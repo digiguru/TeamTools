@@ -1,4 +1,15 @@
+class Event {
+    static fixScope(event, scope) {
+        return event.bind(scope);
+    }
+    static add(eventNames, element, event) {
+        
+        eventNames.forEach(function(eventName){
+            element.addEventListener(eventName, event);
+        });
 
+    }
+}
 class Point {
     constructor(x, y) {
         this.x = x;
@@ -19,28 +30,29 @@ class Stage {
         this.stretch = document.getElementById('stretch');
         this.comfort = document.getElementById('comfort');
         this.mode = "nothing";
-        this.startDrag = function(e) {
-            this.mode = "drag";
-            this.clickArea.addEventListener('mousemove', this.dropEvent);
-        }
-        this.stopDrag = function(e) {
-            this.mode = "drop";
-            this.clickArea.removeEventListener('mousemove', this.dropEvent);
-        }
-        this.dropEvent = function(e) {
+        //Drop event
+        this.dropEvent = Event.fixScope(function(e) {
             let clickPoint = new Point(e.offsetX, e.offsetY);
             console.log(this.mode, 'distance', Point.distance(this.centerPoint, clickPoint))
             return true;
-        };
-        this.dropEvent = this.dropEvent.bind(this);
-        this.startDrag = this.startDrag.bind(this);
-        this.stopDrag = this.stopDrag.bind(this);
-        ['mousedown','mouseup'].forEach(function(e){
-            this.clickArea.addEventListener(e, this.dropEvent);
         }, this);
-        this.clickArea.addEventListener('mousedown', this.startDrag);
-        this.clickArea.addEventListener('mouseup', this.stopDrag);
         
+        Event.add(['mousedown','mouseup'], this.clickArea, this.dropEvent, this);
+        
+        //DragNDrop
+        this.startDrag = Event.fixScope(function(e) {
+            this.mode = "drag";
+            this.clickArea.addEventListener('mousemove', this.dropEvent);
+        }, this);
+        this.stopDrag = Event.fixScope(function(e) {
+            this.mode = "drop";
+            this.clickArea.removeEventListener('mousemove', this.dropEvent);
+        }, this);
+        
+        Event.add(['mousedown'], this.clickArea, this.startDrag, this);
+        Event.add(['mouseup'], this.clickArea, this.stopDrag, this);
+        
+        //Setup center
         this.centerPoint = new Point(comfort.getAttribute('cx'), comfort.getAttribute('cy'));
         console.log('center point', this.centerPoint);
     }
