@@ -10,11 +10,19 @@
     #chaos {
         fill: black;        
     }
+    .dropper {
+        fill: white; 
+        pointer-events: none;       
+    }
+    .dropped {
+        fill: grey;        
+    }
+    
         </style>
     
     <body>
 
-        <svg width="800" height="800">
+        <svg id="stage" width="800" height="800">
             <rect   id="chaos"   width="800" height="800"  />
             <circle id="stretch" r="300" cx="400" cy="400" />
             <circle id="comfort" r="100" cx="400" cy="400" />
