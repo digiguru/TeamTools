@@ -68,6 +68,8 @@ var Comfort;
     }());
     var Stage = (function () {
         function Stage() {
+            //<circle id="stretch" r="300" cx="400" cy="400" />
+            //<circle id="comfort" r="100" cx="400" cy="400" />
             this.addCircle = Event.fixScope(function (e) {
                 var el = SVG.circle(8, e.offsetX, e.offsetY, "dropper");
                 /*this.reDragDropped = Event.fixScope(function(e) {
@@ -103,6 +105,30 @@ var Comfort;
                 console.log('STOP!', 'distance', Point.distance(this.centerPoint, clickPoint));
                 return true;
             }, this);
+            var zones = [new ComfortZones("stretch", 300), new ComfortZones("comfort", 100)];
+            var d3zones = d3.select("g")
+                .selectAll("circle")
+                .data(zones);
+            d3zones.enter().append("circle")
+                .attr("cx", 400)
+                .attr("cy", 400)
+                .attr("r", 0)
+                .attr("id", function (d) {
+                return d.name;
+            })
+                .transition()
+                .duration(1000)
+                .delay(function (d, i) { return i * 100; })
+                .ease("elastic")
+                .attr("r", function (d) {
+                return d.radius;
+            });
+            /*
+            d3.select("g").append("circle")
+            .attr("cx", 400)
+            .attr("cy", d.y)
+            .attr("r", 2.5);
+            */
             this.stage = document.getElementById('stage');
             this.clickArea = document.getElementById('clickable');
             this.chaos = document.getElementById('chaos');
@@ -117,5 +143,13 @@ var Comfort;
         return Stage;
     }());
     Comfort.Stage = Stage;
+    var ComfortZones = (function () {
+        function ComfortZones(name, radius) {
+            this.name = name;
+            this.radius = radius;
+        }
+        return ComfortZones;
+    }());
 })(Comfort || (Comfort = {}));
 var stage = new Comfort.Stage();
+//# sourceMappingURL=comfort.js.map

@@ -115,6 +115,37 @@ namespace Comfort {
         }, this);
 
         constructor() {
+
+            //<circle id="stretch" r="300" cx="400" cy="400" />
+            //<circle id="comfort" r="100" cx="400" cy="400" />
+
+            let zones = [new ComfortZones("stretch",300), new ComfortZones("comfort",100)];
+            let d3zones = d3.select("g")
+                .selectAll("circle")
+                .data(zones)
+                    ;
+
+            d3zones.enter().append("circle")
+                .attr("cx", 400)
+                    .attr("cy", 400)
+                    .attr("r", 0)
+                    .attr("id", function(d:ComfortZones) {
+                        return d.name;
+                })
+                .transition()
+                    .duration(1000)
+                    .delay(function(d, i) { return i * 100; })
+                    .ease("elastic")
+                    .attr("r", function(d:ComfortZones) { 
+                        return d.radius; 
+                    })
+                ;
+            /*
+            d3.select("g").append("circle")
+            .attr("cx", 400)
+            .attr("cy", d.y)
+            .attr("r", 2.5);
+            */
             this.stage = document.getElementById('stage');
             this.clickArea = document.getElementById('clickable');
             this.chaos = document.getElementById('chaos');
@@ -132,6 +163,14 @@ namespace Comfort {
 
 
 
+    }
+    class ComfortZones {
+        name : string;
+        radius: number;
+        constructor(name: string, radius: number) {
+            this.name = name;
+            this.radius = radius; 
+        }
     }
 }
 

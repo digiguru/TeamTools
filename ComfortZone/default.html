@@ -1,5 +1,6 @@
 
 <html>
+    <script src="https://d3js.org/d3.v3.min.js"></script>
     <style>
     #comfort {
         fill: blue;        
@@ -24,8 +25,11 @@
 
         <svg id="stage" width="800" height="800">
             <rect   id="chaos"   width="800" height="800"  />
-            <circle id="stretch" r="300" cx="400" cy="400" />
-            <circle id="comfort" r="100" cx="400" cy="400" />
+            <!--<circle id="stretch" r="300" cx="400" cy="400" />
+            <circle id="comfort" r="100" cx="400" cy="400" />-->
+            <g id="zones">
+
+            </g>
             <rect   id="clickable"   width="800" height="800" fill-opacity="0.0"  />
             
         </svg>
