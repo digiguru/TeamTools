@@ -83,6 +83,10 @@ var Comfort;
                 }
                 this.highlight(this.area);
             }, this);
+            this.chooseUser = Event.fixScope(function (e) {
+            }, this);
+            this.checkOverUsers = Event.fixScope(function (e) {
+            }, this);
             this.addCircle = Event.fixScope(function (e) {
                 var el = SVG.circle(8, e.offsetX, e.offsetY, "dropper");
                 /*this.reDragDropped = Event.fixScope(function(e) {
@@ -119,11 +123,53 @@ var Comfort;
                 return true;
             }, this);
             this.setupArea();
-            this.setupEvents();
+            this.setupAreaEvents();
+            this.setupUsers();
+            this.setupUserEvents();
         }
+        Stage.prototype.setupUsers = function () {
+            this.userZone = document.getElementById('users');
+            var users = [new User("Adam Hall"), new User("Billie Davey"), new User("Laura Rowe")];
+            var d3users = d3.select("g#users")
+                .selectAll("circle")
+                .data(users);
+            //text x="0" y="35" font-family="Verdana" font-size="35"
+            d3users.enter().append("rect")
+                .attr("y", function (e, i) {
+                return 60 + (i * 90);
+            })
+                .attr("x", 0)
+                .attr("width", 800)
+                .attr("height", 90)
+                .attr("data-name", function (e) {
+                return e.name;
+            })
+                .each(function (e, i) {
+                d3.select(this.parentNode).append("text")
+                    .attr("class", "username")
+                    .attr("y", function (e) {
+                    return 30 + ((i + 1) * 90);
+                })
+                    .attr("x", 60)
+                    .attr("data-name", function () {
+                    return e.name;
+                })
+                    .style("font-size", 60)
+                    .style("font-family", "Share Tech Mono")
+                    .text(function (j) {
+                    return e.name;
+                });
+            });
+        };
+        Stage.prototype.setupUserEvents = function () {
+            Event.add(['mousedown'], this.stage, this.chooseUser);
+            Event.add(['mousemove'], this.stage, this.checkOverUsers);
+        };
         Stage.prototype.setupArea = function () {
+            this.stage = document.getElementById('stage');
+            this.clickArea = document.getElementById('clickable');
             var zones = [new ComfortZones("stretch", 300), new ComfortZones("comfort", 100)];
-            var d3zones = d3.select("g")
+            var d3zones = d3.select("g#zones")
                 .selectAll("circle")
                 .data(zones);
             d3zones.enter().append("circle")
@@ -141,13 +187,11 @@ var Comfort;
                 .attr("r", function (d) {
                 return d.radius;
             });
-        };
-        Stage.prototype.setupEvents = function () {
-            this.stage = document.getElementById('stage');
-            this.clickArea = document.getElementById('clickable');
             this.chaos = document.getElementById('chaos');
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
+        };
+        Stage.prototype.setupAreaEvents = function () {
             Event.add(['mousedown'], this.stage, this.addCircle);
             Event.add(['mousemove'], this.stage, this.checkArea);
             MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
@@ -155,21 +199,43 @@ var Comfort;
             this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
             console.log('center point', this.centerPoint);
         };
+        Stage.prototype.highlightUser = function (username) {
+            /*let d3zones = d3.select("svg")
+                .selectAll(".area")
+                .transition()
+                    .delay(function() {
+                        if(this.getAttribute("id") === area) {
+                            return 0;
+                        }
+                        return 100;
+                    })
+                    .ease("cubic")
+                    .duration(function() {
+                        return 250;
+                    })
+                    
+                    .style("fill", function() {
+                        if(this.getAttribute("id") === area) {
+                             return "#00D7FE";
+                        }
+                        return "grey";
+                    });*/
+        };
         Stage.prototype.highlight = function (area) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
             var d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
-                .ease("cubic")
                 .delay(function () {
                 if (this.getAttribute("id") === area) {
                     return 0;
                 }
-                return 50;
-            })
-                .duration(function () {
                 return 100;
+            })
+                .ease("cubic")
+                .duration(function () {
+                return 250;
             })
                 .style("fill", function () {
                 if (this.getAttribute("id") === area) {
@@ -181,6 +247,13 @@ var Comfort;
         return Stage;
     }());
     Comfort.Stage = Stage;
+    var User = (function () {
+        function User(name) {
+            this.name = name;
+        }
+        return User;
+    }());
+    Comfort.User = User;
     var ComfortZones = (function () {
         function ComfortZones(name, radius) {
             this.name = name;

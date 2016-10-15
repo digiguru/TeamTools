@@ -65,6 +65,7 @@ namespace Comfort {
 
         }
     }
+    
     export class Stage {
         stage;
         clickArea;
@@ -74,8 +75,10 @@ namespace Comfort {
         dropper;
         centerPoint:Point;
         area = "";
-            
 
+        userZone;
+            
+        
         checkArea = Event.fixScope(function(e) {
             let thisPoint = new Point(e.offsetX, e.offsetY);
             let distance = Point.distance(this.centerPoint, thisPoint);
@@ -90,7 +93,13 @@ namespace Comfort {
             this.highlight(this.area);
         }, this);
 
+        chooseUser = Event.fixScope(function (e) {
+
+        }, this);
         
+        checkOverUsers = Event.fixScope(function (e) {
+            
+        }, this);
 
         addCircle = Event.fixScope(function (e) {
             let el = SVG.circle(8, e.offsetX, e.offsetY, "dropper");
@@ -131,9 +140,67 @@ namespace Comfort {
             console.log('STOP!', 'distance', Point.distance(this.centerPoint, clickPoint))
             return true;
         }, this);
+
+        constructor() {
+            
+            
+            this.setupArea();
+            this.setupAreaEvents(); 
+            this.setupUsers();
+            this.setupUserEvents();
+
+
+
+        }
+        setupUsers () {
+            this.userZone = document.getElementById('users');
+            
+            let users = [new User("Adam Hall"), new User("Billie Davey"), new User("Laura Rowe")];
+            let d3users = d3.select("g#users")
+                .selectAll("circle")
+                .data(users);
+//text x="0" y="35" font-family="Verdana" font-size="35"
+            d3users.enter().append("rect")
+                .attr("y", function(e, i) {
+                    return 60 + (i * 90);
+                })
+                .attr("x", 0)
+                .attr("width", 800)
+                .attr("height", 90)
+                .attr("data-name", function(e) {
+                    return e.name;
+                })
+                .each(function(e, i) {
+                    d3.select(this.parentNode).append("text")      
+                        .attr("class", "username")
+                        .attr("y", function(e) {
+                            return 30 + ((i + 1) * 90);
+                        })
+                        .attr("x", 60)
+                        .attr("data-name", function() {
+                            return e.name;
+                        })
+                        .style("font-size", 60)
+                        .style("font-family", "Share Tech Mono")
+                        .text(function(j) {
+                            return e.name;
+                        });
+                });
+                 
+        }
+        setupUserEvents () {
+            
+            Event.add(['mousedown'], this.stage, this.chooseUser);
+            Event.add(['mousemove'], this.stage, this.checkOverUsers);
+            
+        }
         setupArea () {
+            this.stage = document.getElementById('stage');
+            this.clickArea = document.getElementById('clickable');
+            
+            
             let zones = [new ComfortZones("stretch",300), new ComfortZones("comfort",100)];
-            let d3zones = d3.select("g")
+            let d3zones = d3.select("g#zones")
                 .selectAll("circle")
                 .data(zones)
                     ;
@@ -154,14 +221,14 @@ namespace Comfort {
                         return d.radius; 
                     })
                 ;
-        }
-        setupEvents () {
-            this.stage = document.getElementById('stage');
-            this.clickArea = document.getElementById('clickable');
+
             this.chaos = document.getElementById('chaos');
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
 
+        }
+        setupAreaEvents () {
+            
             Event.add(['mousedown'], this.stage, this.addCircle);
             Event.add(['mousemove'], this.stage, this.checkArea);
             MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
@@ -170,6 +237,29 @@ namespace Comfort {
             this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
             console.log('center point', this.centerPoint);
         }
+        highlightUser (username) {
+            /*let d3zones = d3.select("svg")
+                .selectAll(".area")
+                .transition()
+                    .delay(function() {
+                        if(this.getAttribute("id") === area) {
+                            return 0;
+                        }
+                        return 100;
+                    })
+                    .ease("cubic")
+                    .duration(function() {
+                        return 250;
+                    })
+                    
+                    .style("fill", function() {
+                        if(this.getAttribute("id") === area) {
+                             return "#00D7FE";
+                        }
+                        return "grey";
+                    });*/
+        }
+
         highlight ( area ) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
@@ -197,14 +287,18 @@ namespace Comfort {
                     });
             
         }
-        constructor() {
-            this.setupArea();
-            this.setupEvents(); 
-        }
+        
 
         
 
     }
+    export class User {
+        name: string;
+        constructor(name:string) {
+            this.name = name;
+        }
+    }
+
     class ComfortZones {
         name : string;
         radius: number;

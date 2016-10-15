@@ -2,6 +2,20 @@
 <html>
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <style>
+    @import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
+    #users {
+        font-family: 'Share Tech Mono', sans-serif;
+    }
+    #users text {
+        pointer-events: none;     
+    }
+    .username {
+        fill: white;
+    }
+    .user-click {
+        /*fill-opacity: 50.0;*/
+        fill-opacity: 0.0;
+    }
     #comfort, #stretch, #chaos {
         fill: grey; /*#00D7FE*/
         stroke: white;
@@ -26,8 +40,12 @@
             <g id="zones">
 
             </g>
-            <rect   id="clickable"   width="800" height="800" fill-opacity="0.0"  />
+
             
+            <rect   id="clickable"   width="800" height="800" fill-opacity="0.0"  />
+            <g id="users">
+
+            </g>
         </svg>
         <script src="comfort.js"></script>
     </body>
