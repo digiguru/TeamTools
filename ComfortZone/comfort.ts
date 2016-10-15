@@ -178,14 +178,17 @@ namespace Comfort {
             let d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
-                    .duration(function() {
+                    .delay(function() {
                         if(this.getAttribute("id") === area) {
-                            return 500;
+                            return 0;
                         }
-                        return 1000;
+                        return 100;
                     })
-                    .ease("elastic")
-                   
+                    .ease("cubic")
+                    .duration(function() {
+                        return 250;
+                    })
+                    
                     .style("fill", function() {
                         if(this.getAttribute("id") === area) {
                              return "#00D7FE";

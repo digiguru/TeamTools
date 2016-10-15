@@ -161,13 +161,16 @@ var Comfort;
             var d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
-                .duration(function () {
+                .ease("cubic")
+                .delay(function () {
                 if (this.getAttribute("id") === area) {
-                    return 500;
+                    return 0;
                 }
-                return 1000;
+                return 50;
             })
-                .ease("elastic")
+                .duration(function () {
+                return 100;
+            })
                 .style("fill", function () {
                 if (this.getAttribute("id") === area) {
                     return "#00D7FE";
