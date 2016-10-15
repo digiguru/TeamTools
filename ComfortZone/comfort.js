@@ -30,10 +30,12 @@ var Comfort;
             scope.stopDrag = Event.fixScope(function (e) {
                 element.removeEventListener('mousemove', eventDrag);
             }, scope);
+            /*
             Event.add(['mousedown'], element, eventStart);
             Event.add(['mousedown'], element, scope.startDrag);
             Event.add(['mouseup'], element, scope.stopDrag);
             Event.add(['mouseup'], element, eventDrop);
+            */
         };
         return MouseEvent;
     }());
@@ -89,7 +91,6 @@ var Comfort;
                 return true;
             }, this);
             this.setupArea();
-            //this.setupAreaEvents(); 
         }
         ComfortEntryGraph.highlight = function (area) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
@@ -153,6 +154,7 @@ var Comfort;
                 stage.comfortEntryGraph.addDropper(el);
                 //allows it to be re-dragged
                 //this.stage.appendChild(el);
+                stage.nextUser();
             }); //this.addCircle);
             d3.select("#stage").on("mousemove", function (a, b, c) {
                 var coord = d3.mouse(this);
@@ -182,6 +184,15 @@ var Comfort;
         function UserChoiceForm() {
             this.setupUsers();
         }
+        UserChoiceForm.prototype.show = function () {
+            d3.select(this.userZone)
+                .transition()
+                .duration(function () {
+                return 800;
+            })
+                .style("fill-opacity", 1)
+                .attr("transform", "matrix(1,0,0,1,0,0)");
+        };
         UserChoiceForm.prototype.hide = function () {
             d3.select(this.userZone)
                 .transition()
@@ -278,6 +289,10 @@ var Comfort;
         Stage.prototype.selectUser = function (name) {
             this.userChoiceForm.hide();
             this.comfortEntryGraph.startInteraction();
+        };
+        Stage.prototype.nextUser = function () {
+            console.log("nextUser", this);
+            this.userChoiceForm.show();
         };
         Stage.stage = document.getElementById('stage');
         return Stage;

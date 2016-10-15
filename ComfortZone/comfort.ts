@@ -29,10 +29,12 @@ namespace Comfort {
                 element.removeEventListener('mousemove', eventDrag);
             }, scope);
 
+            /*
             Event.add(['mousedown'], element, eventStart);
             Event.add(['mousedown'], element, scope.startDrag);
             Event.add(['mouseup'], element, scope.stopDrag);
             Event.add(['mouseup'], element, eventDrop);
+            */
         }
     }
     class Point {
@@ -171,7 +173,7 @@ namespace Comfort {
                 stage.comfortEntryGraph.addDropper(el);
                 //allows it to be re-dragged
                 //this.stage.appendChild(el);
-
+                stage.nextUser();
 
             });//this.addCircle);
             d3.select("#stage").on("mousemove", function(a,b,c) {
@@ -208,6 +210,15 @@ namespace Comfort {
         
         constructor() {
             this.setupUsers();
+        }
+        show () {
+            d3.select(this.userZone)
+                .transition()
+                .duration(function() {
+                        return 800;
+                })
+                .style("fill-opacity",1)
+                .attr("transform", "matrix(1,0,0,1,0,0)");
         }
         hide () {
             d3.select(this.userZone)
@@ -319,6 +330,11 @@ namespace Comfort {
         selectUser(name) {
             this.userChoiceForm.hide();
             this.comfortEntryGraph.startInteraction();
+        }
+
+        public nextUser() {
+            console.log("nextUser", this);
+            this.userChoiceForm.show();
         }
         
 
