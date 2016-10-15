@@ -207,7 +207,8 @@ var Comfort;
                     return e.name;
                 })
                     .on("mouseover", function (e) {
-                    d3.select(this)
+                    d3.select(this.parentNode)
+                        .selectAll("text")
                         .transition()
                         .duration(function () {
                         return 250;
@@ -217,7 +218,8 @@ var Comfort;
                     });
                 })
                     .on("mouseleave", function (e) {
-                    d3.select(this)
+                    d3.select(this.parentNode)
+                        .selectAll("text")
                         .transition()
                         .duration(function () {
                         return 250;

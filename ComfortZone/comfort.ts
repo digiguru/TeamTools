@@ -236,9 +236,9 @@ namespace Comfort {
                             return e.name;
                         })
                         .on("mouseover", function(e) {
-                            d3.select(this)
+                            d3.select(this.parentNode)
                             //let d3zones = d3.select("g#users")
-                            //    .selectAll("text")
+                                .selectAll("text")
                                 .transition()
                                 .duration(function() {
                                         return 250;
@@ -249,9 +249,9 @@ namespace Comfort {
                                 });
                         })
                         .on("mouseleave", function(e) {
-                            d3.select(this)
+                            d3.select(this.parentNode)
                             //let d3zones = d3.select("g#users")
-                            //    .selectAll("text")
+                                .selectAll("text")
                                 .transition()
                                 .duration(function() {
                                         return 250;
