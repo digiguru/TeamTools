@@ -70,6 +70,21 @@ var Comfort;
         function Stage() {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
+            this.area = "";
+            this.checkArea = Event.fixScope(function (e) {
+                var thisPoint = new Point(e.offsetX, e.offsetY);
+                var distance = Point.distance(this.centerPoint, thisPoint);
+                if (distance < 100) {
+                    this.area = "comfort";
+                }
+                else if (distance < 300) {
+                    this.area = "stretch";
+                }
+                else {
+                    this.area = "chaos";
+                }
+                this.highlight(this.area);
+            }, this);
             this.addCircle = Event.fixScope(function (e) {
                 var el = SVG.circle(8, e.offsetX, e.offsetY, "dropper");
                 /*this.reDragDropped = Event.fixScope(function(e) {
@@ -113,6 +128,7 @@ var Comfort;
                 .attr("cx", 400)
                 .attr("cy", 400)
                 .attr("r", 0)
+                .attr("class", "area")
                 .attr("id", function (d) {
                 return d.name;
             })
@@ -135,11 +151,31 @@ var Comfort;
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
             Event.add(['mousedown'], this.stage, this.addCircle);
+            Event.add(['mousemove'], this.stage, this.checkArea);
             MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
             //Setup center
             this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
             console.log('center point', this.centerPoint);
         }
+        Stage.prototype.highlight = function (area) {
+            var d3zones = d3.select("svg")
+                .selectAll(".area")
+                .transition()
+                .duration(function () {
+                if (this.getAttribute("id") === area) {
+                    return 500;
+                }
+                return 1000;
+            })
+                .ease("elastic")
+                .style("fill", function () {
+                if (this.getAttribute("id") === area) {
+                    return "#00D7FE";
+                }
+                return "grey";
+            });
+        };
+        ;
         return Stage;
     }());
     Comfort.Stage = Stage;

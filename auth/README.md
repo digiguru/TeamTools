@@ -18,6 +18,11 @@ If you would like to download the code and try it for yourself:
 5. Launch: `node server.js`
 6. Visit in your browser at: `http://localhost:8080`
 
+
+To get db up...
+`brew services start mongodb --httpinterface --rest`
+mongod --rest
+
 ## The Tutorials
 
 - [Getting Started and Local Authentication](http://scotch.io/tutorials/javascript/easy-node-authentication-setup-and-local)

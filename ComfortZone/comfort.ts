@@ -73,6 +73,24 @@ namespace Comfort {
         comfort;
         dropper;
         centerPoint:Point;
+        area = "";
+            
+
+        checkArea = Event.fixScope(function(e) {
+            let thisPoint = new Point(e.offsetX, e.offsetY);
+            let distance = Point.distance(this.centerPoint, thisPoint);
+            
+            if(distance < 100) {
+                this.area = "comfort";
+            } else if (distance < 300) {
+                this.area = "stretch";
+            } else {
+                this.area = "chaos";
+            }
+            this.highlight(this.area);
+        }, this);
+
+        
 
         addCircle = Event.fixScope(function (e) {
             let el = SVG.circle(8, e.offsetX, e.offsetY, "dropper");
@@ -129,6 +147,7 @@ namespace Comfort {
                 .attr("cx", 400)
                     .attr("cy", 400)
                     .attr("r", 0)
+                    .attr("class", "area")
                     .attr("id", function(d:ComfortZones) {
                         return d.name;
                 })
@@ -153,7 +172,7 @@ namespace Comfort {
             this.comfort = document.getElementById('comfort');
 
             Event.add(['mousedown'], this.stage, this.addCircle);
-
+            Event.add(['mousemove'], this.stage, this.checkArea);
             MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
 
             //Setup center
@@ -161,7 +180,27 @@ namespace Comfort {
             console.log('center point', this.centerPoint);
         }
 
+        highlight ( area ) {
 
+            let d3zones = d3.select("svg")
+                .selectAll(".area")
+                .transition()
+                    .duration(function() {
+                        if(this.getAttribute("id") === area) {
+                            return 500;
+                        }
+                        return 1000;
+                    })
+                    .ease("elastic")
+                   
+                    .style("fill", function() {
+                        if(this.getAttribute("id") === area) {
+                             return "#00D7FE";
+                        }
+                        return "grey";
+                    });
+            
+        };
 
     }
     class ComfortZones {
