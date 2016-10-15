@@ -68,8 +68,6 @@ var Comfort;
     }());
     var Stage = (function () {
         function Stage() {
-            //<circle id="stretch" r="300" cx="400" cy="400" />
-            //<circle id="comfort" r="100" cx="400" cy="400" />
             this.area = "";
             this.checkArea = Event.fixScope(function (e) {
                 var thisPoint = new Point(e.offsetX, e.offsetY);
@@ -120,6 +118,10 @@ var Comfort;
                 console.log('STOP!', 'distance', Point.distance(this.centerPoint, clickPoint));
                 return true;
             }, this);
+            this.setupArea();
+            this.setupEvents();
+        }
+        Stage.prototype.setupArea = function () {
             var zones = [new ComfortZones("stretch", 300), new ComfortZones("comfort", 100)];
             var d3zones = d3.select("g")
                 .selectAll("circle")
@@ -139,12 +141,8 @@ var Comfort;
                 .attr("r", function (d) {
                 return d.radius;
             });
-            /*
-            d3.select("g").append("circle")
-            .attr("cx", 400)
-            .attr("cy", d.y)
-            .attr("r", 2.5);
-            */
+        };
+        Stage.prototype.setupEvents = function () {
             this.stage = document.getElementById('stage');
             this.clickArea = document.getElementById('clickable');
             this.chaos = document.getElementById('chaos');
@@ -156,8 +154,10 @@ var Comfort;
             //Setup center
             this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
             console.log('center point', this.centerPoint);
-        }
+        };
         Stage.prototype.highlight = function (area) {
+            //<circle id="stretch" r="300" cx="400" cy="400" />
+            //<circle id="comfort" r="100" cx="400" cy="400" />
             var d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
@@ -175,7 +175,6 @@ var Comfort;
                 return "grey";
             });
         };
-        ;
         return Stage;
     }());
     Comfort.Stage = Stage;

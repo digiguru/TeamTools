@@ -131,12 +131,7 @@ namespace Comfort {
             console.log('STOP!', 'distance', Point.distance(this.centerPoint, clickPoint))
             return true;
         }, this);
-
-        constructor() {
-
-            //<circle id="stretch" r="300" cx="400" cy="400" />
-            //<circle id="comfort" r="100" cx="400" cy="400" />
-
+        setupArea () {
             let zones = [new ComfortZones("stretch",300), new ComfortZones("comfort",100)];
             let d3zones = d3.select("g")
                 .selectAll("circle")
@@ -159,12 +154,8 @@ namespace Comfort {
                         return d.radius; 
                     })
                 ;
-            /*
-            d3.select("g").append("circle")
-            .attr("cx", 400)
-            .attr("cy", d.y)
-            .attr("r", 2.5);
-            */
+        }
+        setupEvents () {
             this.stage = document.getElementById('stage');
             this.clickArea = document.getElementById('clickable');
             this.chaos = document.getElementById('chaos');
@@ -179,9 +170,11 @@ namespace Comfort {
             this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
             console.log('center point', this.centerPoint);
         }
-
         highlight ( area ) {
+            //<circle id="stretch" r="300" cx="400" cy="400" />
+            //<circle id="comfort" r="100" cx="400" cy="400" />
 
+           
             let d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
@@ -200,7 +193,13 @@ namespace Comfort {
                         return "grey";
                     });
             
-        };
+        }
+        constructor() {
+            this.setupArea();
+            this.setupEvents(); 
+        }
+
+        
 
     }
     class ComfortZones {
