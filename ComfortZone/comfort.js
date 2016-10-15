@@ -42,6 +42,9 @@ var Comfort;
             this.x = x;
             this.y = y;
         }
+        Point.fromCoords = function (coords) {
+            return new Point(coords[0], coords[1]);
+        };
         Point.distance = function (a, b) {
             var dx = a.x - b.x;
             var dy = a.y - b.y;
@@ -66,52 +69,39 @@ var Comfort;
         };
         return SVG;
     }());
+    var ComfortChoiceStage = (function () {
+        function ComfortChoiceStage() {
+        }
+        return ComfortChoiceStage;
+    }());
+    Comfort.ComfortChoiceStage = ComfortChoiceStage;
     var Stage = (function () {
         function Stage() {
             this.area = "";
-            this.checkArea = Event.fixScope(function (e) {
-                var thisPoint = new Point(e.offsetX, e.offsetY);
-                var distance = Point.distance(this.centerPoint, thisPoint);
-                if (distance < 100) {
-                    this.area = "comfort";
-                }
-                else if (distance < 300) {
-                    this.area = "stretch";
-                }
-                else {
-                    this.area = "chaos";
-                }
-                this.highlight(this.area);
-            }, this);
-            this.chooseUser = Event.fixScope(function (e) {
-            }, this);
-            this.checkOverUsers = Event.fixScope(function (e) {
-            }, this);
-            this.addCircle = Event.fixScope(function (e) {
-                var el = SVG.circle(8, e.offsetX, e.offsetY, "dropper");
-                /*this.reDragDropped = Event.fixScope(function(e) {
-                    this.dropper = el;
-                    this.dropper.setAttribute("class", "dropper");
-                    this.stage.addEventListener('mousemove', this.dragEvent);
-                }, this);
-                Event.add(['mousedown'], el, this.reDragDropped, this);
-                */
-                this.dropper = el;
-                //allows it to be dropped forever....
-                this.stage.insertBefore(el, this.clickArea);
-                //allows it to be re-dragged
-                //this.stage.appendChild(el);
+            this.checkOverUsers = Event.fixScope(function (j, e) {
+                var d3zones = d3.select("g#users")
+                    .selectAll("text")
+                    .transition()
+                    .duration(function () {
+                    return 250;
+                })
+                    .style("fill", function () {
+                    if (this.getAttribute("data-name") === j.attr("data-name")) {
+                        return "#00D7FE";
+                    }
+                    return "grey";
+                });
             }, this);
             this.startDrag = Event.fixScope(function (e) {
                 var clickPoint = new Point(e.offsetX, e.offsetY);
-                console.log('start...', 'distance', Point.distance(this.centerPoint, clickPoint));
+                console.log('start...', 'distance', Point.distance(Stage.centerPoint, clickPoint));
                 return true;
             }, this);
             this.dragEvent = Event.fixScope(function (e) {
                 var clickPoint = new Point(e.offsetX, e.offsetY);
                 this.dropper.setAttribute("cx", e.offsetX);
                 this.dropper.setAttribute("cy", e.offsetY);
-                console.log('..drag...', 'distance', Point.distance(this.centerPoint, clickPoint));
+                console.log('..drag...', 'distance', Point.distance(Stage.centerPoint, clickPoint));
                 return true;
             }, this);
             this.dropEvent = Event.fixScope(function (e) {
@@ -119,7 +109,7 @@ var Comfort;
                 this.dropper.setAttribute("cx", e.offsetX);
                 this.dropper.setAttribute("cy", e.offsetY);
                 this.dropper.setAttribute("class", "dropped");
-                console.log('STOP!', 'distance', Point.distance(this.centerPoint, clickPoint));
+                console.log('STOP!', 'distance', Point.distance(Stage.centerPoint, clickPoint));
                 return true;
             }, this);
             this.setupArea();
@@ -130,6 +120,7 @@ var Comfort;
         Stage.prototype.setupUsers = function () {
             this.userZone = document.getElementById('users');
             var users = [new User("Adam Hall"), new User("Billie Davey"), new User("Laura Rowe")];
+            var thisStage = this;
             var d3users = d3.select("g#users")
                 .selectAll("circle")
                 .data(users);
@@ -145,6 +136,8 @@ var Comfort;
                 return e.name;
             })
                 .each(function (e, i) {
+                //Event.add(['mousedown'], this.stage, this.chooseUser);
+                Event.add(["mouseover"], this, thisStage.checkOverUsers);
                 d3.select(this.parentNode).append("text")
                     .attr("class", "username")
                     .attr("y", function (e) {
@@ -162,8 +155,8 @@ var Comfort;
             });
         };
         Stage.prototype.setupUserEvents = function () {
-            Event.add(['mousedown'], this.stage, this.chooseUser);
-            Event.add(['mousemove'], this.stage, this.checkOverUsers);
+            //Event.add(['mousedown'], this.stage, this.chooseUser);
+            //Event.add(['mousemove'], this.stage, this.checkOverUsers);
         };
         Stage.prototype.setupArea = function () {
             this.stage = document.getElementById('stage');
@@ -191,13 +184,41 @@ var Comfort;
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
         };
+        Stage.addDropper = function (el) {
+            stage.dropper = el;
+            stage.stage.insertBefore(el, stage.clickArea);
+        };
         Stage.prototype.setupAreaEvents = function () {
-            Event.add(['mousedown'], this.stage, this.addCircle);
-            Event.add(['mousemove'], this.stage, this.checkArea);
+            d3.select("#stage").on("mousedown", function (a, b, c) {
+                console.log(this, a, b, c);
+                var coord = Point.fromCoords(d3.mouse(this));
+                var el = SVG.circle(8, coord.x, coord.y, "dropper");
+                Stage.addDropper(el);
+                //allows it to be re-dragged
+                //this.stage.appendChild(el);
+            }); //this.addCircle);
+            d3.select("#stage").on("mousemove", function (a, b, c) {
+                console.log(this, a, b, c);
+                var coord = d3.mouse(this);
+                var distance = Point.distance(Stage.centerPoint, Point.fromCoords(coord));
+                var area = "";
+                if (distance < 100) {
+                    area = "comfort";
+                }
+                else if (distance < 300) {
+                    area = "stretch";
+                }
+                else {
+                    area = "chaos";
+                }
+                Stage.highlight(area);
+            }); //this.checkArea);
+            //Event.add(['mousedown'], this.stage, this.addCircle);
+            //Event.add(['mousemove'], this.stage, this.checkArea);
             MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
             //Setup center
-            this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
-            console.log('center point', this.centerPoint);
+            Stage.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
+            console.log('center point', Stage.centerPoint);
         };
         Stage.prototype.highlightUser = function (username) {
             /*let d3zones = d3.select("svg")
@@ -221,7 +242,7 @@ var Comfort;
                         return "grey";
                     });*/
         };
-        Stage.prototype.highlight = function (area) {
+        Stage.highlight = function (area) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
             var d3zones = d3.select("svg")

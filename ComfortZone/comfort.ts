@@ -38,9 +38,13 @@ namespace Comfort {
     class Point {
         x : number;
         y : number;
+
         constructor(x : number, y : number) {
             this.x = x;
             this.y = y;
+        }
+        static fromCoords(coords:Array<number>) {
+            return new Point(coords[0],coords[1]);
         }
         static distance(a:Point , b:Point) {
             const dx = a.x - b.x;
@@ -65,7 +69,9 @@ namespace Comfort {
 
         }
     }
-    
+    export class ComfortChoiceStage {
+        
+    }
     export class Stage {
         stage;
         clickArea;
@@ -73,54 +79,33 @@ namespace Comfort {
         stretch;
         comfort;
         dropper;
-        centerPoint:Point;
+        public static centerPoint:Point;
         area = "";
 
         userZone;
-            
         
-        checkArea = Event.fixScope(function(e) {
-            let thisPoint = new Point(e.offsetX, e.offsetY);
-            let distance = Point.distance(this.centerPoint, thisPoint);
-            
-            if(distance < 100) {
-                this.area = "comfort";
-            } else if (distance < 300) {
-                this.area = "stretch";
-            } else {
-                this.area = "chaos";
-            }
-            this.highlight(this.area);
+        checkOverUsers = Event.fixScope(function (j, e) {
+            let d3zones = d3.select("g#users")
+            .selectAll("text")
+            .transition()
+            .duration(function() {
+                    return 250;
+                })
+            .style("fill", function() {
+                    if(this.getAttribute("data-name") === j.attr("data-name")) {
+                        return "#00D7FE";
+                    }
+                    return "grey";
+                });
         }, this);
 
-        chooseUser = Event.fixScope(function (e) {
 
-        }, this);
-        
-        checkOverUsers = Event.fixScope(function (e) {
-            
-        }, this);
 
-        addCircle = Event.fixScope(function (e) {
-            let el = SVG.circle(8, e.offsetX, e.offsetY, "dropper");
-            /*this.reDragDropped = Event.fixScope(function(e) {
-                this.dropper = el;
-                this.dropper.setAttribute("class", "dropper");
-                this.stage.addEventListener('mousemove', this.dragEvent);
-            }, this);
-            Event.add(['mousedown'], el, this.reDragDropped, this);
-            */
-            this.dropper = el;
-
-            //allows it to be dropped forever....
-            this.stage.insertBefore(el, this.clickArea);
-            //allows it to be re-dragged
-            //this.stage.appendChild(el);
-        }, this);
+       
 
         startDrag = Event.fixScope(function (e) {
             let clickPoint = new Point(e.offsetX, e.offsetY);
-            console.log('start...', 'distance', Point.distance(this.centerPoint, clickPoint))
+            console.log('start...', 'distance', Point.distance(Stage.centerPoint, clickPoint))
             return true;
         }, this);
 
@@ -128,7 +113,7 @@ namespace Comfort {
             let clickPoint = new Point(e.offsetX, e.offsetY);
             this.dropper.setAttribute("cx", e.offsetX);
             this.dropper.setAttribute("cy", e.offsetY);
-            console.log('..drag...', 'distance', Point.distance(this.centerPoint, clickPoint))
+            console.log('..drag...', 'distance', Point.distance(Stage.centerPoint, clickPoint))
             return true;
         }, this);
 
@@ -137,7 +122,7 @@ namespace Comfort {
             this.dropper.setAttribute("cx", e.offsetX);
             this.dropper.setAttribute("cy", e.offsetY);
             this.dropper.setAttribute("class", "dropped");
-            console.log('STOP!', 'distance', Point.distance(this.centerPoint, clickPoint))
+            console.log('STOP!', 'distance', Point.distance(Stage.centerPoint, clickPoint))
             return true;
         }, this);
 
@@ -156,6 +141,7 @@ namespace Comfort {
             this.userZone = document.getElementById('users');
             
             let users = [new User("Adam Hall"), new User("Billie Davey"), new User("Laura Rowe")];
+            let thisStage = this;
             let d3users = d3.select("g#users")
                 .selectAll("circle")
                 .data(users);
@@ -170,7 +156,11 @@ namespace Comfort {
                 .attr("data-name", function(e) {
                     return e.name;
                 })
+                
                 .each(function(e, i) {
+                    //Event.add(['mousedown'], this.stage, this.chooseUser);
+                    Event.add(["mouseover"], this, thisStage.checkOverUsers);
+
                     d3.select(this.parentNode).append("text")      
                         .attr("class", "username")
                         .attr("y", function(e) {
@@ -190,8 +180,8 @@ namespace Comfort {
         }
         setupUserEvents () {
             
-            Event.add(['mousedown'], this.stage, this.chooseUser);
-            Event.add(['mousemove'], this.stage, this.checkOverUsers);
+            //Event.add(['mousedown'], this.stage, this.chooseUser);
+            //Event.add(['mousemove'], this.stage, this.checkOverUsers);
             
         }
         setupArea () {
@@ -227,17 +217,47 @@ namespace Comfort {
             this.comfort = document.getElementById('comfort');
 
         }
+        static addDropper (el) {
+            stage.dropper = el;
+            stage.stage.insertBefore(el, stage.clickArea);
+        }
         setupAreaEvents () {
+            d3.select("#stage").on("mousedown", function(a,b,c) {
+                console.log(this,a,b,c);
+                let coord = Point.fromCoords(d3.mouse(this));
+                let el = SVG.circle(8, coord.x, coord.y, "dropper");
+                Stage.addDropper(el);
+                //allows it to be re-dragged
+                //this.stage.appendChild(el);
+
+
+            });//this.addCircle);
+            d3.select("#stage").on("mousemove", function(a,b,c) {
+                console.log(this,a,b,c);
+                let coord = d3.mouse(this);
+                let distance = Point.distance(Stage.centerPoint, Point.fromCoords(coord));
+                let area = "";
+                if(distance < 100) {
+                    area = "comfort";
+                } else if (distance < 300) {
+                    area = "stretch";
+                } else {
+                    area = "chaos";
+                }
+                Stage.highlight(area);
+            });//this.checkArea);
             
-            Event.add(['mousedown'], this.stage, this.addCircle);
-            Event.add(['mousemove'], this.stage, this.checkArea);
+            //Event.add(['mousedown'], this.stage, this.addCircle);
+            //Event.add(['mousemove'], this.stage, this.checkArea);
             MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
 
             //Setup center
-            this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
-            console.log('center point', this.centerPoint);
+            Stage.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
+            console.log('center point', Stage.centerPoint);
         }
         highlightUser (username) {
+
+           
             /*let d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
@@ -260,7 +280,7 @@ namespace Comfort {
                     });*/
         }
 
-        highlight ( area ) {
+        public static highlight ( area ) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
 
