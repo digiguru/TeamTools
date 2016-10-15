@@ -69,43 +69,15 @@ namespace Comfort {
 
         }
     }
-    export class ComfortChoiceStage {
-        
-    }
-    export class Stage {
-        stage;
+    export class ComfortEntryGraph {
         clickArea;
         chaos;
         stretch;
         comfort;
-        dropper;
         public static centerPoint:Point;
-        area = "";
-
-        userZone;
-        
-        checkOverUsers = Event.fixScope(function (j, e) {
-            let d3zones = d3.select("g#users")
-            .selectAll("text")
-            .transition()
-            .duration(function() {
-                    return 250;
-                })
-            .style("fill", function() {
-                    if(this.getAttribute("data-name") === j.attr("data-name")) {
-                        return "#00D7FE";
-                    }
-                    return "grey";
-                });
-        }, this);
-
-
-
-       
-
+        dropper;
         startDrag = Event.fixScope(function (e) {
             let clickPoint = new Point(e.offsetX, e.offsetY);
-            console.log('start...', 'distance', Point.distance(Stage.centerPoint, clickPoint))
             return true;
         }, this);
 
@@ -113,79 +85,37 @@ namespace Comfort {
             let clickPoint = new Point(e.offsetX, e.offsetY);
             this.dropper.setAttribute("cx", e.offsetX);
             this.dropper.setAttribute("cy", e.offsetY);
-            console.log('..drag...', 'distance', Point.distance(Stage.centerPoint, clickPoint))
             return true;
         }, this);
 
-        dropEvent = Event.fixScope(function (e) {
-            let clickPoint = new Point(e.offsetX, e.offsetY);
-            this.dropper.setAttribute("cx", e.offsetX);
-            this.dropper.setAttribute("cy", e.offsetY);
-            this.dropper.setAttribute("class", "dropped");
-            console.log('STOP!', 'distance', Point.distance(Stage.centerPoint, clickPoint))
-            return true;
-        }, this);
+        public static highlight ( area ) {
+            //<circle id="stretch" r="300" cx="400" cy="400" />
+            //<circle id="comfort" r="100" cx="400" cy="400" />
 
-        constructor() {
-            
-            
-            this.setupArea();
-            this.setupAreaEvents(); 
-            this.setupUsers();
-            this.setupUserEvents();
-
-
-
-        }
-        setupUsers () {
-            this.userZone = document.getElementById('users');
-            
-            let users = [new User("Adam Hall"), new User("Billie Davey"), new User("Laura Rowe")];
-            let thisStage = this;
-            let d3users = d3.select("g#users")
-                .selectAll("circle")
-                .data(users);
-//text x="0" y="35" font-family="Verdana" font-size="35"
-            d3users.enter().append("rect")
-                .attr("y", function(e, i) {
-                    return 60 + (i * 90);
-                })
-                .attr("x", 0)
-                .attr("width", 800)
-                .attr("height", 90)
-                .attr("data-name", function(e) {
-                    return e.name;
-                })
-                
-                .each(function(e, i) {
-                    //Event.add(['mousedown'], this.stage, this.chooseUser);
-                    Event.add(["mouseover"], this, thisStage.checkOverUsers);
-
-                    d3.select(this.parentNode).append("text")      
-                        .attr("class", "username")
-                        .attr("y", function(e) {
-                            return 30 + ((i + 1) * 90);
-                        })
-                        .attr("x", 60)
-                        .attr("data-name", function() {
-                            return e.name;
-                        })
-                        .style("font-size", 60)
-                        .style("font-family", "Share Tech Mono")
-                        .text(function(j) {
-                            return e.name;
-                        });
-                });
-                 
-        }
-        setupUserEvents () {
-            
-            //Event.add(['mousedown'], this.stage, this.chooseUser);
-            //Event.add(['mousemove'], this.stage, this.checkOverUsers);
+           
+            let d3zones = d3.select("svg")
+                .selectAll(".area")
+                .transition()
+                    .delay(function() {
+                        if(this.getAttribute("id") === area) {
+                            return 0;
+                        }
+                        return 100;
+                    })
+                    .ease("cubic")
+                    .duration(function() {
+                        return 250;
+                    })
+                    
+                    .style("fill", function() {
+                        if(this.getAttribute("id") === area) {
+                             return "#00D7FE";
+                        }
+                        return "grey";
+                    });
             
         }
         setupArea () {
-            this.stage = document.getElementById('stage');
             this.clickArea = document.getElementById('clickable');
             
             
@@ -217,25 +147,23 @@ namespace Comfort {
             this.comfort = document.getElementById('comfort');
 
         }
-        static addDropper (el) {
-            stage.dropper = el;
-            stage.stage.insertBefore(el, stage.clickArea);
+        addDropper (el) {
+            this.dropper = el;
+            document.getElementById('stage').insertBefore(el, this.clickArea);
         }
         setupAreaEvents () {
             d3.select("#stage").on("mousedown", function(a,b,c) {
-                console.log(this,a,b,c);
                 let coord = Point.fromCoords(d3.mouse(this));
                 let el = SVG.circle(8, coord.x, coord.y, "dropper");
-                Stage.addDropper(el);
+                stage.comfortEntryGraph.addDropper(el);
                 //allows it to be re-dragged
                 //this.stage.appendChild(el);
 
 
             });//this.addCircle);
             d3.select("#stage").on("mousemove", function(a,b,c) {
-                console.log(this,a,b,c);
                 let coord = d3.mouse(this);
-                let distance = Point.distance(Stage.centerPoint, Point.fromCoords(coord));
+                let distance = Point.distance(ComfortEntryGraph.centerPoint, Point.fromCoords(coord));
                 let area = "";
                 if(distance < 100) {
                     area = "comfort";
@@ -244,7 +172,7 @@ namespace Comfort {
                 } else {
                     area = "chaos";
                 }
-                Stage.highlight(area);
+                ComfortEntryGraph.highlight(area);
             });//this.checkArea);
             
             //Event.add(['mousedown'], this.stage, this.addCircle);
@@ -252,9 +180,126 @@ namespace Comfort {
             MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
 
             //Setup center
-            Stage.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
-            console.log('center point', Stage.centerPoint);
+            ComfortEntryGraph.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
         }
+
+        dropEvent = Event.fixScope(function (e) {
+            let clickPoint = new Point(e.offsetX, e.offsetY);
+            this.dropper.setAttribute("cx", e.offsetX);
+            this.dropper.setAttribute("cy", e.offsetY);
+            this.dropper.setAttribute("class", "dropped");
+            return true;
+        }, this);
+
+        constructor() {
+            
+            this.setupArea();
+            this.setupAreaEvents(); 
+            
+
+        }
+
+    }
+    export class UserChoiceForm {
+        userZone;
+        
+        constructor() {
+            this.setupUsers();
+            this.setupUserEvents();
+        }
+
+        setupUsers () {
+            this.userZone = document.getElementById('users');
+            
+            let users = [new User("Adam Hall","xxx1"), new User("Billie Davey","xxx2"), new User("Laura Rowe","xxx3")];
+            let thisStage = this;
+            let d3users = d3.select("g#users")
+                .selectAll("circle")
+                .data(users);
+//text x="0" y="35" font-family="Verdana" font-size="35"
+            d3users.enter().append("g")
+                .attr("id", function(e) {
+                    return e.id;
+                })
+                .each(function(e, i) {
+                    //Event.add(['mousedown'], this.stage, this.chooseUser);
+                    //Event.add(["mouseover"], this, thisStage.checkOverUsers);
+                    d3.select(this)
+                        .append("rect")
+                        .attr("y", function(e) {
+                            return 60 + (i * 90);
+                        })
+                        .attr("x", 0)
+                        .attr("width", 800)
+                        .attr("height", 90)
+                        .attr("data-name", function(e) {
+                            return e.name;
+                        })
+                        .on("mouseover", function(e) {
+                            d3.select(this)
+                            //let d3zones = d3.select("g#users")
+                            //    .selectAll("text")
+                                .transition()
+                                .duration(function() {
+                                        return 250;
+                                })
+                                .style("fill", function() {
+                                        return "#00D7FE";
+                                        
+                                });
+                        })
+                        .on("mouseleave", function(e) {
+                            d3.select(this)
+                            //let d3zones = d3.select("g#users")
+                            //    .selectAll("text")
+                                .transition()
+                                .duration(function() {
+                                        return 250;
+                                })
+                                .style("fill", function() {
+                                        return "grey";
+                                        
+                                });
+                        });
+                    d3.select(this).append("text")      
+                        .attr("class", "username")
+                        .attr("y", function(e) {
+                            return 30 + ((i + 1) * 90);
+                        })
+                        .attr("x", 60)
+                        .attr("data-name", function() {
+                            return e.name;
+                        })
+                        .style("font-size", 60)
+                        .style("font-family", "Share Tech Mono")
+                        .text(function(j) {
+                            return e.name;
+                        });
+                });
+                 
+        }
+        setupUserEvents () {
+            
+            //Event.add(['mousedown'], this.stage, this.chooseUser);
+            //Event.add(['mousemove'], this.stage, this.checkOverUsers);
+            
+        }
+
+        
+    }
+    export class Stage {
+        static stage = document.getElementById('stage');
+        
+        comfortEntryGraph;
+        userChoiceForm;
+
+
+        constructor() {
+            this.comfortEntryGraph = new ComfortEntryGraph();
+            this.userChoiceForm = new UserChoiceForm();
+        }
+        
+        
         highlightUser (username) {
 
            
@@ -280,33 +325,7 @@ namespace Comfort {
                     });*/
         }
 
-        public static highlight ( area ) {
-            //<circle id="stretch" r="300" cx="400" cy="400" />
-            //<circle id="comfort" r="100" cx="400" cy="400" />
-
-           
-            let d3zones = d3.select("svg")
-                .selectAll(".area")
-                .transition()
-                    .delay(function() {
-                        if(this.getAttribute("id") === area) {
-                            return 0;
-                        }
-                        return 100;
-                    })
-                    .ease("cubic")
-                    .duration(function() {
-                        return 250;
-                    })
-                    
-                    .style("fill", function() {
-                        if(this.getAttribute("id") === area) {
-                             return "#00D7FE";
-                        }
-                        return "grey";
-                    });
-            
-        }
+        
         
 
         
@@ -314,8 +333,10 @@ namespace Comfort {
     }
     export class User {
         name: string;
-        constructor(name:string) {
+        id: string;
+        constructor(name:string, id:string) {
             this.name = name;
+            this.id = id;
         }
     }
 
