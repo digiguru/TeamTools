@@ -89,7 +89,7 @@ var Comfort;
                 return true;
             }, this);
             this.setupArea();
-            this.setupAreaEvents();
+            //this.setupAreaEvents(); 
         }
         ComfortEntryGraph.highlight = function (area) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
@@ -113,6 +113,9 @@ var Comfort;
                 }
                 return "grey";
             });
+        };
+        ComfortEntryGraph.prototype.startInteraction = function () {
+            this.setupAreaEvents();
         };
         ComfortEntryGraph.prototype.setupArea = function () {
             this.clickArea = document.getElementById('clickable');
@@ -178,8 +181,24 @@ var Comfort;
     var UserChoiceForm = (function () {
         function UserChoiceForm() {
             this.setupUsers();
-            this.setupUserEvents();
         }
+        UserChoiceForm.prototype.hide = function () {
+            d3.select(this.userZone)
+                .transition()
+                .duration(function () {
+                return 800;
+            })
+                .style("fill-opacity", 0)
+                .attr("transform", "matrix(2,0,0,2,-400,-90)");
+            /*  d3.select(this.userZone)
+                .transition()
+               .selectAll("text")
+                .transition()
+                .duration(function() {
+                        return 800;
+                })
+                .style("font-size", 120);*/
+        };
         UserChoiceForm.prototype.setupUsers = function () {
             this.userZone = document.getElementById('users');
             var users = [new User("Adam Hall", "xxx1"), new User("Billie Davey", "xxx2"), new User("Laura Rowe", "xxx3")];
@@ -227,6 +246,10 @@ var Comfort;
                         .style("fill", function () {
                         return "grey";
                     });
+                })
+                    .on("mouseup", function (e) {
+                    var name = this.getAttribute("data-name");
+                    stage.selectUser(name);
                 });
                 d3.select(this).append("text")
                     .attr("class", "username")
@@ -244,10 +267,6 @@ var Comfort;
                 });
             });
         };
-        UserChoiceForm.prototype.setupUserEvents = function () {
-            //Event.add(['mousedown'], this.stage, this.chooseUser);
-            //Event.add(['mousemove'], this.stage, this.checkOverUsers);
-        };
         return UserChoiceForm;
     }());
     Comfort.UserChoiceForm = UserChoiceForm;
@@ -256,27 +275,9 @@ var Comfort;
             this.comfortEntryGraph = new ComfortEntryGraph();
             this.userChoiceForm = new UserChoiceForm();
         }
-        Stage.prototype.highlightUser = function (username) {
-            /*let d3zones = d3.select("svg")
-                .selectAll(".area")
-                .transition()
-                    .delay(function() {
-                        if(this.getAttribute("id") === area) {
-                            return 0;
-                        }
-                        return 100;
-                    })
-                    .ease("cubic")
-                    .duration(function() {
-                        return 250;
-                    })
-                    
-                    .style("fill", function() {
-                        if(this.getAttribute("id") === area) {
-                             return "#00D7FE";
-                        }
-                        return "grey";
-                    });*/
+        Stage.prototype.selectUser = function (name) {
+            this.userChoiceForm.hide();
+            this.comfortEntryGraph.startInteraction();
         };
         Stage.stage = document.getElementById('stage');
         return Stage;

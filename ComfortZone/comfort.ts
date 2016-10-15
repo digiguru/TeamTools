@@ -76,6 +76,7 @@ namespace Comfort {
         comfort;
         public static centerPoint:Point;
         dropper;
+
         startDrag = Event.fixScope(function (e) {
             let clickPoint = new Point(e.offsetX, e.offsetY);
             return true;
@@ -87,7 +88,15 @@ namespace Comfort {
             this.dropper.setAttribute("cy", e.offsetY);
             return true;
         }, this);
-
+        
+        dropEvent = Event.fixScope(function (e) {
+            let clickPoint = new Point(e.offsetX, e.offsetY);
+            this.dropper.setAttribute("cx", e.offsetX);
+            this.dropper.setAttribute("cy", e.offsetY);
+            this.dropper.setAttribute("class", "dropped");
+            return true;
+        }, this);
+        
         public static highlight ( area ) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
@@ -115,6 +124,10 @@ namespace Comfort {
                     });
             
         }
+        public startInteraction () {
+            this.setupAreaEvents();
+        }
+
         setupArea () {
             this.clickArea = document.getElementById('clickable');
             
@@ -183,20 +196,10 @@ namespace Comfort {
             ComfortEntryGraph.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
         }
 
-        dropEvent = Event.fixScope(function (e) {
-            let clickPoint = new Point(e.offsetX, e.offsetY);
-            this.dropper.setAttribute("cx", e.offsetX);
-            this.dropper.setAttribute("cy", e.offsetY);
-            this.dropper.setAttribute("class", "dropped");
-            return true;
-        }, this);
+      
 
         constructor() {
-            
             this.setupArea();
-            this.setupAreaEvents(); 
-            
-
         }
 
     }
@@ -205,9 +208,25 @@ namespace Comfort {
         
         constructor() {
             this.setupUsers();
-            this.setupUserEvents();
         }
+        hide () {
+            d3.select(this.userZone)
+                .transition()
+                .duration(function() {
+                        return 800;
+                })
+                .style("fill-opacity",0)
+                .attr("transform", "matrix(2,0,0,2,-400,-90)");
 
+            /*  d3.select(this.userZone)
+                .transition()
+               .selectAll("text")
+                .transition()
+                .duration(function() {
+                        return 800;
+                })
+                .style("font-size", 120);*/
+        }
         setupUsers () {
             this.userZone = document.getElementById('users');
             
@@ -260,6 +279,10 @@ namespace Comfort {
                                         return "grey";
                                         
                                 });
+                        })
+                        .on("mouseup", function(e) {
+                            let name = this.getAttribute("data-name");
+                            stage.selectUser(name);
                         });
                     d3.select(this).append("text")      
                         .attr("class", "username")
@@ -278,12 +301,6 @@ namespace Comfort {
                 });
                  
         }
-        setupUserEvents () {
-            
-            //Event.add(['mousedown'], this.stage, this.chooseUser);
-            //Event.add(['mousemove'], this.stage, this.checkOverUsers);
-            
-        }
 
         
     }
@@ -299,35 +316,10 @@ namespace Comfort {
             this.userChoiceForm = new UserChoiceForm();
         }
         
-        
-        highlightUser (username) {
-
-           
-            /*let d3zones = d3.select("svg")
-                .selectAll(".area")
-                .transition()
-                    .delay(function() {
-                        if(this.getAttribute("id") === area) {
-                            return 0;
-                        }
-                        return 100;
-                    })
-                    .ease("cubic")
-                    .duration(function() {
-                        return 250;
-                    })
-                    
-                    .style("fill", function() {
-                        if(this.getAttribute("id") === area) {
-                             return "#00D7FE";
-                        }
-                        return "grey";
-                    });*/
+        selectUser(name) {
+            this.userChoiceForm.hide();
+            this.comfortEntryGraph.startInteraction();
         }
-
-        
-        
-
         
 
     }
