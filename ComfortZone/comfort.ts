@@ -18,16 +18,21 @@ namespace Comfort {
             clickEvent.initEvent(eventType, true, true);
             node.dispatchEvent(clickEvent);
         }
+        
+        static stopDrag(element, eventStart, eventDrag, eventDrop, scope) {
+
+        }
+
         static drag(element, eventStart, eventDrag, eventDrop, scope) {
             scope.mode = "none";
 
-            scope.startDrag = Event.fixScope(function (e) {
-                element.addEventListener('mousemove', eventDrag);
-            }, scope);
+            //scope.startDrag = Event.fixScope(function (e) {
+            element.addEventListener('mousemove', eventDrag);
+            //}, scope);
 
-            scope.stopDrag = Event.fixScope(function (e) {
-                element.removeEventListener('mousemove', eventDrag);
-            }, scope);
+            //scope.stopDrag = Event.fixScope(function (e) {
+            element.removeEventListener('mousemove', eventDrag);
+            //}, scope);
 
             /*
             Event.add(['mousedown'], element, eventStart);
@@ -184,8 +189,12 @@ namespace Comfort {
         public static removeClickActivity () {
             console.log("Remove future interaction");
             d3.select("#stage").on("mouseup", function(a,b,c) {
-                console.log("No longer interactive stage");
+                console.log("UNCLICK - Graphup - No longer interactive stage");
             });
+            d3.select("#stage").on("mousedown", function(a,b,c) {
+                console.log("UNCLICK - Graphdown - No longer interactive stage");
+            });
+            
         }
         public static saveTheInteraction (area, distance) {
             console.log("saveTheInteraction");
@@ -193,27 +202,17 @@ namespace Comfort {
             stage.nextUser();
         }
         public hide() {
-             /* let d3zones = d3.select("g#zones")
-                .selectAll("circle")
-                    .attr("r", function(d:ComfortZones) { 
-                        return d.radius; 
-                    }) 
+            console.log("HIDE comfortGRAPH");
+            
+            let d3zones = d3.select("g#zones")    
                 .transition()
                     .duration(1000)
-                    .delay(function(d, i) { return i * 100; })
-                    .ease("elastic")
-                    .attr("r", 0) 
-                    .each("end", function() {
-                        console.log("finished hide");
-                        
-                    });*/
-            let d3zones = d3.select("g#zones")    
-                .selectAll("circle")
-                .attr("r", 0);
-            console.log("finished hide?");  
+                    .selectAll("circle")
+                    .attr("r", 0);
+                    
         }
         public show() {
-            console.log("show graph now!");
+            console.log("SHOW graph");
             let d3zones = d3.select("g#zones")
                 .selectAll("circle")
                     .attr("r", 0)
@@ -225,22 +224,20 @@ namespace Comfort {
                         return d.radius; 
                     }) 
                     .each("end", function() {
-                        console.log("showed graph");
-                        //stage.comfortEntryGraph.setupClickActivity();
-                
+                        console.log("SHOWEND graph (this would work but unreliable)");
+                       //stage.comfortEntryGraph.setupClickActivity();
                         
                     });
             setTimeout(function() {
-                stage.comfortEntryGraph.setupClickActivity();
-                console.log("After timeout graph");
+                stage.comfortEntryGraph.setupClickActivity();    
             }, 1000);
             
         }
             
         setupClickActivity () {
-            console.log("setup graph click");
+            console.log("SETUP graph click");
             d3.select("#stage").on("mouseup", function(a,b,c) {
-                console.log("click graph");
+                console.log("CLICK graph - up");
                 let coord = Point.fromCoords(d3.mouse(this));
                 let distance = Point.distance(ComfortEntryGraph.centerPoint, coord);
                 let area = ComfortEntryGraph.calculateDistance(distance);
@@ -249,6 +246,7 @@ namespace Comfort {
             });
 
             d3.select("#stage").on("mousedown", function(a,b,c) {
+                console.log("CLICK graph - down");
                 let coord = Point.fromCoords(d3.mouse(this));
                 let el = SVG.circle(8, coord.x, coord.y, "dropper");
                 stage.comfortEntryGraph.addDropper(el);
@@ -260,7 +258,8 @@ namespace Comfort {
             
             //Event.add(['mousedown'], this.stage, this.addCircle);
             //Event.add(['mousemove'], this.stage, this.checkArea);
-            MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
+            
+            //MouseEvent.drag(this.clickArea, this.startDrag, this.dragEvent, this.dropEvent, this);
 
             //Setup center
         }
@@ -281,6 +280,7 @@ namespace Comfort {
             this.show();
         }
         show () {
+            console.log("SHOW UserChocieForm");
             d3.select(this.userZone)
                 .transition()
                 .duration(function() {
@@ -289,9 +289,11 @@ namespace Comfort {
                 .style("fill-opacity",1)
                 .attr("transform", "matrix(1,0,0,1,0,0)")
                 .each("end", function() {
-                     d3.select("g#users")
+                    console.log("ENDSHOW UserChocieForm");
+                    d3.select("g#users")
                         .selectAll("rect")
                         .on("mouseup", function(e) {
+                            console.log("CLICK - User - up  UserChocieForm");
                             let name = this.getAttribute("data-name");
                             stage.selectUser(name);
                             console.log("This was clicked", this);
@@ -299,6 +301,7 @@ namespace Comfort {
                 });
         }
         hide () {
+            console.log("HIDE userEntry");
             d3.select(this.userZone)
                 .transition()
                 .duration(function() {
@@ -309,7 +312,7 @@ namespace Comfort {
             d3.select("g#users")
                 .selectAll("rect")
                 .on("mouseup", function(e) {
-                    console.log("This was clicked, but ignored", this);
+                    console.log("NOCLICK User - This was clicked, but ignored", this);
                 });
             /*  d3.select(this.userZone)
                 .transition()
@@ -404,19 +407,20 @@ namespace Comfort {
         comfortEntryGraph;
         userChoiceForm;
 
-
         constructor() {
+            console.log("START everything");
             this.comfortEntryGraph = new ComfortEntryGraph();
             this.userChoiceForm = new UserChoiceForm();
         }
         
         selectUser(name) {
+            console.log("ACTION selectUser", name);
             this.userChoiceForm.hide();
             this.comfortEntryGraph.show();
         }
 
         public nextUser() {
-            console.log("nextUser", this);
+            console.log("ACTION nextUser", this);
             this.comfortEntryGraph.hide();
             this.userChoiceForm.show();
         }
