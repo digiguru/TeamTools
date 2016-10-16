@@ -210,15 +210,27 @@ namespace Comfort {
         
         constructor() {
             this.setupUsers();
+            this.show();
         }
         show () {
+            console.log("show users");
             d3.select(this.userZone)
                 .transition()
                 .duration(function() {
                         return 800;
                 })
                 .style("fill-opacity",1)
-                .attr("transform", "matrix(1,0,0,1,0,0)");
+                .attr("transform", "matrix(1,0,0,1,0,0)")
+                .each("end", function() {
+                    console.log("reassign user events");
+                     d3.select("g#users")
+                        .selectAll("rect")
+                        .on("mouseup", function(e) {
+                            let name = this.getAttribute("data-name");
+                            stage.selectUser(name);
+                            console.log("This was clicked", this);
+                        });
+                });
         }
         hide () {
             d3.select(this.userZone)
@@ -228,7 +240,11 @@ namespace Comfort {
                 })
                 .style("fill-opacity",0)
                 .attr("transform", "matrix(2,0,0,2,-400,-90)");
-
+            d3.select("g#users")
+                .selectAll("rect")
+                .on("mouseup", function(e) {
+                    console.log("This was clicked, but ignored", this);
+                });
             /*  d3.select(this.userZone)
                 .transition()
                .selectAll("text")
@@ -251,6 +267,7 @@ namespace Comfort {
                 .attr("id", function(e) {
                     return e.id;
                 })
+                .attr("class", "user-group")
                 .each(function(e, i) {
                     //Event.add(['mousedown'], this.stage, this.chooseUser);
                     //Event.add(["mouseover"], this, thisStage.checkOverUsers);
@@ -291,10 +308,10 @@ namespace Comfort {
                                         
                                 });
                         })
-                        .on("mouseup", function(e) {
+                        /*.on("mouseup", function(e) {
                             let name = this.getAttribute("data-name");
                             stage.selectUser(name);
-                        });
+                        });*/
                     d3.select(this).append("text")      
                         .attr("class", "username")
                         .attr("y", function(e) {

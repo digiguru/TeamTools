@@ -183,15 +183,27 @@ var Comfort;
     var UserChoiceForm = (function () {
         function UserChoiceForm() {
             this.setupUsers();
+            this.show();
         }
         UserChoiceForm.prototype.show = function () {
+            console.log("show users");
             d3.select(this.userZone)
                 .transition()
                 .duration(function () {
                 return 800;
             })
                 .style("fill-opacity", 1)
-                .attr("transform", "matrix(1,0,0,1,0,0)");
+                .attr("transform", "matrix(1,0,0,1,0,0)")
+                .each("end", function () {
+                console.log("reassign user events");
+                d3.select("g#users")
+                    .selectAll("rect")
+                    .on("mouseup", function (e) {
+                    var name = this.getAttribute("data-name");
+                    stage.selectUser(name);
+                    console.log("This was clicked", this);
+                });
+            });
         };
         UserChoiceForm.prototype.hide = function () {
             d3.select(this.userZone)
@@ -201,6 +213,11 @@ var Comfort;
             })
                 .style("fill-opacity", 0)
                 .attr("transform", "matrix(2,0,0,2,-400,-90)");
+            d3.select("g#users")
+                .selectAll("rect")
+                .on("mouseup", function (e) {
+                console.log("This was clicked, but ignored", this);
+            });
             /*  d3.select(this.userZone)
                 .transition()
                .selectAll("text")
@@ -222,6 +239,7 @@ var Comfort;
                 .attr("id", function (e) {
                 return e.id;
             })
+                .attr("class", "user-group")
                 .each(function (e, i) {
                 //Event.add(['mousedown'], this.stage, this.chooseUser);
                 //Event.add(["mouseover"], this, thisStage.checkOverUsers);
@@ -257,11 +275,11 @@ var Comfort;
                         .style("fill", function () {
                         return "grey";
                     });
-                })
-                    .on("mouseup", function (e) {
-                    var name = this.getAttribute("data-name");
-                    stage.selectUser(name);
                 });
+                /*.on("mouseup", function(e) {
+                    let name = this.getAttribute("data-name");
+                    stage.selectUser(name);
+                });*/
                 d3.select(this).append("text")
                     .attr("class", "username")
                     .attr("y", function (e) {
