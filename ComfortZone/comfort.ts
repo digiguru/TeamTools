@@ -1,81 +1,7 @@
 /// <reference path="../typings/d3/d3.d.ts" />
 
 namespace Comfort {
-    class Event {
-        static fixScope(event, scope) {
-            return event.bind(scope);
-        }
-        static add(eventNames, element, event) {
-            eventNames.forEach(function (eventName) {
-                element.addEventListener(eventName, event);
-            });
-        }
 
-    }
-    class MouseEvent {
-        static trigger(node, eventType) {
-            var clickEvent = document.createEvent('MouseEvents');
-            clickEvent.initEvent(eventType, true, true);
-            node.dispatchEvent(clickEvent);
-        }
-        
-        static stopDrag(element, eventStart, eventDrag, eventDrop, scope) {
-
-        }
-
-        static drag(element, eventStart, eventDrag, eventDrop, scope) {
-            scope.mode = "none";
-
-            //scope.startDrag = Event.fixScope(function (e) {
-            element.addEventListener('mousemove', eventDrag);
-            //}, scope);
-
-            //scope.stopDrag = Event.fixScope(function (e) {
-            element.removeEventListener('mousemove', eventDrag);
-            //}, scope);
-
-            /*
-            Event.add(['mousedown'], element, eventStart);
-            Event.add(['mousedown'], element, scope.startDrag);
-            Event.add(['mouseup'], element, scope.stopDrag);
-            Event.add(['mouseup'], element, eventDrop);
-            */
-        }
-    }
-    class Point {
-        x : number;
-        y : number;
-
-        constructor(x : number, y : number) {
-            this.x = x;
-            this.y = y;
-        }
-        static fromCoords(coords:Array<number>) {
-            return new Point(coords[0],coords[1]);
-        }
-        static distance(a:Point , b:Point) {
-            const dx = a.x - b.x;
-            const dy = a.y - b.y;
-
-            return Math.sqrt(dx * dx + dy * dy);
-        }
-    }
-    class SVG {
-        static element(tagName) {
-            return document.createElementNS("http://www.w3.org/2000/svg", tagName);
-        }
-
-        static circle(r, x, y, className) {
-            let el = SVG.element("circle");
-            el.setAttribute("r", r);
-            el.setAttribute("cx", x);
-            el.setAttribute("cy", y);
-            el.setAttribute("class", className);
-            return el;
-            //<circle id="stretch" r="300" cx="400" cy="400" />
-
-        }
-    }
     export class ComfortEntryGraph {
         clickArea;
         chaos;
@@ -331,7 +257,7 @@ namespace Comfort {
             let d3users = d3.select("g#users")
                 .selectAll("circle")
                 .data(users);
-//text x="0" y="35" font-family="Verdana" font-size="35"
+
             d3users.enter().append("g")
                 .attr("id", function(e) {
                     return e.id;
@@ -435,7 +361,81 @@ namespace Comfort {
             this.id = id;
         }
     }
+    class Event {
+        static fixScope(event, scope) {
+            return event.bind(scope);
+        }
+        static add(eventNames, element, event) {
+            eventNames.forEach(function (eventName) {
+                element.addEventListener(eventName, event);
+            });
+        }
 
+    }
+    class MouseEvent {
+        static trigger(node, eventType) {
+            var clickEvent = document.createEvent('MouseEvents');
+            clickEvent.initEvent(eventType, true, true);
+            node.dispatchEvent(clickEvent);
+        }
+        
+        static stopDrag(element, eventStart, eventDrag, eventDrop, scope) {
+
+        }
+
+        static drag(element, eventStart, eventDrag, eventDrop, scope) {
+            scope.mode = "none";
+
+            //scope.startDrag = Event.fixScope(function (e) {
+            element.addEventListener('mousemove', eventDrag);
+            //}, scope);
+
+            //scope.stopDrag = Event.fixScope(function (e) {
+            element.removeEventListener('mousemove', eventDrag);
+            //}, scope);
+
+            /*
+            Event.add(['mousedown'], element, eventStart);
+            Event.add(['mousedown'], element, scope.startDrag);
+            Event.add(['mouseup'], element, scope.stopDrag);
+            Event.add(['mouseup'], element, eventDrop);
+            */
+        }
+    }
+    class Point {
+        x : number;
+        y : number;
+
+        constructor(x : number, y : number) {
+            this.x = x;
+            this.y = y;
+        }
+        static fromCoords(coords:Array<number>) {
+            return new Point(coords[0],coords[1]);
+        }
+        static distance(a:Point , b:Point) {
+            const dx = a.x - b.x;
+            const dy = a.y - b.y;
+
+            return Math.sqrt(dx * dx + dy * dy);
+        }
+    }
+    class SVG {
+        static element(tagName) {
+            return document.createElementNS("http://www.w3.org/2000/svg", tagName);
+        }
+
+        static circle(r, x, y, className) {
+            let el = SVG.element("circle");
+            el.setAttribute("r", r);
+            el.setAttribute("cx", x);
+            el.setAttribute("cy", y);
+            el.setAttribute("class", className);
+            return el;
+            //<circle id="stretch" r="300" cx="400" cy="400" />
+
+        }
+    }
     class ComfortZones {
         name : string;
         radius: number;
