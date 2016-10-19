@@ -3,7 +3,7 @@
     <script src="https://d3js.org/d3.v3.min.js"></script>
     <style>
     @import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
-    #users {
+    #stage {
         font-family: 'Share Tech Mono', sans-serif;
     }
     #users rect {
@@ -38,12 +38,16 @@
 
         <svg id="stage" width="800" height="800">
             <rect class="area"   id="chaos"   width="800" height="800"  />
-            <!--<circle id="stretch" r="300" cx="400" cy="400" />
-            <circle id="comfort" r="100" cx="400" cy="400" />-->
-            <g id="zones">
 
+           
+            <g id="zones">
+                <circle id="stretch" r="0" cx="400" cy="400" /><!--300-->
+                <circle id="comfort" r="0" cx="400" cy="400" /><!--100-->
             </g>
 
+             <text id="label-choas" text-anchor="middle" x="400" y="50">choas</text>
+            <text id="label-stretch" text-anchor="middle" x="400" y="200">stretch</text>
+            <text id="label-comfort" text-anchor="middle" x="400" y="400">stretch</text>
             
             <rect   id="clickable"   width="800" height="800" fill-opacity="0.0"  />
             <g id="users">

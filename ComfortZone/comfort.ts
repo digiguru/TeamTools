@@ -69,8 +69,7 @@ namespace Comfort {
             let zones = [new ComfortZones("stretch",300), new ComfortZones("comfort",100)];
             let d3zones = d3.select("g#zones")
                 .selectAll("circle")
-                .data(zones)
-                    ;
+                .data(zones);
 
             d3zones.enter().append("circle")
                 .attr("cx", 400)
@@ -330,8 +329,8 @@ namespace Comfort {
     export class Stage {
         static stage = document.getElementById('stage');
         
-        comfortEntryGraph;
-        userChoiceForm;
+        comfortEntryGraph : ComfortEntryGraph;
+        userChoiceForm : UserChoiceForm;
 
         constructor() {
             console.log("START everything");

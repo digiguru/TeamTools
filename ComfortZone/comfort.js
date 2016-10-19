@@ -1,78 +1,6 @@
 /// <reference path="../typings/d3/d3.d.ts" />
 var Comfort;
 (function (Comfort) {
-    var Event = (function () {
-        function Event() {
-        }
-        Event.fixScope = function (event, scope) {
-            return event.bind(scope);
-        };
-        Event.add = function (eventNames, element, event) {
-            eventNames.forEach(function (eventName) {
-                element.addEventListener(eventName, event);
-            });
-        };
-        return Event;
-    }());
-    var MouseEvent = (function () {
-        function MouseEvent() {
-        }
-        MouseEvent.trigger = function (node, eventType) {
-            var clickEvent = document.createEvent('MouseEvents');
-            clickEvent.initEvent(eventType, true, true);
-            node.dispatchEvent(clickEvent);
-        };
-        MouseEvent.stopDrag = function (element, eventStart, eventDrag, eventDrop, scope) {
-        };
-        MouseEvent.drag = function (element, eventStart, eventDrag, eventDrop, scope) {
-            scope.mode = "none";
-            //scope.startDrag = Event.fixScope(function (e) {
-            element.addEventListener('mousemove', eventDrag);
-            //}, scope);
-            //scope.stopDrag = Event.fixScope(function (e) {
-            element.removeEventListener('mousemove', eventDrag);
-            //}, scope);
-            /*
-            Event.add(['mousedown'], element, eventStart);
-            Event.add(['mousedown'], element, scope.startDrag);
-            Event.add(['mouseup'], element, scope.stopDrag);
-            Event.add(['mouseup'], element, eventDrop);
-            */
-        };
-        return MouseEvent;
-    }());
-    var Point = (function () {
-        function Point(x, y) {
-            this.x = x;
-            this.y = y;
-        }
-        Point.fromCoords = function (coords) {
-            return new Point(coords[0], coords[1]);
-        };
-        Point.distance = function (a, b) {
-            var dx = a.x - b.x;
-            var dy = a.y - b.y;
-            return Math.sqrt(dx * dx + dy * dy);
-        };
-        return Point;
-    }());
-    var SVG = (function () {
-        function SVG() {
-        }
-        SVG.element = function (tagName) {
-            return document.createElementNS("http://www.w3.org/2000/svg", tagName);
-        };
-        SVG.circle = function (r, x, y, className) {
-            var el = SVG.element("circle");
-            el.setAttribute("r", r);
-            el.setAttribute("cx", x);
-            el.setAttribute("cy", y);
-            el.setAttribute("class", className);
-            return el;
-            //<circle id="stretch" r="300" cx="400" cy="400" />
-        };
-        return SVG;
-    }());
     var ComfortEntryGraph = (function () {
         function ComfortEntryGraph() {
             this.startDrag = Event.fixScope(function (e) {
@@ -288,7 +216,6 @@ var Comfort;
             var d3users = d3.select("g#users")
                 .selectAll("circle")
                 .data(users);
-            //text x="0" y="35" font-family="Verdana" font-size="35"
             d3users.enter().append("g")
                 .attr("id", function (e) {
                 return e.id;
@@ -381,6 +308,78 @@ var Comfort;
         return User;
     }());
     Comfort.User = User;
+    var Event = (function () {
+        function Event() {
+        }
+        Event.fixScope = function (event, scope) {
+            return event.bind(scope);
+        };
+        Event.add = function (eventNames, element, event) {
+            eventNames.forEach(function (eventName) {
+                element.addEventListener(eventName, event);
+            });
+        };
+        return Event;
+    }());
+    var MouseEvent = (function () {
+        function MouseEvent() {
+        }
+        MouseEvent.trigger = function (node, eventType) {
+            var clickEvent = document.createEvent('MouseEvents');
+            clickEvent.initEvent(eventType, true, true);
+            node.dispatchEvent(clickEvent);
+        };
+        MouseEvent.stopDrag = function (element, eventStart, eventDrag, eventDrop, scope) {
+        };
+        MouseEvent.drag = function (element, eventStart, eventDrag, eventDrop, scope) {
+            scope.mode = "none";
+            //scope.startDrag = Event.fixScope(function (e) {
+            element.addEventListener('mousemove', eventDrag);
+            //}, scope);
+            //scope.stopDrag = Event.fixScope(function (e) {
+            element.removeEventListener('mousemove', eventDrag);
+            //}, scope);
+            /*
+            Event.add(['mousedown'], element, eventStart);
+            Event.add(['mousedown'], element, scope.startDrag);
+            Event.add(['mouseup'], element, scope.stopDrag);
+            Event.add(['mouseup'], element, eventDrop);
+            */
+        };
+        return MouseEvent;
+    }());
+    var Point = (function () {
+        function Point(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        Point.fromCoords = function (coords) {
+            return new Point(coords[0], coords[1]);
+        };
+        Point.distance = function (a, b) {
+            var dx = a.x - b.x;
+            var dy = a.y - b.y;
+            return Math.sqrt(dx * dx + dy * dy);
+        };
+        return Point;
+    }());
+    var SVG = (function () {
+        function SVG() {
+        }
+        SVG.element = function (tagName) {
+            return document.createElementNS("http://www.w3.org/2000/svg", tagName);
+        };
+        SVG.circle = function (r, x, y, className) {
+            var el = SVG.element("circle");
+            el.setAttribute("r", r);
+            el.setAttribute("cx", x);
+            el.setAttribute("cy", y);
+            el.setAttribute("class", className);
+            return el;
+            //<circle id="stretch" r="300" cx="400" cy="400" />
+        };
+        return SVG;
+    }());
     var ComfortZones = (function () {
         function ComfortZones(name, radius) {
             this.name = name;
