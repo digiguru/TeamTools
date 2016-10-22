@@ -81,6 +81,7 @@ namespace Comfort {
         chaos;
         stretch;
         comfort;
+        currentUser:User;
         public static centerPoint:Point;
         dropper;
 
@@ -122,7 +123,6 @@ namespace Comfort {
                     .duration(function() {
                         return 250;
                     })
-                    
                     .style("fill", function() {
                         if(this.getAttribute("id") === area) {
                              return "#00D7FE";
@@ -186,7 +186,7 @@ namespace Comfort {
                 ComfortEntryGraph.highlight(area);
             });//this.checkArea);
         }
-        public static removeClickActivity () {
+        public removeClickActivity () {
             console.log("Remove future interaction");
             d3.select("#stage").on("mouseup", function(a,b,c) {
                 console.log("UNCLICK - Graphup - No longer interactive stage");
@@ -196,10 +196,11 @@ namespace Comfort {
             });
             
         }
-        public static saveTheInteraction (area, distance) {
+        public saveTheInteraction (area:string, distance:number) {
             console.log("saveTheInteraction");
             this.removeClickActivity();
-            stage.nextUser();
+            stage.saveGraph(area,distance,this.currentUser);
+            //stage.nextUser();
         }
         public hide() {
             console.log("HIDE comfortGRAPH");
@@ -211,7 +212,8 @@ namespace Comfort {
                     .attr("r", 0);
                     
         }
-        public show() {
+        public show(user:User) {
+            this.currentUser = user;
             console.log("SHOW graph");
             let d3zones = d3.select("g#zones")
                 .selectAll("circle")
@@ -222,26 +224,25 @@ namespace Comfort {
                     .ease("elastic")
                     .attr("r", function(d:ComfortZones) { 
                         return d.radius; 
-                    }) 
-                    .each("end", function() {
-                        console.log("SHOWEND graph (this would work but unreliable)");
-                       //stage.comfortEntryGraph.setupClickActivity();
-                        
-                    });
+                    }); 
+
             setTimeout(function() {
                 stage.comfortEntryGraph.setupClickActivity();    
             }, 1000);
             
         }
+
             
         setupClickActivity () {
             console.log("SETUP graph click");
+            var that = this;
             d3.select("#stage").on("mouseup", function(a,b,c) {
                 console.log("CLICK graph - up");
                 let coord = Point.fromCoords(d3.mouse(this));
                 let distance = Point.distance(ComfortEntryGraph.centerPoint, coord);
                 let area = ComfortEntryGraph.calculateDistance(distance);
-                ComfortEntryGraph.saveTheInteraction(area, distance);
+                //stage.nextUser();
+                that.saveTheInteraction(area, distance);
 
             });
 
@@ -252,7 +253,7 @@ namespace Comfort {
                 stage.comfortEntryGraph.addDropper(el);
                 //allows it to be re-dragged
                 //this.stage.appendChild(el);
-                stage.nextUser();
+                
             });
             
             
@@ -274,10 +275,37 @@ namespace Comfort {
     }
     export class UserChoiceForm {
         userZone;
-        
+        users : Array<User>;
+        d3Users :d3.Selection<any>;
+
         constructor() {
+            this.users = [
+                new User("Adam Hall","xxx1"), 
+                new User("Billie Davey","xxx2"), 
+                new User("Laura Rowe","xxx3")
+            ];
+            this.userZone = document.getElementById('users');
+            this.d3Users = d3.select("g#users");
+            
             this.setupUsers();
             this.show();
+        }
+        getUser(id) : User {
+            let users =  this.users.filter(function(x) {
+                return x.id === id;
+            });
+            if(users.length) {
+                return users[0];
+            }
+            throw Error("Cannot find user " + id);
+        }
+        markUserDone (user:User) {
+            for(var i = 0; i<this.users.length; i++) {
+                if(user.id === this.users[i].id) {
+                    user.voted = true;
+                }
+            }
+            this.rebind();
         }
         show () {
             console.log("SHOW UserChocieForm");
@@ -294,8 +322,9 @@ namespace Comfort {
                         .selectAll("rect")
                         .on("mouseup", function(e) {
                             console.log("CLICK - User - up  UserChocieForm");
-                            let name = this.getAttribute("data-name");
-                            stage.selectUser(name);
+                            //let name = this.getAttribute("data-name");
+                            let id = this.getAttribute("data-id");
+                            stage.selectUser(id);
                             console.log("This was clicked", this);
                         });
                 });
@@ -323,16 +352,18 @@ namespace Comfort {
                 })
                 .style("font-size", 120);*/
         }
-        setupUsers () {
-            this.userZone = document.getElementById('users');
-            
-            let users = [new User("Adam Hall","xxx1"), new User("Billie Davey","xxx2"), new User("Laura Rowe","xxx3")];
-            let thisStage = this;
-            let d3users = d3.select("g#users")
+        rebind(): d3.selection.Update<User> {
+           return this.d3Users
                 .selectAll("circle")
-                .data(users);
+                .data(this.users);
+        
+        }
+        setupUsers () {
+            
+            let items = this.rebind();
+
 //text x="0" y="35" font-family="Verdana" font-size="35"
-            d3users.enter().append("g")
+            items.enter().append("g")
                 .attr("id", function(e) {
                     return e.id;
                 })
@@ -340,17 +371,17 @@ namespace Comfort {
                 .each(function(e, i) {
                     //Event.add(['mousedown'], this.stage, this.chooseUser);
                     //Event.add(["mouseover"], this, thisStage.checkOverUsers);
-                    d3.select(this)
-                        .append("rect")
+                    var d3Item = d3.select(this);
+
+                    d3Item.append("rect")
                         .attr("y", function(e) {
                             return 60 + (i * 90);
                         })
                         .attr("x", 0)
                         .attr("width", 800)
                         .attr("height", 90)
-                        .attr("data-name", function(e) {
-                            return e.name;
-                        })
+                        .attr("data-name", e.name)
+                        .attr("data-id", e.id)
                         .on("mouseover", function(e) {
                             d3.select(this.parentNode)
                             //let d3zones = d3.select("g#users")
@@ -381,15 +412,13 @@ namespace Comfort {
                             let name = this.getAttribute("data-name");
                             stage.selectUser(name);
                         });*/
-                    d3.select(this).append("text")      
+                    d3Item.append("text")      
                         .attr("class", "username")
                         .attr("y", function(e) {
                             return 30 + ((i + 1) * 90);
                         })
                         .attr("x", 60)
-                        .attr("data-name", function() {
-                            return e.name;
-                        })
+                        .attr("data-name", e.name)
                         .style("font-size", 60)
                         .style("font-family", "Share Tech Mono")
                         .text(function(j) {
@@ -404,22 +433,28 @@ namespace Comfort {
     export class Stage {
         static stage = document.getElementById('stage');
         
-        comfortEntryGraph;
-        userChoiceForm;
+        comfortEntryGraph :ComfortEntryGraph;
+        userChoiceForm : UserChoiceForm;
 
         constructor() {
             console.log("START everything");
             this.comfortEntryGraph = new ComfortEntryGraph();
             this.userChoiceForm = new UserChoiceForm();
         }
-        
-        selectUser(name) {
-            console.log("ACTION selectUser", name);
+       
+        selectUser(id) {
+            console.log("ACTION selectUser", id);
+            let user = this.userChoiceForm.getUser(id);
             this.userChoiceForm.hide();
-            this.comfortEntryGraph.show();
+            this.comfortEntryGraph.show(user);
         }
 
-        public nextUser() {
+        saveGraph(area:string, distance:number, user:User) {
+            this.userChoiceForm.markUserDone(user);
+            this.nextUser();
+        }
+            
+        private nextUser() {
             console.log("ACTION nextUser", this);
             this.comfortEntryGraph.hide();
             this.userChoiceForm.show();
@@ -430,9 +465,11 @@ namespace Comfort {
     export class User {
         name: string;
         id: string;
+        voted: boolean;
         constructor(name:string, id:string) {
             this.name = name;
             this.id = id;
+            this.voted = false;
         }
     }
 
