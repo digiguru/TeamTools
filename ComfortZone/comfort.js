@@ -92,7 +92,7 @@ var Comfort;
                 ComfortEntryGraph.highlight(area);
             }); //this.checkArea);
         };
-        ComfortEntryGraph.removeClickActivity = function () {
+        ComfortEntryGraph.prototype.removeClickActivity = function () {
             console.log("Remove future interaction");
             d3.select("#stage").on("mouseup", function (a, b, c) {
                 console.log("UNCLICK - Graphup - No longer interactive stage");
@@ -101,10 +101,11 @@ var Comfort;
                 console.log("UNCLICK - Graphdown - No longer interactive stage");
             });
         };
-        ComfortEntryGraph.saveTheInteraction = function (area, distance) {
+        ComfortEntryGraph.prototype.saveTheInteraction = function (area, distance) {
             console.log("saveTheInteraction");
             this.removeClickActivity();
-            stage.nextUser();
+            stage.saveGraph(area, distance, this.currentUser);
+            //stage.nextUser();
         };
         ComfortEntryGraph.prototype.hide = function () {
             console.log("HIDE comfortGRAPH");
@@ -114,7 +115,8 @@ var Comfort;
                 .selectAll("circle")
                 .attr("r", 0);
         };
-        ComfortEntryGraph.prototype.show = function () {
+        ComfortEntryGraph.prototype.show = function (user) {
+            this.currentUser = user;
             console.log("SHOW graph");
             var d3zones = d3.select("g#zones")
                 .selectAll("circle")
@@ -125,10 +127,6 @@ var Comfort;
                 .ease("elastic")
                 .attr("r", function (d) {
                 return d.radius;
-            })
-                .each("end", function () {
-                console.log("SHOWEND graph (this would work but unreliable)");
-                //stage.comfortEntryGraph.setupClickActivity();
             });
             setTimeout(function () {
                 stage.comfortEntryGraph.setupClickActivity();
@@ -136,12 +134,14 @@ var Comfort;
         };
         ComfortEntryGraph.prototype.setupClickActivity = function () {
             console.log("SETUP graph click");
+            var that = this;
             d3.select("#stage").on("mouseup", function (a, b, c) {
                 console.log("CLICK graph - up");
                 var coord = Point.fromCoords(d3.mouse(this));
                 var distance = Point.distance(ComfortEntryGraph.centerPoint, coord);
                 var area = ComfortEntryGraph.calculateDistance(distance);
-                ComfortEntryGraph.saveTheInteraction(area, distance);
+                //stage.nextUser();
+                that.saveTheInteraction(area, distance);
             });
             d3.select("#stage").on("mousedown", function (a, b, c) {
                 console.log("CLICK graph - down");
@@ -150,7 +150,6 @@ var Comfort;
                 stage.comfortEntryGraph.addDropper(el);
                 //allows it to be re-dragged
                 //this.stage.appendChild(el);
-                stage.nextUser();
             });
             //Event.add(['mousedown'], this.stage, this.addCircle);
             //Event.add(['mousemove'], this.stage, this.checkArea);
@@ -162,9 +161,33 @@ var Comfort;
     Comfort.ComfortEntryGraph = ComfortEntryGraph;
     var UserChoiceForm = (function () {
         function UserChoiceForm() {
+            this.users = [
+                new User("Adam Hall", "xxx1"),
+                new User("Billie Davey", "xxx2"),
+                new User("Laura Rowe", "xxx3")
+            ];
+            this.userZone = document.getElementById('users');
+            this.d3Users = d3.select("g#users");
             this.setupUsers();
             this.show();
         }
+        UserChoiceForm.prototype.getUser = function (id) {
+            var users = this.users.filter(function (x) {
+                return x.id === id;
+            });
+            if (users.length) {
+                return users[0];
+            }
+            throw Error("Cannot find user " + id);
+        };
+        UserChoiceForm.prototype.markUserDone = function (user) {
+            for (var i = 0; i < this.users.length; i++) {
+                if (user.id === this.users[i].id) {
+                    user.voted = true;
+                }
+            }
+            this.rebind();
+        };
         UserChoiceForm.prototype.show = function () {
             console.log("SHOW UserChocieForm");
             d3.select(this.userZone)
@@ -180,8 +203,9 @@ var Comfort;
                     .selectAll("rect")
                     .on("mouseup", function (e) {
                     console.log("CLICK - User - up  UserChocieForm");
-                    var name = this.getAttribute("data-name");
-                    stage.selectUser(name);
+                    //let name = this.getAttribute("data-name");
+                    var id = this.getAttribute("data-id");
+                    stage.selectUser(id);
                     console.log("This was clicked", this);
                 });
             });
@@ -209,14 +233,20 @@ var Comfort;
                 })
                 .style("font-size", 120);*/
         };
-        UserChoiceForm.prototype.setupUsers = function () {
-            this.userZone = document.getElementById('users');
-            var users = [new User("Adam Hall", "xxx1"), new User("Billie Davey", "xxx2"), new User("Laura Rowe", "xxx3")];
-            var thisStage = this;
-            var d3users = d3.select("g#users")
+        UserChoiceForm.prototype.rebind = function () {
+            return this.d3Users
                 .selectAll("circle")
+<<<<<<< HEAD
                 .data(users);
             d3users.enter().append("g")
+=======
+                .data(this.users);
+        };
+        UserChoiceForm.prototype.setupUsers = function () {
+            var items = this.rebind();
+            //text x="0" y="35" font-family="Verdana" font-size="35"
+            items.enter().append("g")
+>>>>>>> master
                 .attr("id", function (e) {
                 return e.id;
             })
@@ -224,17 +254,16 @@ var Comfort;
                 .each(function (e, i) {
                 //Event.add(['mousedown'], this.stage, this.chooseUser);
                 //Event.add(["mouseover"], this, thisStage.checkOverUsers);
-                d3.select(this)
-                    .append("rect")
+                var d3Item = d3.select(this);
+                d3Item.append("rect")
                     .attr("y", function (e) {
                     return 60 + (i * 90);
                 })
                     .attr("x", 0)
                     .attr("width", 800)
                     .attr("height", 90)
-                    .attr("data-name", function (e) {
-                    return e.name;
-                })
+                    .attr("data-name", e.name)
+                    .attr("data-id", e.id)
                     .on("mouseover", function (e) {
                     d3.select(this.parentNode)
                         .selectAll("text")
@@ -261,15 +290,13 @@ var Comfort;
                     let name = this.getAttribute("data-name");
                     stage.selectUser(name);
                 });*/
-                d3.select(this).append("text")
+                d3Item.append("text")
                     .attr("class", "username")
                     .attr("y", function (e) {
                     return 30 + ((i + 1) * 90);
                 })
                     .attr("x", 60)
-                    .attr("data-name", function () {
-                    return e.name;
-                })
+                    .attr("data-name", e.name)
                     .style("font-size", 60)
                     .style("font-family", "Share Tech Mono")
                     .text(function (j) {
@@ -286,10 +313,15 @@ var Comfort;
             this.comfortEntryGraph = new ComfortEntryGraph();
             this.userChoiceForm = new UserChoiceForm();
         }
-        Stage.prototype.selectUser = function (name) {
-            console.log("ACTION selectUser", name);
+        Stage.prototype.selectUser = function (id) {
+            console.log("ACTION selectUser", id);
+            var user = this.userChoiceForm.getUser(id);
             this.userChoiceForm.hide();
-            this.comfortEntryGraph.show();
+            this.comfortEntryGraph.show(user);
+        };
+        Stage.prototype.saveGraph = function (area, distance, user) {
+            this.userChoiceForm.markUserDone(user);
+            this.nextUser();
         };
         Stage.prototype.nextUser = function () {
             console.log("ACTION nextUser", this);
@@ -304,6 +336,7 @@ var Comfort;
         function User(name, id) {
             this.name = name;
             this.id = id;
+            this.voted = false;
         }
         return User;
     }());
