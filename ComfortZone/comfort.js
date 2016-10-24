@@ -40,7 +40,7 @@ var Comfort;
             this.chaos = document.getElementById('chaos');
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
-            ComfortEntryGraph.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
+            this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
         };
         ComfortEntryGraph.prototype.setupOverActivity = function () {
             var that = this;
@@ -61,9 +61,8 @@ var Comfort;
             return function (d, i) {
                 /* 'this' is the DOM element */
                 var coord = d3.mouse(this);
-                var distance = Point.distance(ComfortEntryGraph.centerPoint, Point.fromCoords(coord));
+                var distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
                 var area = ComfortEntryGraph.calculateDistance(distance);
-                console.log("Graphmove", coord, distance, area);
                 that.highlight(area);
             };
         };
@@ -73,7 +72,7 @@ var Comfort;
             return function (d, i) {
                 /* 'this' is the DOM element */
                 var coord = Point.fromCoords(d3.mouse(this));
-                var distance = Point.distance(ComfortEntryGraph.centerPoint, coord);
+                var distance = Point.distance(that.centerPoint, coord);
                 var area = ComfortEntryGraph.calculateDistance(distance);
                 that.saveTheInteraction(area, distance);
             };

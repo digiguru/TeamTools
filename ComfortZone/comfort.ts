@@ -8,7 +8,7 @@ namespace Comfort {
         stretch;
         comfort;
         currentUser:User;
-        public static centerPoint:Point;
+        centerPoint:Point;
         dropper;
         
         constructor() {
@@ -58,7 +58,7 @@ namespace Comfort {
             this.chaos = document.getElementById('chaos');
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
-            ComfortEntryGraph.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
+            this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
             
 
         }
@@ -83,24 +83,23 @@ namespace Comfort {
 
         private graphMove() {
             /* 'that' is the instance of graph */
-            let that = this;
+            let that : ComfortEntryGraph = this;
             return function(d, i) {
                 /* 'this' is the DOM element */
                 let coord = d3.mouse(this);
-                let distance = Point.distance(ComfortEntryGraph.centerPoint, Point.fromCoords(coord));
+                let distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
                 let area = ComfortEntryGraph.calculateDistance(distance);
-                console.log("Graphmove", coord, distance, area);
                 that.highlight(area);
             }
         }
 
         private graphUp() {
             /* 'that' is the instance of graph */
-            let that = this;
+            let that : ComfortEntryGraph = this;
             return function(d, i) {
                 /* 'this' is the DOM element */
                 let coord = Point.fromCoords(d3.mouse(this));
-                let distance = Point.distance(ComfortEntryGraph.centerPoint, coord);
+                let distance = Point.distance(that.centerPoint, coord);
                 let area = ComfortEntryGraph.calculateDistance(distance);          
                 that.saveTheInteraction(area, distance);
             }
