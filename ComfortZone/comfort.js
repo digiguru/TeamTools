@@ -71,7 +71,7 @@ var Comfort;
             this.chaos = document.getElementById('chaos');
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
-            this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
+            this.centerPoint = new Point(parseInt(this.comfort.getAttribute('cx'), 10), parseInt(this.comfort.getAttribute('cy'), 10));
         };
         ComfortEntryGraph.prototype.setupOverActivity = function () {
             var that = this;

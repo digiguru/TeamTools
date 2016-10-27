@@ -7,7 +7,7 @@
 
 namespace Comfort {
     export class Timed {
-        public static for(milliseconds:number) {
+        public static for(milliseconds:number) :Promise<number> {
             const p: Promise<Number> = new Promise((resolve)=>{
                 setTimeout(function() {
                     resolve(milliseconds);                    
@@ -33,13 +33,13 @@ namespace Comfort {
     }
    
     export class ComfortEntryGraph {
-        clickArea;
-        chaos;
-        stretch;
-        comfort;
+        clickArea : HTMLElement;
+        chaos : HTMLElement;
+        stretch : HTMLElement;
+        comfort : HTMLElement;
         currentUser:User;
         centerPoint:Point;
-        dropper;
+        dropper : SVGAElement;
         
         constructor() {
             this.setupArea();
@@ -88,7 +88,7 @@ namespace Comfort {
             this.chaos = document.getElementById('chaos');
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
-            this.centerPoint = new Point(this.comfort.getAttribute('cx'), this.comfort.getAttribute('cy'));
+            this.centerPoint = new Point(parseInt(this.comfort.getAttribute('cx'), 10), parseInt(this.comfort.getAttribute('cy'), 10);
             
 
         }
@@ -114,7 +114,7 @@ namespace Comfort {
         private graphMove() {
             /* 'that' is the instance of graph */
             let that : ComfortEntryGraph = this;
-            return function(d, i) {
+            return function(d:void, i:number) {
                 /* 'this' is the DOM element */
                 let coord = d3.mouse(this);
                 let distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
@@ -126,7 +126,7 @@ namespace Comfort {
         private graphUp() {
             /* 'that' is the instance of graph */
             let that : ComfortEntryGraph = this;
-            return function(d, i) {
+            return function(d:void, i :number) {
                 /* 'this' is the DOM element */
                 let coord = Point.fromCoords(d3.mouse(this));
                 let distance = Point.distance(that.centerPoint, coord);
@@ -138,7 +138,7 @@ namespace Comfort {
          private graphDown() {
             /* 'that' is the instance of graph */
             let that = this;
-            return function(d, i) {
+            return function(d:void, i:number) {
                 /* 'this' is the DOM element */
                 let coord = Point.fromCoords(d3.mouse(this));
                 let el = SVG.circle(8, coord.x, coord.y, "dropper");
@@ -146,7 +146,7 @@ namespace Comfort {
             }
         }
 
-        public highlight ( area ) {
+        public highlight ( area : string) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
 
@@ -174,7 +174,7 @@ namespace Comfort {
         }
         
        
-        public addDropper (el) {
+        public addDropper (el : SVGAElement)  {
             this.dropper = el;
             document.getElementById('stage').insertBefore(el, this.clickArea);
         }
@@ -273,7 +273,7 @@ return null;
         }
     }
     export class UserChoiceForm {
-        userZone;
+        userZone : HTMLElement;
         users : Array<User>;
         d3Users :d3.Selection<any>;
 
@@ -363,7 +363,7 @@ return null;
         private clickUser () {
             /* 'that' is the instance of graph */
             let that = this;
-            return function(d, i) {
+            return function(d:User, i:number) {
                 /* 'this' is the DOM element */
                 console.log("CLICK - User - up  UserChocieForm");
                 //let name = this.getAttribute("data-name");
@@ -375,7 +375,7 @@ return null;
         private overUser () {
             /* 'that' is the instance of graph */
             let that = this;
-            return function(d, i) {
+            return function(d:User, i:number) {
                 /* 'this' is the DOM element */
                 d3.select(this.parentNode)
                 //let d3zones = d3.select("g#users")
@@ -390,7 +390,7 @@ return null;
         private leaveUser() {
              /* 'that' is the instance of graph */
             let that = this;
-            return function(d, i) {
+            return function(d:User, i:number) {
                 /* 'this' is the DOM element */
                 d3.select(this.parentNode)
                 //let d3zones = d3.select("g#users")
