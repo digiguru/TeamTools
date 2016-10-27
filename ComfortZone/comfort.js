@@ -1,6 +1,37 @@
 /// <reference path="../typings/d3/d3.d.ts" />
+/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
+//import {Promise} from 'es6-promise';
 var Comfort;
 (function (Comfort) {
+    var Timed = (function () {
+        function Timed() {
+        }
+        Timed.for = function (milliseconds) {
+            var p = new Promise(function (resolve) {
+                setTimeout(function () {
+                    resolve(milliseconds);
+                }, milliseconds);
+            });
+            return p;
+        };
+        return Timed;
+    }());
+    Comfort.Timed = Timed;
+    var ComfortUserChoiceHistory = (function () {
+        function ComfortUserChoiceHistory() {
+        }
+        return ComfortUserChoiceHistory;
+    }());
+    Comfort.ComfortUserChoiceHistory = ComfortUserChoiceHistory;
+    var ComfortUserChoice = (function () {
+        function ComfortUserChoice(user, distance, area) {
+            this.user = user;
+            this.distance = distance;
+            this.area = area;
+        }
+        return ComfortUserChoice;
+    }());
+    Comfort.ComfortUserChoice = ComfortUserChoice;
     var ComfortEntryGraph = (function () {
         function ComfortEntryGraph() {
             this.startDrag = Event.fixScope(function (e) {
@@ -145,10 +176,17 @@ var Comfort;
         ComfortEntryGraph.prototype.hide = function () {
             console.log("HIDE comfortGRAPH");
             var d3zones = d3.select("g#zones")
+                .selectAll("circle")
                 .transition()
                 .duration(1000)
-                .selectAll("circle")
                 .attr("r", 0);
+            var d3drops = d3.select("#stage")
+                .selectAll("circle.dropper")
+                .transition()
+                .delay(250)
+                .duration(250)
+                .attr("r", 0);
+            return Timed.for(1000);
         };
         ComfortEntryGraph.prototype.show = function (user) {
             this.currentUser = user;
@@ -163,11 +201,31 @@ var Comfort;
                 .attr("r", function (d) {
                 return d.radius;
             });
-            setTimeout(this.setupClickActivity.bind(this), 1000);
+            return Timed.for(1000).then(this.setupClickActivity.bind(this));
         };
         return ComfortEntryGraph;
     }());
     Comfort.ComfortEntryGraph = ComfortEntryGraph;
+    var Polar = (function () {
+        function Polar(radius, angle) {
+            this.radius = radius;
+            this.angle = angle;
+        }
+        return Polar;
+    }());
+    Comfort.Polar = Polar;
+    var GraphComfortHistory = (function () {
+        function GraphComfortHistory() {
+        }
+        GraphComfortHistory.prototype.show = function () {
+            return null;
+        };
+        GraphComfortHistory.prototype.hide = function () {
+            return null;
+        };
+        return GraphComfortHistory;
+    }());
+    Comfort.GraphComfortHistory = GraphComfortHistory;
     var UserChoiceForm = (function () {
         function UserChoiceForm() {
             this.users = [
@@ -197,6 +255,18 @@ var Comfort;
             }
             this.rebind();
         };
+        UserChoiceForm.prototype.afterShow = function () {
+            console.log("ENDSHOW UserChocieForm");
+            d3.select("g#users")
+                .selectAll("rect")
+                .on("mouseup", this.clickUser());
+        };
+        UserChoiceForm.prototype.hasMoreUsers = function () {
+            var unvotedUsers = this.users.filter(function (x) {
+                return !x.voted;
+            });
+            return unvotedUsers.length;
+        };
         UserChoiceForm.prototype.show = function () {
             console.log("SHOW UserChocieForm");
             d3.select(this.userZone)
@@ -205,19 +275,8 @@ var Comfort;
                 return 800;
             })
                 .style("fill-opacity", 1)
-                .attr("transform", "matrix(1,0,0,1,0,0)")
-                .each("end", function () {
-                console.log("ENDSHOW UserChocieForm");
-                d3.select("g#users")
-                    .selectAll("rect")
-                    .on("mouseup", function (e) {
-                    console.log("CLICK - User - up  UserChocieForm");
-                    //let name = this.getAttribute("data-name");
-                    var id = this.getAttribute("data-id");
-                    stage.selectUser(id);
-                    console.log("This was clicked", this);
-                });
-            });
+                .attr("transform", "matrix(1,0,0,1,0,0)");
+            return Timed.for(800).then(this.afterShow.bind(this));
         };
         UserChoiceForm.prototype.hide = function () {
             console.log("HIDE userEntry");
@@ -233,6 +292,7 @@ var Comfort;
                 .on("mouseup", function (e) {
                 console.log("NOCLICK User - This was clicked, but ignored", this);
             });
+            return Timed.for(800);
             /*  d3.select(this.userZone)
                 .transition()
                .selectAll("text")
@@ -246,6 +306,18 @@ var Comfort;
             return this.d3Users
                 .selectAll("circle")
                 .data(this.users);
+        };
+        UserChoiceForm.prototype.clickUser = function () {
+            /* 'that' is the instance of graph */
+            var that = this;
+            return function (d, i) {
+                /* 'this' is the DOM element */
+                console.log("CLICK - User - up  UserChocieForm");
+                //let name = this.getAttribute("data-name");
+                var id = this.getAttribute("data-id");
+                stage.selectUser(id);
+                console.log("This was clicked", that);
+            };
         };
         UserChoiceForm.prototype.overUser = function () {
             /* 'that' is the instance of graph */
@@ -327,8 +399,10 @@ var Comfort;
     var Stage = (function () {
         function Stage() {
             console.log("START everything");
+            this.userChoiceHistory = new Array();
             this.comfortEntryGraph = new ComfortEntryGraph();
             this.userChoiceForm = new UserChoiceForm();
+            this.graphComfortHistory = new GraphComfortHistory();
         }
         Stage.prototype.selectUser = function (id) {
             console.log("ACTION selectUser", id);
@@ -338,12 +412,27 @@ var Comfort;
         };
         Stage.prototype.saveGraph = function (area, distance, user) {
             this.userChoiceForm.markUserDone(user);
-            this.nextUser();
+            this.addUserChoiceHistory(area, distance, user);
+            this.next();
         };
-        Stage.prototype.nextUser = function () {
+        Stage.prototype.addUserChoiceHistory = function (area, distance, user) {
+            var userChoice = new ComfortUserChoice(user, distance, area);
+            this.userChoiceHistory.push(userChoice);
+        };
+        Stage.prototype.next = function () {
+            //const prom = new Promsie()
             console.log("ACTION nextUser", this);
-            this.comfortEntryGraph.hide();
-            this.userChoiceForm.show();
+            this.comfortEntryGraph.hide().then(function () {
+                if (this.userChoiceForm.hasMoreUsers()) {
+                    console.log("Users left...", this);
+                    this.userChoiceForm.show();
+                }
+                else {
+                    console.log("NO users left", this);
+                    this.userChoiceForm.show();
+                    this.graphComfortHistory.show();
+                }
+            }.bind(this));
         };
         Stage.stage = document.getElementById('stage');
         return Stage;
@@ -406,10 +495,37 @@ var Comfort;
         Point.fromCoords = function (coords) {
             return new Point(coords[0], coords[1]);
         };
-        Point.distance = function (a, b) {
-            var dx = a.x - b.x;
-            var dy = a.y - b.y;
-            return Math.sqrt(dx * dx + dy * dy);
+        Point.fromOffset = function (point, origin) {
+            var dx = point.x - origin.x;
+            var dy = point.y - origin.y;
+            return new Point(dx, dy);
+        };
+        Point.toOffset = function (point, origin) {
+            var dx = point.x + origin.x;
+            var dy = point.y + origin.y;
+            return new Point(dx, dy);
+        };
+        Point.distance = function (point, origin) {
+            var offset = Point.fromOffset(point, origin);
+            return Point.distanceFromOffset(offset);
+        };
+        Point.distanceFromOffset = function (offset) {
+            return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
+        };
+        Point.toCartesianNoOffset = function (polar) {
+            var x = polar.radius * Math.cos(polar.angle);
+            var y = polar.radius * Math.sin(polar.angle);
+            return new Point(x, y);
+        };
+        Point.toCartesian = function (polar, origin) {
+            var point = Point.toCartesianNoOffset(polar);
+            return Point.toOffset(point, origin);
+        };
+        Point.toPolar = function (point, origin) {
+            var offset = Point.fromOffset(point, origin);
+            var radius = Point.distanceFromOffset(offset);
+            var angle = Math.atan2(offset.y, offset.x);
+            return new Polar(radius, angle);
         };
         return Point;
     }());

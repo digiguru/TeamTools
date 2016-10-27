@@ -1,7 +1,37 @@
 /// <reference path="../typings/d3/d3.d.ts" />
+/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
+
+//import {Promise} from 'es6-promise';
+
+
 
 namespace Comfort {
+    export class Timed {
+        public static for(milliseconds:number) {
+            const p: Promise<Number> = new Promise((resolve)=>{
+                setTimeout(function() {
+                    resolve(milliseconds);                    
+                }, milliseconds);
+            });
+            return p;
+        }
+    }
 
+    export class ComfortUserChoiceHistory {
+        date :Date;
+        data : Array<ComfortUserChoice>;
+    }
+    export class ComfortUserChoice {
+        user : User;
+        distance : Number;
+        area : String;
+        constructor(user : User, distance : Number, area : String) {
+          this.user = user;
+          this.distance = distance;
+          this.area = area;
+        }
+    }
+   
     export class ComfortEntryGraph {
         clickArea;
         chaos;
@@ -178,17 +208,25 @@ namespace Comfort {
             stage.saveGraph(area,distance,this.currentUser);
             //stage.nextUser();
         }
-        public hide() {
+        public hide():Promise<number> {
             console.log("HIDE comfortGRAPH");
             
             let d3zones = d3.select("g#zones")    
-                .transition()
+                .selectAll("circle")
+                    .transition()
                     .duration(1000)
-                    .selectAll("circle")
                     .attr("r", 0);
+
+            let d3drops = d3.select("#stage")
+                .selectAll("circle.dropper")   
+                .transition()
+                    .delay(250)
+                    .duration(250)
+                    .attr("r", 0);
+            return Timed.for(1000);
                     
         }
-        public show(user:User) {
+        public show(user:User):Promise<number> {
             this.currentUser = user;
             console.log("SHOW graph");
             let d3zones = d3.select("g#zones")
@@ -202,10 +240,37 @@ namespace Comfort {
                         return d.radius; 
                     }); 
             
-            setTimeout(this.setupClickActivity.bind(this), 1000);
+            return Timed.for(1000).then(this.setupClickActivity.bind(this));
             
         }
 
+    }
+    export class Polar {
+        radius:number;
+        angle:number;
+        constructor(radius:number, angle:number) {
+            this.radius = radius;
+            this.angle = angle;
+        }
+        
+    }
+  
+    export class GraphComfortHistory {
+        public graphData : Array<ComfortUserChoice>;
+
+        constructor() {
+          
+        }
+
+
+
+        public show():Promise<number> {
+            return null;
+        }
+
+        public hide():Promise<number> {
+return null;
+        }
     }
     export class UserChoiceForm {
         userZone;
@@ -241,7 +306,19 @@ namespace Comfort {
             }
             this.rebind();
         }
-        public show () {
+        private afterShow() {
+            console.log("ENDSHOW UserChocieForm");
+            d3.select("g#users")
+                .selectAll("rect")
+                .on("mouseup", this.clickUser());
+        }
+        public hasMoreUsers() {
+            let unvotedUsers = this.users.filter(function(x) {
+                return !x.voted
+            });
+            return unvotedUsers.length;
+        }
+        public show ():Promise<number> {
             console.log("SHOW UserChocieForm");
             d3.select(this.userZone)
                 .transition()
@@ -249,21 +326,11 @@ namespace Comfort {
                         return 800;
                 })
                 .style("fill-opacity",1)
-                .attr("transform", "matrix(1,0,0,1,0,0)")
-                .each("end", function() {
-                    console.log("ENDSHOW UserChocieForm");
-                    d3.select("g#users")
-                        .selectAll("rect")
-                        .on("mouseup", function(e) {
-                            console.log("CLICK - User - up  UserChocieForm");
-                            //let name = this.getAttribute("data-name");
-                            let id = this.getAttribute("data-id");
-                            stage.selectUser(id);
-                            console.log("This was clicked", this);
-                        });
-                });
+                .attr("transform", "matrix(1,0,0,1,0,0)");
+        
+            return Timed.for(800).then(this.afterShow.bind(this));
         }
-        public hide () {
+        public hide ():Promise<number> {
             console.log("HIDE userEntry");
             d3.select(this.userZone)
                 .transition()
@@ -277,6 +344,7 @@ namespace Comfort {
                 .on("mouseup", function(e) {
                     console.log("NOCLICK User - This was clicked, but ignored", this);
                 });
+            return Timed.for(800);
             /*  d3.select(this.userZone)
                 .transition()
                .selectAll("text")
@@ -291,6 +359,18 @@ namespace Comfort {
                 .selectAll("circle")
                 .data(this.users);
         
+        }
+        private clickUser () {
+            /* 'that' is the instance of graph */
+            let that = this;
+            return function(d, i) {
+                /* 'this' is the DOM element */
+                console.log("CLICK - User - up  UserChocieForm");
+                //let name = this.getAttribute("data-name");
+                let id = this.getAttribute("data-id");
+                stage.selectUser(id);
+                console.log("This was clicked", that);
+            }
         }
         private overUser () {
             /* 'that' is the instance of graph */
@@ -376,14 +456,17 @@ namespace Comfort {
     }
     export class Stage {
         static stage = document.getElementById('stage');
-        
+        userChoiceHistory : Array<ComfortUserChoice>;
         comfortEntryGraph : ComfortEntryGraph;
         userChoiceForm : UserChoiceForm;
+        graphComfortHistory: GraphComfortHistory;
 
         constructor() {
             console.log("START everything");
+            this.userChoiceHistory = new Array<ComfortUserChoice>();
             this.comfortEntryGraph = new ComfortEntryGraph();
             this.userChoiceForm = new UserChoiceForm();
+            this.graphComfortHistory = new GraphComfortHistory();
         }
        
         selectUser(id) {
@@ -395,13 +478,29 @@ namespace Comfort {
 
         saveGraph(area:string, distance:number, user:User) {
             this.userChoiceForm.markUserDone(user);
-            this.nextUser();
+            this.addUserChoiceHistory(area, distance, user);
+            this.next();
         }
-            
-        private nextUser() {
+
+        private addUserChoiceHistory(area:string, distance:number, user:User) {
+            let userChoice = new ComfortUserChoice(user,distance,area);
+            this.userChoiceHistory.push(userChoice);
+        }  
+        private next() {
+            //const prom = new Promsie()
             console.log("ACTION nextUser", this);
-            this.comfortEntryGraph.hide();
-            this.userChoiceForm.show();
+            this.comfortEntryGraph.hide().then(function() {
+                if(this.userChoiceForm.hasMoreUsers()) {
+                    console.log("Users left...", this);
+                    this.userChoiceForm.show();
+                } else {
+                    console.log("NO users left", this);
+                    this.userChoiceForm.show();
+                    this.graphComfortHistory.show();
+                }
+            }.bind(this));
+            
+            
         }
         
 
@@ -468,11 +567,37 @@ namespace Comfort {
         static fromCoords(coords:Array<number>) {
             return new Point(coords[0],coords[1]);
         }
-        static distance(a:Point , b:Point) {
-            const dx = a.x - b.x;
-            const dy = a.y - b.y;
-
-            return Math.sqrt(dx * dx + dy * dy);
+        public static fromOffset(point:Point , origin:Point):Point {
+            const dx = point.x - origin.x;
+            const dy = point.y - origin.y;
+            return new Point(dx,dy);
+        }
+        public static toOffset(point:Point, origin:Point):Point {
+            const dx = point.x + origin.x;
+            const dy = point.y + origin.y;
+            return new Point(dx,dy);
+        }
+        public static distance(point:Point , origin:Point):number {
+            const offset = Point.fromOffset(point, origin);
+            return Point.distanceFromOffset(offset);
+        }
+        public static distanceFromOffset(offset:Point):number {
+            return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
+        }
+        public static toCartesianNoOffset(polar:Polar):Point {
+            let x = polar.radius * Math.cos(polar.angle)
+            let y = polar.radius * Math.sin(polar.angle)
+            return new Point(x, y); 
+        }
+        public static toCartesian(polar:Polar,origin:Point):Point {
+            const point = Point.toCartesianNoOffset(polar);
+            return Point.toOffset(point,origin); 
+        }
+        public static toPolar(point:Point, origin:Point):Polar {
+            const offset = Point.fromOffset(point, origin);
+            const radius = Point.distanceFromOffset(offset);
+            const angle = Math.atan2(offset.y, offset.x);
+            return new Polar(radius, angle);
         }
     }
     class SVG {
