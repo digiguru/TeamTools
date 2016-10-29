@@ -86,7 +86,7 @@ namespace Comfort {
             return Timed.for(1000);
                     
         }
-        public show(user:User):Promise<number> {
+        public showBase():Promise<number> {
             console.log("SHOW graph");
             const d3zones = d3.select("g#zones")
                 .selectAll("circle")
@@ -235,25 +235,28 @@ namespace Comfort {
         }
 
       
-        public removeClickActivity () {
-            console.log("Remove future interaction");
-            d3.select("#stage").on("mouseup", function(a,b,c) {
+        public removeInteractions () {
+            console.log("REMOVE activiteis from GraphComfortEntry");
+            d3.select("#stage").on("mouseup", function() {
                 console.log("UNCLICK - Graphup - No longer interactive stage");
             });
-            d3.select("#stage").on("mousedown", function(a,b,c) {
+            d3.select("#stage").on("mousedown", function() {
                 console.log("UNCLICK - Graphdown - No longer interactive stage");
+            });
+            d3.select("#stage").on("mousemove", function() {
+                console.log("UNMove - mousemove - No longer interactive stage");
             });
             
         }
         public saveTheInteraction (area:string, distance:number) {
             console.log("saveTheInteraction");
-            this.removeClickActivity();
+            this.removeInteractions();
             stage.saveGraph(area,distance,this.currentUser);
             //stage.nextUser();
         }
         public show(user:User) {
             this.currentUser = user;
-            const promise = super.show(user);
+            const promise = this.showBase();
             return promise.then(this.setupClickActivity.bind(this));
         }
   
@@ -275,14 +278,32 @@ namespace Comfort {
             super(); 
         }
 
+        public show(graphData : Array<ComfortUserChoice>):Promise<number> {
+            this.graphData = graphData;
+            const promise = this.showBase();
+
+             const d3zones = d3.select("g#history")
+                .selectAll("circle")
+                .data(this.graphData);
+
+            d3zones.enter().append("circle")
+                .attr("cx", 400)
+                .attr("cy", 400)
+                .attr("r", 10)
+                .attr("class", "point")
+                .attr("id", function(d:ComfortUserChoice) {
+                    return d.user.name;
+                });
 
 
-        public show():Promise<number> {
-            return null;
+            promise.then(function() {
+               
+            });
+            return promise;
         }
 
         public hide():Promise<number> {
-return null;
+            return null;
         }
     }
     export class UserChoiceForm {
@@ -470,23 +491,35 @@ return null;
     export class Stage {
         static stage = document.getElementById('stage');
         userChoiceHistory : Array<ComfortUserChoice>;
-        graphComfortEntry : GraphComfortEntry;
         userChoiceForm : UserChoiceForm;
+        graphComfortEntry : GraphComfortEntry;
         graphComfortHistory: GraphComfortHistory;
 
         constructor() {
             console.log("START everything");
             this.userChoiceHistory = new Array<ComfortUserChoice>();
-            this.graphComfortEntry = new GraphComfortEntry();
             this.userChoiceForm = new UserChoiceForm();
-            this.graphComfortHistory = new GraphComfortHistory();
         }
-       
+        private showGraphComfortEntry(user:User) {
+            if(!this.graphComfortEntry) {
+                this.graphComfortEntry = new GraphComfortEntry();
+            }
+            this.graphComfortEntry.show(user);
+        }
+
+        private showGraphComfortHistory() {
+            if(!this.graphComfortHistory) {
+                this.graphComfortEntry = null;
+                this.graphComfortHistory = new GraphComfortHistory();
+            }
+            this.graphComfortHistory.show();
+        }
+
         selectUser(id) {
             console.log("ACTION selectUser", id);
             const user = this.userChoiceForm.getUser(id);
             this.userChoiceForm.hide();
-            this.graphComfortEntry.show(user);
+            this.showGraphComfortEntry(user);
         }
 
         saveGraph(area:string, distance:number, user:User) {
@@ -499,6 +532,7 @@ return null;
             const userChoice = new ComfortUserChoice(user,distance,area);
             this.userChoiceHistory.push(userChoice);
         }  
+
         private next() {
             //const prom = new Promsie()
             console.log("ACTION nextUser", this);
@@ -508,8 +542,8 @@ return null;
                     this.userChoiceForm.show();
                 } else {
                     console.log("NO users left", this);
-                    this.userChoiceForm.show();
-                    this.graphComfortHistory.show();
+                    //this.userChoiceForm.show();
+                    this.showGraphComfortHistory();
                 }
             }.bind(this));
             

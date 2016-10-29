@@ -76,7 +76,7 @@ var Comfort;
                 .attr("r", 0);
             return Timed.for(1000);
         };
-        GraphComfortBase.prototype.show = function (user) {
+        GraphComfortBase.prototype.showBase = function () {
             console.log("SHOW graph");
             var d3zones = d3.select("g#zones")
                 .selectAll("circle")
@@ -200,24 +200,27 @@ var Comfort;
                 return "chaos";
             }
         };
-        GraphComfortEntry.prototype.removeClickActivity = function () {
-            console.log("Remove future interaction");
-            d3.select("#stage").on("mouseup", function (a, b, c) {
+        GraphComfortEntry.prototype.removeInteractions = function () {
+            console.log("REMOVE activiteis from GraphComfortEntry");
+            d3.select("#stage").on("mouseup", function () {
                 console.log("UNCLICK - Graphup - No longer interactive stage");
             });
-            d3.select("#stage").on("mousedown", function (a, b, c) {
+            d3.select("#stage").on("mousedown", function () {
                 console.log("UNCLICK - Graphdown - No longer interactive stage");
+            });
+            d3.select("#stage").on("mousemove", function () {
+                console.log("UNMove - mousemove - No longer interactive stage");
             });
         };
         GraphComfortEntry.prototype.saveTheInteraction = function (area, distance) {
             console.log("saveTheInteraction");
-            this.removeClickActivity();
+            this.removeInteractions();
             stage.saveGraph(area, distance, this.currentUser);
             //stage.nextUser();
         };
         GraphComfortEntry.prototype.show = function (user) {
             this.currentUser = user;
-            var promise = _super.prototype.show.call(this, user);
+            var promise = this.showBase();
             return promise.then(this.setupClickActivity.bind(this));
         };
         return GraphComfortEntry;
@@ -236,8 +239,23 @@ var Comfort;
         function GraphComfortHistory() {
             _super.call(this);
         }
-        GraphComfortHistory.prototype.show = function () {
-            return null;
+        GraphComfortHistory.prototype.show = function (graphData) {
+            this.graphData = graphData;
+            var promise = this.showBase();
+            var d3zones = d3.select("g#history")
+                .selectAll("circle")
+                .data(this.graphData);
+            d3zones.enter().append("circle")
+                .attr("cx", 400)
+                .attr("cy", 400)
+                .attr("r", 10)
+                .attr("class", "point")
+                .attr("id", function (d) {
+                return d.user.name;
+            });
+            promise.then(function () {
+            });
+            return promise;
         };
         GraphComfortHistory.prototype.hide = function () {
             return null;
@@ -419,15 +437,26 @@ var Comfort;
         function Stage() {
             console.log("START everything");
             this.userChoiceHistory = new Array();
-            this.graphComfortEntry = new GraphComfortEntry();
             this.userChoiceForm = new UserChoiceForm();
-            this.graphComfortHistory = new GraphComfortHistory();
         }
+        Stage.prototype.showGraphComfortEntry = function (user) {
+            if (!this.graphComfortEntry) {
+                this.graphComfortEntry = new GraphComfortEntry();
+            }
+            this.graphComfortEntry.show(user);
+        };
+        Stage.prototype.showGraphComfortHistory = function () {
+            if (!this.graphComfortHistory) {
+                this.graphComfortEntry = null;
+                this.graphComfortHistory = new GraphComfortHistory();
+            }
+            this.graphComfortHistory.show();
+        };
         Stage.prototype.selectUser = function (id) {
             console.log("ACTION selectUser", id);
             var user = this.userChoiceForm.getUser(id);
             this.userChoiceForm.hide();
-            this.graphComfortEntry.show(user);
+            this.showGraphComfortEntry(user);
         };
         Stage.prototype.saveGraph = function (area, distance, user) {
             this.userChoiceForm.markUserDone(user);
@@ -448,8 +477,8 @@ var Comfort;
                 }
                 else {
                     console.log("NO users left", this);
-                    this.userChoiceForm.show();
-                    this.graphComfortHistory.show();
+                    //this.userChoiceForm.show();
+                    this.showGraphComfortHistory();
                 }
             }.bind(this));
         };
