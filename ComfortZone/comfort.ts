@@ -31,7 +31,7 @@ namespace Comfort {
           this.area = area;
         }
     }
-    export class ComfortGraphBase {
+    export class GraphComfortBase {
         chaos : HTMLElement;
         stretch : HTMLElement;
         comfort : HTMLElement;
@@ -105,7 +105,7 @@ namespace Comfort {
 
     }
     
-    export class ComfortEntryGraph extends ComfortGraphBase {
+    export class GraphComfortEntry extends GraphComfortBase {
         clickArea : HTMLElement;
         currentUser:User;
         dropper : SVGAElement;
@@ -158,24 +158,24 @@ namespace Comfort {
 
         private graphMove() {
             /* 'that' is the instance of graph */
-            const that : ComfortEntryGraph = this;
+            const that : GraphComfortEntry = this;
             return function(d:void, i:number) {
                 /* 'this' is the DOM element */
                 const coord = d3.mouse(this);
                 const distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
-                const area = ComfortEntryGraph.calculateDistance(distance);
+                const area = GraphComfortEntry.calculateDistance(distance);
                 that.highlight(area);
             }
         }
 
         private graphUp() {
             /* 'that' is the instance of graph */
-            const that : ComfortEntryGraph = this;
+            const that : GraphComfortEntry = this;
             return function(d:void, i :number) {
                 /* 'this' is the DOM element */
                 const coord = Point.fromCoords(d3.mouse(this));
                 const distance = Point.distance(that.centerPoint, coord);
-                const area = ComfortEntryGraph.calculateDistance(distance);          
+                const area = GraphComfortEntry.calculateDistance(distance);          
                 that.saveTheInteraction(area, distance);
             }
         }
@@ -268,7 +268,7 @@ namespace Comfort {
         
     }
   
-    export class GraphComfortHistory extends ComfortGraphBase {
+    export class GraphComfortHistory extends GraphComfortBase {
         public graphData : Array<ComfortUserChoice>;
 
         constructor() {
@@ -470,14 +470,14 @@ return null;
     export class Stage {
         static stage = document.getElementById('stage');
         userChoiceHistory : Array<ComfortUserChoice>;
-        comfortEntryGraph : ComfortEntryGraph;
+        graphComfortEntry : GraphComfortEntry;
         userChoiceForm : UserChoiceForm;
         graphComfortHistory: GraphComfortHistory;
 
         constructor() {
             console.log("START everything");
             this.userChoiceHistory = new Array<ComfortUserChoice>();
-            this.comfortEntryGraph = new ComfortEntryGraph();
+            this.graphComfortEntry = new GraphComfortEntry();
             this.userChoiceForm = new UserChoiceForm();
             this.graphComfortHistory = new GraphComfortHistory();
         }
@@ -486,7 +486,7 @@ return null;
             console.log("ACTION selectUser", id);
             const user = this.userChoiceForm.getUser(id);
             this.userChoiceForm.hide();
-            this.comfortEntryGraph.show(user);
+            this.graphComfortEntry.show(user);
         }
 
         saveGraph(area:string, distance:number, user:User) {
@@ -502,7 +502,7 @@ return null;
         private next() {
             //const prom = new Promsie()
             console.log("ACTION nextUser", this);
-            this.comfortEntryGraph.hide().then(function() {
+            this.graphComfortEntry.hide().then(function() {
                 if(this.userChoiceForm.hasMoreUsers()) {
                     console.log("Users left...", this);
                     this.userChoiceForm.show();
