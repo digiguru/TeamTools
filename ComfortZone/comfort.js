@@ -1,5 +1,10 @@
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
 //import {Promise} from 'es6-promise';
 var Comfort;
 (function (Comfort) {
@@ -32,8 +37,66 @@ var Comfort;
         return ComfortUserChoice;
     }());
     Comfort.ComfortUserChoice = ComfortUserChoice;
-    var ComfortEntryGraph = (function () {
+    var ComfortGraphBase = (function () {
+        function ComfortGraphBase() {
+            this.setupArea();
+        }
+        ComfortGraphBase.prototype.setupArea = function () {
+            var zones = [new ComfortZones("stretch", 300), new ComfortZones("comfort", 100)];
+            var d3zones = d3.select("g#zones")
+                .selectAll("circle")
+                .data(zones);
+            d3zones.enter().append("circle")
+                .attr("cx", 400)
+                .attr("cy", 400)
+                .attr("r", 0)
+                .attr("class", "area")
+                .attr("id", function (d) {
+                return d.name;
+            });
+            this.chaos = document.getElementById('chaos');
+            this.stretch = document.getElementById('stretch');
+            this.comfort = document.getElementById('comfort');
+            var centerX = Number(this.comfort.getAttribute('cx'));
+            var centerY = Number(this.comfort.getAttribute('cy'));
+            this.centerPoint = new Point(centerX, centerY);
+        };
+        ComfortGraphBase.prototype.hide = function () {
+            console.log("HIDE comfortGRAPH");
+            var d3zones = d3.select("g#zones")
+                .selectAll("circle")
+                .transition()
+                .duration(1000)
+                .attr("r", 0);
+            var d3drops = d3.select("#stage")
+                .selectAll("circle.dropper")
+                .transition()
+                .delay(250)
+                .duration(250)
+                .attr("r", 0);
+            return Timed.for(1000);
+        };
+        ComfortGraphBase.prototype.show = function (user) {
+            console.log("SHOW graph");
+            var d3zones = d3.select("g#zones")
+                .selectAll("circle")
+                .attr("r", 0)
+                .transition()
+                .duration(1000)
+                .delay(function (d, i) { return i * 100; })
+                .ease("elastic")
+                .attr("r", function (d) {
+                return d.radius;
+            });
+            return Timed.for(1000);
+        };
+        return ComfortGraphBase;
+    }());
+    Comfort.ComfortGraphBase = ComfortGraphBase;
+    var ComfortEntryGraph = (function (_super) {
+        __extends(ComfortEntryGraph, _super);
         function ComfortEntryGraph() {
+            _super.call(this);
             this.startDrag = Event.fixScope(function (e) {
                 var clickPoint = new Point(e.offsetX, e.offsetY);
                 return true;
@@ -51,28 +114,9 @@ var Comfort;
                 this.dropper.setAttribute("class", "dropped");
                 return true;
             }, this);
-            this.setupArea();
+            this.clickArea = document.getElementById('clickable');
             this.setupOverActivity();
         }
-        ComfortEntryGraph.prototype.setupArea = function () {
-            this.clickArea = document.getElementById('clickable');
-            var zones = [new ComfortZones("stretch", 300), new ComfortZones("comfort", 100)];
-            var d3zones = d3.select("g#zones")
-                .selectAll("circle")
-                .data(zones);
-            d3zones.enter().append("circle")
-                .attr("cx", 400)
-                .attr("cy", 400)
-                .attr("r", 0)
-                .attr("class", "area")
-                .attr("id", function (d) {
-                return d.name;
-            });
-            this.chaos = document.getElementById('chaos');
-            this.stretch = document.getElementById('stretch');
-            this.comfort = document.getElementById('comfort');
-            this.centerPoint = new Point(parseInt(this.comfort.getAttribute('cx'), 10), parseInt(this.comfort.getAttribute('cy'), 10));
-        };
         ComfortEntryGraph.prototype.setupOverActivity = function () {
             var that = this;
             d3.select("#stage").on("mousemove", this.graphMove()); //this.checkArea);
@@ -146,17 +190,15 @@ var Comfort;
             document.getElementById('stage').insertBefore(el, this.clickArea);
         };
         ComfortEntryGraph.calculateDistance = function (distance) {
-            var area = "";
             if (distance < 100) {
-                area = "comfort";
+                return "comfort";
             }
             else if (distance < 300) {
-                area = "stretch";
+                return "stretch";
             }
             else {
-                area = "chaos";
+                return "chaos";
             }
-            return area;
         };
         ComfortEntryGraph.prototype.removeClickActivity = function () {
             console.log("Remove future interaction");
@@ -173,38 +215,13 @@ var Comfort;
             stage.saveGraph(area, distance, this.currentUser);
             //stage.nextUser();
         };
-        ComfortEntryGraph.prototype.hide = function () {
-            console.log("HIDE comfortGRAPH");
-            var d3zones = d3.select("g#zones")
-                .selectAll("circle")
-                .transition()
-                .duration(1000)
-                .attr("r", 0);
-            var d3drops = d3.select("#stage")
-                .selectAll("circle.dropper")
-                .transition()
-                .delay(250)
-                .duration(250)
-                .attr("r", 0);
-            return Timed.for(1000);
-        };
         ComfortEntryGraph.prototype.show = function (user) {
             this.currentUser = user;
-            console.log("SHOW graph");
-            var d3zones = d3.select("g#zones")
-                .selectAll("circle")
-                .attr("r", 0)
-                .transition()
-                .duration(1000)
-                .delay(function (d, i) { return i * 100; })
-                .ease("elastic")
-                .attr("r", function (d) {
-                return d.radius;
-            });
-            return Timed.for(1000).then(this.setupClickActivity.bind(this));
+            var promise = _super.prototype.show.call(this, user);
+            return promise.then(this.setupClickActivity.bind(this));
         };
         return ComfortEntryGraph;
-    }());
+    }(ComfortGraphBase));
     Comfort.ComfortEntryGraph = ComfortEntryGraph;
     var Polar = (function () {
         function Polar(radius, angle) {
@@ -214,8 +231,10 @@ var Comfort;
         return Polar;
     }());
     Comfort.Polar = Polar;
-    var GraphComfortHistory = (function () {
+    var GraphComfortHistory = (function (_super) {
+        __extends(GraphComfortHistory, _super);
         function GraphComfortHistory() {
+            _super.call(this);
         }
         GraphComfortHistory.prototype.show = function () {
             return null;
@@ -224,7 +243,7 @@ var Comfort;
             return null;
         };
         return GraphComfortHistory;
-    }());
+    }(ComfortGraphBase));
     Comfort.GraphComfortHistory = GraphComfortHistory;
     var UserChoiceForm = (function () {
         function UserChoiceForm() {
@@ -313,7 +332,7 @@ var Comfort;
             return function (d, i) {
                 /* 'this' is the DOM element */
                 console.log("CLICK - User - up  UserChocieForm");
-                //let name = this.getAttribute("data-name");
+                //const name = this.getAttribute("data-name");
                 var id = this.getAttribute("data-id");
                 stage.selectUser(id);
                 console.log("This was clicked", that);
@@ -367,7 +386,7 @@ var Comfort;
                     .on("mouseover", that.overUser())
                     .on("mouseleave", that.leaveUser());
                 /*.on("mouseup", function(e) {
-                    let name = this.getAttribute("data-name");
+                    const name = this.getAttribute("data-name");
                     stage.selectUser(name);
                 });*/
                 d3Item.append("text")

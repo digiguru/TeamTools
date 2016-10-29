@@ -31,47 +31,21 @@ namespace Comfort {
           this.area = area;
         }
     }
-   
-    export class ComfortEntryGraph {
-        clickArea : HTMLElement;
+    export class ComfortGraphBase {
         chaos : HTMLElement;
         stretch : HTMLElement;
         comfort : HTMLElement;
-        currentUser:User;
-        centerPoint:Point;
-        dropper : SVGAElement;
+        centerPoint : Point;
         
         constructor() {
             this.setupArea();
-            this.setupOverActivity();
         }
 
-        private startDrag = Event.fixScope(function (e) {
-            let clickPoint = new Point(e.offsetX, e.offsetY);
-            return true;
-        }, this);
-
-        private dragEvent = Event.fixScope(function (e) {
-            let clickPoint = new Point(e.offsetX, e.offsetY);
-            this.dropper.setAttribute("cx", e.offsetX);
-            this.dropper.setAttribute("cy", e.offsetY);
-            return true;
-        }, this);
-        
-        private dropEvent = Event.fixScope(function (e) {
-            let clickPoint = new Point(e.offsetX, e.offsetY);
-            this.dropper.setAttribute("cx", e.offsetX);
-            this.dropper.setAttribute("cy", e.offsetY);
-            this.dropper.setAttribute("class", "dropped");
-            return true;
-        }, this);
-        
         private setupArea () {
-            this.clickArea = document.getElementById('clickable');
             
             
-            let zones = [new ComfortZones("stretch",300), new ComfortZones("comfort",100)];
-            let d3zones = d3.select("g#zones")
+            const zones = [new ComfortZones("stretch",300), new ComfortZones("comfort",100)];
+            const d3zones = d3.select("g#zones")
                 .selectAll("circle")
                 .data(zones);
 
@@ -88,13 +62,84 @@ namespace Comfort {
             this.chaos = document.getElementById('chaos');
             this.stretch = document.getElementById('stretch');
             this.comfort = document.getElementById('comfort');
-            this.centerPoint = new Point(parseInt(this.comfort.getAttribute('cx'), 10), parseInt(this.comfort.getAttribute('cy'), 10);
+            const centerX = Number(this.comfort.getAttribute('cx'));
+            const centerY = Number(this.comfort.getAttribute('cy'));
+            this.centerPoint = new Point(centerX,centerY);
             
 
         }
+        public hide():Promise<number> {
+            console.log("HIDE comfortGRAPH");
+            
+            const d3zones = d3.select("g#zones")    
+                .selectAll("circle")
+                    .transition()
+                    .duration(1000)
+                    .attr("r", 0);
+
+            const d3drops = d3.select("#stage")
+                .selectAll("circle.dropper")   
+                .transition()
+                    .delay(250)
+                    .duration(250)
+                    .attr("r", 0);
+            return Timed.for(1000);
+                    
+        }
+        public show(user:User):Promise<number> {
+            console.log("SHOW graph");
+            const d3zones = d3.select("g#zones")
+                .selectAll("circle")
+                    .attr("r", 0)
+                .transition()
+                    .duration(1000)
+                    .delay(function(d, i) { return i * 100; })
+                    .ease("elastic")
+                    .attr("r", function(d:ComfortZones) { 
+                        return d.radius; 
+                    }); 
+            
+            return Timed.for(1000);
+            
+        }
+
+    }
+    
+    export class ComfortEntryGraph extends ComfortGraphBase {
+        clickArea : HTMLElement;
+        currentUser:User;
+        dropper : SVGAElement;
+        
+        constructor() {
+            super();
+            this.clickArea = document.getElementById('clickable');
+            this.setupOverActivity();
+        }
+
+        private startDrag = Event.fixScope(function (e) {
+            const clickPoint = new Point(e.offsetX, e.offsetY);
+            return true;
+        }, this);
+
+        private dragEvent = Event.fixScope(function (e) {
+            const clickPoint = new Point(e.offsetX, e.offsetY);
+            this.dropper.setAttribute("cx", e.offsetX);
+            this.dropper.setAttribute("cy", e.offsetY);
+            return true;
+        }, this);
+        
+        private dropEvent = Event.fixScope(function (e) {
+            const clickPoint = new Point(e.offsetX, e.offsetY);
+            this.dropper.setAttribute("cx", e.offsetX);
+            this.dropper.setAttribute("cy", e.offsetY);
+            this.dropper.setAttribute("class", "dropped");
+            return true;
+        }, this);
+        
+        
 
         public setupOverActivity () {
-            let that = this;
+            const that = this;
             d3.select("#stage").on("mousemove", this.graphMove());//this.checkArea);
         }
 
@@ -113,45 +158,45 @@ namespace Comfort {
 
         private graphMove() {
             /* 'that' is the instance of graph */
-            let that : ComfortEntryGraph = this;
+            const that : ComfortEntryGraph = this;
             return function(d:void, i:number) {
                 /* 'this' is the DOM element */
-                let coord = d3.mouse(this);
-                let distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
-                let area = ComfortEntryGraph.calculateDistance(distance);
+                const coord = d3.mouse(this);
+                const distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
+                const area = ComfortEntryGraph.calculateDistance(distance);
                 that.highlight(area);
             }
         }
 
         private graphUp() {
             /* 'that' is the instance of graph */
-            let that : ComfortEntryGraph = this;
+            const that : ComfortEntryGraph = this;
             return function(d:void, i :number) {
                 /* 'this' is the DOM element */
-                let coord = Point.fromCoords(d3.mouse(this));
-                let distance = Point.distance(that.centerPoint, coord);
-                let area = ComfortEntryGraph.calculateDistance(distance);          
+                const coord = Point.fromCoords(d3.mouse(this));
+                const distance = Point.distance(that.centerPoint, coord);
+                const area = ComfortEntryGraph.calculateDistance(distance);          
                 that.saveTheInteraction(area, distance);
             }
         }
 
          private graphDown() {
             /* 'that' is the instance of graph */
-            let that = this;
+            const that = this;
             return function(d:void, i:number) {
                 /* 'this' is the DOM element */
-                let coord = Point.fromCoords(d3.mouse(this));
-                let el = SVG.circle(8, coord.x, coord.y, "dropper");
+                const coord = Point.fromCoords(d3.mouse(this));
+                const el = SVG.circle(8, coord.x, coord.y, "dropper");
                 that.addDropper(el);
             }
         }
 
-        public highlight ( area : string) {
+        public highlight (area : string) {
             //<circle id="stretch" r="300" cx="400" cy="400" />
             //<circle id="comfort" r="100" cx="400" cy="400" />
 
            
-            let d3zones = d3.select("svg")
+            const d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
                     .delay(function() {
@@ -180,15 +225,13 @@ namespace Comfort {
         }
 
         public static calculateDistance(distance) {
-            let area = "";
             if(distance < 100) {
-                area = "comfort";
+                return "comfort";
             } else if (distance < 300) {
-                area = "stretch";
+                return "stretch";
             } else {
-                area = "chaos";
+                return "chaos";
             }
-            return area;
         }
 
       
@@ -208,42 +251,12 @@ namespace Comfort {
             stage.saveGraph(area,distance,this.currentUser);
             //stage.nextUser();
         }
-        public hide():Promise<number> {
-            console.log("HIDE comfortGRAPH");
-            
-            let d3zones = d3.select("g#zones")    
-                .selectAll("circle")
-                    .transition()
-                    .duration(1000)
-                    .attr("r", 0);
-
-            let d3drops = d3.select("#stage")
-                .selectAll("circle.dropper")   
-                .transition()
-                    .delay(250)
-                    .duration(250)
-                    .attr("r", 0);
-            return Timed.for(1000);
-                    
-        }
-        public show(user:User):Promise<number> {
+        public show(user:User) {
             this.currentUser = user;
-            console.log("SHOW graph");
-            let d3zones = d3.select("g#zones")
-                .selectAll("circle")
-                    .attr("r", 0)
-                .transition()
-                    .duration(1000)
-                    .delay(function(d, i) { return i * 100; })
-                    .ease("elastic")
-                    .attr("r", function(d:ComfortZones) { 
-                        return d.radius; 
-                    }); 
-            
-            return Timed.for(1000).then(this.setupClickActivity.bind(this));
-            
+            const promise = super.show(user);
+            return promise.then(this.setupClickActivity.bind(this));
         }
-
+  
     }
     export class Polar {
         radius:number;
@@ -255,11 +268,11 @@ namespace Comfort {
         
     }
   
-    export class GraphComfortHistory {
+    export class GraphComfortHistory extends ComfortGraphBase {
         public graphData : Array<ComfortUserChoice>;
 
         constructor() {
-          
+            super(); 
         }
 
 
@@ -290,7 +303,7 @@ return null;
             this.show();
         }
         public getUser(id) : User {
-            let users =  this.users.filter(function(x) {
+            const users =  this.users.filter(function(x) {
                 return x.id === id;
             });
             if(users.length) {
@@ -313,7 +326,7 @@ return null;
                 .on("mouseup", this.clickUser());
         }
         public hasMoreUsers() {
-            let unvotedUsers = this.users.filter(function(x) {
+            const unvotedUsers = this.users.filter(function(x) {
                 return !x.voted
             });
             return unvotedUsers.length;
@@ -362,23 +375,23 @@ return null;
         }
         private clickUser () {
             /* 'that' is the instance of graph */
-            let that = this;
+            const that = this;
             return function(d:User, i:number) {
                 /* 'this' is the DOM element */
                 console.log("CLICK - User - up  UserChocieForm");
-                //let name = this.getAttribute("data-name");
-                let id = this.getAttribute("data-id");
+                //const name = this.getAttribute("data-name");
+                const id = this.getAttribute("data-id");
                 stage.selectUser(id);
                 console.log("This was clicked", that);
             }
         }
         private overUser () {
             /* 'that' is the instance of graph */
-            let that = this;
+            const that = this;
             return function(d:User, i:number) {
                 /* 'this' is the DOM element */
                 d3.select(this.parentNode)
-                //let d3zones = d3.select("g#users")
+                //const d3zones = d3.select("g#users")
                     .selectAll("text")
                     .transition()
                     .duration(250)
@@ -389,11 +402,11 @@ return null;
         }
         private leaveUser() {
              /* 'that' is the instance of graph */
-            let that = this;
+            const that = this;
             return function(d:User, i:number) {
                 /* 'this' is the DOM element */
                 d3.select(this.parentNode)
-                //let d3zones = d3.select("g#users")
+                //const d3zones = d3.select("g#users")
                     .selectAll("text")
                     .transition()
                     .duration(function() {
@@ -405,11 +418,11 @@ return null;
             }
         }
         private eachUser () {
-            let that = this;
+            const that = this;
             return function(e, i) {
                 //Event.add(['mousedown'], this.stage, this.chooseUser);
                 //Event.add(["mouseover"], this, thisStage.checkOverUsers);
-                var d3Item = d3.select(this);
+                const d3Item = d3.select(this);
 
                 d3Item.append("rect")
                     .attr("y", function(e) {
@@ -423,7 +436,7 @@ return null;
                     .on("mouseover", that.overUser())
                     .on("mouseleave", that.leaveUser())
                     /*.on("mouseup", function(e) {
-                        let name = this.getAttribute("data-name");
+                        const name = this.getAttribute("data-name");
                         stage.selectUser(name);
                     });*/
                 d3Item.append("text")      
@@ -442,7 +455,7 @@ return null;
         }
         private setupUsers () {
 
-            let items = this.rebind();
+            const items = this.rebind();
             items.enter().append("g")
                 .attr("id", function(e) {
                     return e.id;
@@ -471,7 +484,7 @@ return null;
        
         selectUser(id) {
             console.log("ACTION selectUser", id);
-            let user = this.userChoiceForm.getUser(id);
+            const user = this.userChoiceForm.getUser(id);
             this.userChoiceForm.hide();
             this.comfortEntryGraph.show(user);
         }
@@ -483,7 +496,7 @@ return null;
         }
 
         private addUserChoiceHistory(area:string, distance:number, user:User) {
-            let userChoice = new ComfortUserChoice(user,distance,area);
+            const userChoice = new ComfortUserChoice(user,distance,area);
             this.userChoiceHistory.push(userChoice);
         }  
         private next() {
@@ -560,7 +573,7 @@ return null;
         x : number;
         y : number;
 
-        constructor(x : number, y : number) {
+        constructor(x:number, y:number) {
             this.x = x;
             this.y = y;
         }
@@ -585,8 +598,8 @@ return null;
             return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
         }
         public static toCartesianNoOffset(polar:Polar):Point {
-            let x = polar.radius * Math.cos(polar.angle)
-            let y = polar.radius * Math.sin(polar.angle)
+            const x = polar.radius * Math.cos(polar.angle)
+            const y = polar.radius * Math.sin(polar.angle)
             return new Point(x, y); 
         }
         public static toCartesian(polar:Polar,origin:Point):Point {
@@ -606,7 +619,7 @@ return null;
         }
 
         static circle(r, x, y, className) {
-            let el = SVG.element("circle");
+            const el = SVG.element("circle");
             el.setAttribute("r", r);
             el.setAttribute("cx", x);
             el.setAttribute("cy", y);
@@ -626,6 +639,6 @@ return null;
     }
 }
 
-var stage = new Comfort.Stage();
+const stage = new Comfort.Stage();
 
 
