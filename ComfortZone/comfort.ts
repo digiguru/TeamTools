@@ -23,9 +23,9 @@ namespace Comfort {
     }
     export class ComfortUserChoice {
         user : User;
-        distance : Number;
+        distance : number;
         area : String;
-        constructor(user : User, distance : Number, area : String) {
+        constructor(user : User, distance : number, area : String) {
           this.user = user;
           this.distance = distance;
           this.area = area;
@@ -272,32 +272,49 @@ namespace Comfort {
     }
   
     export class GraphComfortHistory extends GraphComfortBase {
-        public graphData : Array<ComfortUserChoice>;
-
+        public graphData = new Array<ComfortUserChoice>();
+        public d3Points;
         constructor() {
             super(); 
+            //this.setupHistory();
         }
 
         public show(graphData : Array<ComfortUserChoice>):Promise<number> {
             this.graphData = graphData;
             const promise = this.showBase();
-
-             const d3zones = d3.select("g#history")
+            d3.select("g#history")
                 .selectAll("circle")
-                .data(this.graphData);
-
-            d3zones.enter().append("circle")
-                .attr("cx", 400)
-                .attr("cy", 400)
-                .attr("r", 10)
-                .attr("class", "point")
-                .attr("id", function(d:ComfortUserChoice) {
-                    return d.user.name;
+                .data(this.graphData)
+                    .enter()
+                    .append("circle")
+                    .attr("cx", 400)
+                    .attr("cy", 400)
+                    .attr("r", 10)
+                    .attr("class", "point")
+                    .attr("id", function(d:ComfortUserChoice) {
+                        return d.user.name;
+                    });
+            const totalPoints = graphData.length;
+            const radian = 6.2831853072;//360 * Math.PI / 180;
+            const polarDivision = radian / totalPoints;
+            d3.select("g#history")
+                .selectAll("circle")
+                .transition()
+                .duration(function() {
+                    return 800;
+                })
+                .attr("cx", function(data:ComfortUserChoice, index) {
+                    const angle = polarDivision * index;
+                    return Point.toCartesian(new Polar(data.distance, angle), new Point(400,400)).x;
+                })
+                .attr("cy", function(data:ComfortUserChoice, index) {
+                    const angle = polarDivision * index;
+                    return Point.toCartesian(new Polar(data.distance, angle), new Point(400,400)).y;
                 });
 
 
             promise.then(function() {
-               
+               console.log("SHOWED base graph - now what?");
             });
             return promise;
         }
@@ -309,7 +326,7 @@ namespace Comfort {
     export class UserChoiceForm {
         userZone : HTMLElement;
         users : Array<User>;
-        d3Users :d3.Selection<any>;
+        d3Users : d3.Selection<any>;
 
         constructor() {
             this.users = [
@@ -512,7 +529,7 @@ namespace Comfort {
                 this.graphComfortEntry = null;
                 this.graphComfortHistory = new GraphComfortHistory();
             }
-            this.graphComfortHistory.show();
+            this.graphComfortHistory.show(this.userChoiceHistory);
         }
 
         selectUser(id) {
@@ -603,7 +620,7 @@ namespace Comfort {
             */
         }
     }
-    class Point {
+    export class Point {
         x : number;
         y : number;
 
@@ -632,8 +649,8 @@ namespace Comfort {
             return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
         }
         public static toCartesianNoOffset(polar:Polar):Point {
-            const x = polar.radius * Math.cos(polar.angle)
-            const y = polar.radius * Math.sin(polar.angle)
+            const x = polar.radius * Math.cos(polar.angle);
+            const y = polar.radius * Math.sin(polar.angle);
             return new Point(x, y); 
         }
         public static toCartesian(polar:Polar,origin:Point):Point {

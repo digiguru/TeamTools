@@ -238,14 +238,17 @@ var Comfort;
         __extends(GraphComfortHistory, _super);
         function GraphComfortHistory() {
             _super.call(this);
+            this.graphData = new Array();
+            //this.setupHistory();
         }
         GraphComfortHistory.prototype.show = function (graphData) {
             this.graphData = graphData;
             var promise = this.showBase();
-            var d3zones = d3.select("g#history")
+            d3.select("g#history")
                 .selectAll("circle")
-                .data(this.graphData);
-            d3zones.enter().append("circle")
+                .data(this.graphData)
+                .enter()
+                .append("circle")
                 .attr("cx", 400)
                 .attr("cy", 400)
                 .attr("r", 10)
@@ -253,7 +256,25 @@ var Comfort;
                 .attr("id", function (d) {
                 return d.user.name;
             });
+            var totalPoints = graphData.length;
+            var radian = 6.2831853072; //360 * Math.PI / 180;
+            var polarDivision = radian / totalPoints;
+            d3.select("g#history")
+                .selectAll("circle")
+                .transition()
+                .duration(function () {
+                return 800;
+            })
+                .attr("cx", function (data, index) {
+                var angle = polarDivision * index;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).x;
+            })
+                .attr("cy", function (data, index) {
+                var angle = polarDivision * index;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).y;
+            });
             promise.then(function () {
+                console.log("SHOWED base graph - now what?");
             });
             return promise;
         };
@@ -450,7 +471,7 @@ var Comfort;
                 this.graphComfortEntry = null;
                 this.graphComfortHistory = new GraphComfortHistory();
             }
-            this.graphComfortHistory.show();
+            this.graphComfortHistory.show(this.userChoiceHistory);
         };
         Stage.prototype.selectUser = function (id) {
             console.log("ACTION selectUser", id);
@@ -577,6 +598,7 @@ var Comfort;
         };
         return Point;
     }());
+    Comfort.Point = Point;
     var SVG = (function () {
         function SVG() {
         }
