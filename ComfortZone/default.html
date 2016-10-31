@@ -19,8 +19,17 @@
         /*fill-opacity: 50.0;*/
         fill-opacity: 0.0;
     }
-    #comfort, #stretch, #chaos {
-        fill: grey; /*#00D7FE*/
+    .area-label {
+         fill: white;
+    }
+    .js-area-highlight {
+        fill: #00D7FE;
+    }
+    .js-area-standard {
+        fill: #00D7FE;
+    }
+    .area {
+    /*#comfort, #stretch, #chaos {*/
         stroke: white;
         stroke-width: 1;       
     }
@@ -44,18 +53,18 @@
                     d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z" />
             </g>
 
-            <rect class="area"   id="chaos"   width="800" height="800"  />
+            <rect class="area js-area-standard"   id="chaos"   width="800" height="800"  />
 
             
             <g id="zones">
-                <circle class="area" id="stretch" r="0" cx="400" cy="400" /><!--300-->
-                <circle class="area" id="comfort" r="0" cx="400" cy="400" /><!--100-->
+                <circle class="area js-area-standard" id="stretch" r="0" cx="400" cy="400" /><!--300-->
+                <circle class="area js-area-standard" id="comfort" r="0" cx="400" cy="400" /><!--100-->
             </g>
             <g id="history">
             </g>
-            <text id="label-choas" text-anchor="middle" x="400" y="50">choas</text>
-            <text id="label-stretch" text-anchor="middle" x="400" y="200">stretch</text>
-            <text id="label-comfort" text-anchor="middle" x="400" y="400">comfort</text>
+            <text class="area-label" id="label-choas" text-anchor="middle" x="400" y="50">chaos</text>
+            <text class="area-label" id="label-stretch" text-anchor="middle" x="400" y="200">stretch</text>
+            <text class="area-label" id="label-comfort" text-anchor="middle" x="400" y="400">comfort</text>
             
             <rect   id="clickable"   width="800" height="800" fill-opacity="0.0"  />
             <g id="users">
