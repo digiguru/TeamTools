@@ -552,8 +552,17 @@ var Comfort;
             this.next();
         };
         Mediator.prototype.addUserChoiceHistory = function (area, distance, user) {
-            var userChoice = new ComfortUserChoice(user, distance, area);
-            this.userChoiceHistory.push(userChoice);
+            var thisUserChoice = this.userChoiceHistory.filter(function (x) {
+                return x.user.id === user.id;
+            });
+            if (thisUserChoice.length) {
+                thisUserChoice[0].area = area;
+                thisUserChoice[0].distance = distance;
+            }
+            else {
+                var userChoice = new ComfortUserChoice(user, distance, area);
+                this.userChoiceHistory.push(userChoice);
+            }
         };
         Mediator.prototype.next = function () {
             //const prom = new Promsie()
