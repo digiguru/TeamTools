@@ -260,6 +260,7 @@ var Comfort;
         GraphComfortEntry.prototype.show = function (user) {
             this.currentUser = user;
             var promise = this.showBase();
+            this.setupOverActivity();
             return promise.then(this.setupClickActivity.bind(this));
         };
         return GraphComfortEntry;
@@ -342,7 +343,7 @@ var Comfort;
         };
         FormUserChoice.prototype.afterShow = function () {
             console.log("ENDSHOW UserChocieForm");
-            d3.select("g#users")
+            this.d3Users
                 .selectAll("rect")
                 .on("mouseup", this.clickUser());
         };
@@ -361,6 +362,14 @@ var Comfort;
             })
                 .style("fill-opacity", 1)
                 .attr("transform", "matrix(1,0,0,1,0,0)");
+            this.d3Users.selectAll("g").attr("class", function (e) {
+                if (e.voted) {
+                    return "user-group-complete";
+                }
+                else {
+                    return "user-group";
+                }
+            });
             return Timed.for(800).then(this.afterShow.bind(this));
         };
         FormUserChoice.prototype.hide = function () {
@@ -483,7 +492,6 @@ var Comfort;
                 .attr("id", function (e) {
                 return e.id;
             })
-                .attr("class", "user-group")
                 .each(this.eachUser());
         };
         return FormUserChoice;

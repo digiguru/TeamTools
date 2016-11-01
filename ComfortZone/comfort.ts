@@ -299,6 +299,7 @@ namespace Comfort {
         public show(user:User) {
             this.currentUser = user;
             const promise = this.showBase();
+            this.setupOverActivity();
             return promise.then(this.setupClickActivity.bind(this));
         }
   
@@ -389,7 +390,7 @@ namespace Comfort {
         }
         private afterShow() {
             console.log("ENDSHOW UserChocieForm");
-            d3.select("g#users")
+            this.d3Users
                 .selectAll("rect")
                 .on("mouseup", this.clickUser());
         }
@@ -408,7 +409,15 @@ namespace Comfort {
                 })
                 .style("fill-opacity",1)
                 .attr("transform", "matrix(1,0,0,1,0,0)");
-        
+            
+            this.d3Users.selectAll("g").attr("class", function(e) {
+                    if(e.voted) {
+                        return "user-group-complete";
+                    } else {
+                        return "user-group";
+                    }
+                })
+
             return Timed.for(800).then(this.afterShow.bind(this));
         }
         public hide ():Promise<number> {
@@ -536,9 +545,8 @@ namespace Comfort {
                 .attr("id", function(e) {
                     return e.id;
                 })
-                .attr("class", "user-group")
-                .each(this.eachUser());
-                 
+                .each(this.eachUser()); 
+            
         }
 
         
