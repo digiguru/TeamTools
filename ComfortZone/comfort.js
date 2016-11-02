@@ -612,6 +612,7 @@ var mediator = new Comfort.Mediator();
 mediator.setUsers([
     new Comfort.User("Adam Hall", "xxx1"),
     new Comfort.User("Billie Davey", "xxx2"),
-    new Comfort.User("Laura Rowe", "xxx3")
+    new Comfort.User("Laura Rowe", "xxx3"),
+    new Comfort.User("Simon Dawson", "xxx4")
 ]);
 //# sourceMappingURL=comfort.js.map

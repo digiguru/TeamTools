@@ -16,7 +16,26 @@ namespace Comfort {
             return p;
         }
     }
+    export class Breadcrumb {
+        name: string;
+        command: string;
+        params: any;
+        enabled: boolean;
+        constructor(name:string, command:string, params:any) {
+            this.name = name;
+            this.command = command;
+            this.params = params;
+            this.enabled = false;
+        }
+    }
     
+    export class BreadcrumbControl {
+        items = new Array<Breadcrumb>();
+        public addBreadcrumb(name:string, command:string, params:any) {
+            this.items.push(new Breadcrumb(name, command, params));
+        }
+    }
+
     export class User {
         name: string;
         id: string;
@@ -39,7 +58,7 @@ namespace Comfort {
         static fromCoords(coords:Array<number>) {
             return new Point(coords[0],coords[1]);
         }
-        public static fromOffset(point:Point , origin:Point):Point {
+        public static fromOffset(point:Point, origin:Point):Point {
             const dx = point.x - origin.x;
             const dy = point.y - origin.y;
             return new Point(dx,dy);
@@ -551,17 +570,19 @@ namespace Comfort {
 
         
     }
+    
     export class Mediator {
 
         userChoiceHistory : Array<ComfortUserChoice>;
         formUserChoice : FormUserChoice;
         graphComfortEntry : GraphComfortEntry;
         graphComfortHistory: GraphComfortHistory;
-        
+        breadcrumbControl: BreadcrumbControl;
         constructor() {
             console.log("START everything");
             this.userChoiceHistory = new Array<ComfortUserChoice>();
             this.formUserChoice = new FormUserChoice();
+            this.breadcrumbControl = new BreadcrumbControl();
         }
         public do(command:string, params:any) {
             switch (command)
@@ -577,6 +598,18 @@ namespace Comfort {
                     const distance = params.number;
                     const user = params.user;
                     this.saveGraph(area, distance, user);
+                    break;
+                case "showUserChoice":
+                    this.showUserChoice();
+                    break;
+                case "showGraphComfortHistory":
+                    this.showGraphComfortHistory();
+                    break;
+                case "showGraphComfortChoice":
+                    const comfortuser:User = params;
+                    this.showGraphComfortEntry(comfortuser);
+                    break;
+
             }
         }
         public addUser(user:User) {
@@ -637,10 +670,9 @@ namespace Comfort {
             this.graphComfortEntry.hide().then(function() {
                 if(this.formUserChoice.hasMoreUsers()) {
                     console.log("Users left...", this);
-                    this.formUserChoice.show();
+                    this.showUserChoice();
                 } else {
                     console.log("NO users left", this);
-                    //this.formUserChoice.show();
                     this.showGraphComfortHistory();
                 }
             }.bind(this));
@@ -685,5 +717,6 @@ const mediator = new Comfort.Mediator();
 mediator.setUsers([
     new Comfort.User("Adam Hall","xxx1"), 
     new Comfort.User("Billie Davey","xxx2"), 
-    new Comfort.User("Laura Rowe","xxx3")
+    new Comfort.User("Laura Rowe","xxx3"),
+    new Comfort.User("Simon Dawson","xxx4")
 ]);
