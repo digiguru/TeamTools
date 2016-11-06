@@ -7,8 +7,8 @@
 
 namespace Comfort {
     export class Timed {
-        public static for(milliseconds:number) :Promise<number> {
-            const p: Promise<Number> = new Promise((resolve)=>{
+        public static for(milliseconds:number) :Thenable<number> {
+            const p: Thenable<Number> = new Promise((resolve)=>{
                 setTimeout(function() {
                     resolve(milliseconds);                    
                 }, milliseconds);
@@ -153,7 +153,7 @@ namespace Comfort {
             
 
         }
-        public hide():Promise<number> {
+        public hide():Thenable<number> {
             console.log("HIDE comfortGRAPH");
             
             const d3zones = d3.select("g#zones")    
@@ -171,7 +171,7 @@ namespace Comfort {
             return Timed.for(1000);
                     
         }
-        public showBase():Promise<number> {
+        public showBase():Thenable<number> {
             console.log("SHOW graph");
             const d3zones = d3.select("g#zones")
                 .selectAll("circle")
@@ -317,9 +317,9 @@ namespace Comfort {
         }
         public show(user:User) {
             this.currentUser = user;
-            const promise = this.showBase();
+            const Thenable = this.showBase();
             this.setupOverActivity();
-            return promise.then(this.setupClickActivity.bind(this));
+            return Thenable.then(this.setupClickActivity.bind(this));
         }
   
     }
@@ -332,9 +332,9 @@ namespace Comfort {
             //this.setupHistory();
         }
 
-        public show(graphData : Array<ComfortUserChoice>):Promise<number> {
+        public show(graphData : Array<ComfortUserChoice>):Thenable<number> {
             this.graphData = graphData;
-            const promise = this.showBase();
+            const Thenable = this.showBase();
             d3.select("g#history")
                 .selectAll("circle")
                 .data(this.graphData)
@@ -366,13 +366,13 @@ namespace Comfort {
                 });
 
 
-            promise.then(function() {
+            Thenable.then(function() {
                console.log("SHOWED base graph - now what?");
             });
-            return promise;
+            return Thenable;
         }
 
-        public hide():Promise<number> {
+        public hide():Thenable<number> {
             return null;
         }
     }
@@ -419,7 +419,7 @@ namespace Comfort {
             });
             return unvotedUsers.length;
         }
-        public show ():Promise<number> {
+        public show ():Thenable<number> {
             console.log("SHOW UserChocieForm");
             d3.select(this.userZone)
                 .transition()
@@ -439,7 +439,7 @@ namespace Comfort {
 
             return Timed.for(800).then(this.afterShow.bind(this));
         }
-        public hide ():Promise<number> {
+        public hide ():Thenable<number> {
             console.log("HIDE userEntry");
             d3.select(this.userZone)
                 .transition()

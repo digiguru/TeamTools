@@ -22,6 +22,26 @@ var Comfort;
         return Timed;
     }());
     Comfort.Timed = Timed;
+    var Breadcrumb = (function () {
+        function Breadcrumb(name, command, params) {
+            this.name = name;
+            this.command = command;
+            this.params = params;
+            this.enabled = false;
+        }
+        return Breadcrumb;
+    }());
+    Comfort.Breadcrumb = Breadcrumb;
+    var BreadcrumbControl = (function () {
+        function BreadcrumbControl() {
+            this.items = new Array();
+        }
+        BreadcrumbControl.prototype.addBreadcrumb = function (name, command, params) {
+            this.items.push(new Breadcrumb(name, command, params));
+        };
+        return BreadcrumbControl;
+    }());
+    Comfort.BreadcrumbControl = BreadcrumbControl;
     var User = (function () {
         function User(name, id) {
             this.name = name;
@@ -259,9 +279,9 @@ var Comfort;
         };
         GraphComfortEntry.prototype.show = function (user) {
             this.currentUser = user;
-            var promise = this.showBase();
+            var Thenable = this.showBase();
             this.setupOverActivity();
-            return promise.then(this.setupClickActivity.bind(this));
+            return Thenable.then(this.setupClickActivity.bind(this));
         };
         return GraphComfortEntry;
     }(GraphComfortBase));
@@ -275,7 +295,7 @@ var Comfort;
         }
         GraphComfortHistory.prototype.show = function (graphData) {
             this.graphData = graphData;
-            var promise = this.showBase();
+            var Thenable = this.showBase();
             d3.select("g#history")
                 .selectAll("circle")
                 .data(this.graphData)
@@ -305,10 +325,10 @@ var Comfort;
                 var angle = polarDivision * index;
                 return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).y;
             });
-            promise.then(function () {
+            Thenable.then(function () {
                 console.log("SHOWED base graph - now what?");
             });
-            return promise;
+            return Thenable;
         };
         GraphComfortHistory.prototype.hide = function () {
             return null;
@@ -502,6 +522,7 @@ var Comfort;
             console.log("START everything");
             this.userChoiceHistory = new Array();
             this.formUserChoice = new FormUserChoice();
+            this.breadcrumbControl = new BreadcrumbControl();
         }
         Mediator.prototype.do = function (command, params) {
             switch (command) {
@@ -516,6 +537,17 @@ var Comfort;
                     var distance = params.number;
                     var user = params.user;
                     this.saveGraph(area, distance, user);
+                    break;
+                case "showUserChoice":
+                    this.showUserChoice();
+                    break;
+                case "showGraphComfortHistory":
+                    this.showGraphComfortHistory();
+                    break;
+                case "showGraphComfortChoice":
+                    var comfortuser = params;
+                    this.showGraphComfortEntry(comfortuser);
+                    break;
             }
         };
         Mediator.prototype.addUser = function (user) {
@@ -570,11 +602,10 @@ var Comfort;
             this.graphComfortEntry.hide().then(function () {
                 if (this.formUserChoice.hasMoreUsers()) {
                     console.log("Users left...", this);
-                    this.formUserChoice.show();
+                    this.showUserChoice();
                 }
                 else {
                     console.log("NO users left", this);
-                    //this.formUserChoice.show();
                     this.showGraphComfortHistory();
                 }
             }.bind(this));
