@@ -503,8 +503,13 @@ var Comfort;
             this.setupUsers();
         };
         FormUserChoice.prototype.setUsers = function (users) {
+            this.destroyUsers();
             this.users = users;
             this.setupUsers();
+            this.show();
+        };
+        FormUserChoice.prototype.destroyUsers = function () {
+            d3.select("g#users").selectAll("*").remove();
         };
         FormUserChoice.prototype.setupUsers = function () {
             var items = this.rebind();

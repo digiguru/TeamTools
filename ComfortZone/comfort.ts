@@ -554,8 +554,13 @@ namespace Comfort {
             this.setupUsers();
         }
         public setUsers(users:Array<User>) {
+            this.destroyUsers();
             this.users = users;
             this.setupUsers();
+            this.show();
+        }
+        private destroyUsers() {
+            d3.select("g#users").selectAll("*").remove();
         }
         private setupUsers () {
 
