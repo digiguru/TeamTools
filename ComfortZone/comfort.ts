@@ -2,10 +2,16 @@
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 
 //import {Promise} from 'es6-promise';
+//import {Point} from 'Point';
+//import {Point} from './Point';
+//import {Polar} from './Polar';
 
-
+//import Point = require('Polar', {
+    
+import * as Plot from 'Polar';
 
 namespace Comfort {
+    
     export class Timed {
         public static for(milliseconds:number) :Thenable<number> {
             const p: Thenable<Number> = new Promise((resolve)=>{
@@ -47,55 +53,12 @@ namespace Comfort {
         }
     }
     
-    export class Point {
-        x : number;
-        y : number;
-
-        constructor(x:number, y:number) {
-            this.x = x;
-            this.y = y;
-        }
-        static fromCoords(coords:Array<number>) {
-            return new Point(coords[0],coords[1]);
-        }
-        public static fromOffset(point:Point, origin:Point):Point {
-            const dx = point.x - origin.x;
-            const dy = point.y - origin.y;
-            return new Point(dx,dy);
-        }
-        public static toOffset(point:Point, origin:Point):Point {
-            const dx = point.x + origin.x;
-            const dy = point.y + origin.y;
-            return new Point(dx,dy);
-        }
-        public static distance(point:Point , origin:Point):number {
-            const offset = Point.fromOffset(point, origin);
-            return Point.distanceFromOffset(offset);
-        }
-        public static distanceFromOffset(offset:Point):number {
-            return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
-        }
-        public static toCartesianNoOffset(polar:Polar):Point {
-            const x = polar.radius * Math.cos(polar.angle);
-            const y = polar.radius * Math.sin(polar.angle);
-            return new Point(x, y); 
-        }
-        public static toCartesian(polar:Polar,origin:Point):Point {
-            const point = Point.toCartesianNoOffset(polar);
-            return Point.toOffset(point,origin); 
-        }
-        public static toPolar(point:Point, origin:Point):Polar {
-            const offset = Point.fromOffset(point, origin);
-            const radius = Point.distanceFromOffset(offset);
-            const angle = Math.atan2(offset.y, offset.x);
-            return new Polar(radius, angle);
-        }
-    }
 
     export class ComfortUserChoiceHistory {
         date :Date;
         data : Array<ComfortUserChoice>;
     }
+
     export class ComfortUserChoice {
         user : User;
         distance : number;
@@ -106,21 +69,13 @@ namespace Comfort {
           this.area = area;
         }
     }
-    export class Polar {
-        radius:number;
-        angle:number;
-        constructor(radius:number, angle:number) {
-            this.radius = radius;
-            this.angle = angle;
-        }
-        
-    }
+    
 
     export class GraphComfortBase {
         chaos : HTMLElement;
         stretch : HTMLElement;
         comfort : HTMLElement;
-        centerPoint : Point;
+        centerPoint : Plot.Point;
         
         constructor() {
             this.setupArea();
@@ -149,7 +104,7 @@ namespace Comfort {
             this.comfort = document.getElementById('comfort');
             const centerX = Number(this.comfort.getAttribute('cx'));
             const centerY = Number(this.comfort.getAttribute('cy'));
-            this.centerPoint = new Point(centerX,centerY);
+            this.centerPoint = new Plot.Point(centerX,centerY);
             
 
         }
@@ -223,7 +178,7 @@ namespace Comfort {
             return function(d:void, i:number) {
                 /* 'this' is the DOM element */
                 const coord = d3.mouse(this);
-                const distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
+                const distance = Plot.Point.distance(that.centerPoint, Plot.Point.fromCoords(coord));
                 const area = GraphComfortEntry.calculateDistance(distance);
                 that.highlight(area);
             }
@@ -234,8 +189,8 @@ namespace Comfort {
             const that : GraphComfortEntry = this;
             return function(d:void, i :number) {
                 /* 'this' is the DOM element */
-                const coord = Point.fromCoords(d3.mouse(this));
-                const distance = Point.distance(that.centerPoint, coord);
+                const coord = Plot.Point.fromCoords(d3.mouse(this));
+                const distance = Plot.Point.distance(that.centerPoint, coord);
                 const area = GraphComfortEntry.calculateDistance(distance);          
                 that.saveTheInteraction(area, distance);
             }
@@ -246,7 +201,7 @@ namespace Comfort {
             const that = this;
             return function(d:void, i:number) {
                 /* 'this' is the DOM element */
-                const coord = Point.fromCoords(d3.mouse(this));
+                const coord = Plot.Point.fromCoords(d3.mouse(this));
                 const el = SVG.circle(8, coord.x, coord.y, "dropper");
                 that.addDropper(el);
             }
@@ -358,11 +313,11 @@ namespace Comfort {
                 })
                 .attr("cx", function(data:ComfortUserChoice, index) {
                     const angle = polarDivision * index;
-                    return Point.toCartesian(new Polar(data.distance, angle), new Point(400,400)).x;
+                    return Plot.Point.toCartesian(new Plot.Polar(data.distance, angle), new Plot.Point(400,400)).x;
                 })
                 .attr("cy", function(data:ComfortUserChoice, index) {
                     const angle = polarDivision * index;
-                    return Point.toCartesian(new Polar(data.distance, angle), new Point(400,400)).y;
+                    return Plot.Point.toCartesian(new Plot.Polar(data.distance, angle), new Plot.Point(400,400)).y;
                 });
 
 

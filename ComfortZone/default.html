@@ -1,6 +1,9 @@
 
 <html>
-    <script src="d3.v3.min.js"></script><!-- TODO: get from remote https://d3js.org/d3.v3.min.js - fallback to local-->
+    <script src="modules.js"></script>
+    <script src="3rdParty/d3.v3.min.js"></script><!-- TODO: get from remote https://d3js.org/d3.v3.min.js - fallback to local-->
+
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>-->
     <style>
     @import url(http://fonts.googleapis.com/css?family=Share+Tech+Mono);
     #stage {
@@ -43,11 +46,11 @@
         stroke-width: 1;       
     }
     .dropper {
-        fill: #white; 
+        fill: white; 
         pointer-events: none;       
     }
     .dropped {
-        fill: #slategrey;        
+        fill: slategrey;        
     }
     
         </style>

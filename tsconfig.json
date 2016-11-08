@@ -1,7 +1,17 @@
 {
+    "compileOnSave": true,
     "compilerOptions": {
         "target": "es5",
-        "module": "commonjs",
-        "sourceMap": true
+        "module": "amd",
+        "moduleResolution": "classic",
+        "sourceMap": true,
+        "diagnostics": true,
+        "noFallthroughCasesInSwitch": true,
+        /*"noImplicitAny": true,*/
+        "noImplicitReturns": true,
+        /*"noImplicitThis": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,*/
+        "traceResolution": true
     }
 }
