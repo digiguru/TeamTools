@@ -107,7 +107,15 @@ define(["require", "exports", 'GraphComfortBase', 'Point', 'SVG'], function (req
             console.log("saveTheInteraction");
             this.removeInteractions();
             //TODO: Put in the line below
-            //mediator.saveGraph(area,distance,this.currentUser);
+            var event = new CustomEvent('saveGraph', {
+                "detail": {
+                    "area": area,
+                    "distance": distance,
+                    "currentUser": this.currentUser
+                }
+            });
+            document.dispatchEvent(event);
+            //mediator.saveGraph();
         };
         GraphComfortEntry.prototype.show = function (user) {
             this.currentUser = user;

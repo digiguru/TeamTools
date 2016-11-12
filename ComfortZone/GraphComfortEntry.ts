@@ -122,7 +122,15 @@ export class GraphComfortEntry extends GraphComfortBase {
         this.removeInteractions();
 
         //TODO: Put in the line below
-        //mediator.saveGraph(area,distance,this.currentUser);
+        var event = new CustomEvent('saveGraph', {
+            "detail": {
+                "area":area,
+                "distance":distance,
+                "currentUser":this.currentUser
+            }
+        });
+        document.dispatchEvent(event);
+        //mediator.saveGraph();
     }
     public show(user:User) {
         this.currentUser = user;
