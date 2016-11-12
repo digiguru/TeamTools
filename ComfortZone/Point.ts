@@ -1,8 +1,5 @@
 //import Polar = require('Polar');
-///<amd-dependency path="Polar" />
 
-//define(['Polar'], function(Polar:Polar) {
-//import Pan = require('Polar');
 import {Polar} from 'Polar';
 export class Point {
     x : number;

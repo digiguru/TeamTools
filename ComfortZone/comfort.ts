@@ -12,20 +12,20 @@
 
 console.log("Starting");
 
-function runMe() {
-    console.log("Running");
-    require(['Point'], function(o) {
-        const point = new o.Point(23,23);
-        console.log(point);
-    });
+require(['Polar'], function(o) {
+    const polar = new o.Polar(23,23);
+    console.log(polar);
+});
 
-    require(['Polar'], function(o) {
-        const polar = new o.Polar(23,23);
-        console.log(polar);
-    });
-}
+require(['Point'], function(o) {
+    const Point = new o.Point(23,23);
+    console.log(Point);
+});
 
-window.onload = runMe;
+require(['Mediator'], function(o) {
+    const Mediator = new o.Mediator(23,23);
+    console.log(Mediator);
+});
     
 //import {Mediator} from 'Mediator';
 //import {User} from 'User';

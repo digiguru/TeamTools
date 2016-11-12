@@ -1,7 +1,9 @@
 import {ComfortUserChoice} from 'ComfortUserChoice';
 import {BreadcrumbControl} from 'BreadcrumbControl';
 import {User} from 'User';
-import {FormUserChoice,GraphComfortEntry,GraphComfortHistory} from 'comfort';
+import {FormUserChoice} from 'FormUserChoice';
+import {GraphComfortEntry} from 'GraphComfortEntry';
+import {GraphComfortHistory} from 'GraphComfortHistory';
 
 
 export class Mediator {

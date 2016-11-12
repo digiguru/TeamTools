@@ -6,18 +6,18 @@
 //import {Point} from './Point';
 //import {Polar} from './Polar';
 console.log("Starting");
-function runMe() {
-    console.log("Running");
-    require(['Point'], function (o) {
-        var point = new o.Point(23, 23);
-        console.log(point);
-    });
-    require(['Polar'], function (o) {
-        var polar = new o.Polar(23, 23);
-        console.log(polar);
-    });
-}
-window.onload = runMe;
+require(['Polar'], function (o) {
+    var polar = new o.Polar(23, 23);
+    console.log(polar);
+});
+require(['Point'], function (o) {
+    var Point = new o.Point(23, 23);
+    console.log(Point);
+});
+require(['Mediator'], function (o) {
+    var Mediator = new o.Mediator(23, 23);
+    console.log(Mediator);
+});
 //import {Mediator} from 'Mediator';
 //import {User} from 'User';
 //const stage = new Comfort.Stage();

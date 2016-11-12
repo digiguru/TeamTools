@@ -1,10 +1,10 @@
-define(["require", "exports", 'ComfortUserChoice', 'BreadcrumbControl', 'comfort'], function (require, exports, ComfortUserChoice_1, BreadcrumbControl_1, comfort_1) {
+define(["require", "exports", 'ComfortUserChoice', 'BreadcrumbControl', 'FormUserChoice', 'GraphComfortEntry', 'GraphComfortHistory'], function (require, exports, ComfortUserChoice_1, BreadcrumbControl_1, FormUserChoice_1, GraphComfortEntry_1, GraphComfortHistory_1) {
     "use strict";
     var Mediator = (function () {
         function Mediator() {
             console.log("START everything");
             this.userChoiceHistory = new Array();
-            this.formUserChoice = new comfort_1.FormUserChoice();
+            this.formUserChoice = new FormUserChoice_1.FormUserChoice();
             this.breadcrumbControl = new BreadcrumbControl_1.BreadcrumbControl();
         }
         Mediator.prototype.do = function (command, params) {
@@ -44,14 +44,14 @@ define(["require", "exports", 'ComfortUserChoice', 'BreadcrumbControl', 'comfort
         };
         Mediator.prototype.showGraphComfortEntry = function (user) {
             if (!this.graphComfortEntry) {
-                this.graphComfortEntry = new comfort_1.GraphComfortEntry();
+                this.graphComfortEntry = new GraphComfortEntry_1.GraphComfortEntry();
             }
             this.graphComfortEntry.show(user);
         };
         Mediator.prototype.showGraphComfortHistory = function () {
             if (!this.graphComfortHistory) {
                 this.graphComfortEntry = null;
-                this.graphComfortHistory = new comfort_1.GraphComfortHistory();
+                this.graphComfortHistory = new GraphComfortHistory_1.GraphComfortHistory();
             }
             this.graphComfortHistory.show(this.userChoiceHistory);
         };

@@ -1,6 +1,5 @@
 //import Polar = require('Polar');
-///<amd-dependency path="Polar" />
-define(["require", "exports", 'Polar', "Polar"], function (require, exports, Polar_1) {
+define(["require", "exports", 'Polar'], function (require, exports, Polar_1) {
     "use strict";
     var Point = (function () {
         function Point(x, y) {
