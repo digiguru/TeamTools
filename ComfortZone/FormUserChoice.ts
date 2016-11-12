@@ -10,9 +10,10 @@ export class FormUserChoice {
         this.users = [];
         this.userZone = document.getElementById('users');
         this.d3Users = d3.select("g#users");
-        
-        this.setupUsers();
-        this.show();
+        if(this.users && this.users.length) {
+            this.setupUsers();
+            this.show();
+        }
     }
     public getUser(id) : User {
         const users =  this.users.filter(function(x) {
@@ -178,13 +179,15 @@ export class FormUserChoice {
         d3.select("g#users").selectAll("*").remove();
     }
     private setupUsers () {
-
-        const items = this.rebind();
-        items.enter().append("g")
-            .attr("id", function(e) {
-                return e.id;
-            })
-            .each(this.eachUser()); 
+       
+            const items = this.rebind();
+            items.enter().append("g")
+                .attr("id", function(e) {
+                    return e.id;
+                })
+                .each(this.eachUser()); 
+        
+        
         
     }
 

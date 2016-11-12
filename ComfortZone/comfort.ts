@@ -10,23 +10,24 @@
 
 
 
-console.log("Starting");
 
-require(['Polar'], function(o) {
-    const polar = new o.Polar(23,23);
-    console.log(polar);
+
+
+
+require(['Mediator','User'], function(m,u) {
+    console.log("Starting");
+    const mediator = new m.Mediator(23,23);
+    console.log(mediator);
+    mediator.setUsers([
+        new u.User("Adam Hall","xxx1"), 
+        new u.User("Billie Davey","xxx2"), 
+        new u.User("Laura Rowe","xxx3"),
+        new u.User("Simon Dawson","xxx4")
+    ]);
+    console.log(mediator);
 });
 
-require(['Point'], function(o) {
-    const Point = new o.Point(23,23);
-    console.log(Point);
-});
 
-require(['Mediator'], function(o) {
-    const Mediator = new o.Mediator(23,23);
-    console.log(Mediator);
-});
-    
 //import {Mediator} from 'Mediator';
 //import {User} from 'User';
 
@@ -34,10 +35,7 @@ require(['Mediator'], function(o) {
 //const stage = new Comfort.Stage();
 //const mediator = new Mediator();
 /*mediator.setUsers([
-    new User("Adam Hall","xxx1"), 
-    new User("Billie Davey","xxx2"), 
-    new User("Laura Rowe","xxx3"),
-    new User("Simon Dawson","xxx4")
+   
 ]);*/
 //export mediator;
 

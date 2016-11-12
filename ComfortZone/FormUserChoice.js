@@ -5,8 +5,10 @@ define(["require", "exports", 'Timed'], function (require, exports, Timed_1) {
             this.users = [];
             this.userZone = document.getElementById('users');
             this.d3Users = d3.select("g#users");
-            this.setupUsers();
-            this.show();
+            if (this.users && this.users.length) {
+                this.setupUsers();
+                this.show();
+            }
         }
         FormUserChoice.prototype.getUser = function (id) {
             var users = this.users.filter(function (x) {
