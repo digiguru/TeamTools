@@ -87,8 +87,8 @@ define(["require", "exports", 'Timed'], function (require, exports, Timed_1) {
                 console.log("CLICK - User - up  UserChocieForm");
                 //const name = this.getAttribute("data-name");
                 var id = this.getAttribute("data-id");
-                //TODO: NEED TO HAVE THE LINE BELOW.... but how?
-                //mediator.selectUser(id);
+                var event = new CustomEvent('selectUser', { "detail": { "id": id } });
+                document.dispatchEvent(event);
                 console.log("This was clicked", that);
             };
         };

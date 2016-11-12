@@ -15,6 +15,14 @@ require(['Mediator', 'User'], function (m, u) {
         new u.User("Laura Rowe", "xxx3"),
         new u.User("Simon Dawson", "xxx4")
     ]);
+    document.addEventListener("selectUser", function (e) {
+        mediator.selectUser(e.detail.id);
+    });
+    document.addEventListener("saveGraph", function (e) {
+        var o = e.detail;
+        mediator.saveGraph(o.area, o.distance, o.currentUser);
+    });
+    //;")
     console.log(mediator);
 });
 //import {Mediator} from 'Mediator';
