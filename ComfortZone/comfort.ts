@@ -13,10 +13,10 @@
 
 
 
-
+var mediator;
 require(['Mediator','User'], function(m,u) {
     console.log("Starting");
-    const mediator = new m.Mediator(23,23);
+    mediator = new m.Mediator(23,23);
     console.log(mediator);
     mediator.setUsers([
         new u.User("Adam Hall","xxx1"), 

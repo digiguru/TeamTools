@@ -12,6 +12,9 @@
         /*"noImplicitThis": true,
         "noUnusedLocals": true,
         "noUnusedParameters": true,*/
-        "traceResolution": true
+        "traceResolution": true,
+        "declarationDir": "out",
+        "outFile": "ComfortZone/js/compiled.js"
+        
     }
 }
