@@ -16,21 +16,25 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
     public show(graphData : Array<TuckmanUserChoice>):Thenable<number> {
         this.graphData = graphData;
         const Thenable = this.showBase();
+        
+        const totalPoints = graphData.length;
+        const totalHeight = 800;
+        const heightDivision = totalHeight / totalPoints;
+        
         d3.select("g#history")
             .selectAll("circle")
             .data(this.graphData)
                 .enter()
                 .append("circle")
                 .attr("cx", 0)
-                .attr("cy", 400)
+                .attr("cy", function(data:TuckmanUserChoice, index) {
+                    return (heightDivision * index) + 100;
+                })
                 .attr("r", 10)
                 .attr("class", "point")
                 .attr("id", function(d:TuckmanUserChoice) {
                     return d.user.name;
                 });
-        const totalPoints = graphData.length;
-        const totalHeight = 800;
-        const heightDivision = totalHeight / totalPoints;
         d3.select("g#history")
             .selectAll("circle")
             .transition()
@@ -41,7 +45,7 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
                 return data.distance;
             })
             .attr("cy", function(data:TuckmanUserChoice, index) {
-                return heightDivision * index;
+                return (heightDivision * index) + 100;
             });
 
 

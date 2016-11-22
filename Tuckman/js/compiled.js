@@ -468,8 +468,8 @@ define("GraphTuckmanEntry", ["require", "exports", "GraphTuckmanBase", "Point", 
             var that = this;
             return function (d, i) {
                 // 'this' is the DOM element 
-                var coord = d3.mouse(this);
-                var distance = coord[1];
+                var coord = Point_2.Point.fromCoords(d3.mouse(this));
+                var distance = coord.x;
                 var area = GraphTuckmanEntry.calculateDistance(distance);
                 that.highlight(area);
             };
@@ -480,7 +480,7 @@ define("GraphTuckmanEntry", ["require", "exports", "GraphTuckmanBase", "Point", 
             return function (d, i) {
                 // 'this' is the DOM element 
                 var coord = Point_2.Point.fromCoords(d3.mouse(this));
-                var distance = coord[1];
+                var distance = coord.x;
                 var area = GraphTuckmanEntry.calculateDistance(distance);
                 that.saveTheInteraction(area, distance);
             };
@@ -523,13 +523,13 @@ define("GraphTuckmanEntry", ["require", "exports", "GraphTuckmanBase", "Point", 
             document.getElementById('stage').insertBefore(el, this.clickArea);
         };
         GraphTuckmanEntry.calculateDistance = function (distance) {
-            if (distance < 100) {
+            if (distance < 200) {
                 return "forming";
             }
-            else if (distance < 300) {
+            else if (distance < 400) {
                 return "storming";
             }
-            else if (distance < 500) {
+            else if (distance < 600) {
                 return "norming";
             }
             else {
@@ -596,21 +596,23 @@ define("GraphTuckmanHistory", ["require", "exports", "GraphTuckmanBase"], functi
         GraphTuckmanHistory.prototype.show = function (graphData) {
             this.graphData = graphData;
             var Thenable = this.showBase();
+            var totalPoints = graphData.length;
+            var totalHeight = 800;
+            var heightDivision = totalHeight / totalPoints;
             d3.select("g#history")
                 .selectAll("circle")
                 .data(this.graphData)
                 .enter()
                 .append("circle")
                 .attr("cx", 0)
-                .attr("cy", 400)
+                .attr("cy", function (data, index) {
+                return (heightDivision * index) + 100;
+            })
                 .attr("r", 10)
                 .attr("class", "point")
                 .attr("id", function (d) {
                 return d.user.name;
             });
-            var totalPoints = graphData.length;
-            var totalHeight = 800;
-            var heightDivision = totalHeight / totalPoints;
             d3.select("g#history")
                 .selectAll("circle")
                 .transition()
@@ -621,7 +623,7 @@ define("GraphTuckmanHistory", ["require", "exports", "GraphTuckmanBase"], functi
                 return data.distance;
             })
                 .attr("cy", function (data, index) {
-                return heightDivision * index;
+                return (heightDivision * index) + 100;
             });
             Thenable.then(function () {
                 console.log("SHOWED base graph - now what?");

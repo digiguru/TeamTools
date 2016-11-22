@@ -30,8 +30,8 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
         const that : GraphTuckmanEntry = this;
         return function(d:void, i:number) {
             // 'this' is the DOM element 
-            const coord = d3.mouse(this);
-            const distance = coord[1];
+            const coord = Point.fromCoords(d3.mouse(this));
+            const distance = coord.x;
             const area = GraphTuckmanEntry.calculateDistance(distance);
             that.highlight(area);
         }
@@ -43,7 +43,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
         return function(d:void, i :number) {
             // 'this' is the DOM element 
             const coord = Point.fromCoords(d3.mouse(this));
-            const distance = coord[1];
+            const distance = coord.x;
             const area = GraphTuckmanEntry.calculateDistance(distance);          
             that.saveTheInteraction(area, distance);
         }
@@ -94,11 +94,11 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     public static calculateDistance(distance) {
-        if(distance < 100) {
+        if(distance < 200) {
             return "forming";
-        } else if (distance < 300) {
+        } else if (distance < 400) {
             return "storming";
-        } else if (distance < 500) {
+        } else if (distance < 600) {
             return "norming";
         } else {
             return "performing";
