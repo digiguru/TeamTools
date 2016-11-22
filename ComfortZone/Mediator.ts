@@ -13,12 +13,14 @@ export class Mediator {
     graphComfortEntry : GraphComfortEntry;
     graphComfortHistory: GraphComfortHistory;
     breadcrumbControl: BreadcrumbControl;
+    
     constructor() {
         console.log("START everything");
         this.userChoiceHistory = new Array<ComfortUserChoice>();
         this.formUserChoice = new FormUserChoice();
         this.breadcrumbControl = new BreadcrumbControl();
     }
+
     public do(command:string, params:any) {
         switch (command)
         {
@@ -47,9 +49,11 @@ export class Mediator {
 
         }
     }
+    
     public addUser(user:User) {
         this.formUserChoice.addUser(user);
     }
+
     public setUsers(users:Array<User>) {
         this.formUserChoice.setUsers(users);
     }
@@ -63,6 +67,26 @@ export class Mediator {
             this.graphComfortEntry = new GraphComfortEntry();
         }
         this.graphComfortEntry.show(user);
+    }
+    
+    public showComfortHistory(history) {
+        var afterHide = function() {
+           if(!this.graphComfortHistory) {
+                this.graphComfortEntry = null;
+                this.graphComfortHistory = new GraphComfortHistory();
+            }
+            this.graphComfortHistory.show(history);
+        }.bind(this);
+        if (this.graphComfortEntry) {
+            this.graphComfortEntry.hide().then(afterHide);
+        } else {
+            if(this.formUserChoice) {
+                this.formUserChoice.hide();
+            }
+            afterHide();
+        }
+        
+       
     }
 
     private showGraphComfortHistory() {
@@ -102,7 +126,7 @@ export class Mediator {
     private next() {
         //const prom = new Promsie()
         console.log("ACTION nextUser", this);
-        this.graphComfortEntry.hide().then(function() {
+        var afterHide = function() {
             if(this.formUserChoice.hasMoreUsers()) {
                 console.log("Users left...", this);
                 this.showUserChoice();
@@ -110,9 +134,9 @@ export class Mediator {
                 console.log("NO users left", this);
                 this.showGraphComfortHistory();
             }
-        }.bind(this));
+        }.bind(this);
         
-        
+        this.graphComfortEntry.hide().then(afterHide);
     }
 
     //setupUsers

@@ -68,6 +68,18 @@ require(['Mediator', 'User'], function (m, u) {
     //;")
     console.log(mediator);
 });
+/*
+Commands you can throw into the mediator....
+
+mediator.setUsers([
+   {name:"Nigel Hall",id:"1xx0"},
+   {name:"Fred Hall",id:"1xx1"},
+   {name:"Bob Hall",id:"1xx2"}
+]);
+
+mediator.addUser({name:"Mandy", id:"981298129"})
+
+*/
 //import {Mediator} from 'Mediator';
 //import {User} from 'User';
 //const stage = new Comfort.Stage();
@@ -672,6 +684,24 @@ define("Mediator", ["require", "exports", "ComfortUserChoice", "BreadcrumbContro
             }
             this.graphComfortEntry.show(user);
         };
+        Mediator.prototype.showComfortHistory = function (history) {
+            var afterHide = function () {
+                if (!this.graphComfortHistory) {
+                    this.graphComfortEntry = null;
+                    this.graphComfortHistory = new GraphComfortHistory_1.GraphComfortHistory();
+                }
+                this.graphComfortHistory.show(history);
+            }.bind(this);
+            if (this.graphComfortEntry) {
+                this.graphComfortEntry.hide().then(afterHide);
+            }
+            else {
+                if (this.formUserChoice) {
+                    this.formUserChoice.hide();
+                }
+                afterHide();
+            }
+        };
         Mediator.prototype.showGraphComfortHistory = function () {
             if (!this.graphComfortHistory) {
                 this.graphComfortEntry = null;
@@ -706,7 +736,7 @@ define("Mediator", ["require", "exports", "ComfortUserChoice", "BreadcrumbContro
         Mediator.prototype.next = function () {
             //const prom = new Promsie()
             console.log("ACTION nextUser", this);
-            this.graphComfortEntry.hide().then(function () {
+            var afterHide = function () {
                 if (this.formUserChoice.hasMoreUsers()) {
                     console.log("Users left...", this);
                     this.showUserChoice();
@@ -715,7 +745,8 @@ define("Mediator", ["require", "exports", "ComfortUserChoice", "BreadcrumbContro
                     console.log("NO users left", this);
                     this.showGraphComfortHistory();
                 }
-            }.bind(this));
+            }.bind(this);
+            this.graphComfortEntry.hide().then(afterHide);
         };
         return Mediator;
     }());
