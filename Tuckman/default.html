@@ -1,15 +1,6 @@
 
 <html>
-    <!--
-        <script src="modules.js"></script>
-    -->
-    <!--
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/0.19.41/system-csp-production.js"></script>
-    -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
-    <!--
-    <script src="3rdParty/require.min.js"></script>
-    -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.2/require.min.js"></script>
     <script src="../3rdParty/d3.v3.min.js"></script><!-- TODO: get from remote https://d3js.org/d3.v3.min.js - fallback to local-->
 
     <style>
@@ -73,18 +64,20 @@
                     d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z" />
             </g>
 
-            <rect class="area js-area-standard"   id="chaos"   width="800" height="800"  />
-
+            
             
             <g id="zones">
-                <circle class="area js-area-standard" id="stretch" r="0" cx="400" cy="400" /><!--300-->
-                <circle class="area js-area-standard" id="comfort" r="0" cx="400" cy="400" /><!--100-->
+                <rect class="area js-area-standard" id="norming"    x="0"   y="0" width="200" height="800" />
+                <rect class="area js-area-standard" id="storming"   x="200" y="0" width="200" height="800" />
+                <rect class="area js-area-standard" id="forming"    x="400" y="0" width="200" height="800" />
+                <rect class="area js-area-standard" id="performing" x="600" y="0" width="200" height="800" />
             </g>
             <g id="history">
             </g>
-            <text class="area-label" id="label-choas" text-anchor="middle" x="400" y="50">chaos</text>
-            <text class="area-label" id="label-stretch" text-anchor="middle" x="400" y="200">stretch</text>
-            <text class="area-label" id="label-comfort" text-anchor="middle" x="400" y="400">comfort</text>
+            <text class="area-label" id="label-norming"    text-anchor="middle" x="100" y="400">norming</text>
+            <text class="area-label" id="label-storming"   text-anchor="middle" x="300" y="400">storming</text>
+            <text class="area-label" id="label-forming"    text-anchor="middle" x="500" y="400">forming</text>
+            <text class="area-label" id="label-performing" text-anchor="middle" x="700" y="400">performing</text>
             
             <rect   id="clickable"   width="800" height="800" fill-opacity="0.0"  />
             <g id="users">

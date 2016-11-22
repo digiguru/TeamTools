@@ -14,7 +14,7 @@
         "noUnusedParameters": true,*/
         "traceResolution": true,
         "declarationDir": "out",
-        "outFile": "ComfortZone/js/compiled.js"
+        "outFile": "js/compiled.js"
         
     }
 }
