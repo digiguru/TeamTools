@@ -1,6 +1,6 @@
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="Polar.ts"/>
+/// <reference path="../Shared/Polar.ts"/>
 
 //import {Promise} from 'es6-promise';
 //import {Point} from 'Point';
@@ -14,7 +14,7 @@
 
 
 var mediator;
-require(['Mediator','User'], function(m,u) {
+require(['Mediator','../Shared/User'], function(m,u) {
     console.log("Starting");
     mediator = new m.Mediator(23,23);
     console.log(mediator);

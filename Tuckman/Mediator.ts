@@ -1,7 +1,7 @@
 import {TuckmanUserChoice} from 'TuckmanUserChoice';
-import {BreadcrumbControl} from 'BreadcrumbControl';
-import {User} from 'User';
-import {FormUserChoice} from 'FormUserChoice';
+import {BreadcrumbControl} from '../Shared/BreadcrumbControl';
+import {User} from '../Shared/User';
+import {FormUserChoice} from '../Shared/FormUserChoice';
 import {GraphTuckmanEntry} from 'GraphTuckmanEntry';
 import {GraphTuckmanHistory} from 'GraphTuckmanHistory';
 

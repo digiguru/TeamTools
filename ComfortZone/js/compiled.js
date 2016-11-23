@@ -3,92 +3,7 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define("Breadcrumb", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var Breadcrumb = (function () {
-        function Breadcrumb(name, command, params) {
-            this.name = name;
-            this.command = command;
-            this.params = params;
-            this.enabled = false;
-        }
-        return Breadcrumb;
-    }());
-    exports.Breadcrumb = Breadcrumb;
-});
-define("BreadcrumbControl", ["require", "exports", "Breadcrumb"], function (require, exports, Breadcrumb_1) {
-    "use strict";
-    var BreadcrumbControl = (function () {
-        function BreadcrumbControl() {
-            this.items = new Array();
-        }
-        BreadcrumbControl.prototype.addBreadcrumb = function (name, command, params) {
-            this.items.push(new Breadcrumb_1.Breadcrumb(name, command, params));
-        };
-        return BreadcrumbControl;
-    }());
-    exports.BreadcrumbControl = BreadcrumbControl;
-});
-define("Polar", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var Polar = (function () {
-        function Polar(radius, angle) {
-            this.radius = radius;
-            this.angle = angle;
-        }
-        return Polar;
-    }());
-    exports.Polar = Polar;
-});
-/// <reference path="../typings/d3/d3.d.ts" />
-/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="Polar.ts"/>
-//import {Promise} from 'es6-promise';
-//import {Point} from 'Point';
-//import {Point} from './Point';
-//import {Polar} from './Polar';
-var mediator;
-require(['Mediator', 'User'], function (m, u) {
-    console.log("Starting");
-    mediator = new m.Mediator(23, 23);
-    console.log(mediator);
-    mediator.setUsers([
-        new u.User("Adam Hall", "xxx1"),
-        new u.User("Billie Davey", "xxx2"),
-        new u.User("Laura Rowe", "xxx3"),
-        new u.User("Simon Dawson", "xxx4")
-    ]);
-    document.addEventListener("selectUser", function (e) {
-        mediator.selectUser(e.detail.id);
-    });
-    document.addEventListener("saveGraph", function (e) {
-        var o = e.detail;
-        mediator.saveGraph(o.area, o.distance, o.currentUser);
-    });
-    //;")
-    console.log(mediator);
-});
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"},
-   {name:"Fred Hall",id:"1xx1"},
-   {name:"Bob Hall",id:"1xx2"}
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
-define("User", ["require", "exports"], function (require, exports) {
+define("Shared/User", ["require", "exports"], function (require, exports) {
     "use strict";
     var User = (function () {
         function User(name, id) {
@@ -100,7 +15,7 @@ define("User", ["require", "exports"], function (require, exports) {
     }());
     exports.User = User;
 });
-define("ComfortUserChoice", ["require", "exports"], function (require, exports) {
+define("ComfortZone/ComfortUserChoice", ["require", "exports"], function (require, exports) {
     "use strict";
     var ComfortUserChoice = (function () {
         function ComfortUserChoice(user, distance, area) {
@@ -112,7 +27,7 @@ define("ComfortUserChoice", ["require", "exports"], function (require, exports) 
     }());
     exports.ComfortUserChoice = ComfortUserChoice;
 });
-define("ComfortUserChoiceHistory", ["require", "exports"], function (require, exports) {
+define("ComfortZone/ComfortUserChoiceHistory", ["require", "exports"], function (require, exports) {
     "use strict";
     var ComfortUserChoiceHistory = (function () {
         function ComfortUserChoiceHistory() {
@@ -121,7 +36,7 @@ define("ComfortUserChoiceHistory", ["require", "exports"], function (require, ex
     }());
     exports.ComfortUserChoiceHistory = ComfortUserChoiceHistory;
 });
-define("ComfortZones", ["require", "exports"], function (require, exports) {
+define("ComfortZone/ComfortZones", ["require", "exports"], function (require, exports) {
     "use strict";
     var ComfortZones = (function () {
         function ComfortZones(name, radius) {
@@ -132,7 +47,7 @@ define("ComfortZones", ["require", "exports"], function (require, exports) {
     }());
     exports.ComfortZones = ComfortZones;
 });
-define("Timed", ["require", "exports"], function (require, exports) {
+define("Shared/Timed", ["require", "exports"], function (require, exports) {
     "use strict";
     var Timed = (function () {
         function Timed() {
@@ -149,188 +64,19 @@ define("Timed", ["require", "exports"], function (require, exports) {
     }());
     exports.Timed = Timed;
 });
-define("FormUserChoice", ["require", "exports", "Timed"], function (require, exports, Timed_1) {
+define("Shared/Polar", ["require", "exports"], function (require, exports) {
     "use strict";
-    var FormUserChoice = (function () {
-        function FormUserChoice() {
-            this.users = [];
-            this.userZone = document.getElementById('users');
-            this.d3Users = d3.select("g#users");
-            if (this.users && this.users.length) {
-                this.setupUsers();
-                this.show();
-            }
+    var Polar = (function () {
+        function Polar(radius, angle) {
+            this.radius = radius;
+            this.angle = angle;
         }
-        FormUserChoice.prototype.getUser = function (id) {
-            var users = this.users.filter(function (x) {
-                return x.id === id;
-            });
-            if (users.length) {
-                return users[0];
-            }
-            throw Error("Cannot find user " + id);
-        };
-        FormUserChoice.prototype.markUserDone = function (user) {
-            for (var i = 0; i < this.users.length; i++) {
-                if (user.id === this.users[i].id) {
-                    user.voted = true;
-                }
-            }
-            this.rebind();
-        };
-        FormUserChoice.prototype.afterShow = function () {
-            console.log("ENDSHOW UserChocieForm");
-            this.d3Users
-                .selectAll("rect")
-                .on("mouseup", this.clickUser());
-        };
-        FormUserChoice.prototype.hasMoreUsers = function () {
-            var unvotedUsers = this.users.filter(function (x) {
-                return !x.voted;
-            });
-            return unvotedUsers.length;
-        };
-        FormUserChoice.prototype.show = function () {
-            console.log("SHOW UserChocieForm");
-            d3.select(this.userZone)
-                .transition()
-                .duration(function () {
-                return 800;
-            })
-                .style("fill-opacity", 1)
-                .attr("transform", "matrix(1,0,0,1,0,0)");
-            this.d3Users.selectAll("g").attr("class", function (e) {
-                if (e.voted) {
-                    return "user-group-complete";
-                }
-                else {
-                    return "user-group";
-                }
-            });
-            return Timed_1.Timed.for(800).then(this.afterShow.bind(this));
-        };
-        FormUserChoice.prototype.hide = function () {
-            console.log("HIDE userEntry");
-            d3.select(this.userZone)
-                .transition()
-                .duration(function () {
-                return 800;
-            })
-                .style("fill-opacity", 0)
-                .attr("transform", "matrix(2,0,0,2,-400,-90)");
-            d3.select("g#users")
-                .selectAll("rect")
-                .on("mouseup", function (e) {
-                console.log("NOCLICK User - This was clicked, but ignored", this);
-            });
-            return Timed_1.Timed.for(800);
-        };
-        FormUserChoice.prototype.rebind = function () {
-            return this.d3Users
-                .selectAll("circle")
-                .data(this.users);
-        };
-        FormUserChoice.prototype.clickUser = function () {
-            // 'that' is the instance of graph 
-            var that = this;
-            return function (d, i) {
-                // 'this' is the DOM element 
-                console.log("CLICK - User - up  UserChocieForm");
-                //const name = this.getAttribute("data-name");
-                var id = this.getAttribute("data-id");
-                var event = new CustomEvent('selectUser', { "detail": { "id": id } });
-                document.dispatchEvent(event);
-                console.log("This was clicked", that);
-            };
-        };
-        FormUserChoice.prototype.overUser = function () {
-            // 'that' is the instance of graph 
-            var that = this;
-            return function (d, i) {
-                // 'this' is the DOM element 
-                d3.select(this.parentNode)
-                    .selectAll("text")
-                    .transition()
-                    .duration(250)
-                    .style("fill", function () {
-                    return "#00D7FE";
-                });
-            };
-        };
-        FormUserChoice.prototype.leaveUser = function () {
-            // 'that' is the instance of graph 
-            var that = this;
-            return function (d, i) {
-                // 'this' is the DOM element 
-                d3.select(this.parentNode)
-                    .selectAll("text")
-                    .transition()
-                    .duration(function () {
-                    return 250;
-                })
-                    .style("fill", function () {
-                    return "grey";
-                });
-            };
-        };
-        FormUserChoice.prototype.eachUser = function () {
-            var that = this;
-            return function (e, i) {
-                //Event.add(['mousedown'], this.stage, this.chooseUser);
-                //Event.add(["mouseover"], this, thisStage.checkOverUsers);
-                var d3Item = d3.select(this);
-                d3Item.append("rect")
-                    .attr("y", function (e) {
-                    return 60 + (i * 90);
-                })
-                    .attr("x", 0)
-                    .attr("width", 800)
-                    .attr("height", 90)
-                    .attr("data-name", e.name)
-                    .attr("data-id", e.id)
-                    .on("mouseover", that.overUser())
-                    .on("mouseleave", that.leaveUser());
-                d3Item.append("text")
-                    .attr("class", "username")
-                    .attr("y", function (e) {
-                    return 30 + ((i + 1) * 90);
-                })
-                    .attr("x", 60)
-                    .attr("data-name", e.name)
-                    .style("font-size", 60)
-                    .style("font-family", "Share Tech Mono")
-                    .text(function (j) {
-                    return e.name;
-                });
-            };
-        };
-        FormUserChoice.prototype.addUser = function (user) {
-            this.users.push(user);
-            this.setupUsers();
-        };
-        FormUserChoice.prototype.setUsers = function (users) {
-            this.destroyUsers();
-            this.users = users;
-            this.setupUsers();
-            this.show();
-        };
-        FormUserChoice.prototype.destroyUsers = function () {
-            d3.select("g#users").selectAll("*").remove();
-        };
-        FormUserChoice.prototype.setupUsers = function () {
-            var items = this.rebind();
-            items.enter().append("g")
-                .attr("id", function (e) {
-                return e.id;
-            })
-                .each(this.eachUser());
-        };
-        return FormUserChoice;
+        return Polar;
     }());
-    exports.FormUserChoice = FormUserChoice;
+    exports.Polar = Polar;
 });
 //import Polar = require('Polar');
-define("Point", ["require", "exports", "Polar"], function (require, exports, Polar_1) {
+define("Shared/Point", ["require", "exports", "Shared/Polar"], function (require, exports, Polar_1) {
     "use strict";
     var Point = (function () {
         function Point(x, y) {
@@ -377,7 +123,7 @@ define("Point", ["require", "exports", "Polar"], function (require, exports, Pol
     exports.Point = Point;
 });
 //});
-define("GraphComfortBase", ["require", "exports", "Timed", "ComfortZones", "Point"], function (require, exports, Timed_2, ComfortZones_1, Point_1) {
+define("ComfortZone/GraphComfortBase", ["require", "exports", "Shared/Timed", "ComfortZone/ComfortZones", "Shared/Point"], function (require, exports, Timed_1, ComfortZones_1, Point_1) {
     "use strict";
     var GraphComfortBase = (function () {
         function GraphComfortBase() {
@@ -416,7 +162,7 @@ define("GraphComfortBase", ["require", "exports", "Timed", "ComfortZones", "Poin
                 .delay(250)
                 .duration(250)
                 .attr("r", 0);
-            return Timed_2.Timed.for(1000);
+            return Timed_1.Timed.for(1000);
         };
         GraphComfortBase.prototype.showBase = function () {
             console.log("SHOW graph");
@@ -430,13 +176,13 @@ define("GraphComfortBase", ["require", "exports", "Timed", "ComfortZones", "Poin
                 .attr("r", function (d) {
                 return d.radius;
             });
-            return Timed_2.Timed.for(1000);
+            return Timed_1.Timed.for(1000);
         };
         return GraphComfortBase;
     }());
     exports.GraphComfortBase = GraphComfortBase;
 });
-define("SVG", ["require", "exports"], function (require, exports) {
+define("Shared/SVG", ["require", "exports"], function (require, exports) {
     "use strict";
     var SVG = (function () {
         function SVG() {
@@ -457,7 +203,7 @@ define("SVG", ["require", "exports"], function (require, exports) {
     }());
     exports.SVG = SVG;
 });
-define("GraphComfortEntry", ["require", "exports", "GraphComfortBase", "Point", "SVG"], function (require, exports, GraphComfortBase_1, Point_2, SVG_1) {
+define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/GraphComfortBase", "Shared/Point", "Shared/SVG"], function (require, exports, GraphComfortBase_1, Point_2, SVG_1) {
     "use strict";
     var GraphComfortEntry = (function (_super) {
         __extends(GraphComfortEntry, _super);
@@ -581,7 +327,7 @@ define("GraphComfortEntry", ["require", "exports", "GraphComfortBase", "Point", 
     }(GraphComfortBase_1.GraphComfortBase));
     exports.GraphComfortEntry = GraphComfortEntry;
 });
-define("GraphComfortHistory", ["require", "exports", "GraphComfortBase", "Point", "Polar"], function (require, exports, GraphComfortBase_2, Point_3, Polar_2) {
+define("ComfortZone/GraphComfortHistory", ["require", "exports", "ComfortZone/GraphComfortBase", "Shared/Point", "Shared/Polar"], function (require, exports, GraphComfortBase_2, Point_3, Polar_2) {
     "use strict";
     var GraphComfortHistory = (function (_super) {
         __extends(GraphComfortHistory, _super);
@@ -634,7 +380,213 @@ define("GraphComfortHistory", ["require", "exports", "GraphComfortBase", "Point"
     }(GraphComfortBase_2.GraphComfortBase));
     exports.GraphComfortHistory = GraphComfortHistory;
 });
-define("Mediator", ["require", "exports", "ComfortUserChoice", "BreadcrumbControl", "FormUserChoice", "GraphComfortEntry", "GraphComfortHistory"], function (require, exports, ComfortUserChoice_1, BreadcrumbControl_1, FormUserChoice_1, GraphComfortEntry_1, GraphComfortHistory_1) {
+define("Shared/Breadcrumb", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var Breadcrumb = (function () {
+        function Breadcrumb(name, command, params) {
+            this.name = name;
+            this.command = command;
+            this.params = params;
+            this.enabled = false;
+        }
+        return Breadcrumb;
+    }());
+    exports.Breadcrumb = Breadcrumb;
+});
+define("Shared/BreadcrumbControl", ["require", "exports", "Shared/Breadcrumb"], function (require, exports, Breadcrumb_1) {
+    "use strict";
+    var BreadcrumbControl = (function () {
+        function BreadcrumbControl() {
+            this.items = new Array();
+        }
+        BreadcrumbControl.prototype.addBreadcrumb = function (name, command, params) {
+            this.items.push(new Breadcrumb_1.Breadcrumb(name, command, params));
+        };
+        return BreadcrumbControl;
+    }());
+    exports.BreadcrumbControl = BreadcrumbControl;
+});
+define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function (require, exports, Timed_2) {
+    "use strict";
+    var FormUserChoice = (function () {
+        function FormUserChoice() {
+            this.users = [];
+            this.userZone = document.getElementById('users');
+            this.d3Users = d3.select("g#users");
+            if (this.users && this.users.length) {
+                this.setupUsers();
+                this.show();
+            }
+        }
+        FormUserChoice.prototype.getUser = function (id) {
+            var users = this.users.filter(function (x) {
+                return x.id === id;
+            });
+            if (users.length) {
+                return users[0];
+            }
+            throw Error("Cannot find user " + id);
+        };
+        FormUserChoice.prototype.markUserDone = function (user) {
+            for (var i = 0; i < this.users.length; i++) {
+                if (user.id === this.users[i].id) {
+                    user.voted = true;
+                }
+            }
+            this.rebind();
+        };
+        FormUserChoice.prototype.afterShow = function () {
+            console.log("ENDSHOW UserChocieForm");
+            this.d3Users
+                .selectAll("rect")
+                .on("mouseup", this.clickUser());
+        };
+        FormUserChoice.prototype.hasMoreUsers = function () {
+            var unvotedUsers = this.users.filter(function (x) {
+                return !x.voted;
+            });
+            return unvotedUsers.length;
+        };
+        FormUserChoice.prototype.show = function () {
+            console.log("SHOW UserChocieForm");
+            d3.select(this.userZone)
+                .transition()
+                .duration(function () {
+                return 800;
+            })
+                .style("fill-opacity", 1)
+                .attr("transform", "matrix(1,0,0,1,0,0)");
+            this.d3Users.selectAll("g").attr("class", function (e) {
+                if (e.voted) {
+                    return "user-group-complete";
+                }
+                else {
+                    return "user-group";
+                }
+            });
+            return Timed_2.Timed.for(800).then(this.afterShow.bind(this));
+        };
+        FormUserChoice.prototype.hide = function () {
+            console.log("HIDE userEntry");
+            d3.select(this.userZone)
+                .transition()
+                .duration(function () {
+                return 800;
+            })
+                .style("fill-opacity", 0)
+                .attr("transform", "matrix(2,0,0,2,-400,-90)");
+            d3.select("g#users")
+                .selectAll("rect")
+                .on("mouseup", function (e) {
+                console.log("NOCLICK User - This was clicked, but ignored", this);
+            });
+            return Timed_2.Timed.for(800);
+        };
+        FormUserChoice.prototype.rebind = function () {
+            return this.d3Users
+                .selectAll("circle")
+                .data(this.users);
+        };
+        FormUserChoice.prototype.clickUser = function () {
+            // 'that' is the instance of graph 
+            var that = this;
+            return function (d, i) {
+                // 'this' is the DOM element 
+                console.log("CLICK - User - up  UserChocieForm");
+                //const name = this.getAttribute("data-name");
+                var id = this.getAttribute("data-id");
+                var event = new CustomEvent('selectUser', { "detail": { "id": id } });
+                document.dispatchEvent(event);
+                console.log("This was clicked", that);
+            };
+        };
+        FormUserChoice.prototype.overUser = function () {
+            // 'that' is the instance of graph 
+            var that = this;
+            return function (d, i) {
+                // 'this' is the DOM element 
+                d3.select(this.parentNode)
+                    .selectAll("text")
+                    .transition()
+                    .duration(250)
+                    .style("fill", function () {
+                    return "#00D7FE";
+                });
+            };
+        };
+        FormUserChoice.prototype.leaveUser = function () {
+            // 'that' is the instance of graph 
+            var that = this;
+            return function (d, i) {
+                // 'this' is the DOM element 
+                d3.select(this.parentNode)
+                    .selectAll("text")
+                    .transition()
+                    .duration(function () {
+                    return 250;
+                })
+                    .style("fill", function () {
+                    return "grey";
+                });
+            };
+        };
+        FormUserChoice.prototype.eachUser = function () {
+            var that = this;
+            return function (e, i) {
+                //Event.add(['mousedown'], this.stage, this.chooseUser);
+                //Event.add(["mouseover"], this, thisStage.checkOverUsers);
+                var d3Item = d3.select(this);
+                d3Item.append("rect")
+                    .attr("y", function (e) {
+                    return 60 + (i * 90);
+                })
+                    .attr("x", 0)
+                    .attr("width", 800)
+                    .attr("height", 90)
+                    .attr("data-name", e.name)
+                    .attr("data-id", e.id)
+                    .on("mouseover", that.overUser())
+                    .on("mouseleave", that.leaveUser());
+                d3Item.append("text")
+                    .attr("class", "username")
+                    .attr("y", function (e) {
+                    return 30 + ((i + 1) * 90);
+                })
+                    .attr("x", 60)
+                    .attr("data-name", e.name)
+                    .style("font-size", 60)
+                    .style("font-family", "Share Tech Mono")
+                    .text(function (j) {
+                    return e.name;
+                });
+            };
+        };
+        FormUserChoice.prototype.addUser = function (user) {
+            this.users.push(user);
+            this.setupUsers();
+        };
+        FormUserChoice.prototype.setUsers = function (users) {
+            this.destroyUsers();
+            this.users = users;
+            this.setupUsers();
+            this.show();
+        };
+        FormUserChoice.prototype.destroyUsers = function () {
+            d3.select("g#users").selectAll("*").remove();
+        };
+        FormUserChoice.prototype.setupUsers = function () {
+            var items = this.rebind();
+            items.enter().append("g")
+                .attr("id", function (e) {
+                return e.id;
+            })
+                .each(this.eachUser());
+        };
+        return FormUserChoice;
+    }());
+    exports.FormUserChoice = FormUserChoice;
+});
+define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserChoice", "Shared/BreadcrumbControl", "Shared/FormUserChoice", "ComfortZone/GraphComfortEntry", "ComfortZone/GraphComfortHistory"], function (require, exports, ComfortUserChoice_1, BreadcrumbControl_1, FormUserChoice_1, GraphComfortEntry_1, GraphComfortHistory_1) {
     "use strict";
     var Mediator = (function () {
         function Mediator() {
@@ -752,4 +704,52 @@ define("Mediator", ["require", "exports", "ComfortUserChoice", "BreadcrumbContro
     }());
     exports.Mediator = Mediator;
 });
+/// <reference path="../typings/d3/d3.d.ts" />
+/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
+/// <reference path="../Shared/Polar.ts"/>
+//import {Promise} from 'es6-promise';
+//import {Point} from 'Point';
+//import {Point} from './Point';
+//import {Polar} from './Polar';
+var mediator;
+require(['Mediator', '../Shared/User'], function (m, u) {
+    console.log("Starting");
+    mediator = new m.Mediator(23, 23);
+    console.log(mediator);
+    mediator.setUsers([
+        new u.User("Adam Hall", "xxx1"),
+        new u.User("Billie Davey", "xxx2"),
+        new u.User("Laura Rowe", "xxx3"),
+        new u.User("Simon Dawson", "xxx4")
+    ]);
+    document.addEventListener("selectUser", function (e) {
+        mediator.selectUser(e.detail.id);
+    });
+    document.addEventListener("saveGraph", function (e) {
+        var o = e.detail;
+        mediator.saveGraph(o.area, o.distance, o.currentUser);
+    });
+    //;")
+    console.log(mediator);
+});
+/*
+Commands you can throw into the mediator....
+
+mediator.setUsers([
+   {name:"Nigel Hall",id:"1xx0"},
+   {name:"Fred Hall",id:"1xx1"},
+   {name:"Bob Hall",id:"1xx2"}
+]);
+
+mediator.addUser({name:"Mandy", id:"981298129"})
+
+*/
+//import {Mediator} from 'Mediator';
+//import {User} from 'User';
+//const stage = new Comfort.Stage();
+//const mediator = new Mediator();
+/*mediator.setUsers([
+   
+]);*/
+//export mediator;
 //# sourceMappingURL=compiled.js.map
