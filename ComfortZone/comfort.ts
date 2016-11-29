@@ -7,14 +7,11 @@
 //import {Point} from './Point';
 //import {Polar} from './Polar';
 
-
-
-
-
-
-
 var mediator;
-require(['Mediator','../Shared/User'], function(m,u) {
+requirejs.config( {
+    baseUrl : '/'
+});
+require(['ComfortZone/Mediator','Shared/User'], function(m,u) {
     console.log("Starting");
     mediator = new m.Mediator(23,23);
     console.log(mediator);

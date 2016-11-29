@@ -1,7 +1,7 @@
 import {ComfortUserChoice} from 'ComfortUserChoice';
-import {BreadcrumbControl} from '../Shared/BreadcrumbControl';
-import {User} from '../Shared/User';
-import {FormUserChoice} from '../Shared/FormUserChoice';
+import {BreadcrumbControl} from 'Shared/BreadcrumbControl';
+import {User} from 'Shared/User';
+import {FormUserChoice} from 'Shared/FormUserChoice';
 import {GraphComfortEntry} from 'GraphComfortEntry';
 import {GraphComfortHistory} from 'GraphComfortHistory';
 

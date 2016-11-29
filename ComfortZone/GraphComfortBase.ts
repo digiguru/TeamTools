@@ -1,6 +1,6 @@
-import {Timed} from '../Shared/Timed';
+import {Timed} from 'Shared/Timed';
 import {ComfortZones} from 'ComfortZones';
-import {Point} from '../Shared/Point';
+import {Point} from 'Shared/Point';
 
 
 export class GraphComfortBase {
