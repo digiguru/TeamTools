@@ -1,7 +1,7 @@
-import {User} from 'User';
+import {User} from 'Shared/User';
 import {GraphComfortBase} from 'GraphComfortBase';
-import {Point} from 'Point';
-import {SVG} from 'SVG';
+import {Point} from 'Shared/Point';
+import {SVG} from 'Shared/SVG';
 
 export class GraphComfortEntry extends GraphComfortBase {
     clickArea : HTMLElement;

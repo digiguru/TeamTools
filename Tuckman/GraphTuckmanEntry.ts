@@ -1,7 +1,7 @@
-import {User} from 'User';
+import {User} from 'Shared/User';
 import {GraphTuckmanBase} from 'GraphTuckmanBase';
-import {Point} from 'Point';
-import {SVG} from 'SVG';
+import {Point} from 'Shared/Point';
+import {SVG} from 'Shared/SVG';
 
 export class GraphTuckmanEntry extends GraphTuckmanBase {
     clickArea : HTMLElement;
