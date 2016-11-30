@@ -1,7 +1,7 @@
-import {ComfortUserChoice} from 'ComfortUserChoice';
-import {GraphComfortBase} from 'GraphComfortBase';
-import {Point} from 'Shared/Point';
-import {Polar} from 'Shared/Polar';
+import {ComfortUserChoice} from './ComfortUserChoice';
+import {GraphComfortBase} from './GraphComfortBase';
+import {Point} from '../Shared/Point';
+import {Polar} from '../Shared/Polar';
 
 
 export class GraphComfortHistory extends GraphComfortBase {

@@ -3,69 +3,6 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define("Shared/Polar", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var Polar = (function () {
-        function Polar(radius, angle) {
-            this.radius = radius;
-            this.angle = angle;
-        }
-        return Polar;
-    }());
-    exports.Polar = Polar;
-});
-/// <reference path="../typings/d3/d3.d.ts" />
-/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="../Shared/Polar.ts"/>
-//import {Promise} from 'es6-promise';
-//import {Point} from 'Point';
-//import {Point} from './Point';
-//import {Polar} from './Polar';
-var mediator;
-requirejs.config({
-    baseUrl: '/'
-});
-var test = "";
-require(['ComfortZone/Mediator', 'Shared/User'], function (m, u) {
-    console.log("Starting");
-    mediator = new m.Mediator(23, 23);
-    console.log(mediator);
-    mediator.setUsers([
-        new u.User("Adam Hall", "xxx1"),
-        new u.User("Billie Davey", "xxx2"),
-        new u.User("Laura Rowe", "xxx3"),
-        new u.User("Simon Dawson", "xxx4")
-    ]);
-    document.addEventListener("selectUser", function (e) {
-        mediator.selectUser(e.detail.id);
-    });
-    document.addEventListener("saveGraph", function (e) {
-        var o = e.detail;
-        mediator.saveGraph(o.area, o.distance, o.currentUser);
-    });
-    //;")
-    console.log(mediator);
-});
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"},
-   {name:"Fred Hall",id:"1xx1"},
-   {name:"Bob Hall",id:"1xx2"}
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
 define("Shared/User", ["require", "exports"], function (require, exports) {
     "use strict";
     var User = (function () {
@@ -126,6 +63,17 @@ define("Shared/Timed", ["require", "exports"], function (require, exports) {
         return Timed;
     }());
     exports.Timed = Timed;
+});
+define("Shared/Polar", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var Polar = (function () {
+        function Polar(radius, angle) {
+            this.radius = radius;
+            this.angle = angle;
+        }
+        return Polar;
+    }());
+    exports.Polar = Polar;
 });
 //import Polar = require('Polar');
 define("Shared/Point", ["require", "exports", "Shared/Polar"], function (require, exports, Polar_1) {
@@ -756,4 +704,55 @@ define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserCh
     }());
     exports.Mediator = Mediator;
 });
+/// <reference path="../typings/d3/d3.d.ts" />
+/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
+/// <reference path="../Shared/Polar.ts"/>
+//import {Promise} from 'es6-promise';
+//import {Point} from 'Point';
+//import {Point} from './Point';
+//import {Polar} from './Polar';
+var mediator;
+requirejs.config({
+    baseUrl: '/'
+});
+require(['ComfortZone/Mediator', 'Shared/User'], function (m, u) {
+    console.log("Starting");
+    mediator = new m.Mediator(23, 23);
+    console.log(mediator);
+    mediator.setUsers([
+        new u.User("Adam Hall", "xxx1"),
+        new u.User("Billie Davey", "xxx2"),
+        new u.User("Laura Rowe", "xxx3"),
+        new u.User("Simon Dawson", "xxx4")
+    ]);
+    document.addEventListener("selectUser", function (e) {
+        mediator.selectUser(e.detail.id);
+    });
+    document.addEventListener("saveGraph", function (e) {
+        var o = e.detail;
+        mediator.saveGraph(o.area, o.distance, o.currentUser);
+    });
+    //;")
+    console.log(mediator);
+});
+/*
+Commands you can throw into the mediator....
+
+mediator.setUsers([
+   {name:"Nigel Hall",id:"1xx0"},
+   {name:"Fred Hall",id:"1xx1"},
+   {name:"Bob Hall",id:"1xx2"}
+]);
+
+mediator.addUser({name:"Mandy", id:"981298129"})
+
+*/
+//import {Mediator} from 'Mediator';
+//import {User} from 'User';
+//const stage = new Comfort.Stage();
+//const mediator = new Mediator();
+/*mediator.setUsers([
+   
+]);*/
+//export mediator;
 //# sourceMappingURL=compiled.js.map
