@@ -1,4 +1,4 @@
-import {User} from 'Shared/User';
+import {User} from '../Shared/User';
 
 export class TuckmanUserChoice {
     user : User;

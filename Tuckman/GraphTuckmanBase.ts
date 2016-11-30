@@ -1,6 +1,6 @@
-import {Timed} from 'Shared/Timed';
-import {TuckmanZones} from 'TuckmanZones';
-import {Point} from 'Shared/Point';
+import {Timed} from '../Shared/Timed';
+import {TuckmanZones} from './TuckmanZones';
+import {Point} from '../Shared/Point';
 
 
 export class GraphTuckmanBase {

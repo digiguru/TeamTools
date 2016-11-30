@@ -707,6 +707,15 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
     }());
     exports.Mediator = Mediator;
 });
+define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var TuckmanUserChoiceHistory = (function () {
+        function TuckmanUserChoiceHistory() {
+        }
+        return TuckmanUserChoiceHistory;
+    }());
+    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
+});
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 /// <reference path="../Shared/Polar.ts"/>
@@ -758,13 +767,4 @@ mediator.addUser({name:"Mandy", id:"981298129"})
    
 ]);*/
 //export mediator;
-define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var TuckmanUserChoiceHistory = (function () {
-        function TuckmanUserChoiceHistory() {
-        }
-        return TuckmanUserChoiceHistory;
-    }());
-    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
-});
 //# sourceMappingURL=compiled.js.map
