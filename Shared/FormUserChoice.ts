@@ -1,5 +1,5 @@
-import {User} from 'User';
-import {Timed} from 'Timed';
+import {User} from './User';
+import {Timed} from './Timed';
 
 export class FormUserChoice {
     userZone : HTMLElement;

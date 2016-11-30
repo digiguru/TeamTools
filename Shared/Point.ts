@@ -1,6 +1,6 @@
 //import Polar = require('Polar');
 
-import {Polar} from 'Polar';
+import {Polar} from './Polar';
 export class Point {
     x : number;
     y : number;
