@@ -99,9 +99,11 @@ export class Mediator {
 
     public selectUser(id) {
         console.log("ACTION selectUser", id);
-        const user = this.formUserChoice.getUser(id);
-        this.formUserChoice.hide();
-        this.showGraphComfortEntry(user);
+        this.formUserChoice.getUser(id).then((user) => {
+            this.formUserChoice.hide();
+            this.showGraphComfortEntry(user);
+        });
+        
     }
 
     public saveGraph(area:string, distance:number, user:User) {

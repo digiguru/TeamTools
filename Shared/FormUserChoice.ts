@@ -1,50 +1,56 @@
 import {User} from './User';
 import {Timed} from './Timed';
+import {IUserRepository, InMemoryUsers} from './Users';
 
 export class FormUserChoice {
     userZone : HTMLElement;
-    users : Array<User>;
+    userRepo : IUserRepository;
     d3Users : d3.Selection<any>;
 
     constructor() {
-        this.users = [];
+        this.userRepo = new InMemoryUsers(); //DI this
         this.userZone = document.getElementById('users');
         this.d3Users = d3.select("g#users");
-        if(this.users && this.users.length) {
-            this.setupUsers();
-            this.show();
-        }
-    }
-    public getUser(id) : User {
-        const users =  this.users.filter(function(x) {
-            return x.id === id;
-        });
-        if(users.length) {
-            return users[0];
-        }
-        throw Error("Cannot find user " + id);
-    }
-    public markUserDone (user:User) {
-        for(var i = 0; i<this.users.length; i++) {
-            if(user.id === this.users[i].id) {
-                user.voted = true;
+        this.userRepo.getUsers().then((users) => {
+            if(users && users.length) {
+                this.setupUsers();
+                this.show();
             }
-        }
-        this.rebind();
+        });
     }
+    public getUser(id) : Thenable<User> {
+        return this.userRepo.getUser(id);
+    }
+
+    public markUserDone (user:User) {
+        user.voted = true;
+        this.userRepo.saveUser(user).then(users => {
+            this.rebind(users);
+        });
+    }
+
     private afterShow() {
         console.log("ENDSHOW UserChocieForm");
         this.d3Users
             .selectAll("rect")
             .on("mouseup", this.clickUser());
     }
-    public hasMoreUsers() {
-        const unvotedUsers = this.users.filter(function(x) {
-            return !x.voted
+    public hasMoreUsers() : Thenable<boolean> { //Move to user repo?
+        return new Promise((resolve, reject) => {
+            this.userRepo.getUsers().then(users => {
+                const unvotedUsers = users.filter(function(x) {
+                    return !x.voted
+                });
+                if(unvotedUsers.length) {
+                    resolve(true);
+                } else {
+                    reject(false);
+                }
+            });
         });
-        return unvotedUsers.length;
+        
     }
-    public show ():Thenable<number> {
+    public show():Thenable<number> {
         console.log("SHOW UserChocieForm");
         d3.select(this.userZone)
             .transition()
@@ -81,11 +87,10 @@ export class FormUserChoice {
         return Timed.for(800);
         
     }
-    private rebind(): d3.selection.Update<User> {
-    return this.d3Users
-            .selectAll("circle")
-            .data(this.users);
-    
+    private rebind(users:User[]): d3.selection.Update<User> {
+        return this.d3Users
+                .selectAll("circle")
+                .data(users);
     }
     private clickUser () {
         // 'that' is the instance of graph 
@@ -167,29 +172,31 @@ export class FormUserChoice {
         }
     }
     public addUser(user:User) {
-        this.users.push(user);
+        this.userRepo.users.push(user);
         this.setupUsers();
     }
     public setUsers(users:Array<User>) {
         this.destroyUsers();
-        this.users = users;
-        this.setupUsers();
-        this.show();
+        var userNames = new Array<string>();
+        users.forEach(element => {
+            userNames.push(element.name);
+        });
+        this.userRepo.setUsers(userNames).then(() => {
+            this.setupUsers();
+            this.show();
+        });
     }
     private destroyUsers() {
         d3.select("g#users").selectAll("*").remove();
     }
+
     private setupUsers () {
-       
-            const items = this.rebind();
-            items.enter().append("g")
-                .attr("id", function(e) {
-                    return e.id;
-                })
-                .each(this.eachUser()); 
-        
-        
-        
+        const items = this.rebind();
+        items.enter().append("g")
+            .attr("id", (e) => {
+                return e.id;
+            })
+            .each(this.eachUser());
     }
 
     

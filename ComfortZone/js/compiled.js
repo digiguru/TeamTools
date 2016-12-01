@@ -406,20 +406,56 @@ define("Shared/BreadcrumbControl", ["require", "exports", "Shared/Breadcrumb"], 
     }());
     exports.BreadcrumbControl = BreadcrumbControl;
 });
-define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function (require, exports, Timed_2) {
+define("Shared/Users", ["require", "exports", "Shared/User"], function (require, exports, User_1) {
+    "use strict";
+    var InMemoryUsers = (function () {
+        function InMemoryUsers() {
+            this.setUsers([
+                "Adam Hall",
+                "Billie Davey",
+                "Laura Rowe",
+                "Simon Dawson"]);
+        }
+        InMemoryUsers.prototype.getUsers = function () {
+            return Promise.resolve(this.users);
+        };
+        InMemoryUsers.prototype.saveUser = function (user) {
+            for (var i = 0; i < this.users.length; i++) {
+                if (user.id === this.users[i].id) {
+                    this.users[i] = user;
+                    return Promise.resolve(true);
+                }
+            }
+            return Promise.resolve(false);
+        };
+        InMemoryUsers.prototype.setUsers = function (names) {
+            this.users = [];
+            for (var i = 0; i < names.length; i++) {
+                this.users.push(new User_1.User(names[i], "user" + i));
+            }
+            return Promise.resolve(true);
+        };
+        return InMemoryUsers;
+    }());
+    exports.InMemoryUsers = InMemoryUsers;
+});
+define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/Users"], function (require, exports, Timed_2, Users_1) {
     "use strict";
     var FormUserChoice = (function () {
         function FormUserChoice() {
-            this.users = [];
+            var _this = this;
+            this.userRepo = new Users_1.InMemoryUsers(); //DI this
             this.userZone = document.getElementById('users');
             this.d3Users = d3.select("g#users");
-            if (this.users && this.users.length) {
-                this.setupUsers();
-                this.show();
-            }
+            this.userRepo.getUsers().then(function (users) {
+                if (users && users.length) {
+                    _this.setupUsers();
+                    _this.show();
+                }
+            });
         }
         FormUserChoice.prototype.getUser = function (id) {
-            var users = this.users.filter(function (x) {
+            var users = this.userRepo.users.filter(function (x) {
                 return x.id === id;
             });
             if (users.length) {
@@ -428,12 +464,11 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function
             throw Error("Cannot find user " + id);
         };
         FormUserChoice.prototype.markUserDone = function (user) {
-            for (var i = 0; i < this.users.length; i++) {
-                if (user.id === this.users[i].id) {
-                    user.voted = true;
-                }
-            }
-            this.rebind();
+            var _this = this;
+            user.voted = true;
+            this.userRepo.saveUser(user).then(function () {
+                _this.rebind();
+            });
         };
         FormUserChoice.prototype.afterShow = function () {
             console.log("ENDSHOW UserChocieForm");
@@ -442,7 +477,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function
                 .on("mouseup", this.clickUser());
         };
         FormUserChoice.prototype.hasMoreUsers = function () {
-            var unvotedUsers = this.users.filter(function (x) {
+            var unvotedUsers = this.userRepo.users.filter(function (x) {
                 return !x.voted;
             });
             return unvotedUsers.length;
@@ -485,7 +520,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function
         FormUserChoice.prototype.rebind = function () {
             return this.d3Users
                 .selectAll("circle")
-                .data(this.users);
+                .data(this.userRepo.users);
         };
         FormUserChoice.prototype.clickUser = function () {
             // 'that' is the instance of graph 
@@ -562,14 +597,20 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function
             };
         };
         FormUserChoice.prototype.addUser = function (user) {
-            this.users.push(user);
+            this.userRepo.users.push(user);
             this.setupUsers();
         };
         FormUserChoice.prototype.setUsers = function (users) {
+            var _this = this;
             this.destroyUsers();
-            this.users = users;
-            this.setupUsers();
-            this.show();
+            var userNames = new Array();
+            users.forEach(function (element) {
+                userNames.push(element.name);
+            });
+            this.userRepo.setUsers(userNames).then(function () {
+                _this.setupUsers();
+                _this.show();
+            });
         };
         FormUserChoice.prototype.destroyUsers = function () {
             d3.select("g#users").selectAll("*").remove();
@@ -715,6 +756,8 @@ var mediator;
 requirejs.config({
     baseUrl: '/'
 });
+//import {Mediator} from './Mediator';
+//import {User} from '../Shared/User';
 require(['ComfortZone/Mediator', 'Shared/User'], function (m, u) {
     console.log("Starting");
     mediator = new m.Mediator(23, 23);

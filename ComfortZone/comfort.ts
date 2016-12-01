@@ -11,6 +11,10 @@ var mediator;
 requirejs.config( {
     baseUrl : '/'
 });
+
+//import {Mediator} from './Mediator';
+//import {User} from '../Shared/User';
+
 require(['ComfortZone/Mediator','Shared/User'], function(m,u) {
     console.log("Starting");
     mediator = new m.Mediator(23,23);
