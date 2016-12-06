@@ -3,6 +3,45 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+define("Shared/Cache", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var GenericCache = (function () {
+        function GenericCache() {
+            this.store = [];
+        }
+        GenericCache.prototype.update = function (item) {
+            for (var i = 0; i < this.store.length; i++) {
+                if (item.id === this.store[i].id) {
+                    this.store[i] = item;
+                }
+            }
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.add = function (item) {
+            this.store.push(item);
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.get = function () {
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.getById = function (id) {
+            var store = this.store.filter(function (x) {
+                return x.id === id;
+            });
+            if (store.length) {
+                return Promise.resolve(store[0]);
+            }
+            throw Error("Cannot find item by ID: " + id);
+        };
+        GenericCache.prototype.set = function (items) {
+            this.store = items;
+            return Promise.resolve(this.store);
+            ;
+        };
+        return GenericCache;
+    }());
+    exports.GenericCache = GenericCache;
+});
 define("Shared/User", ["require", "exports"], function (require, exports) {
     "use strict";
     var User = (function () {
@@ -406,59 +445,120 @@ define("Shared/BreadcrumbControl", ["require", "exports", "Shared/Breadcrumb"], 
     }());
     exports.BreadcrumbControl = BreadcrumbControl;
 });
-define("Shared/Users", ["require", "exports", "Shared/User"], function (require, exports, User_1) {
+define("Shared/Users", ["require", "exports", "Shared/User", "Shared/Cache"], function (require, exports, User_1, Cache_1) {
     "use strict";
+    var BrowserRepo = (function () {
+        function BrowserRepo(key, window) {
+            this.br = window;
+            this.key = key;
+        }
+        BrowserRepo.prototype.get = function () {
+            var text = this.br.localStorage.getItem(this.key);
+            var json = JSON.parse(text);
+            return Promise.resolve(json);
+        };
+        BrowserRepo.prototype.save = function (thing) {
+            var text = JSON.stringify(thing);
+            this.br.localStorage.setItem(this.key, text);
+            return Promise.resolve(thing);
+        };
+        return BrowserRepo;
+    }());
+    exports.BrowserRepo = BrowserRepo;
+    var BrowserUsers = (function () {
+        function BrowserUsers(window) {
+            this.repo = new BrowserRepo("users", window);
+        }
+        BrowserUsers.prototype.getUsers = function () {
+            return this.repo.get();
+        };
+        BrowserUsers.prototype.saveUsers = function (users) {
+            return this.repo.save(users);
+        };
+        return BrowserUsers;
+    }());
+    exports.BrowserUsers = BrowserUsers;
+    var InMemoryBrowserUsers = (function () {
+        function InMemoryBrowserUsers(window) {
+            this.cache = new InMemoryUsers();
+            this.repo = new BrowserUsers(window);
+        }
+        InMemoryBrowserUsers.prototype.updateUser = function (user) {
+            var _this = this;
+            var prom = this.cache.updateUser(user);
+            prom.then(function (users) {
+                _this.repo.saveUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.addUser = function (name) {
+            var _this = this;
+            var prom = this.cache.addUserByName(name);
+            prom.then(function (users) {
+                _this.repo.saveUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.getUsers = function () {
+            var _this = this;
+            var prom = this.repo.getUsers();
+            prom.then(function (users) {
+                _this.cache.setUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.getUser = function (id) {
+            var result = this.cache.getUser(id);
+            return Promise.resolve(result);
+        };
+        InMemoryBrowserUsers.prototype.setUsers = function (users) {
+            var promCache = this.cache.setUsers(users);
+            var promRepo = this.repo.saveUsers(users);
+            return promCache;
+        };
+        return InMemoryBrowserUsers;
+    }());
+    exports.InMemoryBrowserUsers = InMemoryBrowserUsers;
     var InMemoryUsers = (function () {
         function InMemoryUsers() {
-            this.setUsers([
+            this.cache = new Cache_1.GenericCache();
+            this.setUsersByName([
                 "Adam Hall",
                 "Billie Davey",
                 "Laura Rowe",
-                "Simon Dawson"]);
+                "Simon Dawson"
+            ]);
         }
-        InMemoryUsers.prototype.createUser = function (name) {
-            return new User_1.User(name, "user" + this.users.length);
+        InMemoryUsers.prototype.createUser = function (name, index) {
+            return new User_1.User(name, "user" + index);
         };
-        InMemoryUsers.prototype.addUser = function (name) {
-            this.users.push(this.createUser(name));
-            return Promise.resolve(this.users);
+        InMemoryUsers.prototype.addUser = function (user) {
+            return this.cache.add(user);
+        };
+        InMemoryUsers.prototype.addUserByName = function (name) {
+            return this.cache.add(this.createUser(name, 9));
         };
         InMemoryUsers.prototype.updateUser = function (user) {
-            for (var i = 0; i < this.users.length; i++) {
-                if (user.id === this.users[i].id) {
-                    this.users[i] = user;
-                }
-            }
-            return Promise.resolve(this.users);
+            return this.cache.update(user);
         };
         InMemoryUsers.prototype.getUsers = function () {
-            return Promise.resolve(this.users);
+            return this.cache.get();
         };
         InMemoryUsers.prototype.getUser = function (id) {
-            var users = this.users.filter(function (x) {
-                return x.id === id;
-            });
-            if (users.length) {
-                return Promise.resolve(users[0]);
-            }
-            throw Error("Cannot find user " + id);
+            return this.cache.getById(id);
         };
         InMemoryUsers.prototype.saveUser = function (user) {
-            for (var i = 0; i < this.users.length; i++) {
-                if (user.id === this.users[i].id) {
-                    this.users[i] = user;
-                    return Promise.resolve(this.users);
-                }
-            }
-            return Promise.reject(this.users);
+            return this.cache.update(user);
         };
-        InMemoryUsers.prototype.setUsers = function (names) {
-            this.users = [];
-            for (var i = 0; i < names.length; i++) {
-                this.addUser(names[i]);
-            }
-            return Promise.resolve(this.users);
-            ;
+        InMemoryUsers.prototype.setUsers = function (users) {
+            return this.cache.set(users);
+        };
+        InMemoryUsers.prototype.setUsersByName = function (names) {
+            var _this = this;
+            var users = names.map(function (v, i) {
+                return _this.createUser(v, i);
+            });
+            return this.cache.set(users);
         };
         return InMemoryUsers;
     }());
@@ -625,9 +725,15 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                 });
             };
         };
-        FormUserChoice.prototype.addUser = function (username) {
+        FormUserChoice.prototype.addUserByName = function (username) {
             var _this = this;
-            this.userRepo.addUser(username).then(function (users) {
+            this.userRepo.addUserByName(username).then(function (users) {
+                _this.setupUsers(users);
+            });
+        };
+        FormUserChoice.prototype.addUser = function (user) {
+            var _this = this;
+            this.userRepo.addUser(user).then(function (users) {
                 _this.setupUsers(users);
             });
         };
@@ -638,7 +744,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             users.forEach(function (element) {
                 userNames.push(element.name);
             });
-            this.userRepo.setUsers(userNames).then(function (users) {
+            this.userRepo.setUsersByName(userNames).then(function (users) {
                 _this.setupUsers(users);
                 _this.show();
             });

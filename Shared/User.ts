@@ -1,4 +1,5 @@
-export class User {
+import {IIndexableObject} from './Cache';
+export class User implements IIndexableObject {
     name: string;
     id: string;
     voted: boolean;
