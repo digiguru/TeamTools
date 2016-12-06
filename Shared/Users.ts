@@ -20,6 +20,23 @@ export class InMemoryUsers implements IUserRepository {
             "Simon Dawson"]);    
     }
 
+    createUser(name:string) {
+        return new User(name, "user"+this.users.length);
+    }
+
+    addUser(name:string) : Thenable<User[]> {
+        this.users.push(this.createUser(name));
+        return Promise.resolve(this.users);
+    }
+
+    updateUser(user:User) : Thenable<User[]> {
+        for (var i = 0; i < this.users.length; i++) {
+            if (user.id === this.users[i].id) {
+                this.users[i] = user;
+            }
+        }
+        return Promise.resolve(this.users);
+    }
     
 
     getUsers() : Thenable<Array<User>>  {
@@ -48,7 +65,7 @@ export class InMemoryUsers implements IUserRepository {
     setUsers(names:Array<string>) : Thenable<User[]> {
         this.users = [];
         for (var i=0; i<names.length;i++) {
-            this.users.push(new User(names[i], "user"+i))
+            this.addUser(names[i]);
         }
         return Promise.resolve(this.users);;
     }

@@ -13,7 +13,7 @@ export class FormUserChoice {
         this.d3Users = d3.select("g#users");
         this.userRepo.getUsers().then((users) => {
             if(users && users.length) {
-                this.setupUsers();
+                this.setupUsers(users);
                 this.show();
             }
         });
@@ -24,7 +24,7 @@ export class FormUserChoice {
 
     public markUserDone (user:User) {
         user.voted = true;
-        this.userRepo.saveUser(user).then(users => {
+        this.userRepo.updateUser(user).then(users => {
             this.rebind(users);
         });
     }
@@ -171,9 +171,11 @@ export class FormUserChoice {
                 });
         }
     }
-    public addUser(user:User) {
-        this.userRepo.users.push(user);
-        this.setupUsers();
+    public addUser(username:string) {
+        this.userRepo.addUser(username).then(users => {
+            this.setupUsers(users);
+        });
+        
     }
     public setUsers(users:Array<User>) {
         this.destroyUsers();
@@ -181,8 +183,8 @@ export class FormUserChoice {
         users.forEach(element => {
             userNames.push(element.name);
         });
-        this.userRepo.setUsers(userNames).then(() => {
-            this.setupUsers();
+        this.userRepo.setUsers(userNames).then((users) => {
+            this.setupUsers(users);
             this.show();
         });
     }
@@ -190,8 +192,8 @@ export class FormUserChoice {
         d3.select("g#users").selectAll("*").remove();
     }
 
-    private setupUsers () {
-        const items = this.rebind();
+    private setupUsers (users:User[]) {
+        const items = this.rebind(users);
         items.enter().append("g")
             .attr("id", (e) => {
                 return e.id;

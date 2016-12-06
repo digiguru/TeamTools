@@ -416,24 +416,49 @@ define("Shared/Users", ["require", "exports", "Shared/User"], function (require,
                 "Laura Rowe",
                 "Simon Dawson"]);
         }
+        InMemoryUsers.prototype.createUser = function (name) {
+            return new User_1.User(name, "user" + this.users.length);
+        };
+        InMemoryUsers.prototype.addUser = function (name) {
+            this.users.push(this.createUser(name));
+            return Promise.resolve(this.users);
+        };
+        InMemoryUsers.prototype.updateUser = function (user) {
+            for (var i = 0; i < this.users.length; i++) {
+                if (user.id === this.users[i].id) {
+                    this.users[i] = user;
+                }
+            }
+            return Promise.resolve(this.users);
+        };
         InMemoryUsers.prototype.getUsers = function () {
             return Promise.resolve(this.users);
+        };
+        InMemoryUsers.prototype.getUser = function (id) {
+            var users = this.users.filter(function (x) {
+                return x.id === id;
+            });
+            if (users.length) {
+                return Promise.resolve(users[0]);
+            }
+            throw Error("Cannot find user " + id);
         };
         InMemoryUsers.prototype.saveUser = function (user) {
             for (var i = 0; i < this.users.length; i++) {
                 if (user.id === this.users[i].id) {
                     this.users[i] = user;
-                    return Promise.resolve(true);
+                    return Promise.resolve(this.users);
                 }
             }
-            return Promise.resolve(false);
+            return Promise.reject(this.users);
         };
         InMemoryUsers.prototype.setUsers = function (names) {
             this.users = [];
             for (var i = 0; i < names.length; i++) {
-                this.users.push(new User_1.User(names[i], "user" + i));
+                this.addUser(names[i]);
             }
-            return Promise.resolve(true);
+            return Promise.resolve(this.users);
+            ;
         };
         return InMemoryUsers;
     }());
@@ -449,25 +474,19 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             this.d3Users = d3.select("g#users");
             this.userRepo.getUsers().then(function (users) {
                 if (users && users.length) {
-                    _this.setupUsers();
+                    _this.setupUsers(users);
                     _this.show();
                 }
             });
         }
         FormUserChoice.prototype.getUser = function (id) {
-            var users = this.userRepo.users.filter(function (x) {
-                return x.id === id;
-            });
-            if (users.length) {
-                return users[0];
-            }
-            throw Error("Cannot find user " + id);
+            return this.userRepo.getUser(id);
         };
         FormUserChoice.prototype.markUserDone = function (user) {
             var _this = this;
             user.voted = true;
-            this.userRepo.saveUser(user).then(function () {
-                _this.rebind();
+            this.userRepo.updateUser(user).then(function (users) {
+                _this.rebind(users);
             });
         };
         FormUserChoice.prototype.afterShow = function () {
@@ -477,10 +496,20 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                 .on("mouseup", this.clickUser());
         };
         FormUserChoice.prototype.hasMoreUsers = function () {
-            var unvotedUsers = this.userRepo.users.filter(function (x) {
-                return !x.voted;
+            var _this = this;
+            return new Promise(function (resolve, reject) {
+                _this.userRepo.getUsers().then(function (users) {
+                    var unvotedUsers = users.filter(function (x) {
+                        return !x.voted;
+                    });
+                    if (unvotedUsers.length) {
+                        resolve(true);
+                    }
+                    else {
+                        reject(false);
+                    }
+                });
             });
-            return unvotedUsers.length;
         };
         FormUserChoice.prototype.show = function () {
             console.log("SHOW UserChocieForm");
@@ -517,10 +546,10 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             });
             return Timed_2.Timed.for(800);
         };
-        FormUserChoice.prototype.rebind = function () {
+        FormUserChoice.prototype.rebind = function (users) {
             return this.d3Users
                 .selectAll("circle")
-                .data(this.userRepo.users);
+                .data(users);
         };
         FormUserChoice.prototype.clickUser = function () {
             // 'that' is the instance of graph 
@@ -596,9 +625,11 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                 });
             };
         };
-        FormUserChoice.prototype.addUser = function (user) {
-            this.userRepo.users.push(user);
-            this.setupUsers();
+        FormUserChoice.prototype.addUser = function (username) {
+            var _this = this;
+            this.userRepo.addUser(username).then(function (users) {
+                _this.setupUsers(users);
+            });
         };
         FormUserChoice.prototype.setUsers = function (users) {
             var _this = this;
@@ -607,16 +638,16 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             users.forEach(function (element) {
                 userNames.push(element.name);
             });
-            this.userRepo.setUsers(userNames).then(function () {
-                _this.setupUsers();
+            this.userRepo.setUsers(userNames).then(function (users) {
+                _this.setupUsers(users);
                 _this.show();
             });
         };
         FormUserChoice.prototype.destroyUsers = function () {
             d3.select("g#users").selectAll("*").remove();
         };
-        FormUserChoice.prototype.setupUsers = function () {
-            var items = this.rebind();
+        FormUserChoice.prototype.setupUsers = function (users) {
+            var items = this.rebind(users);
             items.enter().append("g")
                 .attr("id", function (e) {
                 return e.id;
@@ -703,10 +734,12 @@ define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserCh
             this.graphComfortHistory.show(this.userChoiceHistory);
         };
         Mediator.prototype.selectUser = function (id) {
+            var _this = this;
             console.log("ACTION selectUser", id);
-            var user = this.formUserChoice.getUser(id);
-            this.formUserChoice.hide();
-            this.showGraphComfortEntry(user);
+            this.formUserChoice.getUser(id).then(function (user) {
+                _this.formUserChoice.hide();
+                _this.showGraphComfortEntry(user);
+            });
         };
         Mediator.prototype.saveGraph = function (area, distance, user) {
             this.formUserChoice.markUserDone(user);
