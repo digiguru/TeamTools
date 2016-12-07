@@ -1,10 +1,10 @@
 import {User} from './User';
 import {Timed} from './Timed';
-import {IAllUserRepostiory, InMemoryUsers} from './Users';
+import {IUserRepo, InMemoryUsers} from './Users';
 
 export class FormUserChoice {
     userZone : HTMLElement;
-    userRepo : InMemoryUsers;
+    userRepo : IUserRepo;
     d3Users : d3.Selection<any>;
 
     constructor() {
@@ -171,12 +171,7 @@ export class FormUserChoice {
                 });
         }
     }
-    public addUserByName(username:string) {
-        this.userRepo.addUserByName(username).then(users => {
-            this.setupUsers(users);
-        });
-    }
-
+    
     public addUser(user:User) {
         this.userRepo.addUser(user).then(users => {
             this.setupUsers(users);
@@ -185,11 +180,7 @@ export class FormUserChoice {
     
     public setUsers(users:Array<User>) {
         this.destroyUsers();
-        var userNames = new Array<string>();
-        users.forEach(element => {
-            userNames.push(element.name);
-        });
-        this.userRepo.setUsersByName(userNames).then((users) => {
+        this.userRepo.setUsers(users).then((users) => {
             this.setupUsers(users);
             this.show();
         });

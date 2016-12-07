@@ -45,7 +45,15 @@ export class BrowserUsers implements IAllUserRepostiory {
     } 
 }
 
-export class InMemoryBrowserUsers  {
+export interface IUserRepo {
+    getUsers() : Thenable<User[]>;
+    getUser(id:string) : Thenable<User>;
+    updateUser(user:User) : Thenable<User[]>;
+    setUsers(users:User[]) : Thenable<User[]>;
+    addUser(user:User) : Thenable<User[]>;
+}
+
+export class InMemoryBrowserUsers implements IUserRepo  {
     cache:InMemoryUsers;
     repo:IAllUserRepostiory;
     constructor(window:Window) {
@@ -59,8 +67,8 @@ export class InMemoryBrowserUsers  {
         });
         return prom;
     }
-    addUser(name:string) : Thenable<User[]> {
-        const prom = this.cache.addUserByName(name);
+    addUser(user:User) : Thenable<User[]> {
+        const prom = this.cache.addUser(user);
         prom.then(users => {
             this.repo.saveUsers(users);
         });
@@ -85,7 +93,7 @@ export class InMemoryBrowserUsers  {
     }
 }
 
-export class InMemoryUsers {
+export class InMemoryUsers implements IUserRepo {
     cache : GenericCache;
     
     constructor() {
