@@ -1,11 +1,6 @@
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="../Shared/Polar.ts"/>
-
-//import {Promise} from 'es6-promise';
-//import {Point} from 'Point';
-//import {Point} from './Point';
-//import {Polar} from './Polar';
+/// <reference path="../typings/requirejs/require.d.ts"/>
 
 
 var mediator;

@@ -1,19 +1,15 @@
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="../Shared/Polar.ts"/>
+/// <reference path="../typings/requirejs/require.d.ts"/>
+/// <reference path="../Shared/User.ts"/>
+/// <reference path="../ComfortZone/Mediator.ts"/>
 
-//import {Promise} from 'es6-promise';
-//import {Point} from 'Point';
-//import {Point} from './Point';
-//import {Polar} from './Polar';
 
 var mediator;
 requirejs.config( {
     baseUrl : '/'
 });
 
-//import {Mediator} from './Mediator';
-//import {User} from '../Shared/User';
 
 require(['ComfortZone/Mediator','Shared/User'], function(m,u) {
     console.log("Starting");
