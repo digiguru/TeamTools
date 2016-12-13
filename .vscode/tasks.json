@@ -18,6 +18,11 @@
             "taskName": "TuckmanTask",
             "isBuildCommand": true,
             "args": ["-p", "./Tuckman"]
+        },
+        { 
+            "taskName": "EntryTask",
+            "isBuildCommand": true,
+            "args": ["-p", "./Entry"]
         }
      ]
     /*
