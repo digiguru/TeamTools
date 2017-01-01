@@ -1,32 +1,31 @@
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 /// <reference path="../typings/requirejs/require.d.ts"/>
-
-var mediator;
+/// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
+var users;
 requirejs.config( {
     baseUrl : '/'
 });
 
 
-require(['Shared/User'], function(m,u) {
+require(['Shared/InMemoryBrowserUsers'], function(u) {
+
     console.log("Starting");
-    mediator = new m.Mediator(23,23);
-    console.log(mediator);
-    mediator.setUsers([
-        new u.User("Adam Hall","xxx1"), 
-        new u.User("Billie Davey","xxx2"), 
-        new u.User("Laura Rowe","xxx3"),
-        new u.User("Simon Dawson","xxx4")
-    ]);
-    document.addEventListener("selectUser", function(e:CustomEvent) {
-        mediator.selectUser(e.detail.id);
+    users = new u.InMemoryBrowserUsers(window);
+    
+    users.getUsers().then((data) => {
+        if (data) {
+            const strings:string[] = data.map((user) => {
+                return user.username;
+            });
+            
+            const text = strings.join("\n");
+            console.log(strings);
+            document.getElementById('users').value = text;
+        }
+         
     });
-    document.addEventListener("saveGraph", function(e:CustomEvent) {
-        var o = e.detail;
-        mediator.saveGraph(o.area,o.distance,o.currentUser);
-    });
-            //;")
-    console.log(mediator);
+    
 });
 /*
 Commands you can throw into the mediator....

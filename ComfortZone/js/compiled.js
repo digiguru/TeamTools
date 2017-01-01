@@ -445,80 +445,11 @@ define("Shared/BreadcrumbControl", ["require", "exports", "Shared/Breadcrumb"], 
     }());
     exports.BreadcrumbControl = BreadcrumbControl;
 });
+define("Shared/IUsers", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
 define("Shared/Users", ["require", "exports", "Shared/User", "Shared/Cache"], function (require, exports, User_1, Cache_1) {
     "use strict";
-    var BrowserRepo = (function () {
-        function BrowserRepo(key, window) {
-            this.br = window;
-            this.key = key;
-        }
-        BrowserRepo.prototype.get = function () {
-            var text = this.br.localStorage.getItem(this.key);
-            var json = JSON.parse(text);
-            return Promise.resolve(json);
-        };
-        BrowserRepo.prototype.save = function (thing) {
-            var text = JSON.stringify(thing);
-            this.br.localStorage.setItem(this.key, text);
-            return Promise.resolve(thing);
-        };
-        return BrowserRepo;
-    }());
-    exports.BrowserRepo = BrowserRepo;
-    var BrowserUsers = (function () {
-        function BrowserUsers(window) {
-            this.repo = new BrowserRepo("users", window);
-        }
-        BrowserUsers.prototype.getUsers = function () {
-            return this.repo.get();
-        };
-        BrowserUsers.prototype.saveUsers = function (users) {
-            return this.repo.save(users);
-        };
-        return BrowserUsers;
-    }());
-    exports.BrowserUsers = BrowserUsers;
-    var InMemoryBrowserUsers = (function () {
-        function InMemoryBrowserUsers(window) {
-            this.cache = new InMemoryUsers();
-            this.repo = new BrowserUsers(window);
-        }
-        InMemoryBrowserUsers.prototype.updateUser = function (user) {
-            var _this = this;
-            var prom = this.cache.updateUser(user);
-            prom.then(function (users) {
-                _this.repo.saveUsers(users);
-            });
-            return prom;
-        };
-        InMemoryBrowserUsers.prototype.addUser = function (name) {
-            var _this = this;
-            var prom = this.cache.addUserByName(name);
-            prom.then(function (users) {
-                _this.repo.saveUsers(users);
-            });
-            return prom;
-        };
-        InMemoryBrowserUsers.prototype.getUsers = function () {
-            var _this = this;
-            var prom = this.repo.getUsers();
-            prom.then(function (users) {
-                _this.cache.setUsers(users);
-            });
-            return prom;
-        };
-        InMemoryBrowserUsers.prototype.getUser = function (id) {
-            var result = this.cache.getUser(id);
-            return Promise.resolve(result);
-        };
-        InMemoryBrowserUsers.prototype.setUsers = function (users) {
-            var promCache = this.cache.setUsers(users);
-            var promRepo = this.repo.saveUsers(users);
-            return promCache;
-        };
-        return InMemoryBrowserUsers;
-    }());
-    exports.InMemoryBrowserUsers = InMemoryBrowserUsers;
     var InMemoryUsers = (function () {
         function InMemoryUsers() {
             this.cache = new Cache_1.GenericCache();
@@ -725,12 +656,6 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                 });
             };
         };
-        FormUserChoice.prototype.addUserByName = function (username) {
-            var _this = this;
-            this.userRepo.addUserByName(username).then(function (users) {
-                _this.setupUsers(users);
-            });
-        };
         FormUserChoice.prototype.addUser = function (user) {
             var _this = this;
             this.userRepo.addUser(user).then(function (users) {
@@ -740,11 +665,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
         FormUserChoice.prototype.setUsers = function (users) {
             var _this = this;
             this.destroyUsers();
-            var userNames = new Array();
-            users.forEach(function (element) {
-                userNames.push(element.name);
-            });
-            this.userRepo.setUsersByName(userNames).then(function (users) {
+            this.userRepo.setUsers(users).then(function (users) {
                 _this.setupUsers(users);
                 _this.show();
             });
@@ -886,17 +807,13 @@ define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserCh
 });
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="../Shared/Polar.ts"/>
-//import {Promise} from 'es6-promise';
-//import {Point} from 'Point';
-//import {Point} from './Point';
-//import {Polar} from './Polar';
+/// <reference path="../typings/requirejs/require.d.ts"/>
+/// <reference path="../Shared/User.ts"/>
+/// <reference path="../ComfortZone/Mediator.ts"/>
 var mediator;
 requirejs.config({
     baseUrl: '/'
 });
-//import {Mediator} from './Mediator';
-//import {User} from '../Shared/User';
 require(['ComfortZone/Mediator', 'Shared/User'], function (m, u) {
     console.log("Starting");
     mediator = new m.Mediator(23, 23);

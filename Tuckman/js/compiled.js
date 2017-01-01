@@ -158,6 +158,45 @@ define("Tuckman/GraphTuckmanBase", ["require", "exports", "Shared/Timed", "Tuckm
     }());
     exports.GraphTuckmanBase = GraphTuckmanBase;
 });
+define("Shared/Cache", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var GenericCache = (function () {
+        function GenericCache() {
+            this.store = [];
+        }
+        GenericCache.prototype.update = function (item) {
+            for (var i = 0; i < this.store.length; i++) {
+                if (item.id === this.store[i].id) {
+                    this.store[i] = item;
+                }
+            }
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.add = function (item) {
+            this.store.push(item);
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.get = function () {
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.getById = function (id) {
+            var store = this.store.filter(function (x) {
+                return x.id === id;
+            });
+            if (store.length) {
+                return Promise.resolve(store[0]);
+            }
+            throw Error("Cannot find item by ID: " + id);
+        };
+        GenericCache.prototype.set = function (items) {
+            this.store = items;
+            return Promise.resolve(this.store);
+            ;
+        };
+        return GenericCache;
+    }());
+    exports.GenericCache = GenericCache;
+});
 define("Shared/User", ["require", "exports"], function (require, exports) {
     "use strict";
     var User = (function () {
@@ -409,34 +448,80 @@ define("Shared/BreadcrumbControl", ["require", "exports", "Shared/Breadcrumb"], 
     }());
     exports.BreadcrumbControl = BreadcrumbControl;
 });
-define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function (require, exports, Timed_2) {
+define("Shared/IUsers", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
+define("Shared/Users", ["require", "exports", "Shared/User", "Shared/Cache"], function (require, exports, User_1, Cache_1) {
+    "use strict";
+    var InMemoryUsers = (function () {
+        function InMemoryUsers() {
+            this.cache = new Cache_1.GenericCache();
+            this.setUsersByName([
+                "Adam Hall",
+                "Billie Davey",
+                "Laura Rowe",
+                "Simon Dawson"
+            ]);
+        }
+        InMemoryUsers.prototype.createUser = function (name, index) {
+            return new User_1.User(name, "user" + index);
+        };
+        InMemoryUsers.prototype.addUser = function (user) {
+            return this.cache.add(user);
+        };
+        InMemoryUsers.prototype.addUserByName = function (name) {
+            return this.cache.add(this.createUser(name, 9));
+        };
+        InMemoryUsers.prototype.updateUser = function (user) {
+            return this.cache.update(user);
+        };
+        InMemoryUsers.prototype.getUsers = function () {
+            return this.cache.get();
+        };
+        InMemoryUsers.prototype.getUser = function (id) {
+            return this.cache.getById(id);
+        };
+        InMemoryUsers.prototype.saveUser = function (user) {
+            return this.cache.update(user);
+        };
+        InMemoryUsers.prototype.setUsers = function (users) {
+            return this.cache.set(users);
+        };
+        InMemoryUsers.prototype.setUsersByName = function (names) {
+            var _this = this;
+            var users = names.map(function (v, i) {
+                return _this.createUser(v, i);
+            });
+            return this.cache.set(users);
+        };
+        return InMemoryUsers;
+    }());
+    exports.InMemoryUsers = InMemoryUsers;
+});
+define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/Users"], function (require, exports, Timed_2, Users_1) {
     "use strict";
     var FormUserChoice = (function () {
         function FormUserChoice() {
-            this.users = [];
+            var _this = this;
+            this.userRepo = new Users_1.InMemoryUsers(); //DI this
             this.userZone = document.getElementById('users');
             this.d3Users = d3.select("g#users");
-            if (this.users && this.users.length) {
-                this.setupUsers();
-                this.show();
-            }
+            this.userRepo.getUsers().then(function (users) {
+                if (users && users.length) {
+                    _this.setupUsers(users);
+                    _this.show();
+                }
+            });
         }
         FormUserChoice.prototype.getUser = function (id) {
-            var users = this.users.filter(function (x) {
-                return x.id === id;
-            });
-            if (users.length) {
-                return users[0];
-            }
-            throw Error("Cannot find user " + id);
+            return this.userRepo.getUser(id);
         };
         FormUserChoice.prototype.markUserDone = function (user) {
-            for (var i = 0; i < this.users.length; i++) {
-                if (user.id === this.users[i].id) {
-                    user.voted = true;
-                }
-            }
-            this.rebind();
+            var _this = this;
+            user.voted = true;
+            this.userRepo.updateUser(user).then(function (users) {
+                _this.rebind(users);
+            });
         };
         FormUserChoice.prototype.afterShow = function () {
             console.log("ENDSHOW UserChocieForm");
@@ -445,10 +530,20 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function
                 .on("mouseup", this.clickUser());
         };
         FormUserChoice.prototype.hasMoreUsers = function () {
-            var unvotedUsers = this.users.filter(function (x) {
-                return !x.voted;
+            var _this = this;
+            return new Promise(function (resolve, reject) {
+                _this.userRepo.getUsers().then(function (users) {
+                    var unvotedUsers = users.filter(function (x) {
+                        return !x.voted;
+                    });
+                    if (unvotedUsers.length) {
+                        resolve(true);
+                    }
+                    else {
+                        reject(false);
+                    }
+                });
             });
-            return unvotedUsers.length;
         };
         FormUserChoice.prototype.show = function () {
             console.log("SHOW UserChocieForm");
@@ -485,10 +580,10 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function
             });
             return Timed_2.Timed.for(800);
         };
-        FormUserChoice.prototype.rebind = function () {
+        FormUserChoice.prototype.rebind = function (users) {
             return this.d3Users
                 .selectAll("circle")
-                .data(this.users);
+                .data(users);
         };
         FormUserChoice.prototype.clickUser = function () {
             // 'that' is the instance of graph 
@@ -565,20 +660,24 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed"], function
             };
         };
         FormUserChoice.prototype.addUser = function (user) {
-            this.users.push(user);
-            this.setupUsers();
+            var _this = this;
+            this.userRepo.addUser(user).then(function (users) {
+                _this.setupUsers(users);
+            });
         };
         FormUserChoice.prototype.setUsers = function (users) {
+            var _this = this;
             this.destroyUsers();
-            this.users = users;
-            this.setupUsers();
-            this.show();
+            this.userRepo.setUsers(users).then(function (users) {
+                _this.setupUsers(users);
+                _this.show();
+            });
         };
         FormUserChoice.prototype.destroyUsers = function () {
             d3.select("g#users").selectAll("*").remove();
         };
-        FormUserChoice.prototype.setupUsers = function () {
-            var items = this.rebind();
+        FormUserChoice.prototype.setupUsers = function (users) {
+            var items = this.rebind(users);
             items.enter().append("g")
                 .attr("id", function (e) {
                 return e.id;
@@ -665,10 +764,12 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
             this.graphTuckmanHistory.show(this.userChoiceHistory);
         };
         Mediator.prototype.selectUser = function (id) {
+            var _this = this;
             console.log("ACTION selectUser", id);
-            var user = this.formUserChoice.getUser(id);
-            this.formUserChoice.hide();
-            this.showGraphTuckmanEntry(user);
+            var user = this.formUserChoice.getUser(id).then(function (user) {
+                _this.formUserChoice.hide();
+                _this.showGraphTuckmanEntry(user);
+            });
         };
         Mediator.prototype.saveGraph = function (area, distance, user) {
             this.formUserChoice.markUserDone(user);
@@ -718,11 +819,7 @@ define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (req
 });
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="../Shared/Polar.ts"/>
-//import {Promise} from 'es6-promise';
-//import {Point} from 'Point';
-//import {Point} from './Point';
-//import {Polar} from './Polar';
+/// <reference path="../typings/requirejs/require.d.ts"/>
 var mediator;
 requirejs.config({
     baseUrl: '/'
