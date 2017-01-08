@@ -451,26 +451,43 @@ define("Shared/BreadcrumbControl", ["require", "exports", "Shared/Breadcrumb"], 
 define("Shared/IUsers", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("Shared/Users", ["require", "exports", "Shared/User", "Shared/Cache"], function (require, exports, User_1, Cache_1) {
+define("Shared/UserConstructor", ["require", "exports", "Shared/User"], function (require, exports, User_1) {
+    "use strict";
+    var UserConstructor = (function () {
+        function UserConstructor() {
+        }
+        UserConstructor.createUsersByNames = function (names) {
+            var _this = this;
+            var users = names.map(function (v, i) {
+                return _this.createUser(v, i);
+            });
+            return users;
+        };
+        UserConstructor.createUser = function (name, index) {
+            return new User_1.User(name, "user" + index);
+        };
+        return UserConstructor;
+    }());
+    exports.UserConstructor = UserConstructor;
+});
+define("Shared/Users", ["require", "exports", "Shared/Cache", "Shared/UserConstructor"], function (require, exports, Cache_1, UserConstructor_1) {
     "use strict";
     var InMemoryUsers = (function () {
         function InMemoryUsers() {
             this.cache = new Cache_1.GenericCache();
-            this.setUsersByName([
+            var users = UserConstructor_1.UserConstructor.createUsersByNames([
                 "Adam Hall",
                 "Billie Davey",
                 "Laura Rowe",
                 "Simon Dawson"
             ]);
+            this.setUsers(users);
         }
-        InMemoryUsers.prototype.createUser = function (name, index) {
-            return new User_1.User(name, "user" + index);
-        };
         InMemoryUsers.prototype.addUser = function (user) {
             return this.cache.add(user);
         };
         InMemoryUsers.prototype.addUserByName = function (name) {
-            return this.cache.add(this.createUser(name, 9));
+            return this.cache.add(UserConstructor_1.UserConstructor.createUser(name, 9));
         };
         InMemoryUsers.prototype.updateUser = function (user) {
             return this.cache.update(user);
@@ -485,13 +502,6 @@ define("Shared/Users", ["require", "exports", "Shared/User", "Shared/Cache"], fu
             return this.cache.update(user);
         };
         InMemoryUsers.prototype.setUsers = function (users) {
-            return this.cache.set(users);
-        };
-        InMemoryUsers.prototype.setUsersByName = function (names) {
-            var _this = this;
-            var users = names.map(function (v, i) {
-                return _this.createUser(v, i);
-            });
             return this.cache.set(users);
         };
         return InMemoryUsers;
@@ -808,15 +818,6 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
     }());
     exports.Mediator = Mediator;
 });
-define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var TuckmanUserChoiceHistory = (function () {
-        function TuckmanUserChoiceHistory() {
-        }
-        return TuckmanUserChoiceHistory;
-    }());
-    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
-});
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 /// <reference path="../typings/requirejs/require.d.ts"/>
@@ -864,4 +865,13 @@ mediator.addUser({name:"Mandy", id:"981298129"})
    
 ]);*/
 //export mediator;
+define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var TuckmanUserChoiceHistory = (function () {
+        function TuckmanUserChoiceHistory() {
+        }
+        return TuckmanUserChoiceHistory;
+    }());
+    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
+});
 //# sourceMappingURL=compiled.js.map

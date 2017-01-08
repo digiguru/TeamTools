@@ -2,28 +2,37 @@
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 /// <reference path="../typings/requirejs/require.d.ts"/>
 /// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
+/// <reference path="../Shared/UserConstructor.ts"/>
 var users;
 requirejs.config( {
     baseUrl : '/'
 });
 
 
-require(['Shared/InMemoryBrowserUsers'], function(u) {
+require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c) {
 
     console.log("Starting");
     users = new u.InMemoryBrowserUsers(window);
     
     users.getUsers().then((data) => {
-        if (data) {
+        console.log("Have these users", data);
+        if (data.length) {
             const strings:string[] = data.map((user) => {
-                return user.username;
+                return user.name;
             });
-            
+            console.log("see", strings);
             const text = strings.join("\n");
-            console.log(strings);
+            console.log("is", text);
             document.getElementById('users').value = text;
         }
-         
+        document.getElementById('save').addEventListener("mousedown", () => {
+            var entry :string = document.getElementById('users').value;
+            var usernames = entry.split("\n");
+            var newusers = c.UserConstructor.createUsersByNames(usernames);
+            window.users.setUsers(newusers).then((result) => {
+                console.log("Set users", result);
+            });
+        });
     });
     
 });

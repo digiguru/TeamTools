@@ -52,26 +52,47 @@ define("Shared/User", ["require", "exports"], function (require, exports) {
 define("Shared/IUsers", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("Shared/Users", ["require", "exports", "Shared/User", "Shared/Cache"], function (require, exports, User_1, Cache_1) {
+define("Shared/UserConstructor", ["require", "exports", "Shared/User"], function (require, exports, User_1) {
+    "use strict";
+    var UserConstructor = (function () {
+        function UserConstructor() {
+        }
+        UserConstructor.notEmpty = function (input) {
+            return (input !== "");
+        };
+        UserConstructor.createUsersByNames = function (names) {
+            var _this = this;
+            var filtered = names.filter(UserConstructor.notEmpty);
+            var users = filtered.map(function (v, i) {
+                return _this.createUser(v, i);
+            });
+            return users;
+        };
+        UserConstructor.createUser = function (name, index) {
+            return new User_1.User(name, "user" + index);
+        };
+        return UserConstructor;
+    }());
+    exports.UserConstructor = UserConstructor;
+});
+define("Shared/Users", ["require", "exports", "Shared/Cache", "Shared/UserConstructor"], function (require, exports, Cache_1, UserConstructor_1) {
     "use strict";
     var InMemoryUsers = (function () {
         function InMemoryUsers() {
             this.cache = new Cache_1.GenericCache();
-            this.setUsersByName([
+            var users = UserConstructor_1.UserConstructor.createUsersByNames([
                 "Adam Hall",
                 "Billie Davey",
                 "Laura Rowe",
                 "Simon Dawson"
             ]);
+            this.setUsers(users);
         }
-        InMemoryUsers.prototype.createUser = function (name, index) {
-            return new User_1.User(name, "user" + index);
-        };
         InMemoryUsers.prototype.addUser = function (user) {
             return this.cache.add(user);
         };
         InMemoryUsers.prototype.addUserByName = function (name) {
-            return this.cache.add(this.createUser(name, 9));
+            return this.cache.add(UserConstructor_1.UserConstructor.createUser(name, 9));
         };
         InMemoryUsers.prototype.updateUser = function (user) {
             return this.cache.update(user);
@@ -86,13 +107,6 @@ define("Shared/Users", ["require", "exports", "Shared/User", "Shared/Cache"], fu
             return this.cache.update(user);
         };
         InMemoryUsers.prototype.setUsers = function (users) {
-            return this.cache.set(users);
-        };
-        InMemoryUsers.prototype.setUsersByName = function (names) {
-            var _this = this;
-            var users = names.map(function (v, i) {
-                return _this.createUser(v, i);
-            });
             return this.cache.set(users);
         };
         return InMemoryUsers;
@@ -184,22 +198,33 @@ define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Sh
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 /// <reference path="../typings/requirejs/require.d.ts"/>
 /// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
+/// <reference path="../Shared/UserConstructor.ts"/>
 var users;
 requirejs.config({
     baseUrl: '/'
 });
-require(['Shared/InMemoryBrowserUsers'], function (u) {
+require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, c) {
     console.log("Starting");
     users = new u.InMemoryBrowserUsers(window);
     users.getUsers().then(function (data) {
-        if (data) {
+        console.log("Have these users", data);
+        if (data.length) {
             var strings = data.map(function (user) {
-                return user.username;
+                return user.name;
             });
+            console.log("see", strings);
             var text = strings.join("\n");
-            console.log(strings);
+            console.log("is", text);
             document.getElementById('users').value = text;
         }
+        document.getElementById('save').addEventListener("mousedown", function () {
+            var entry = document.getElementById('users').value;
+            var usernames = entry.split("\n");
+            var newusers = c.UserConstructor.createUsersByNames(usernames);
+            window.users.setUsers(newusers).then(function (result) {
+                console.log("Set users", result);
+            });
+        });
     });
 });
 /*

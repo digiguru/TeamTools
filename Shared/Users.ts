@@ -1,30 +1,30 @@
 import {User} from './User';
 import {GenericCache} from './Cache';
 import {IUserRepo} from './IUsers';
+import {UserConstructor} from './UserConstructor';
 
 export class InMemoryUsers implements IUserRepo {
     cache : GenericCache;
     
     constructor() {
         this.cache = new GenericCache();
-        this.setUsersByName([
+        var users = UserConstructor.createUsersByNames([
             "Adam Hall",
             "Billie Davey",
             "Laura Rowe",
             "Simon Dawson"
         ]); 
+        this.setUsers(users);
     }
 
-    createUser(name:string, index:number) {
-        return new User(name, "user"+index);
-    }
+    
 
     addUser(user:User) : Thenable<User[]> {
         return this.cache.add(user);
     }
     
     addUserByName(name:string) : Thenable<User[]> {//Don't want this?
-        return this.cache.add(this.createUser(name, 9));
+        return this.cache.add(UserConstructor.createUser(name, 9));
     }
 
     updateUser(user:User) : Thenable<User[]> {
@@ -48,10 +48,5 @@ export class InMemoryUsers implements IUserRepo {
         return this.cache.set(users);
     }
 
-    setUsersByName(names:Array<string>) : Thenable<User[]> {
-        const users = names.map((v, i) => {
-            return this.createUser(v,i);
-        });
-        return this.cache.set(users); 
-    }
+    
 }
