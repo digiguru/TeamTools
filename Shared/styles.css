@@ -1,0 +1,54 @@
+@import url(//fonts.googleapis.com/css?family=Share+Tech+Mono);
+#stage, textarea {
+    font-family: 'Share Tech Mono', sans-serif;
+}
+#users rect {
+    cursor: hand;
+}
+#users text {
+    pointer-events: none;     
+}
+.username {
+    fill: white;
+}
+.user-group-complete rect {
+    fill: grey;
+}
+.user-group:hover text {
+    fill: black;
+}
+.user-group-complete:hover rect, .user-group:hover rect {
+    fill: white;
+}
+.user-click {
+    /*fill-opacity: 50.0;*/
+    fill-opacity: 0.0;
+}
+.area-label {
+        fill: white;
+}
+.coloured-bg {
+    background-color: #00D7FE;
+}
+textarea {
+    min-height: 150px;
+    font-size: large;
+}
+.js-area-highlight {
+    fill: #00D7FE;
+}
+.js-area-standard {
+    fill: #00D7FE;
+}
+.area {
+/*#comfort, #stretch, #chaos {*/
+    stroke: white;
+    stroke-width: 1;       
+}
+.dropper {
+    fill: white; 
+    pointer-events: none;       
+}
+.dropped {
+    fill: slategrey;        
+}
