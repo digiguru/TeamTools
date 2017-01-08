@@ -456,9 +456,13 @@ define("Shared/UserConstructor", ["require", "exports", "Shared/User"], function
     var UserConstructor = (function () {
         function UserConstructor() {
         }
+        UserConstructor.notEmpty = function (input) {
+            return (input !== "");
+        };
         UserConstructor.createUsersByNames = function (names) {
             var _this = this;
-            var users = names.map(function (v, i) {
+            var filtered = names.filter(UserConstructor.notEmpty);
+            var users = filtered.map(function (v, i) {
                 return _this.createUser(v, i);
             });
             return users;
@@ -818,23 +822,115 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
     }());
     exports.Mediator = Mediator;
 });
+define("Shared/BrowserRepo", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var BrowserRepo = (function () {
+        function BrowserRepo(key, window) {
+            this.br = window;
+            this.key = key;
+        }
+        BrowserRepo.prototype.get = function () {
+            var text = this.br.localStorage.getItem(this.key);
+            var json = JSON.parse(text);
+            return Promise.resolve(json);
+        };
+        BrowserRepo.prototype.save = function (thing) {
+            var text = JSON.stringify(thing);
+            this.br.localStorage.setItem(this.key, text);
+            return Promise.resolve(thing);
+        };
+        return BrowserRepo;
+    }());
+    exports.BrowserRepo = BrowserRepo;
+});
+define("Shared/BrowserUsers", ["require", "exports", "Shared/BrowserRepo"], function (require, exports, BrowserRepo_1) {
+    "use strict";
+    var BrowserUsers = (function () {
+        function BrowserUsers(window) {
+            this.repo = new BrowserRepo_1.BrowserRepo("users", window);
+        }
+        BrowserUsers.prototype.getUsers = function () {
+            return this.repo.get();
+        };
+        BrowserUsers.prototype.saveUsers = function (users) {
+            return this.repo.save(users);
+        };
+        return BrowserUsers;
+    }());
+    exports.BrowserUsers = BrowserUsers;
+});
+define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Shared/BrowserUsers"], function (require, exports, Users_2, BrowserUsers_1) {
+    "use strict";
+    var InMemoryBrowserUsers = (function () {
+        function InMemoryBrowserUsers(window) {
+            this.cache = new Users_2.InMemoryUsers();
+            this.repo = new BrowserUsers_1.BrowserUsers(window);
+        }
+        InMemoryBrowserUsers.prototype.updateUser = function (user) {
+            var _this = this;
+            var prom = this.cache.updateUser(user);
+            prom.then(function (users) {
+                _this.repo.saveUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.addUser = function (user) {
+            var _this = this;
+            var prom = this.cache.addUser(user);
+            prom.then(function (users) {
+                _this.repo.saveUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.getUsers = function () {
+            var _this = this;
+            var prom = this.repo.getUsers();
+            prom.then(function (users) {
+                _this.cache.setUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.getUser = function (id) {
+            var result = this.cache.getUser(id);
+            return Promise.resolve(result);
+        };
+        InMemoryBrowserUsers.prototype.setUsers = function (users) {
+            var promCache = this.cache.setUsers(users);
+            var promRepo = this.repo.saveUsers(users);
+            return promCache;
+        };
+        return InMemoryBrowserUsers;
+    }());
+    exports.InMemoryBrowserUsers = InMemoryBrowserUsers;
+});
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 /// <reference path="../typings/requirejs/require.d.ts"/>
-var mediator;
+/// <reference path="../Shared/User.ts"/>
+/// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
+/// <reference path="../Tuckman/Mediator.ts"/>
+var mediator, userLoader;
 requirejs.config({
     baseUrl: '/'
 });
-require(['Tuckman/Mediator', 'Shared/User'], function (m, u) {
+require(['Tuckman/Mediator', 'Shared/User', 'Shared/InMemoryBrowserUsers'], function (m, u, b) {
     console.log("Starting");
     mediator = new m.Mediator(23, 23);
+    userLoader = new b.InMemoryBrowserUsers(window);
     console.log(mediator);
-    mediator.setUsers([
-        new u.User("Adam Hall", "xxx1"),
-        new u.User("Billie Davey", "xxx2"),
-        new u.User("Laura Rowe", "xxx3"),
-        new u.User("Simon Dawson", "xxx4")
-    ]);
+    userLoader.getUsers().then(function (users) {
+        if (users) {
+            mediator.setUsers(users);
+        }
+        else {
+            mediator.setUsers([
+                new u.User("Adam Hall", "xxx1"),
+                new u.User("Billie Davey", "xxx2"),
+                new u.User("Laura Rowe", "xxx3"),
+                new u.User("Simon Dawson", "xxx4")
+            ]);
+        }
+    });
     document.addEventListener("selectUser", function (e) {
         mediator.selectUser(e.detail.id);
     });
