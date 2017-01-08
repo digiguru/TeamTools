@@ -1,1 +1,1 @@
-<?php header( 'Location: /ComfortZone/default.html' ) ;  ?>
+<?php header( 'Location: /Entry/default.html' ) ;  ?>
