@@ -221,17 +221,17 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
         });
     };
     var UIAddUser = function (username) {
-        var newNode = document.createElement("li");
         var textNode = document.createElement("span");
         textNode.setAttribute("class", "user");
         textNode.textContent = username;
         var deleteButton = document.createElement("a");
         deleteButton.setAttribute("href", "void(0);");
-        deleteButton.textContent = "x";
-        deleteButton.addEventListener("mousedown", function (e, v) {
+        deleteButton.textContent = "X";
+        deleteButton.addEventListener("mousedown", function (e) {
             var el = e.target.parentNode;
             UIClearUser(el.textContent);
         });
+        var newNode = document.createElement("li");
         newNode.appendChild(textNode);
         newNode.appendChild(deleteButton);
         document.getElementById('users').appendChild(newNode);
@@ -268,34 +268,22 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
         document.getElementById('new').addEventListener("mousedown", function () {
             UIClearUsers();
         });
-        document.getElementById('save').addEventListener("mousedown", function () {
+        document.getElementById('add').addEventListener("mousedown", function () {
             var username = document.getElementById('user').value;
             if (username) {
-                UIAddUser(username);
                 var usernames = getUsers();
-                saveUsers(usernames);
+                var isUnique = !(usernames.filter(function (value) {
+                    return value === username;
+                }).length);
+                if (isUnique) {
+                    UIAddUser(username);
+                    saveUsers(usernames);
+                }
+                else {
+                    alert("already entered");
+                }
             }
         });
     });
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"},
-   {name:"Fred Hall",id:"1xx1"},
-   {name:"Bob Hall",id:"1xx2"}
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
 //# sourceMappingURL=compiled.js.map

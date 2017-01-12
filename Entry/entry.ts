@@ -86,12 +86,20 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
         document.getElementById('new').addEventListener("mousedown", () => {
             UIClearUsers();
         });
-        document.getElementById('save').addEventListener("mousedown", () => {
+        document.getElementById('add').addEventListener("mousedown", () => {
             var username = document.getElementById('user').value;
             if (username) {
-                UIAddUser(username);
                 var usernames = getUsers();
-                saveUsers(usernames);
+                var isUnique = !(usernames.filter((value) => {
+                   return value === username;
+                }).length);
+                if(isUnique) {
+                    UIAddUser(username);
+                    saveUsers(usernames);
+                } else {
+                    alert("already entered");
+                }
+                
             }
         });
     });
