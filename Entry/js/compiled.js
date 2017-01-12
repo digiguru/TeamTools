@@ -199,31 +199,82 @@ define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Sh
 /// <reference path="../typings/requirejs/require.d.ts"/>
 /// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
 /// <reference path="../Shared/UserConstructor.ts"/>
-var users;
 requirejs.config({
     baseUrl: '/'
 });
+var users;
 require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, c) {
     console.log("Starting");
     users = new u.InMemoryBrowserUsers(window);
+    var getUsers = function () {
+        var entry = document.getElementById('users').getElementsByClassName('user');
+        var usernames = new Array();
+        for (var i = 0; i < entry.length; i++) {
+            usernames.push(entry.item(i).textContent);
+        }
+        return usernames;
+    };
+    var saveUsers = function (usernames) {
+        var newusers = c.UserConstructor.createUsersByNames(usernames);
+        window.users.setUsers(newusers).then(function (result) {
+            console.log("Set users", result);
+        });
+    };
+    var UIAddUser = function (username) {
+        var newNode = document.createElement("li");
+        var textNode = document.createElement("span");
+        textNode.setAttribute("class", "user");
+        textNode.textContent = username;
+        var deleteButton = document.createElement("a");
+        deleteButton.setAttribute("href", "void(0);");
+        deleteButton.textContent = "x";
+        deleteButton.addEventListener("mousedown", function (e, v) {
+            var el = e.target.parentNode;
+            UIClearUser(el.textContent);
+        });
+        newNode.appendChild(textNode);
+        newNode.appendChild(deleteButton);
+        document.getElementById('users').appendChild(newNode);
+    };
+    var UIClearUser = function (username) {
+        var parent = document.getElementById('users');
+        var nodeList = parent.childNodes;
+        for (var i = nodeList.length; i--; i > 0) {
+            if (username === nodeList[i].textContent) {
+                document.getElementById('users').removeChild(nodeList[i]);
+            }
+        }
+    };
+    var UIClearUsers = function () {
+        var parent = document.getElementById('users');
+        var nodeList = parent.childNodes;
+        for (var i = nodeList.length; i--; i > 0) {
+            document.getElementById('users').removeChild(nodeList[i]);
+        }
+    };
     users.getUsers().then(function (data) {
+        UIClearUsers();
         console.log("Have these users", data);
         if (data && data.length) {
             var strings = data.map(function (user) {
                 return user.name;
             });
             console.log("see", strings);
-            var text = strings.join("\n");
-            console.log("is", text);
-            document.getElementById('users').value = text;
+            for (var i = 0; i < strings.length; i++) {
+                console.log("ADD", strings[i]);
+                UIAddUser(strings[i]);
+            }
         }
+        document.getElementById('new').addEventListener("mousedown", function () {
+            UIClearUsers();
+        });
         document.getElementById('save').addEventListener("mousedown", function () {
-            var entry = document.getElementById('users').value;
-            var usernames = entry.split("\n");
-            var newusers = c.UserConstructor.createUsersByNames(usernames);
-            window.users.setUsers(newusers).then(function (result) {
-                console.log("Set users", result);
-            });
+            var username = document.getElementById('user').value;
+            if (username) {
+                UIAddUser(username);
+                var usernames = getUsers();
+                saveUsers(usernames);
+            }
         });
     });
 });

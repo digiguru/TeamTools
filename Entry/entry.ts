@@ -29,9 +29,23 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
         });
     }
     var UIAddUser = (username) => {
+        
+        var textNode = document.createElement("span");
+        textNode.setAttribute("class", "user");
+        textNode.textContent = username;
+
+        var deleteButton = document.createElement("a");
+        deleteButton.setAttribute("href", "void(0);");
+        deleteButton.textContent = "X";
+        deleteButton.addEventListener("mousedown", (e:MouseEvent) => {
+            var el = e.target.parentNode;
+            UIClearUser(el.textContent);
+        });
+
         var newNode = document.createElement("li");
-        newNode.setAttribute("class", "user");
-        newNode.textContent = username;
+        newNode.appendChild(textNode);
+        newNode.appendChild(deleteButton);
+
         document.getElementById('users').appendChild(newNode);
     }
     var UIClearUser = (username) => {
@@ -69,6 +83,9 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
             */
         }
 
+        document.getElementById('new').addEventListener("mousedown", () => {
+            UIClearUsers();
+        });
         document.getElementById('save').addEventListener("mousedown", () => {
             var username = document.getElementById('user').value;
             if (username) {
@@ -80,27 +97,4 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
     });
     
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"}, 
-   {name:"Fred Hall",id:"1xx1"}, 
-   {name:"Bob Hall",id:"1xx2"} 
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-
-
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
 
