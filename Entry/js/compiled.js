@@ -208,7 +208,7 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
     users = new u.InMemoryBrowserUsers(window);
     users.getUsers().then(function (data) {
         console.log("Have these users", data);
-        if (data.length) {
+        if (data && data.length) {
             var strings = data.map(function (user) {
                 return user.name;
             });

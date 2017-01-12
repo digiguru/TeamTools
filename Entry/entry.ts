@@ -16,7 +16,7 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
     
     users.getUsers().then((data) => {
         console.log("Have these users", data);
-        if (data.length) {
+        if (data && data.length) {
             const strings:string[] = data.map((user) => {
                 return user.name;
             });
