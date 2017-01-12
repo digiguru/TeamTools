@@ -554,7 +554,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                         resolve(true);
                     }
                     else {
-                        reject(false);
+                        resolve(false);
                     }
                 });
             });
@@ -807,20 +807,32 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
             //const prom = new Promsie()
             console.log("ACTION nextUser", this);
             var afterHide = function () {
-                if (this.formUserChoice.hasMoreUsers()) {
-                    console.log("Users left...", this);
-                    this.showUserChoice();
-                }
-                else {
-                    console.log("NO users left", this);
-                    this.showGraphTuckmanHistory();
-                }
+                var _this = this;
+                this.formUserChoice.hasMoreUsers().then(function (result) {
+                    if (result) {
+                        console.log("Users left...", _this);
+                        _this.showUserChoice();
+                    }
+                    else {
+                        console.log("NO users left", _this);
+                        _this.showGraphTuckmanHistory();
+                    }
+                });
             }.bind(this);
             this.graphTuckmanEntry.hide().then(afterHide);
         };
         return Mediator;
     }());
     exports.Mediator = Mediator;
+});
+define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var TuckmanUserChoiceHistory = (function () {
+        function TuckmanUserChoiceHistory() {
+        }
+        return TuckmanUserChoiceHistory;
+    }());
+    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
 });
 define("Shared/BrowserRepo", ["require", "exports"], function (require, exports) {
     "use strict";
@@ -961,13 +973,4 @@ mediator.addUser({name:"Mandy", id:"981298129"})
    
 ]);*/
 //export mediator;
-define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var TuckmanUserChoiceHistory = (function () {
-        function TuckmanUserChoiceHistory() {
-        }
-        return TuckmanUserChoiceHistory;
-    }());
-    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
-});
 //# sourceMappingURL=compiled.js.map

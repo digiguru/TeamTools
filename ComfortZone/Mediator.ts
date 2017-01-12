@@ -129,13 +129,15 @@ export class Mediator {
         //const prom = new Promsie()
         console.log("ACTION nextUser", this);
         var afterHide = function() {
-            if(this.formUserChoice.hasMoreUsers()) {
-                console.log("Users left...", this);
-                this.showUserChoice();
-            } else {
-                console.log("NO users left", this);
-                this.showGraphComfortHistory();
-            }
+            this.formUserChoice.hasMoreUsers().then((result) => {
+                if (result) {
+                    console.log("Users left...", this);
+                    this.showUserChoice();
+                } else {
+                    console.log("NO users left", this);
+                    this.showGraphComfortHistory();
+                }
+            });
         }.bind(this);
         
         this.graphComfortEntry.hide().then(afterHide);

@@ -199,52 +199,91 @@ define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Sh
 /// <reference path="../typings/requirejs/require.d.ts"/>
 /// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
 /// <reference path="../Shared/UserConstructor.ts"/>
-var users;
 requirejs.config({
     baseUrl: '/'
 });
+var users;
 require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, c) {
     console.log("Starting");
     users = new u.InMemoryBrowserUsers(window);
+    var getUsers = function () {
+        var entry = document.getElementById('users').getElementsByClassName('user');
+        var usernames = new Array();
+        for (var i = 0; i < entry.length; i++) {
+            usernames.push(entry.item(i).textContent);
+        }
+        return usernames;
+    };
+    var saveUsers = function (usernames) {
+        var newusers = c.UserConstructor.createUsersByNames(usernames);
+        window.users.setUsers(newusers).then(function (result) {
+            console.log("Set users", result);
+        });
+    };
+    var UIAddUser = function (username) {
+        var textNode = document.createElement("span");
+        textNode.setAttribute("class", "user");
+        textNode.textContent = username;
+        var deleteButton = document.createElement("a");
+        deleteButton.setAttribute("href", "void(0);");
+        deleteButton.textContent = "X";
+        deleteButton.addEventListener("mousedown", function (e) {
+            var el = e.target.parentNode;
+            UIClearUser(el.textContent);
+        });
+        var newNode = document.createElement("li");
+        newNode.appendChild(textNode);
+        newNode.appendChild(deleteButton);
+        document.getElementById('users').appendChild(newNode);
+    };
+    var UIClearUser = function (username) {
+        var parent = document.getElementById('users');
+        var nodeList = parent.childNodes;
+        for (var i = nodeList.length; i--; i > 0) {
+            if (username === nodeList[i].textContent) {
+                document.getElementById('users').removeChild(nodeList[i]);
+            }
+        }
+    };
+    var UIClearUsers = function () {
+        var parent = document.getElementById('users');
+        var nodeList = parent.childNodes;
+        for (var i = nodeList.length; i--; i > 0) {
+            document.getElementById('users').removeChild(nodeList[i]);
+        }
+    };
     users.getUsers().then(function (data) {
+        UIClearUsers();
         console.log("Have these users", data);
         if (data && data.length) {
             var strings = data.map(function (user) {
                 return user.name;
             });
             console.log("see", strings);
-            var text = strings.join("\n");
-            console.log("is", text);
-            document.getElementById('users').value = text;
+            for (var i = 0; i < strings.length; i++) {
+                console.log("ADD", strings[i]);
+                UIAddUser(strings[i]);
+            }
         }
-        document.getElementById('save').addEventListener("mousedown", function () {
-            var entry = document.getElementById('users').value;
-            var usernames = entry.split("\n");
-            var newusers = c.UserConstructor.createUsersByNames(usernames);
-            window.users.setUsers(newusers).then(function (result) {
-                console.log("Set users", result);
-            });
+        document.getElementById('new').addEventListener("mousedown", function () {
+            UIClearUsers();
+        });
+        document.getElementById('add').addEventListener("mousedown", function () {
+            var username = document.getElementById('user').value;
+            if (username) {
+                var usernames = getUsers();
+                var isUnique = !(usernames.filter(function (value) {
+                    return value === username;
+                }).length);
+                if (isUnique) {
+                    UIAddUser(username);
+                    saveUsers(usernames);
+                }
+                else {
+                    alert("already entered");
+                }
+            }
         });
     });
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"},
-   {name:"Fred Hall",id:"1xx1"},
-   {name:"Bob Hall",id:"1xx2"}
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
 //# sourceMappingURL=compiled.js.map

@@ -44,7 +44,7 @@ export class FormUserChoice {
                 if(unvotedUsers.length) {
                     resolve(true);
                 } else {
-                    reject(false);
+                    resolve(false);
                 }
             });
         });
