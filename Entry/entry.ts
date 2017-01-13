@@ -10,8 +10,6 @@ requirejs.config( {
 var users;
 
 require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c) {
-
-    console.log("Starting");
     users = new u.InMemoryBrowserUsers(window);
     
     var getUsers = () => {
@@ -28,6 +26,25 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
             console.log("Set users", result);
         });
     }
+    var AddUser = () => {
+        var username = UIGetUsername();
+        if (username) {
+            var usernames = getUsers();
+            var isUnique = !(usernames.filter((value) => {
+                return value === username;
+            }).length);
+            if(isUnique) {
+                UIAddUser(username);
+                usernames = getUsers();
+                saveUsers(usernames);
+                UIClearUsername();
+                setTimeout(() => { UIFocusUsername()},10);
+            } else {
+                UIShowError("already entered user" + username);
+            }
+            
+        }
+    };
     var UIAddUser = (username) => {
         
         var textNode = document.createElement("span");
@@ -40,6 +57,10 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
         deleteButton.addEventListener("mousedown", (e:MouseEvent) => {
             var el = e.target.parentNode;
             UIClearUser(el.textContent);
+            
+            var usernames = getUsers();
+            saveUsers(usernames);
+                    
         });
 
         var newNode = document.createElement("li");
@@ -64,44 +85,43 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
             document.getElementById('users').removeChild(nodeList[i]);
         }
     }
+    var UIGetUsername = () => {
+        return document.getElementById('user').value;
+    }
+    var UIShowError = (error) => {
+        alert(error);
+    }
+    var UIClearUsername = () => {
+        document.getElementById('user').value = "";
+    }
+    var UIFocusUsername = () => {
+        document.getElementById('user').focus();
+    }
+
     users.getUsers().then((data) => {
         UIClearUsers();
-        console.log("Have these users", data);
+        UIFocusUsername();
         if (data && data.length) {
             const strings:string[] = data.map((user) => {
                 return user.name;
             });
-            console.log("see", strings);
             for (var i=0;i<strings.length;i++) {
-                console.log("ADD", strings[i]);
                 UIAddUser(strings[i]);
             }
-            /*const text = strings.join("\n");
-            console.log("is", text);
-
-            document.getElementById('user').value = text;
-            */
         }
 
         document.getElementById('new').addEventListener("mousedown", () => {
             UIClearUsers();
         });
-        document.getElementById('add').addEventListener("mousedown", () => {
-            var username = document.getElementById('user').value;
-            if (username) {
-                var usernames = getUsers();
-                var isUnique = !(usernames.filter((value) => {
-                   return value === username;
-                }).length);
-                if(isUnique) {
-                    UIAddUser(username);
-                    saveUsers(usernames);
-                } else {
-                    alert("already entered");
-                }
-                
+        document.getElementById('user').addEventListener("keyup", (e:KeyboardEvent) => {
+            var code = e.keyCode;
+            if(code === 13) {
+                AddUser();
             }
         });
+        document.getElementById('add').addEventListener("mousedown", AddUser);
+        
+        
     });
     
 });

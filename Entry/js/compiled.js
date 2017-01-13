@@ -204,7 +204,6 @@ requirejs.config({
 });
 var users;
 require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, c) {
-    console.log("Starting");
     users = new u.InMemoryBrowserUsers(window);
     var getUsers = function () {
         var entry = document.getElementById('users').getElementsByClassName('user');
@@ -220,6 +219,25 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
             console.log("Set users", result);
         });
     };
+    var AddUser = function () {
+        var username = UIGetUsername();
+        if (username) {
+            var usernames = getUsers();
+            var isUnique = !(usernames.filter(function (value) {
+                return value === username;
+            }).length);
+            if (isUnique) {
+                UIAddUser(username);
+                usernames = getUsers();
+                saveUsers(usernames);
+                UIClearUsername();
+                setTimeout(function () { UIFocusUsername(); }, 10);
+            }
+            else {
+                UIShowError("already entered user" + username);
+            }
+        }
+    };
     var UIAddUser = function (username) {
         var textNode = document.createElement("span");
         textNode.setAttribute("class", "user");
@@ -230,6 +248,8 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
         deleteButton.addEventListener("mousedown", function (e) {
             var el = e.target.parentNode;
             UIClearUser(el.textContent);
+            var usernames = getUsers();
+            saveUsers(usernames);
         });
         var newNode = document.createElement("li");
         newNode.appendChild(textNode);
@@ -252,38 +272,39 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
             document.getElementById('users').removeChild(nodeList[i]);
         }
     };
+    var UIGetUsername = function () {
+        return document.getElementById('user').value;
+    };
+    var UIShowError = function (error) {
+        alert(error);
+    };
+    var UIClearUsername = function () {
+        document.getElementById('user').value = "";
+    };
+    var UIFocusUsername = function () {
+        document.getElementById('user').focus();
+    };
     users.getUsers().then(function (data) {
         UIClearUsers();
-        console.log("Have these users", data);
+        UIFocusUsername();
         if (data && data.length) {
             var strings = data.map(function (user) {
                 return user.name;
             });
-            console.log("see", strings);
             for (var i = 0; i < strings.length; i++) {
-                console.log("ADD", strings[i]);
                 UIAddUser(strings[i]);
             }
         }
         document.getElementById('new').addEventListener("mousedown", function () {
             UIClearUsers();
         });
-        document.getElementById('add').addEventListener("mousedown", function () {
-            var username = document.getElementById('user').value;
-            if (username) {
-                var usernames = getUsers();
-                var isUnique = !(usernames.filter(function (value) {
-                    return value === username;
-                }).length);
-                if (isUnique) {
-                    UIAddUser(username);
-                    saveUsers(usernames);
-                }
-                else {
-                    alert("already entered");
-                }
+        document.getElementById('user').addEventListener("keyup", function (e) {
+            var code = e.keyCode;
+            if (code === 13) {
+                AddUser();
             }
         });
+        document.getElementById('add').addEventListener("mousedown", AddUser);
     });
 });
 //# sourceMappingURL=compiled.js.map
