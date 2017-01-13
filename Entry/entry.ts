@@ -23,7 +23,9 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
                     AddUser();
                 }
             });
-            document.getElementById('add').addEventListener("mousedown", AddUser);     
+            document.getElementById('add').addEventListener("mousedown", () => {
+                AddUser();
+            });     
         }
 
         AddUser(username) {
@@ -92,7 +94,7 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
     
     var saveUsers = (usernames) => {
         var newusers = c.UserConstructor.createUsersByNames(usernames);
-        window.users.setUsers(newusers).then((result) => {
+        users.setUsers(newusers).then((result) => {
             console.log("Set users", result);
         });
     }
