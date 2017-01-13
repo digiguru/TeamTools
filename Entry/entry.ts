@@ -66,7 +66,7 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
                 document.getElementById('users').removeChild(nodeList[i]);
             }
         }
-        GetUsername () {
+        GetUsername () : string {
             return document.getElementById('user').value;
         }
         ShowError (error) {
@@ -78,7 +78,7 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
         FocusUsername () {
             document.getElementById('user').focus();
         }
-        GetUsers () {
+        GetUsers () : Array<string> {
             var entry = document.getElementById('users').getElementsByClassName('user');
             var usernames = new Array<string>();
             for (var i=0;i<entry.length;i++) {
