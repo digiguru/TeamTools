@@ -13,8 +13,8 @@
         "noUnusedLocals": true,
         "noUnusedParameters": true,*/
         "traceResolution": true,
-        "declarationDir": "out",
-        "outFile": "js/compiled.js"
+        "declarationDir": "js",
+        "declaration": true
         
     }
 }
