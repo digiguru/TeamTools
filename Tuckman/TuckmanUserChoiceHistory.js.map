@@ -1,0 +1,1 @@
+{"version":3,"sources":["TuckmanUserChoiceHistory.ts"],"names":[],"mappings":";;IAEA;QAAA;QAGA,CAAC;QAAD,+BAAC;IAAD,CAHA,AAGC,IAAA;IAHY,4DAAwB","file":"TuckmanUserChoiceHistory.js","sourcesContent":["import {TuckmanUserChoice} from './TuckmanUserChoice';\n\nexport class TuckmanUserChoiceHistory {\n    date :Date;\n    data : Array<TuckmanUserChoice>;\n}"]}
