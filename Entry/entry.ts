@@ -38,7 +38,7 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
             deleteButton.setAttribute("href", "void(0);");
             deleteButton.textContent = "X";
             deleteButton.addEventListener("mousedown", (e:MouseEvent) => {
-                var el = e.target.parentNode;
+                var el = (<Element>e.target).parentNode;
                 this.ClearUser(el.textContent);
                 
                 var usernames = UI.GetUsers();
@@ -69,16 +69,16 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
             }
         }
         GetUsername () : string {
-            return document.getElementById('user').value;
+            return (<HTMLInputElement>document.getElementById('user')).value;
         }
         ShowError (error) {
             alert(error);
         }
         ClearUsername () {
-            document.getElementById('user').value = "";
+            (<HTMLInputElement>document.getElementById('user')).value = "";
         }
         FocusUsername () {
-            document.getElementById('user').focus();
+            (<HTMLInputElement>document.getElementById('user')).focus();
         }
         GetUsers () : Array<string> {
             var entry = document.getElementById('users').getElementsByClassName('user');

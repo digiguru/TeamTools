@@ -1,3 +1,27 @@
 {
-  "name": "TeamTools"
+  "name": "teamtools",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.1.0",
+    "gulp-typescript": "^3.1.4",
+    "jasmine": "^2.5.3",
+    "typescript": "^2.1.5"
+  },
+  "description": "Start mini server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "jasmine": "^2.5.3"
+  },
+  "scripts": {
+    "test": "jasmine",
+    "build": ""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://digiguru@bitbucket.org/digiguru/teamtools.git"
+  },
+  "author": "digiguru",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/digiguru/teamtools#readme"
 }

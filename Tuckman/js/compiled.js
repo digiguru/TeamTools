@@ -235,9 +235,10 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
     var GraphTuckmanEntry = (function (_super) {
         __extends(GraphTuckmanEntry, _super);
         function GraphTuckmanEntry() {
-            _super.call(this);
-            this.clickArea = document.getElementById('clickable');
-            this.setupOverActivity();
+            var _this = _super.call(this) || this;
+            _this.clickArea = document.getElementById('clickable');
+            _this.setupOverActivity();
+            return _this;
         }
         GraphTuckmanEntry.prototype.setupOverActivity = function () {
             var that = this;
@@ -374,8 +375,9 @@ define("Tuckman/GraphTuckmanHistory", ["require", "exports", "Tuckman/GraphTuckm
     var GraphTuckmanHistory = (function (_super) {
         __extends(GraphTuckmanHistory, _super);
         function GraphTuckmanHistory() {
-            _super.call(this);
-            this.graphData = new Array();
+            var _this = _super.call(this) || this;
+            _this.graphData = new Array();
+            return _this;
             //this.setupHistory();
         }
         GraphTuckmanHistory.prototype.show = function (graphData) {
@@ -825,15 +827,6 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
     }());
     exports.Mediator = Mediator;
 });
-define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var TuckmanUserChoiceHistory = (function () {
-        function TuckmanUserChoiceHistory() {
-        }
-        return TuckmanUserChoiceHistory;
-    }());
-    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
-});
 define("Shared/BrowserRepo", ["require", "exports"], function (require, exports) {
     "use strict";
     var BrowserRepo = (function () {
@@ -973,4 +966,14 @@ mediator.addUser({name:"Mandy", id:"981298129"})
    
 ]);*/
 //export mediator;
+define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var TuckmanUserChoiceHistory = (function () {
+        function TuckmanUserChoiceHistory() {
+        }
+        return TuckmanUserChoiceHistory;
+    }());
+    exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
+});
+
 //# sourceMappingURL=compiled.js.map
