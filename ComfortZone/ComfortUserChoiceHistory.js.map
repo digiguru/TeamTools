@@ -1,1 +1,0 @@
-{"version":3,"sources":["ComfortUserChoiceHistory.ts"],"names":[],"mappings":";;IACA;QAAA;QAGA,CAAC;QAAD,+BAAC;IAAD,CAHA,AAGC,IAAA;IAHY,4DAAwB","file":"ComfortUserChoiceHistory.js","sourcesContent":["import {ComfortUserChoice} from './ComfortUserChoice';\nexport class ComfortUserChoiceHistory {\n    date :Date;\n    data : Array<ComfortUserChoice>;\n}"]}
