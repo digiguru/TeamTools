@@ -12,3 +12,9 @@ Rebuild in VS Code
 Deploy to live
 
 {{git push heroku master}}
+
+Run the tests localy
+
+{{npm test}}
+
+Or hit debug button in VSCode
