@@ -7,7 +7,15 @@ Get typings
 
 Rebuild in VS Code
 
-{{cmd+shift+p  task (run task) then shoose the part to re-compile}}
+{{cmd+shift+p  task (run task) then choose the part to re-compile}}
+
+Alternativly you can use gulp
+
+{{gulp Build}}
+
+or even better npm
+
+{{npm run build}}
 
 Deploy to live
 

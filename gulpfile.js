@@ -5,8 +5,7 @@ var tsTuckman = ts.createProject("Tuckman/tsconfig.json");
 var tsComfortZone = ts.createProject("ComfortZone/tsconfig.json");
 var sourcemaps = require('gulp-sourcemaps');
 
-
-gulp.task("Entry", function () {
+gulp.task("BuildEntry", function () {
     var ts = tsEntry.src()
         .pipe(sourcemaps.init())
         .pipe(tsEntry())
@@ -14,14 +13,14 @@ gulp.task("Entry", function () {
         .pipe(sourcemaps.write("."))
         .pipe(gulp.dest("Entry"));
 });
-gulp.task("Tuckman", function () {
+gulp.task("BuildTuckman", function () {
     return tsTuckman.src()
         .pipe(sourcemaps.init())
         .pipe(tsTuckman())
         .js.pipe(sourcemaps.write("."))
         .pipe(gulp.dest("Tuckman"));
 });
-gulp.task("ComfortZone", function () {
+gulp.task("BuildComfortZone", function () {
     return tsComfortZone.src()
         .pipe(sourcemaps.init())
         .pipe(tsComfortZone())
@@ -29,4 +28,4 @@ gulp.task("ComfortZone", function () {
         .pipe(gulp.dest("ComfortZone"));
 });
 
-gulp.task('Build', ['Entry', 'Tuckman', 'ComfortZone']);
+gulp.task('Build', ['BuildEntry', 'BuildTuckman', 'BuildComfortZone']);

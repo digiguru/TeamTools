@@ -6,6 +6,7 @@
     "gulp-sourcemaps": "^2.1.0",
     "gulp-typescript": "^3.1.4",
     "jest": "^18.1.0",
+    "jest-cli": "^18.1.0",
     "typescript": "^2.1.5"
   },
   "description": "Start mini server",
@@ -13,7 +14,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
-    "build": ""
+    "build": "gulp Build"
   },
   "repository": {
     "type": "git",
