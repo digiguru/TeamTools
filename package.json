@@ -1,25 +1,34 @@
 {
   "name": "teamtools",
   "devDependencies": {
+    "@types/jasmine": "^2.5.40",
     "gulp": "^3.9.1",
     "gulp-sourcemaps": "^2.1.0",
     "gulp-typescript": "^3.1.4",
-    "jasmine": "^2.5.3",
+    "jest": "^18.1.0",
     "typescript": "^2.1.5"
   },
   "description": "Start mini server",
   "version": "1.0.0",
   "main": "index.js",
-  "dependencies": {
-    "jasmine": "^2.5.3"
-  },
   "scripts": {
-    "test": "jasmine",
+    "test": "jest --runInBand",
     "build": ""
   },
   "repository": {
     "type": "git",
     "url": "git+https://digiguru@bitbucket.org/digiguru/teamtools.git"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
   },
   "author": "digiguru",
   "license": "MIT",
