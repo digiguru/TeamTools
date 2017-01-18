@@ -15,5 +15,5 @@ export class BrowserUsers implements IAllUserRepostiory {
 
     saveUsers(users:User[]) :  Thenable<User[]> {
         return this.repo.save(users);
-    } 
+    }
 }

@@ -13,7 +13,7 @@ export class Mediator {
     graphTuckmanEntry : GraphTuckmanEntry;
     graphTuckmanHistory: GraphTuckmanHistory;
     breadcrumbControl: BreadcrumbControl;
-    
+
     constructor() {
         console.log("START everything");
         this.userChoiceHistory = new Array<TuckmanUserChoice>();
@@ -49,7 +49,7 @@ export class Mediator {
 
         }
     }
-    
+
     public addUser(user:User) {
         this.formUserChoice.addUser(user);
     }
@@ -68,7 +68,7 @@ export class Mediator {
         }
         this.graphTuckmanEntry.show(user);
     }
-    
+
     public showTuckmanHistory(history) {
         let afterHide = function() {
            if(!this.graphTuckmanHistory) {
@@ -85,8 +85,8 @@ export class Mediator {
             }
             afterHide();
         }
-        
-       
+
+
     }
 
     private showGraphTuckmanHistory() {
@@ -103,7 +103,7 @@ export class Mediator {
             this.formUserChoice.hide();
             this.showGraphTuckmanEntry(user);
         });
-        
+
     }
 
     public saveGraph(area:string, distance:number, user:User) {
@@ -123,7 +123,7 @@ export class Mediator {
             const userChoice = new TuckmanUserChoice(user,distance,area);
             this.userChoiceHistory.push(userChoice);
         }
-    }  
+    }
 
     private next() {
         //const prom = new Promsie()
@@ -139,7 +139,7 @@ export class Mediator {
                 }
             })
         }.bind(this);
-        
+
         this.graphTuckmanEntry.hide().then(afterHide);
     }
 

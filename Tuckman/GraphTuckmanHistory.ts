@@ -5,22 +5,22 @@ import {Polar} from "../Shared/Polar";
 
 
 export class GraphTuckmanHistory extends GraphTuckmanBase {
-    
+
     public graphData = new Array<TuckmanUserChoice>();
     public d3Points;
     constructor() {
-        super(); 
+        super();
         //this.setupHistory();
     }
 
     public show(graphData : Array<TuckmanUserChoice>):Thenable<number> {
         this.graphData = graphData;
         const Thenable = this.showBase();
-        
+
         const totalPoints = graphData.length;
         const totalHeight = 800;
         const heightDivision = totalHeight / totalPoints;
-        
+
         d3.select("g#history")
             .selectAll("circle")
             .data(this.graphData)

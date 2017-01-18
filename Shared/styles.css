@@ -18,7 +18,7 @@
     cursor: hand;
 }
 #users text {
-    pointer-events: none;     
+    pointer-events: none;
 }
 .username {
     fill: white;
@@ -55,12 +55,12 @@ textarea {
 .area {
 /*#comfort, #stretch, #chaos {*/
     stroke: white;
-    stroke-width: 1;       
+    stroke-width: 1;
 }
 .dropper {
-    fill: white; 
-    pointer-events: none;       
+    fill: white;
+    pointer-events: none;
 }
 .dropped {
-    fill: slategrey;        
+    fill: slategrey;
 }

@@ -7,7 +7,7 @@ export class GraphComfortEntry extends GraphComfortBase {
     clickArea : HTMLElement;
     currentUser:User;
     dropper : SVGAElement;
-    
+
     constructor() {
         super();
         this.clickArea = document.getElementById("clickable");
@@ -26,10 +26,10 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     private graphMove() {
-        /// "that" is the instance of graph 
+        /// "that" is the instance of graph
         const that : GraphComfortEntry = this;
         return function(d:void, i:number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             const coord = d3.mouse(this);
             const distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
             const area = GraphComfortEntry.calculateDistance(distance);
@@ -38,22 +38,22 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     private graphUp() {
-        // "that" is the instance of graph 
+        // "that" is the instance of graph
         const that : GraphComfortEntry = this;
         return function(d:void, i :number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             const coord = Point.fromCoords(d3.mouse(this));
             const distance = Point.distance(that.centerPoint, coord);
-            const area = GraphComfortEntry.calculateDistance(distance);          
+            const area = GraphComfortEntry.calculateDistance(distance);
             that.saveTheInteraction(area, distance);
         }
     }
 
     private graphDown() {
-        // "that" is the instance of graph 
+        // "that" is the instance of graph
         const that = this;
         return function(d:void, i:number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             const coord = Point.fromCoords(d3.mouse(this));
             const el = SVG.circle(8, coord.x, coord.y, "dropper");
             that.addDropper(el);
@@ -64,7 +64,7 @@ export class GraphComfortEntry extends GraphComfortBase {
         //<circle id="stretch" r="300" cx="400" cy="400" />
         //<circle id="comfort" r="100" cx="400" cy="400" />
 
-    
+
         const d3zones = d3.select("svg")
             .selectAll(".area")
             .transition()
@@ -84,9 +84,9 @@ export class GraphComfortEntry extends GraphComfortBase {
                     }
                     return "#00D7FE";
                 });
-        
+
     }
-    
+
 
     public addDropper (el : SVGAElement)  {
         this.dropper = el;
@@ -115,7 +115,7 @@ export class GraphComfortEntry extends GraphComfortBase {
         d3.select("#stage").on("mousemove", function() {
             console.log("UNMove - mousemove - No longer interactive stage");
         });
-        
+
     }
     public saveTheInteraction (area:string, distance:number) {
         console.log("saveTheInteraction");

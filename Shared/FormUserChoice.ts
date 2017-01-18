@@ -49,7 +49,7 @@ export class FormUserChoice {
                 }
             });
         });
-        
+
     }
     public show():Thenable<number> {
         console.log("SHOW UserChocieForm");
@@ -60,7 +60,7 @@ export class FormUserChoice {
             })
             .style("fill-opacity",1)
             .attr("transform", "matrix(1,0,0,1,0,0)");
-        
+
         this.d3Users.selectAll("g").attr("class", function(e) {
                 if(e.voted) {
                     return "user-group-complete";
@@ -86,7 +86,7 @@ export class FormUserChoice {
                 console.log("NOCLICK User - This was clicked, but ignored", this);
             });
         return Timed.for(800);
-        
+
     }
     private rebind(users:User[]): d3.selection.Update<User> {
         return this.d3Users
@@ -94,10 +94,10 @@ export class FormUserChoice {
                 .data(users);
     }
     private clickUser () {
-        // "that" is the instance of graph 
+        // "that" is the instance of graph
         const that = this;
         return function(d:User, i:number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             console.log("CLICK - User - up  UserChocieForm");
             //const name = this.getAttribute("data-name");
             const id = this.getAttribute("data-id");
@@ -108,25 +108,25 @@ export class FormUserChoice {
         }
     }
     private overUser () {
-        // "that" is the instance of graph 
+        // "that" is the instance of graph
         const that = this;
         return function(d:User, i:number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             d3.select(this.parentNode)
             //const d3zones = d3.select("g#users")
                 .selectAll("text")
                 .transition()
                 .duration(250)
                 .style("fill", function() {
-                    return "#00D7FE";  
+                    return "#00D7FE";
                 });
         }
     }
     private leaveUser() {
-        // "that" is the instance of graph 
+        // "that" is the instance of graph
         const that = this;
         return function(d:User, i:number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             d3.select(this.parentNode)
             //const d3zones = d3.select("g#users")
                 .selectAll("text")
@@ -135,7 +135,7 @@ export class FormUserChoice {
                     return 250;
                 })
                 .style("fill", function() {
-                    return "grey";    
+                    return "grey";
                 });
         }
     }
@@ -157,8 +157,8 @@ export class FormUserChoice {
                 .attr("data-id", e.id)
                 .on("mouseover", that.overUser())
                 .on("mouseleave", that.leaveUser())
-                
-            d3Item.append("text")      
+
+            d3Item.append("text")
                 .attr("class", "username")
                 .attr("y", function(e) {
                     return 30 + ((i + 1) * 90);
@@ -172,13 +172,13 @@ export class FormUserChoice {
                 });
         }
     }
-    
+
     public addUser(user:User) {
         this.userRepo.addUser(user).then(users => {
             this.setupUsers(users);
         });
     }
-    
+
     public setUsers(users:Array<User>) {
         this.destroyUsers();
         this.userRepo.setUsers(users).then((users) => {
@@ -199,5 +199,5 @@ export class FormUserChoice {
             .each(this.eachUser());
     }
 
-    
+
 }

@@ -32,11 +32,11 @@ export class Point {
     public static toCartesianNoOffset(polar:Polar):Point {
         const x = polar.radius * Math.cos(polar.angle);
         const y = polar.radius * Math.sin(polar.angle);
-        return new Point(x, y); 
+        return new Point(x, y);
     }
     public static toCartesian(polar:Polar,origin:Point):Point {
         const point = Point.toCartesianNoOffset(polar);
-        return Point.toOffset(point,origin); 
+        return Point.toOffset(point,origin);
     }
     public static toPolar(point:Point, origin:Point):Polar {
         const offset = Point.fromOffset(point, origin);

@@ -6,6 +6,6 @@ export class TuckmanZones {
     constructor(name: string, left: number, width: number) {
         this.name = name;
         this.left = left;
-        this.width = width; 
+        this.width = width;
     }
 }

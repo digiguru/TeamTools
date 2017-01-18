@@ -8,14 +8,14 @@ export class GraphComfortBase {
     stretch : HTMLElement;
     comfort : HTMLElement;
     centerPoint : Point;
-    
+
     constructor() {
         this.setupArea();
     }
 
     private setupArea () {
-        
-        
+
+
         const zones = [new ComfortZones("stretch",300), new ComfortZones("comfort",100)];
         const d3zones = d3.select("g#zones")
             .selectAll("circle")
@@ -29,7 +29,7 @@ export class GraphComfortBase {
                 .attr("id", function(d:ComfortZones) {
                     return d.name;
             });
-        
+
 
         this.chaos = document.getElementById("chaos");
         this.stretch = document.getElementById("stretch");
@@ -37,26 +37,26 @@ export class GraphComfortBase {
         const centerX = Number(this.comfort.getAttribute("cx"));
         const centerY = Number(this.comfort.getAttribute("cy"));
         this.centerPoint = new Point(centerX,centerY);
-        
+
 
     }
     public hide():Thenable<number> {
         console.log("HIDE comfortGRAPH");
-        
-        const d3zones = d3.select("g#zones")    
+
+        const d3zones = d3.select("g#zones")
             .selectAll("circle")
                 .transition()
                 .duration(1000)
                 .attr("r", 0);
 
         const d3drops = d3.select("#stage")
-            .selectAll("circle.dropper")   
+            .selectAll("circle.dropper")
             .transition()
                 .delay(250)
                 .duration(250)
                 .attr("r", 0);
         return Timed.for(1000);
-                
+
     }
     public showBase():Thenable<number> {
         console.log("SHOW graph");
@@ -67,12 +67,12 @@ export class GraphComfortBase {
                 .duration(1000)
                 .delay(function(d, i) { return i * 100; })
                 .ease("elastic")
-                .attr("r", function(d:ComfortZones) { 
-                    return d.radius; 
-                }); 
-        
+                .attr("r", function(d:ComfortZones) {
+                    return d.radius;
+                });
+
         return Timed.for(1000);
-        
+
     }
 
 }

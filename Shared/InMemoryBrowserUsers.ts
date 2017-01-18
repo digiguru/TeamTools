@@ -37,7 +37,7 @@ export class InMemoryBrowserUsers implements IUserRepo  {
         return Promise.resolve(result);
     }
     setUsers(users:User[]) : Thenable<User[]> {
-        
+
         const promCache = this.cache.setUsers(users);
         const promRepo = this.repo.saveUsers(users);
         return promCache;

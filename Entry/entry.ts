@@ -11,7 +11,7 @@ let users;
 
 require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c) {
     users = new u.InMemoryBrowserUsers(window);
-    
+
     class UIEntry {
         constructor() {
             document.getElementById("new").addEventListener("mousedown", () => {
@@ -25,11 +25,11 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             });
             document.getElementById("add").addEventListener("mousedown", () => {
                 AddUser();
-            });     
+            });
         }
 
         AddUser(username) {
-            
+
             let textNode = document.createElement("span");
             textNode.setAttribute("class", "user");
             textNode.textContent = username;
@@ -40,10 +40,10 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             deleteButton.addEventListener("mousedown", (e:MouseEvent) => {
                 let el = (<Element>e.target).parentNode;
                 this.ClearUser(el.textContent);
-                
+
                 let usernames = UI.GetUsers();
                 saveUsers(usernames);
-                        
+
             });
 
             let newNode = document.createElement("li");
@@ -58,7 +58,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             for (let i=nodeList.length;i--;i>0) {
                 if(username === nodeList[i].textContent) {
                     document.getElementById("users").removeChild(nodeList[i]);
-                }  
+                }
             }
         }
         ClearUsers () {
@@ -86,12 +86,12 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             for (let i=0;i<entry.length;i++) {
                 usernames.push(entry.item(i).textContent);
             }
-            return usernames;            
+            return usernames;
         };
 
     }
     let UI = new UIEntry();
-    
+
     let saveUsers = (usernames) => {
         let newusers = c.UserConstructor.createUsersByNames(usernames);
         users.setUsers(newusers).then((result) => {
@@ -114,7 +114,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
                 setTimeout(() => { UI.FocusUsername()},10);
             } else {
                 UI.ShowError("already entered user" + username);
-            }   
+            }
         }
     };
 
@@ -130,6 +130,6 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             }
         }
     });
-    
+
 });
 

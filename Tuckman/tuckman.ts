@@ -21,13 +21,13 @@ require(["Tuckman/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], functi
             mediator.setUsers(users);
         } else {
             mediator.setUsers([
-                new u.User("Adam Hall","xxx1"), 
-                new u.User("Billie Davey","xxx2"), 
+                new u.User("Adam Hall","xxx1"),
+                new u.User("Billie Davey","xxx2"),
                 new u.User("Laura Rowe","xxx3"),
                 new u.User("Simon Dawson","xxx4")
             ]);
         }
-        
+
     });
     document.addEventListener("selectUser", function(e:CustomEvent) {
         mediator.selectUser(e.detail.id);

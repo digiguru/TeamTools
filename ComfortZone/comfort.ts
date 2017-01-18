@@ -23,13 +23,13 @@ require(["ComfortZone/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], fu
             mediator.setUsers(users);
         } else {
             mediator.setUsers([
-                new u.User("Adam Hall","xxx1"), 
-                new u.User("Billie Davey","xxx2"), 
+                new u.User("Adam Hall","xxx1"),
+                new u.User("Billie Davey","xxx2"),
                 new u.User("Laura Rowe","xxx3"),
                 new u.User("Simon Dawson","xxx4")
             ]);
         }
-        
+
     });
 
     document.addEventListener("selectUser", function(e:CustomEvent) {
@@ -46,9 +46,9 @@ require(["ComfortZone/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], fu
 Commands you can throw into the mediator....
 
 mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"}, 
-   {name:"Fred Hall",id:"1xx1"}, 
-   {name:"Bob Hall",id:"1xx2"} 
+   {name:"Nigel Hall",id:"1xx0"},
+   {name:"Fred Hall",id:"1xx1"},
+   {name:"Bob Hall",id:"1xx2"}
 ]);
 
 mediator.addUser({name:"Mandy", id:"981298129"})
@@ -62,7 +62,7 @@ mediator.addUser({name:"Mandy", id:"981298129"})
 //const stage = new Comfort.Stage();
 //const mediator = new Mediator();
 /*mediator.setUsers([
-   
+
 ]);*/
 //export mediator;
 

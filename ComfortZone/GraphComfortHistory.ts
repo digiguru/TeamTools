@@ -5,11 +5,11 @@ import {Polar} from "../Shared/Polar";
 
 
 export class GraphComfortHistory extends GraphComfortBase {
-    
+
     public graphData = new Array<ComfortUserChoice>();
     public d3Points;
     constructor() {
-        super(); 
+        super();
         //this.setupHistory();
     }
 

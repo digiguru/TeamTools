@@ -4,6 +4,6 @@ export class ComfortZones {
     radius: number;
     constructor(name: string, radius: number) {
         this.name = name;
-        this.radius = radius; 
+        this.radius = radius;
     }
 }

@@ -13,7 +13,7 @@ export class Mediator {
     graphComfortEntry : GraphComfortEntry;
     graphComfortHistory: GraphComfortHistory;
     breadcrumbControl: BreadcrumbControl;
-    
+
     constructor() {
         console.log("START everything");
         this.userChoiceHistory = new Array<ComfortUserChoice>();
@@ -49,7 +49,7 @@ export class Mediator {
 
         }
     }
-    
+
     public addUser(user:User) {
         this.formUserChoice.addUser(user);
     }
@@ -68,7 +68,7 @@ export class Mediator {
         }
         this.graphComfortEntry.show(user);
     }
-    
+
     public showComfortHistory(history) {
         let afterHide = function() {
            if(!this.graphComfortHistory) {
@@ -85,8 +85,8 @@ export class Mediator {
             }
             afterHide();
         }
-        
-       
+
+
     }
 
     private showGraphComfortHistory() {
@@ -103,7 +103,7 @@ export class Mediator {
             this.formUserChoice.hide();
             this.showGraphComfortEntry(user);
         });
-        
+
     }
 
     public saveGraph(area:string, distance:number, user:User) {
@@ -123,7 +123,7 @@ export class Mediator {
             const userChoice = new ComfortUserChoice(user,distance,area);
             this.userChoiceHistory.push(userChoice);
         }
-    }  
+    }
 
     private next() {
         //const prom = new Promsie()
@@ -139,7 +139,7 @@ export class Mediator {
                 }
             });
         }.bind(this);
-        
+
         this.graphComfortEntry.hide().then(afterHide);
     }
 

@@ -7,7 +7,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     clickArea : HTMLElement;
     currentUser:User;
     dropper : SVGAElement;
-    
+
     constructor() {
         super();
         this.clickArea = document.getElementById("clickable");
@@ -26,10 +26,10 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     private graphMove() {
-        /// "that" is the instance of graph 
+        /// "that" is the instance of graph
         const that : GraphTuckmanEntry = this;
         return function(d:void, i:number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             const coord = Point.fromCoords(d3.mouse(this));
             const distance = coord.x;
             const area = GraphTuckmanEntry.calculateDistance(distance);
@@ -38,22 +38,22 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     private graphUp() {
-        // "that" is the instance of graph 
+        // "that" is the instance of graph
         const that : GraphTuckmanEntry = this;
         return function(d:void, i :number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             const coord = Point.fromCoords(d3.mouse(this));
             const distance = coord.x;
-            const area = GraphTuckmanEntry.calculateDistance(distance);          
+            const area = GraphTuckmanEntry.calculateDistance(distance);
             that.saveTheInteraction(area, distance);
         }
     }
 
     private graphDown() {
-        // "that" is the instance of graph 
+        // "that" is the instance of graph
         const that = this;
         return function(d:void, i:number) {
-            // "this" is the DOM element 
+            // "this" is the DOM element
             const coord = Point.fromCoords(d3.mouse(this));
             const el = SVG.circle(8, coord.x, coord.y, "dropper");
             that.addDropper(el);
@@ -64,7 +64,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
         //<circle id="stretch" r="300" cx="400" cy="400" />
         //<circle id="comfort" r="100" cx="400" cy="400" />
 
-    
+
         const d3zones = d3.select("svg")
             .selectAll(".area")
             .transition()
@@ -84,9 +84,9 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
                     }
                     return "#00D7FE";
                 });
-        
+
     }
-    
+
 
     public addDropper (el : SVGAElement)  {
         this.dropper = el;
@@ -117,7 +117,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
         d3.select("#stage").on("mousemove", function() {
             console.log("UNMove - mousemove - No longer interactive stage");
         });
-        
+
     }
     public saveTheInteraction (area:string, distance:number) {
         console.log("saveTheInteraction");

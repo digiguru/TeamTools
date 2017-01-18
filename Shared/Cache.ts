@@ -12,11 +12,11 @@ export interface ICache<T> {
 
 export class GenericCache implements ICache<IIndexableObject> {
     store:IIndexableObject[];
-    
+
     constructor() {
         this.store = [];
     }
-    
+
     update(item:IIndexableObject) : Thenable<IIndexableObject[]> {
         for (let i = 0; i < this.store.length; i++) {
             if (item.id === this.store[i].id) {
@@ -34,7 +34,7 @@ export class GenericCache implements ICache<IIndexableObject> {
     get() : Thenable<IIndexableObject[]> {
         return Promise.resolve(this.store);
     }
-    
+
     getById(id:string) : Thenable<IIndexableObject> {
         const store = this.store.filter(function(x:IIndexableObject) {
             return x.id === id;
@@ -44,7 +44,7 @@ export class GenericCache implements ICache<IIndexableObject> {
         }
         throw Error("Cannot find item by ID: " + id);
     }
-    
+
     set(items:IIndexableObject[]) : Thenable<IIndexableObject[]> {
         this.store = items;
         return Promise.resolve(this.store);;

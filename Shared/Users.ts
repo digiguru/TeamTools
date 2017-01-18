@@ -5,7 +5,7 @@ import {UserConstructor} from "./UserConstructor";
 
 export class InMemoryUsers implements IUserRepo {
     cache : GenericCache;
-    
+
     constructor() {
         this.cache = new GenericCache();
         let users = UserConstructor.createUsersByNames([
@@ -13,16 +13,16 @@ export class InMemoryUsers implements IUserRepo {
             "Billie Davey",
             "Laura Rowe",
             "Simon Dawson"
-        ]); 
+        ]);
         this.setUsers(users);
     }
 
-    
+
 
     addUser(user:User) : Thenable<User[]> {
         return this.cache.add(user);
     }
-    
+
     addUserByName(name:string) : Thenable<User[]> {//Don"t want this?
         return this.cache.add(UserConstructor.createUser(name, 9));
     }
@@ -30,7 +30,7 @@ export class InMemoryUsers implements IUserRepo {
     updateUser(user:User) : Thenable<User[]> {
         return this.cache.update(user);
     }
-    
+
 
     getUsers() : Thenable<Array<User>>  {
         return this.cache.get();
@@ -48,5 +48,5 @@ export class InMemoryUsers implements IUserRepo {
         return this.cache.set(users);
     }
 
-    
+
 }
