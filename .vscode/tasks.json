@@ -2,18 +2,21 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "0.1.0",
-    "command": "gulp",
+    "command": "npm",
     "isShellCommand": true,   
-    "isBuildCommand": true,
+    "suppressTaskName": true,
     "tasks": [
         {
-            "taskName": "Build",
-            "args": ["Build"],
+            "taskName": "bundle",
+            "args": ["run","bundle"],
             "isBuildCommand": true,
-            "isWatching": false,
-            "problemMatcher": [
-                "$gulp-tsc"
-            ]
+            "isWatching": false
+        },
+        {
+            "taskName": "test",
+            "args": ["test"],
+            "isTestCommand": true,
+            "isWatching": false
         }
     ]
 }
