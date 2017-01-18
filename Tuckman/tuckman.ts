@@ -9,9 +9,9 @@
 var mediator,
     userLoader;
 requirejs.config( {
-    baseUrl : '/'
+    baseUrl : "/"
 });
-require(['Tuckman/Mediator','Shared/User','Shared/InMemoryBrowserUsers'], function(m,u,b) {
+require(["Tuckman/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], function(m,u,b) {
     console.log("Starting");
     mediator = new m.Mediator(23,23);
     userLoader = new b.InMemoryBrowserUsers(window);
@@ -52,8 +52,8 @@ mediator.addUser({name:"Mandy", id:"981298129"})
 
 */
 
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
+//import {Mediator} from "Mediator";
+//import {User} from "User";
 
 
 //const stage = new Comfort.Stage();

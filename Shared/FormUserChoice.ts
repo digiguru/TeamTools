@@ -1,7 +1,7 @@
-import {User} from './User';
-import {Timed} from './Timed';
-import {InMemoryUsers} from './Users';
-import {IUserRepo} from './IUsers';
+import {User} from "./User";
+import {Timed} from "./Timed";
+import {InMemoryUsers} from "./Users";
+import {IUserRepo} from "./IUsers";
 
 export class FormUserChoice {
     userZone : HTMLElement;
@@ -10,7 +10,7 @@ export class FormUserChoice {
 
     constructor() {
         this.userRepo = new InMemoryUsers(); //DI this
-        this.userZone = document.getElementById('users');
+        this.userZone = document.getElementById("users");
         this.d3Users = d3.select("g#users");
         this.userRepo.getUsers().then((users) => {
             if(users && users.length) {
@@ -94,24 +94,24 @@ export class FormUserChoice {
                 .data(users);
     }
     private clickUser () {
-        // 'that' is the instance of graph 
+        // "that" is the instance of graph 
         const that = this;
         return function(d:User, i:number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             console.log("CLICK - User - up  UserChocieForm");
             //const name = this.getAttribute("data-name");
             const id = this.getAttribute("data-id");
 
-            var event = new CustomEvent('selectUser', { "detail": {"id": id} });
+            var event = new CustomEvent("selectUser", { "detail": {"id": id} });
             document.dispatchEvent(event);
             console.log("This was clicked", that);
         }
     }
     private overUser () {
-        // 'that' is the instance of graph 
+        // "that" is the instance of graph 
         const that = this;
         return function(d:User, i:number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             d3.select(this.parentNode)
             //const d3zones = d3.select("g#users")
                 .selectAll("text")
@@ -123,10 +123,10 @@ export class FormUserChoice {
         }
     }
     private leaveUser() {
-        // 'that' is the instance of graph 
+        // "that" is the instance of graph 
         const that = this;
         return function(d:User, i:number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             d3.select(this.parentNode)
             //const d3zones = d3.select("g#users")
                 .selectAll("text")
@@ -142,7 +142,7 @@ export class FormUserChoice {
     private eachUser () {
         const that = this;
         return function(e, i) {
-            //Event.add(['mousedown'], this.stage, this.chooseUser);
+            //Event.add(["mousedown"], this.stage, this.chooseUser);
             //Event.add(["mouseover"], this, thisStage.checkOverUsers);
             const d3Item = d3.select(this);
 

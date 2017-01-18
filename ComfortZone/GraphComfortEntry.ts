@@ -1,7 +1,7 @@
-import {User} from '../Shared/User';
-import {GraphComfortBase} from './GraphComfortBase';
-import {Point} from '../Shared/Point';
-import {SVG} from '../Shared/SVG';
+import {User} from "../Shared/User";
+import {GraphComfortBase} from "./GraphComfortBase";
+import {Point} from "../Shared/Point";
+import {SVG} from "../Shared/SVG";
 
 export class GraphComfortEntry extends GraphComfortBase {
     clickArea : HTMLElement;
@@ -10,7 +10,7 @@ export class GraphComfortEntry extends GraphComfortBase {
     
     constructor() {
         super();
-        this.clickArea = document.getElementById('clickable');
+        this.clickArea = document.getElementById("clickable");
         this.setupOverActivity();
     }
 
@@ -26,10 +26,10 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     private graphMove() {
-        /// 'that' is the instance of graph 
+        /// "that" is the instance of graph 
         const that : GraphComfortEntry = this;
         return function(d:void, i:number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             const coord = d3.mouse(this);
             const distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
             const area = GraphComfortEntry.calculateDistance(distance);
@@ -38,10 +38,10 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     private graphUp() {
-        // 'that' is the instance of graph 
+        // "that" is the instance of graph 
         const that : GraphComfortEntry = this;
         return function(d:void, i :number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             const coord = Point.fromCoords(d3.mouse(this));
             const distance = Point.distance(that.centerPoint, coord);
             const area = GraphComfortEntry.calculateDistance(distance);          
@@ -50,10 +50,10 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     private graphDown() {
-        // 'that' is the instance of graph 
+        // "that" is the instance of graph 
         const that = this;
         return function(d:void, i:number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             const coord = Point.fromCoords(d3.mouse(this));
             const el = SVG.circle(8, coord.x, coord.y, "dropper");
             that.addDropper(el);
@@ -90,7 +90,7 @@ export class GraphComfortEntry extends GraphComfortBase {
 
     public addDropper (el : SVGAElement)  {
         this.dropper = el;
-        document.getElementById('stage').insertBefore(el, this.clickArea);
+        document.getElementById("stage").insertBefore(el, this.clickArea);
     }
 
     public static calculateDistance(distance) {
@@ -122,7 +122,7 @@ export class GraphComfortEntry extends GraphComfortBase {
         this.removeInteractions();
 
         //TODO: Put in the line below
-        var event = new CustomEvent('saveGraph', {
+        var event = new CustomEvent("saveGraph", {
             "detail": {
                 "area":area,
                 "distance":distance,

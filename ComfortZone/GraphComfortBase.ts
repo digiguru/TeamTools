@@ -1,6 +1,6 @@
-import {Timed} from '../Shared/Timed';
-import {ComfortZones} from './ComfortZones';
-import {Point} from '../Shared/Point';
+import {Timed} from "../Shared/Timed";
+import {ComfortZones} from "./ComfortZones";
+import {Point} from "../Shared/Point";
 
 
 export class GraphComfortBase {
@@ -31,11 +31,11 @@ export class GraphComfortBase {
             });
         
 
-        this.chaos = document.getElementById('chaos');
-        this.stretch = document.getElementById('stretch');
-        this.comfort = document.getElementById('comfort');
-        const centerX = Number(this.comfort.getAttribute('cx'));
-        const centerY = Number(this.comfort.getAttribute('cy'));
+        this.chaos = document.getElementById("chaos");
+        this.stretch = document.getElementById("stretch");
+        this.comfort = document.getElementById("comfort");
+        const centerX = Number(this.comfort.getAttribute("cx"));
+        const centerY = Number(this.comfort.getAttribute("cy"));
         this.centerPoint = new Point(centerX,centerY);
         
 

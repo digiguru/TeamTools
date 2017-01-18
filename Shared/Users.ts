@@ -1,7 +1,7 @@
-import {User} from './User';
-import {GenericCache} from './Cache';
-import {IUserRepo} from './IUsers';
-import {UserConstructor} from './UserConstructor';
+import {User} from "./User";
+import {GenericCache} from "./Cache";
+import {IUserRepo} from "./IUsers";
+import {UserConstructor} from "./UserConstructor";
 
 export class InMemoryUsers implements IUserRepo {
     cache : GenericCache;
@@ -23,7 +23,7 @@ export class InMemoryUsers implements IUserRepo {
         return this.cache.add(user);
     }
     
-    addUserByName(name:string) : Thenable<User[]> {//Don't want this?
+    addUserByName(name:string) : Thenable<User[]> {//Don"t want this?
         return this.cache.add(UserConstructor.createUser(name, 9));
     }
 

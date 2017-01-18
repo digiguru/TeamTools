@@ -1,7 +1,7 @@
-import {User} from '../Shared/User';
-import {GraphTuckmanBase} from './GraphTuckmanBase';
-import {Point} from '../Shared/Point';
-import {SVG} from '../Shared/SVG';
+import {User} from "../Shared/User";
+import {GraphTuckmanBase} from "./GraphTuckmanBase";
+import {Point} from "../Shared/Point";
+import {SVG} from "../Shared/SVG";
 
 export class GraphTuckmanEntry extends GraphTuckmanBase {
     clickArea : HTMLElement;
@@ -10,7 +10,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     
     constructor() {
         super();
-        this.clickArea = document.getElementById('clickable');
+        this.clickArea = document.getElementById("clickable");
         this.setupOverActivity();
     }
 
@@ -26,10 +26,10 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     private graphMove() {
-        /// 'that' is the instance of graph 
+        /// "that" is the instance of graph 
         const that : GraphTuckmanEntry = this;
         return function(d:void, i:number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             const coord = Point.fromCoords(d3.mouse(this));
             const distance = coord.x;
             const area = GraphTuckmanEntry.calculateDistance(distance);
@@ -38,10 +38,10 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     private graphUp() {
-        // 'that' is the instance of graph 
+        // "that" is the instance of graph 
         const that : GraphTuckmanEntry = this;
         return function(d:void, i :number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             const coord = Point.fromCoords(d3.mouse(this));
             const distance = coord.x;
             const area = GraphTuckmanEntry.calculateDistance(distance);          
@@ -50,10 +50,10 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     private graphDown() {
-        // 'that' is the instance of graph 
+        // "that" is the instance of graph 
         const that = this;
         return function(d:void, i:number) {
-            // 'this' is the DOM element 
+            // "this" is the DOM element 
             const coord = Point.fromCoords(d3.mouse(this));
             const el = SVG.circle(8, coord.x, coord.y, "dropper");
             that.addDropper(el);
@@ -90,7 +90,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
 
     public addDropper (el : SVGAElement)  {
         this.dropper = el;
-        document.getElementById('stage').insertBefore(el, this.clickArea);
+        document.getElementById("stage").insertBefore(el, this.clickArea);
     }
 
     public static calculateDistance(distance) {
@@ -124,7 +124,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
         this.removeInteractions();
 
         //TODO: Put in the line below
-        var event = new CustomEvent('saveGraph', {
+        var event = new CustomEvent("saveGraph", {
             "detail": {
                 "area":area,
                 "distance":distance,

@@ -9,11 +9,11 @@
 var mediator,
     userLoader;
 requirejs.config( {
-    baseUrl : '/'
+    baseUrl : "/"
 });
 
 
-require(['ComfortZone/Mediator','Shared/User','Shared/InMemoryBrowserUsers'], function(m,u,b) {
+require(["ComfortZone/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], function(m,u,b) {
     console.log("Starting");
     mediator = new m.Mediator(23,23);
     console.log(mediator);
@@ -55,8 +55,8 @@ mediator.addUser({name:"Mandy", id:"981298129"})
 
 */
 
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
+//import {Mediator} from "Mediator";
+//import {User} from "User";
 
 
 //const stage = new Comfort.Stage();

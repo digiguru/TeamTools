@@ -10,7 +10,7 @@ class Indexable implements IIndexableObject {
     }
 }
 
-it('You can add to the cache', () => {
+it("You can add to the cache", () => {
   //Arrange
   let c = new GenericCache();
   let input = new Indexable("ref","Hello");
@@ -24,7 +24,7 @@ it('You can add to the cache', () => {
   })
 });
 
-it('Collisions in cache are not allowed', () => {
+it("Collisions in cache are not allowed", () => {
   //Arrange
   let c = new GenericCache();
   let input1 = new Indexable("ref","Hello");

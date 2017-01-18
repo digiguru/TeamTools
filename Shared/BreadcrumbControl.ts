@@ -1,5 +1,5 @@
 
-import {Breadcrumb} from './Breadcrumb';
+import {Breadcrumb} from "./Breadcrumb";
 export class BreadcrumbControl {
     items = new Array<Breadcrumb>();
     public addBreadcrumb(name:string, command:string, params:any) {

@@ -1,7 +1,7 @@
-import {TuckmanUserChoice} from './TuckmanUserChoice';
-import {GraphTuckmanBase} from './GraphTuckmanBase';
-import {Point} from '../Shared/Point';
-import {Polar} from '../Shared/Polar';
+import {TuckmanUserChoice} from "./TuckmanUserChoice";
+import {GraphTuckmanBase} from "./GraphTuckmanBase";
+import {Point} from "../Shared/Point";
+import {Polar} from "../Shared/Polar";
 
 
 export class GraphTuckmanHistory extends GraphTuckmanBase {

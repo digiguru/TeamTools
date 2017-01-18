@@ -4,26 +4,26 @@
 /// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
 /// <reference path="../Shared/UserConstructor.ts"/>
 requirejs.config( {
-    baseUrl : '/'
+    baseUrl : "/"
 });
 
 var users;
 
-require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c) {
+require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c) {
     users = new u.InMemoryBrowserUsers(window);
     
     class UIEntry {
         constructor() {
-            document.getElementById('new').addEventListener("mousedown", () => {
+            document.getElementById("new").addEventListener("mousedown", () => {
                 UI.ClearUsers();
             });
-            document.getElementById('user').addEventListener("keyup", (e:KeyboardEvent) => {
+            document.getElementById("user").addEventListener("keyup", (e:KeyboardEvent) => {
                 var code = e.keyCode;
                 if(code === 13) {
                     AddUser();
                 }
             });
-            document.getElementById('add').addEventListener("mousedown", () => {
+            document.getElementById("add").addEventListener("mousedown", () => {
                 AddUser();
             });     
         }
@@ -50,38 +50,38 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c
             newNode.appendChild(textNode);
             newNode.appendChild(deleteButton);
 
-            document.getElementById('users').appendChild(newNode);
+            document.getElementById("users").appendChild(newNode);
         }
         ClearUser (username) {
-            var parent = document.getElementById('users');
+            var parent = document.getElementById("users");
             var nodeList = parent.childNodes;
             for (var i=nodeList.length;i--;i>0) {
                 if(username === nodeList[i].textContent) {
-                    document.getElementById('users').removeChild(nodeList[i]);
+                    document.getElementById("users").removeChild(nodeList[i]);
                 }  
             }
         }
         ClearUsers () {
-            var parent = document.getElementById('users');
+            var parent = document.getElementById("users");
             var nodeList = parent.childNodes;
             for (var i=nodeList.length;i--;i>0){
-                document.getElementById('users').removeChild(nodeList[i]);
+                document.getElementById("users").removeChild(nodeList[i]);
             }
         }
         GetUsername () : string {
-            return (<HTMLInputElement>document.getElementById('user')).value;
+            return (<HTMLInputElement>document.getElementById("user")).value;
         }
         ShowError (error) {
             alert(error);
         }
         ClearUsername () {
-            (<HTMLInputElement>document.getElementById('user')).value = "";
+            (<HTMLInputElement>document.getElementById("user")).value = "";
         }
         FocusUsername () {
-            (<HTMLInputElement>document.getElementById('user')).focus();
+            (<HTMLInputElement>document.getElementById("user")).focus();
         }
         GetUsers () : Array<string> {
-            var entry = document.getElementById('users').getElementsByClassName('user');
+            var entry = document.getElementById("users").getElementsByClassName("user");
             var usernames = new Array<string>();
             for (var i=0;i<entry.length;i++) {
                 usernames.push(entry.item(i).textContent);

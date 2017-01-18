@@ -1,9 +1,9 @@
-import {TuckmanUserChoice} from './TuckmanUserChoice';
-import {BreadcrumbControl} from '../Shared/BreadcrumbControl';
-import {User} from '../Shared/User';
-import {FormUserChoice} from '../Shared/FormUserChoice';
-import {GraphTuckmanEntry} from './GraphTuckmanEntry';
-import {GraphTuckmanHistory} from './GraphTuckmanHistory';
+import {TuckmanUserChoice} from "./TuckmanUserChoice";
+import {BreadcrumbControl} from "../Shared/BreadcrumbControl";
+import {User} from "../Shared/User";
+import {FormUserChoice} from "../Shared/FormUserChoice";
+import {GraphTuckmanEntry} from "./GraphTuckmanEntry";
+import {GraphTuckmanHistory} from "./GraphTuckmanHistory";
 
 
 export class Mediator {

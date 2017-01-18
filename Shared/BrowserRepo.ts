@@ -1,4 +1,4 @@
-import {IAllRepostiory} from './IUsers';
+import {IAllRepostiory} from "./IUsers";
 
 export class BrowserRepo<T> implements IAllRepostiory<T> {
     key : string;

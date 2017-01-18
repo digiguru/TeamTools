@@ -1,6 +1,6 @@
-import {Timed} from '../Shared/Timed';
-import {TuckmanZones} from './TuckmanZones';
-import {Point} from '../Shared/Point';
+import {Timed} from "../Shared/Timed";
+import {TuckmanZones} from "./TuckmanZones";
+import {Point} from "../Shared/Point";
 
 
 export class GraphTuckmanBase {
@@ -36,10 +36,10 @@ export class GraphTuckmanBase {
             });
         
 
-        this.forming = document.getElementById('forming');
-        this.storming = document.getElementById('storming');
-        this.norming = document.getElementById('norming');
-        this.performing = document.getElementById('performing');
+        this.forming = document.getElementById("forming");
+        this.storming = document.getElementById("storming");
+        this.norming = document.getElementById("norming");
+        this.performing = document.getElementById("performing");
         
 
     }
