@@ -102,7 +102,7 @@ export class FormUserChoice {
             //const name = this.getAttribute("data-name");
             const id = this.getAttribute("data-id");
 
-            var event = new CustomEvent("selectUser", { "detail": {"id": id} });
+            let event = new CustomEvent("selectUser", { "detail": {"id": id} });
             document.dispatchEvent(event);
             console.log("This was clicked", that);
         }

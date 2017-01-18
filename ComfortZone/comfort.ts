@@ -6,7 +6,7 @@
 /// <reference path="../ComfortZone/Mediator.ts"/>
 
 
-var mediator,
+let mediator,
     userLoader;
 requirejs.config( {
     baseUrl : "/"
@@ -36,7 +36,7 @@ require(["ComfortZone/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], fu
         mediator.selectUser(e.detail.id);
     });
     document.addEventListener("saveGraph", function(e:CustomEvent) {
-        var o = e.detail;
+        let o = e.detail;
         mediator.saveGraph(o.area,o.distance,o.currentUser);
     });
             //;")

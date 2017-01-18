@@ -18,7 +18,7 @@ export class GenericCache implements ICache<IIndexableObject> {
     }
     
     update(item:IIndexableObject) : Thenable<IIndexableObject[]> {
-        for (var i = 0; i < this.store.length; i++) {
+        for (let i = 0; i < this.store.length; i++) {
             if (item.id === this.store[i].id) {
                 this.store[i] = item;
             }

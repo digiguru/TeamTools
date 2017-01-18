@@ -7,7 +7,7 @@ requirejs.config( {
     baseUrl : "/"
 });
 
-var users;
+let users;
 
 require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c) {
     users = new u.InMemoryBrowserUsers(window);
@@ -18,7 +18,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
                 UI.ClearUsers();
             });
             document.getElementById("user").addEventListener("keyup", (e:KeyboardEvent) => {
-                var code = e.keyCode;
+                let code = e.keyCode;
                 if(code === 13) {
                     AddUser();
                 }
@@ -30,41 +30,41 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
 
         AddUser(username) {
             
-            var textNode = document.createElement("span");
+            let textNode = document.createElement("span");
             textNode.setAttribute("class", "user");
             textNode.textContent = username;
 
-            var deleteButton = document.createElement("a");
+            let deleteButton = document.createElement("a");
             deleteButton.setAttribute("href", "void(0);");
             deleteButton.textContent = "X";
             deleteButton.addEventListener("mousedown", (e:MouseEvent) => {
-                var el = (<Element>e.target).parentNode;
+                let el = (<Element>e.target).parentNode;
                 this.ClearUser(el.textContent);
                 
-                var usernames = UI.GetUsers();
+                let usernames = UI.GetUsers();
                 saveUsers(usernames);
                         
             });
 
-            var newNode = document.createElement("li");
+            let newNode = document.createElement("li");
             newNode.appendChild(textNode);
             newNode.appendChild(deleteButton);
 
             document.getElementById("users").appendChild(newNode);
         }
         ClearUser (username) {
-            var parent = document.getElementById("users");
-            var nodeList = parent.childNodes;
-            for (var i=nodeList.length;i--;i>0) {
+            let parent = document.getElementById("users");
+            let nodeList = parent.childNodes;
+            for (let i=nodeList.length;i--;i>0) {
                 if(username === nodeList[i].textContent) {
                     document.getElementById("users").removeChild(nodeList[i]);
                 }  
             }
         }
         ClearUsers () {
-            var parent = document.getElementById("users");
-            var nodeList = parent.childNodes;
-            for (var i=nodeList.length;i--;i>0){
+            let parent = document.getElementById("users");
+            let nodeList = parent.childNodes;
+            for (let i=nodeList.length;i--;i>0){
                 document.getElementById("users").removeChild(nodeList[i]);
             }
         }
@@ -81,29 +81,29 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             (<HTMLInputElement>document.getElementById("user")).focus();
         }
         GetUsers () : Array<string> {
-            var entry = document.getElementById("users").getElementsByClassName("user");
-            var usernames = new Array<string>();
-            for (var i=0;i<entry.length;i++) {
+            let entry = document.getElementById("users").getElementsByClassName("user");
+            let usernames = new Array<string>();
+            for (let i=0;i<entry.length;i++) {
                 usernames.push(entry.item(i).textContent);
             }
             return usernames;            
         };
 
     }
-    var UI = new UIEntry();
+    let UI = new UIEntry();
     
-    var saveUsers = (usernames) => {
-        var newusers = c.UserConstructor.createUsersByNames(usernames);
+    let saveUsers = (usernames) => {
+        let newusers = c.UserConstructor.createUsersByNames(usernames);
         users.setUsers(newusers).then((result) => {
             console.log("Set users", result);
         });
     }
 
-    var AddUser = () => {
-        var username = UI.GetUsername();
+    let AddUser = () => {
+        let username = UI.GetUsername();
         if (username) {
-            var usernames = UI.GetUsers();
-            var isUnique = !(usernames.filter((value) => {
+            let usernames = UI.GetUsers();
+            let isUnique = !(usernames.filter((value) => {
                 return value === username;
             }).length);
             if(isUnique) {
@@ -125,7 +125,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             const strings:string[] = data.map((user) => {
                 return user.name;
             });
-            for (var i=0;i<strings.length;i++) {
+            for (let i=0;i<strings.length;i++) {
                 UI.AddUser(strings[i]);
             }
         }

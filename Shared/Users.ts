@@ -8,7 +8,7 @@ export class InMemoryUsers implements IUserRepo {
     
     constructor() {
         this.cache = new GenericCache();
-        var users = UserConstructor.createUsersByNames([
+        let users = UserConstructor.createUsersByNames([
             "Adam Hall",
             "Billie Davey",
             "Laura Rowe",

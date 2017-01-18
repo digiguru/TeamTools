@@ -124,7 +124,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
         this.removeInteractions();
 
         //TODO: Put in the line below
-        var event = new CustomEvent("saveGraph", {
+        let event = new CustomEvent("saveGraph", {
             "detail": {
                 "area":area,
                 "distance":distance,

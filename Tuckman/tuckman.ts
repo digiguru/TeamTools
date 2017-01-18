@@ -6,7 +6,7 @@
 /// <reference path="../Tuckman/Mediator.ts"/>
 
 
-var mediator,
+let mediator,
     userLoader;
 requirejs.config( {
     baseUrl : "/"
@@ -33,33 +33,9 @@ require(["Tuckman/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], functi
         mediator.selectUser(e.detail.id);
     });
     document.addEventListener("saveGraph", function(e:CustomEvent) {
-        var o = e.detail;
+        let o = e.detail;
         mediator.saveGraph(o.area,o.distance,o.currentUser);
     });
-            //;")
+
     console.log(mediator);
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"}, 
-   {name:"Fred Hall",id:"1xx1"}, 
-   {name:"Bob Hall",id:"1xx2"} 
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-
-//import {Mediator} from "Mediator";
-//import {User} from "User";
-
-
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
-
