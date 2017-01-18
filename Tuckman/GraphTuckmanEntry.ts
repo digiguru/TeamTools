@@ -69,7 +69,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
             .selectAll(".area")
             .transition()
                 .delay(function() {
-                    if(this.getAttribute("id") === area) {
+                    if (this.getAttribute("id") === area) {
                         return 0;
                     }
                     return 100;
@@ -79,7 +79,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
                     return 250;
                 })
                 .style("fill", function() {
-                    if(this.getAttribute("id") === area) {
+                    if (this.getAttribute("id") === area) {
                         return "rgb(0, 180, 219)";
                     }
                     return "#00D7FE";
@@ -94,7 +94,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     public static calculateDistance(distance) {
-        if(distance < 200) {
+        if (distance < 200) {
             return "forming";
         } else if (distance < 400) {
             return "storming";

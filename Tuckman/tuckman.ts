@@ -11,13 +11,13 @@ let mediator,
 requirejs.config( {
     baseUrl : "/"
 });
-require(["Tuckman/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function(m,u,b) {
+require(["Tuckman/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function(m, u, b) {
     console.log("Starting");
-    mediator = new m.Mediator(23,23);
+    mediator = new m.Mediator(23, 23);
     userLoader = new b.InMemoryBrowserUsers(window);
     console.log(mediator);
     userLoader.getUsers().then(function(users) {
-        if(users) {
+        if (users) {
             mediator.setUsers(users);
         } else {
             mediator.setUsers([
@@ -29,12 +29,12 @@ require(["Tuckman/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], func
         }
 
     });
-    document.addEventListener("selectUser", function(e:CustomEvent) {
+    document.addEventListener("selectUser", function(e: CustomEvent) {
         mediator.selectUser(e.detail.id);
     });
-    document.addEventListener("saveGraph", function(e:CustomEvent) {
+    document.addEventListener("saveGraph", function(e: CustomEvent) {
         let o = e.detail;
-        mediator.saveGraph(o.area,o.distance,o.currentUser);
+        mediator.saveGraph(o.area, o.distance, o.currentUser);
     });
 
     console.log(mediator);

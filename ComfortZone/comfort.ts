@@ -13,13 +13,13 @@ requirejs.config( {
 });
 
 
-require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function(m,u,b) {
+require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function(m, u, b) {
     console.log("Starting");
-    mediator = new m.Mediator(23,23);
+    mediator = new m.Mediator(23, 23);
     console.log(mediator);
     userLoader = new b.InMemoryBrowserUsers(window);
     userLoader.getUsers().then(function(users) {
-        if(users) {
+        if (users) {
             mediator.setUsers(users);
         } else {
             mediator.setUsers([
@@ -32,37 +32,12 @@ require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], 
 
     });
 
-    document.addEventListener("selectUser", function(e:CustomEvent) {
+    document.addEventListener("selectUser", function(e: CustomEvent) {
         mediator.selectUser(e.detail.id);
     });
-    document.addEventListener("saveGraph", function(e:CustomEvent) {
+    document.addEventListener("saveGraph", function(e: CustomEvent) {
         let o = e.detail;
-        mediator.saveGraph(o.area,o.distance,o.currentUser);
+        mediator.saveGraph(o.area, o.distance, o.currentUser);
     });
-            //;")
     console.log(mediator);
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"},
-   {name:"Fred Hall",id:"1xx1"},
-   {name:"Bob Hall",id:"1xx2"}
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-
-//import {Mediator} from "Mediator";
-//import {User} from "User";
-
-
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-
-]);*/
-//export mediator;
-
