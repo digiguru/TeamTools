@@ -4,9 +4,9 @@ import {InMemoryUsers} from "./Users";
 import {IUserRepo} from "./IUsers";
 
 export class FormUserChoice {
-    userZone : HTMLElement;
-    userRepo : IUserRepo;
-    d3Users : d3.Selection<any>;
+    userZone: HTMLElement;
+    userRepo: IUserRepo;
+    d3Users: d3.Selection<any>;
 
     constructor() {
         this.userRepo = new InMemoryUsers(); // TODO: DI this
@@ -19,11 +19,11 @@ export class FormUserChoice {
             }
         });
     }
-    public getUser(id) : Thenable<User> {
+    public getUser(id): Thenable<User> {
         return this.userRepo.getUser(id);
     }
 
-    public markUserDone (user:User) {
+    public markUserDone (user: User) {
         user.voted = true;
         this.userRepo.updateUser(user).then(users => {
             this.rebind(users);
@@ -36,11 +36,11 @@ export class FormUserChoice {
             .selectAll("rect")
             .on("mouseup", this.clickUser());
     }
-    public hasMoreUsers() : Thenable<boolean> { // Move to user repo?
+    public hasMoreUsers(): Thenable<boolean> { // Move to user repo?
         return new Promise((resolve, reject) => {
             this.userRepo.getUsers().then(users => {
                 const unvotedUsers = users.filter(function(x) {
-                    return !x.voted
+                    return !x.voted;
                 });
                 if (unvotedUsers.length) {
                     resolve(true);
@@ -51,14 +51,14 @@ export class FormUserChoice {
         });
 
     }
-    public show():Thenable<number> {
+    public show(): Thenable<number> {
         console.log("SHOW UserChocieForm");
         d3.select(this.userZone)
             .transition()
             .duration(function() {
                     return 800;
             })
-            .style("fill-opacity",1)
+            .style("fill-opacity", 1)
             .attr("transform", "matrix(1,0,0,1,0,0)");
 
         this.d3Users.selectAll("g").attr("class", function(e) {
@@ -67,18 +67,18 @@ export class FormUserChoice {
                 } else {
                     return "user-group";
                 }
-            })
+            });
 
         return Timed.for(800).then(this.afterShow.bind(this));
     }
-    public hide ():Thenable<number> {
+    public hide(): Thenable<number> {
         console.log("HIDE userEntry");
         d3.select(this.userZone)
             .transition()
             .duration(function() {
                     return 800;
             })
-            .style("fill-opacity",0)
+            .style("fill-opacity", 0)
             .attr("transform", "matrix(2,0,0,2,-400,-90)");
         d3.select("g#users")
             .selectAll("rect")
@@ -88,7 +88,7 @@ export class FormUserChoice {
         return Timed.for(800);
 
     }
-    private rebind(users:User[]): d3.selection.Update<User> {
+    private rebind(users: User[]): d3.selection.Update<User> {
         return this.d3Users
                 .selectAll("circle")
                 .data(users);
@@ -96,7 +96,7 @@ export class FormUserChoice {
     private clickUser () {
         // "that" is the instance of graph
         const that = this;
-        return function(d:User, i:number) {
+        return function(d: User, i: number) {
             // "this" is the DOM element
             console.log("CLICK - User - up  UserChocieForm");
             const id = this.getAttribute("data-id");
@@ -104,12 +104,12 @@ export class FormUserChoice {
             let event = new CustomEvent("selectUser", { "detail": {"id": id} });
             document.dispatchEvent(event);
             console.log("This was clicked", that);
-        }
+        };
     }
     private overUser () {
         // "that" is the instance of graph
         const that = this;
-        return function(d:User, i:number) {
+        return function(d: User, i: number) {
             // "this" is the DOM element
             d3.select(this.parentNode)
                 .selectAll("text")
@@ -118,12 +118,12 @@ export class FormUserChoice {
                 .style("fill", function() {
                     return "#00D7FE";
                 });
-        }
+        };
     }
     private leaveUser() {
         // "that" is the instance of graph
         const that = this;
-        return function(d:User, i:number) {
+        return function(d: User, i: number) {
             // "this" is the DOM element
             d3.select(this.parentNode)
                 .selectAll("text")
@@ -134,7 +134,7 @@ export class FormUserChoice {
                 .style("fill", function() {
                     return "grey";
                 });
-        }
+        };
     }
     private eachUser () {
         const that = this;
@@ -151,7 +151,7 @@ export class FormUserChoice {
                 .attr("data-name", e.name)
                 .attr("data-id", e.id)
                 .on("mouseover", that.overUser())
-                .on("mouseleave", that.leaveUser())
+                .on("mouseleave", that.leaveUser());
 
             d3Item.append("text")
                 .attr("class", "username")
@@ -165,16 +165,16 @@ export class FormUserChoice {
                 .text(function(j) {
                     return e.name;
                 });
-        }
+        };
     }
 
-    public addUser(user:User) {
+    public addUser(user: User) {
         this.userRepo.addUser(user).then(users => {
             this.setupUsers(users);
         });
     }
 
-    public setUsers(users:Array<User>) {
+    public setUsers(users: Array<User>) {
         this.destroyUsers();
         this.userRepo.setUsers(users).then((users) => {
             this.setupUsers(users);
@@ -185,7 +185,7 @@ export class FormUserChoice {
         d3.select("g#users").selectAll("*").remove();
     }
 
-    private setupUsers (users:User[]) {
+    private setupUsers (users: User[]) {
         const items = this.rebind(users);
         items.enter().append("g")
             .attr("id", (e) => {
