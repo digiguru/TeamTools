@@ -11,13 +11,13 @@ class Indexable implements IIndexableObject {
 }
 
 it("You can add to the cache", () => {
-  //Arrange
+  // Arrange
   let c = new GenericCache();
   let input = new Indexable("ref", "Hello");
-  //Act
+  // Act
   c.add(input).then((result) => {
     let resultToObj = (<Indexable>result[0]);
-    //Assert
+    // Assert
     expect(result.length).toBe(1);
     expect(resultToObj.id).toBe("ref");
     expect(resultToObj.input).toBe("Hello");
@@ -25,7 +25,7 @@ it("You can add to the cache", () => {
 });
 
 it("Collisions in cache are not allowed", () => {
-  //Arrange
+  // Arrange
   let c = new GenericCache();
   let input1 = new Indexable("ref", "Hello");
   let input2 = new Indexable("ref", "World");
@@ -36,19 +36,19 @@ it("Collisions in cache are not allowed", () => {
     debugger;
     expect(error).toBeUndefined();
   };
-  //Act
+  // Act
   result1.then((result1) => {
     let resultToObj1 = (<Indexable>result1[0]);
-    //Assert
+    // Assert
     expect(result1.length).toBe(1);
     expect(resultToObj1.id).toBe("ref");
     expect(resultToObj1.input).toBe("Hello");
 
-    //Inner Act
+    // Inner Act
     expect(() => {result2 = c.add(input2)}).not.toThrow();
     result2.then((result2) => {
       let resultToObj2 = (<Indexable>result2[1]);
-      //Assert
+      // Assert
       expect(result2.length).toBe(2);
       expect(resultToObj2.id).toBe("ref");
       expect(resultToObj2.input).toBe("World");

@@ -63,7 +63,7 @@ export class Mediator {
     }
 
     private showGraphComfortEntry(user:User) {
-        if(!this.graphComfortEntry) {
+        if (!this.graphComfortEntry) {
             this.graphComfortEntry = new GraphComfortEntry();
         }
         this.graphComfortEntry.show(user);
@@ -71,7 +71,7 @@ export class Mediator {
 
     public showComfortHistory(history) {
         let afterHide = function() {
-           if(!this.graphComfortHistory) {
+           if (!this.graphComfortHistory) {
                 this.graphComfortEntry = null;
                 this.graphComfortHistory = new GraphComfortHistory();
             }
@@ -80,7 +80,7 @@ export class Mediator {
         if (this.graphComfortEntry) {
             this.graphComfortEntry.hide().then(afterHide);
         } else {
-            if(this.formUserChoice) {
+            if (this.formUserChoice) {
                 this.formUserChoice.hide();
             }
             afterHide();
@@ -90,7 +90,7 @@ export class Mediator {
     }
 
     private showGraphComfortHistory() {
-        if(!this.graphComfortHistory) {
+        if (!this.graphComfortHistory) {
             this.graphComfortEntry = null;
             this.graphComfortHistory = new GraphComfortHistory();
         }
@@ -116,7 +116,7 @@ export class Mediator {
         const thisUserChoice = this.userChoiceHistory.filter(function(x) {
             return x.user.id === user.id;
         });
-        if(thisUserChoice.length) {
+        if (thisUserChoice.length) {
             thisUserChoice[0].area = area;
             thisUserChoice[0].distance = distance;
         } else {
@@ -126,7 +126,6 @@ export class Mediator {
     }
 
     private next() {
-        //const prom = new Promsie()
         console.log("ACTION nextUser", this);
         let afterHide = function() {
             this.formUserChoice.hasMoreUsers().then((result) => {
@@ -142,7 +141,4 @@ export class Mediator {
 
         this.graphComfortEntry.hide().then(afterHide);
     }
-
-    //setupUsers
-    //
 }

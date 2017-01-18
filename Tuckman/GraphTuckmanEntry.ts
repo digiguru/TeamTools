@@ -16,7 +16,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
 
     public setupOverActivity () {
         const that = this;
-        d3.select("#stage").on("mousemove", this.graphMove());//this.checkArea);
+        d3.select("#stage").on("mousemove", this.graphMove());
     }
 
     private setupClickActivity () {
@@ -26,7 +26,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     private graphMove() {
-        /// "that" is the instance of graph
+        // "that" is the instance of graph
         const that : GraphTuckmanEntry = this;
         return function(d:void, i:number) {
             // "this" is the DOM element
@@ -61,10 +61,6 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     public highlight (area : string) {
-        //<circle id="stretch" r="300" cx="400" cy="400" />
-        //<circle id="comfort" r="100" cx="400" cy="400" />
-
-
         const d3zones = d3.select("svg")
             .selectAll(".area")
             .transition()
@@ -123,7 +119,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
         console.log("saveTheInteraction");
         this.removeInteractions();
 
-        //TODO: Put in the line below
+        // TODO: Put in the line below
         let event = new CustomEvent("saveGraph", {
             "detail": {
                 "area":area,
@@ -132,7 +128,6 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
             }
         });
         document.dispatchEvent(event);
-        //mediator.saveGraph();
     }
     public show(user:User) {
         this.currentUser = user;

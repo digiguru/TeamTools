@@ -11,7 +11,5 @@ export class SVG {
         el.setAttribute("cy", y);
         el.setAttribute("class", className);
         return el;
-        //<circle id="stretch" r="300" cx="400" cy="400" />
-
     }
 }

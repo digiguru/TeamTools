@@ -10,7 +10,6 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
     public d3Points;
     constructor() {
         super();
-        //this.setupHistory();
     }
 
     public show(graphData : Array<TuckmanUserChoice>):Thenable<number> {

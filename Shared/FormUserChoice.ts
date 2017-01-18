@@ -9,11 +9,11 @@ export class FormUserChoice {
     d3Users : d3.Selection<any>;
 
     constructor() {
-        this.userRepo = new InMemoryUsers(); //DI this
+        this.userRepo = new InMemoryUsers(); // TODO: DI this
         this.userZone = document.getElementById("users");
         this.d3Users = d3.select("g#users");
         this.userRepo.getUsers().then((users) => {
-            if(users && users.length) {
+            if (users && users.length) {
                 this.setupUsers(users);
                 this.show();
             }
@@ -36,13 +36,13 @@ export class FormUserChoice {
             .selectAll("rect")
             .on("mouseup", this.clickUser());
     }
-    public hasMoreUsers() : Thenable<boolean> { //Move to user repo?
+    public hasMoreUsers() : Thenable<boolean> { // Move to user repo?
         return new Promise((resolve, reject) => {
             this.userRepo.getUsers().then(users => {
                 const unvotedUsers = users.filter(function(x) {
                     return !x.voted
                 });
-                if(unvotedUsers.length) {
+                if (unvotedUsers.length) {
                     resolve(true);
                 } else {
                     resolve(false);
@@ -62,7 +62,7 @@ export class FormUserChoice {
             .attr("transform", "matrix(1,0,0,1,0,0)");
 
         this.d3Users.selectAll("g").attr("class", function(e) {
-                if(e.voted) {
+                if (e.voted) {
                     return "user-group-complete";
                 } else {
                     return "user-group";
@@ -99,7 +99,6 @@ export class FormUserChoice {
         return function(d:User, i:number) {
             // "this" is the DOM element
             console.log("CLICK - User - up  UserChocieForm");
-            //const name = this.getAttribute("data-name");
             const id = this.getAttribute("data-id");
 
             let event = new CustomEvent("selectUser", { "detail": {"id": id} });
@@ -113,7 +112,6 @@ export class FormUserChoice {
         return function(d:User, i:number) {
             // "this" is the DOM element
             d3.select(this.parentNode)
-            //const d3zones = d3.select("g#users")
                 .selectAll("text")
                 .transition()
                 .duration(250)
@@ -128,7 +126,6 @@ export class FormUserChoice {
         return function(d:User, i:number) {
             // "this" is the DOM element
             d3.select(this.parentNode)
-            //const d3zones = d3.select("g#users")
                 .selectAll("text")
                 .transition()
                 .duration(function() {
@@ -142,8 +139,6 @@ export class FormUserChoice {
     private eachUser () {
         const that = this;
         return function(e, i) {
-            //Event.add(["mousedown"], this.stage, this.chooseUser);
-            //Event.add(["mouseover"], this, thisStage.checkOverUsers);
             const d3Item = d3.select(this);
 
             d3Item.append("rect")

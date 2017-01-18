@@ -4,9 +4,9 @@ import {Point} from "../Shared/Point";
 import {SVG} from "../Shared/SVG";
 
 export class GraphComfortEntry extends GraphComfortBase {
-    clickArea : HTMLElement;
+    clickArea: HTMLElement;
     currentUser:User;
-    dropper : SVGAElement;
+    dropper: SVGAElement;
 
     constructor() {
         super();
@@ -16,7 +16,7 @@ export class GraphComfortEntry extends GraphComfortBase {
 
     public setupOverActivity () {
         const that = this;
-        d3.select("#stage").on("mousemove", this.graphMove());//this.checkArea);
+        d3.select("#stage").on("mousemove", this.graphMove());
     }
 
     private setupClickActivity () {
@@ -61,15 +61,11 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     public highlight (area : string) {
-        //<circle id="stretch" r="300" cx="400" cy="400" />
-        //<circle id="comfort" r="100" cx="400" cy="400" />
-
-
         const d3zones = d3.select("svg")
             .selectAll(".area")
             .transition()
                 .delay(function() {
-                    if(this.getAttribute("id") === area) {
+                    if (this.getAttribute("id") === area) {
                         return 0;
                     }
                     return 100;
@@ -79,7 +75,7 @@ export class GraphComfortEntry extends GraphComfortBase {
                     return 250;
                 })
                 .style("fill", function() {
-                    if(this.getAttribute("id") === area) {
+                    if (this.getAttribute("id") === area) {
                         return "rgb(0, 180, 219)";
                     }
                     return "#00D7FE";
@@ -94,7 +90,7 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     public static calculateDistance(distance) {
-        if(distance < 100) {
+        if (distance < 100) {
             return "comfort";
         } else if (distance < 300) {
             return "stretch";
@@ -121,7 +117,7 @@ export class GraphComfortEntry extends GraphComfortBase {
         console.log("saveTheInteraction");
         this.removeInteractions();
 
-        //TODO: Put in the line below
+        // TODO: Put in the line below
         let event = new CustomEvent("saveGraph", {
             "detail": {
                 "area":area,
@@ -130,7 +126,6 @@ export class GraphComfortEntry extends GraphComfortBase {
             }
         });
         document.dispatchEvent(event);
-        //mediator.saveGraph();
     }
     public show(user:User) {
         this.currentUser = user;

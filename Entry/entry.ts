@@ -19,7 +19,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             });
             document.getElementById("user").addEventListener("keyup", (e:KeyboardEvent) => {
                 let code = e.keyCode;
-                if(code === 13) {
+                if (code === 13) {
                     AddUser();
                 }
             });
@@ -56,7 +56,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             let parent = document.getElementById("users");
             let nodeList = parent.childNodes;
             for (let i=nodeList.length;i--;i>0) {
-                if(username === nodeList[i].textContent) {
+                if (username === nodeList[i].textContent) {
                     document.getElementById("users").removeChild(nodeList[i]);
                 }
             }
@@ -64,7 +64,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
         ClearUsers () {
             let parent = document.getElementById("users");
             let nodeList = parent.childNodes;
-            for (let i=nodeList.length;i--;i>0){
+            for (let i=nodeList.length;i--;i>0) {
                 document.getElementById("users").removeChild(nodeList[i]);
             }
         }
@@ -106,7 +106,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             let isUnique = !(usernames.filter((value) => {
                 return value === username;
             }).length);
-            if(isUnique) {
+            if (isUnique) {
                 UI.AddUser(username);
                 usernames = UI.GetUsers();
                 saveUsers(usernames);

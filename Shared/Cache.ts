@@ -39,7 +39,7 @@ export class GenericCache implements ICache<IIndexableObject> {
         const store = this.store.filter(function(x:IIndexableObject) {
             return x.id === id;
         });
-        if(store.length) {
+        if (store.length) {
             return Promise.resolve(store[0]);
         }
         throw Error("Cannot find item by ID: " + id);

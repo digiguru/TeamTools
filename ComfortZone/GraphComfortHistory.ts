@@ -10,7 +10,6 @@ export class GraphComfortHistory extends GraphComfortBase {
     public d3Points;
     constructor() {
         super();
-        //this.setupHistory();
     }
 
     public show(graphData : Array<ComfortUserChoice>):Thenable<number> {
@@ -29,7 +28,7 @@ export class GraphComfortHistory extends GraphComfortBase {
                     return d.user.name;
                 });
         const totalPoints = graphData.length;
-        const radian = 6.2831853072;//360 * Math.PI / 180;
+        const radian = 6.2831853072;// 360 * Math.PI / 180;
         const polarDivision = radian / totalPoints;
         d3.select("g#history")
             .selectAll("circle")

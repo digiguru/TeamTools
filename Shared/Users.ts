@@ -23,7 +23,7 @@ export class InMemoryUsers implements IUserRepo {
         return this.cache.add(user);
     }
 
-    addUserByName(name:string) : Thenable<User[]> {//Don"t want this?
+    addUserByName(name:string) : Thenable<User[]> {
         return this.cache.add(UserConstructor.createUser(name, 9));
     }
 
