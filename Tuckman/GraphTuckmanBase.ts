@@ -4,11 +4,11 @@ import {Point} from "../Shared/Point";
 
 
 export class GraphTuckmanBase {
-    forming : HTMLElement;
-    storming : HTMLElement;
-    norming : HTMLElement;
-    performing : HTMLElement;
-    startPoint : Point;
+    forming: HTMLElement;
+    storming: HTMLElement;
+    norming: HTMLElement;
+    performing: HTMLElement;
+    startPoint: Point;
     constructor() {
         this.setupArea();
     }
@@ -31,7 +31,7 @@ export class GraphTuckmanBase {
                 .attr("x", 0)
                 .attr("y", 400)
                 .attr("class", "area")
-                .attr("id", function(d:TuckmanZones) {
+                .attr("id", function(d: TuckmanZones) {
                     return d.name;
             });
 
@@ -43,7 +43,7 @@ export class GraphTuckmanBase {
 
 
     }
-    public hide():Thenable<number> {
+    public hide(): Thenable<number> {
         console.log("HIDE comfortGRAPH");
 
         const d3zones = d3.select("g#zones")
@@ -62,7 +62,7 @@ export class GraphTuckmanBase {
         return Timed.for(1000);
 
     }
-    public showBase():Thenable<number> {
+    public showBase(): Thenable<number> {
         console.log("SHOW graph");
         const d3zones = d3.select("g#zones")
             .selectAll("rect")
@@ -72,10 +72,10 @@ export class GraphTuckmanBase {
                 .duration(1000)
                 .delay(function(d, i) { return i * 100; })
                 .ease("elastic")
-                .attr("x", function(d:TuckmanZones) {
+                .attr("x", function(d: TuckmanZones) {
                     return d.left;
                 })
-                .attr("width", function(d:TuckmanZones) {
+                .attr("width", function(d: TuckmanZones) {
                     return d.width;
                 });
 
