@@ -7,6 +7,7 @@
     "gulp-typescript": "^3.1.4",
     "jest": "^18.1.0",
     "jest-cli": "^18.1.0",
+    "tslint": "^4.3.1",
     "typescript": "^2.1.5"
   },
   "description": "Start mini server",
