@@ -13,7 +13,7 @@ class Indexable implements IIndexableObject {
 it("You can add to the cache", () => {
   //Arrange
   let c = new GenericCache();
-  let input = new Indexable("ref","Hello");
+  let input = new Indexable("ref", "Hello");
   //Act
   c.add(input).then((result) => {
     let resultToObj = (<Indexable>result[0]);
@@ -27,8 +27,8 @@ it("You can add to the cache", () => {
 it("Collisions in cache are not allowed", () => {
   //Arrange
   let c = new GenericCache();
-  let input1 = new Indexable("ref","Hello");
-  let input2 = new Indexable("ref","World");
+  let input1 = new Indexable("ref", "Hello");
+  let input2 = new Indexable("ref", "World");
   let result1;
   let result2;
   expect(() => {result1 = c.add(input1)}).not.toThrow();

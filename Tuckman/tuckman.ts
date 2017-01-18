@@ -11,7 +11,7 @@ let mediator,
 requirejs.config( {
     baseUrl : "/"
 });
-require(["Tuckman/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], function(m,u,b) {
+require(["Tuckman/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function(m,u,b) {
     console.log("Starting");
     mediator = new m.Mediator(23,23);
     userLoader = new b.InMemoryBrowserUsers(window);
@@ -21,10 +21,10 @@ require(["Tuckman/Mediator","Shared/User","Shared/InMemoryBrowserUsers"], functi
             mediator.setUsers(users);
         } else {
             mediator.setUsers([
-                new u.User("Adam Hall","xxx1"),
-                new u.User("Billie Davey","xxx2"),
-                new u.User("Laura Rowe","xxx3"),
-                new u.User("Simon Dawson","xxx4")
+                new u.User("Adam Hall", "xxx1"),
+                new u.User("Billie Davey", "xxx2"),
+                new u.User("Laura Rowe", "xxx3"),
+                new u.User("Simon Dawson", "xxx4")
             ]);
         }
 
