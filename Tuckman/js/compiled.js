@@ -43,7 +43,6 @@ define("Shared/Polar", ["require", "exports"], function (require, exports) {
     }());
     exports.Polar = Polar;
 });
-//import Polar = require('Polar');
 define("Shared/Point", ["require", "exports", "Shared/Polar"], function (require, exports, Polar_1) {
     "use strict";
     var Point = (function () {
@@ -90,7 +89,6 @@ define("Shared/Point", ["require", "exports", "Shared/Polar"], function (require
     }());
     exports.Point = Point;
 });
-//});
 define("Tuckman/GraphTuckmanBase", ["require", "exports", "Shared/Timed", "Tuckman/TuckmanZones", "Shared/Point"], function (require, exports, Timed_1, TuckmanZones_1, Point_1) {
     "use strict";
     var GraphTuckmanBase = (function () {
@@ -115,10 +113,10 @@ define("Tuckman/GraphTuckmanBase", ["require", "exports", "Shared/Timed", "Tuckm
                 .attr("id", function (d) {
                 return d.name;
             });
-            this.forming = document.getElementById('forming');
-            this.storming = document.getElementById('storming');
-            this.norming = document.getElementById('norming');
-            this.performing = document.getElementById('performing');
+            this.forming = document.getElementById("forming");
+            this.storming = document.getElementById("storming");
+            this.norming = document.getElementById("norming");
+            this.performing = document.getElementById("performing");
         };
         GraphTuckmanBase.prototype.hide = function () {
             console.log("HIDE comfortGRAPH");
@@ -191,7 +189,6 @@ define("Shared/Cache", ["require", "exports"], function (require, exports) {
         GenericCache.prototype.set = function (items) {
             this.store = items;
             return Promise.resolve(this.store);
-            ;
         };
         return GenericCache;
     }());
@@ -224,7 +221,6 @@ define("Shared/SVG", ["require", "exports"], function (require, exports) {
             el.setAttribute("cy", y);
             el.setAttribute("class", className);
             return el;
-            //<circle id="stretch" r="300" cx="400" cy="400" />
         };
         return SVG;
     }());
@@ -236,13 +232,13 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
         __extends(GraphTuckmanEntry, _super);
         function GraphTuckmanEntry() {
             var _this = _super.call(this) || this;
-            _this.clickArea = document.getElementById('clickable');
+            _this.clickArea = document.getElementById("clickable");
             _this.setupOverActivity();
             return _this;
         }
         GraphTuckmanEntry.prototype.setupOverActivity = function () {
             var that = this;
-            d3.select("#stage").on("mousemove", this.graphMove()); //this.checkArea);
+            d3.select("#stage").on("mousemove", this.graphMove());
         };
         GraphTuckmanEntry.prototype.setupClickActivity = function () {
             console.log("SETUP graph click");
@@ -250,10 +246,10 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
             d3.select("#stage").on("mousedown", this.graphDown());
         };
         GraphTuckmanEntry.prototype.graphMove = function () {
-            /// 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 var coord = Point_2.Point.fromCoords(d3.mouse(this));
                 var distance = coord.x;
                 var area = GraphTuckmanEntry.calculateDistance(distance);
@@ -261,10 +257,10 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
             };
         };
         GraphTuckmanEntry.prototype.graphUp = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 var coord = Point_2.Point.fromCoords(d3.mouse(this));
                 var distance = coord.x;
                 var area = GraphTuckmanEntry.calculateDistance(distance);
@@ -272,18 +268,16 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
             };
         };
         GraphTuckmanEntry.prototype.graphDown = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 var coord = Point_2.Point.fromCoords(d3.mouse(this));
                 var el = SVG_1.SVG.circle(8, coord.x, coord.y, "dropper");
                 that.addDropper(el);
             };
         };
         GraphTuckmanEntry.prototype.highlight = function (area) {
-            //<circle id="stretch" r="300" cx="400" cy="400" />
-            //<circle id="comfort" r="100" cx="400" cy="400" />
             var d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
@@ -306,7 +300,7 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
         };
         GraphTuckmanEntry.prototype.addDropper = function (el) {
             this.dropper = el;
-            document.getElementById('stage').insertBefore(el, this.clickArea);
+            document.getElementById("stage").insertBefore(el, this.clickArea);
         };
         GraphTuckmanEntry.calculateDistance = function (distance) {
             if (distance < 200) {
@@ -337,8 +331,8 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
         GraphTuckmanEntry.prototype.saveTheInteraction = function (area, distance) {
             console.log("saveTheInteraction");
             this.removeInteractions();
-            //TODO: Put in the line below
-            var event = new CustomEvent('saveGraph', {
+            // TODO: Put in the line below
+            var event = new CustomEvent("saveGraph", {
                 "detail": {
                     "area": area,
                     "distance": distance,
@@ -346,7 +340,6 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
                 }
             });
             document.dispatchEvent(event);
-            //mediator.saveGraph();
         };
         GraphTuckmanEntry.prototype.show = function (user) {
             this.currentUser = user;
@@ -378,7 +371,6 @@ define("Tuckman/GraphTuckmanHistory", ["require", "exports", "Tuckman/GraphTuckm
             var _this = _super.call(this) || this;
             _this.graphData = new Array();
             return _this;
-            //this.setupHistory();
         }
         GraphTuckmanHistory.prototype.show = function (graphData) {
             this.graphData = graphData;
@@ -519,8 +511,8 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
     var FormUserChoice = (function () {
         function FormUserChoice() {
             var _this = this;
-            this.userRepo = new Users_1.InMemoryUsers(); //DI this
-            this.userZone = document.getElementById('users');
+            this.userRepo = new Users_1.InMemoryUsers(); // TODO: DI this
+            this.userZone = document.getElementById("users");
             this.d3Users = d3.select("g#users");
             this.userRepo.getUsers().then(function (users) {
                 if (users && users.length) {
@@ -602,23 +594,22 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                 .data(users);
         };
         FormUserChoice.prototype.clickUser = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 console.log("CLICK - User - up  UserChocieForm");
-                //const name = this.getAttribute("data-name");
                 var id = this.getAttribute("data-id");
-                var event = new CustomEvent('selectUser', { "detail": { "id": id } });
+                var event = new CustomEvent("selectUser", { "detail": { "id": id } });
                 document.dispatchEvent(event);
                 console.log("This was clicked", that);
             };
         };
         FormUserChoice.prototype.overUser = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 d3.select(this.parentNode)
                     .selectAll("text")
                     .transition()
@@ -629,10 +620,10 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             };
         };
         FormUserChoice.prototype.leaveUser = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 d3.select(this.parentNode)
                     .selectAll("text")
                     .transition()
@@ -647,8 +638,6 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
         FormUserChoice.prototype.eachUser = function () {
             var that = this;
             return function (e, i) {
-                //Event.add(['mousedown'], this.stage, this.chooseUser);
-                //Event.add(["mouseover"], this, thisStage.checkOverUsers);
                 var d3Item = d3.select(this);
                 d3Item.append("rect")
                     .attr("y", function (e) {
@@ -806,7 +795,6 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
             }
         };
         Mediator.prototype.next = function () {
-            //const prom = new Promsie()
             console.log("ACTION nextUser", this);
             var afterHide = function () {
                 var _this = this;
@@ -916,9 +904,9 @@ define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Sh
 /// <reference path="../Tuckman/Mediator.ts"/>
 var mediator, userLoader;
 requirejs.config({
-    baseUrl: '/'
+    baseUrl: "/"
 });
-require(['Tuckman/Mediator', 'Shared/User', 'Shared/InMemoryBrowserUsers'], function (m, u, b) {
+require(["Tuckman/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function (m, u, b) {
     console.log("Starting");
     mediator = new m.Mediator(23, 23);
     userLoader = new b.InMemoryBrowserUsers(window);
@@ -943,29 +931,8 @@ require(['Tuckman/Mediator', 'Shared/User', 'Shared/InMemoryBrowserUsers'], func
         var o = e.detail;
         mediator.saveGraph(o.area, o.distance, o.currentUser);
     });
-    //;")
     console.log(mediator);
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"},
-   {name:"Fred Hall",id:"1xx1"},
-   {name:"Bob Hall",id:"1xx2"}
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
 define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (require, exports) {
     "use strict";
     var TuckmanUserChoiceHistory = (function () {

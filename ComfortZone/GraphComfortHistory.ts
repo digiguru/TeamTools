@@ -1,19 +1,18 @@
-import {ComfortUserChoice} from './ComfortUserChoice';
-import {GraphComfortBase} from './GraphComfortBase';
-import {Point} from '../Shared/Point';
-import {Polar} from '../Shared/Polar';
+import {ComfortUserChoice} from "./ComfortUserChoice";
+import {GraphComfortBase} from "./GraphComfortBase";
+import {Point} from "../Shared/Point";
+import {Polar} from "../Shared/Polar";
 
 
 export class GraphComfortHistory extends GraphComfortBase {
-    
+
     public graphData = new Array<ComfortUserChoice>();
     public d3Points;
     constructor() {
-        super(); 
-        //this.setupHistory();
+        super();
     }
 
-    public show(graphData : Array<ComfortUserChoice>):Thenable<number> {
+    public show(graphData: Array<ComfortUserChoice>): Thenable<number> {
         this.graphData = graphData;
         const Thenable = this.showBase();
         d3.select("g#history")
@@ -25,11 +24,11 @@ export class GraphComfortHistory extends GraphComfortBase {
                 .attr("cy", 400)
                 .attr("r", 10)
                 .attr("class", "point")
-                .attr("id", function(d:ComfortUserChoice) {
+                .attr("id", function(d: ComfortUserChoice) {
                     return d.user.name;
                 });
         const totalPoints = graphData.length;
-        const radian = 6.2831853072;//360 * Math.PI / 180;
+        const radian = 6.2831853072; // 360 * Math.PI / 180;
         const polarDivision = radian / totalPoints;
         d3.select("g#history")
             .selectAll("circle")
@@ -37,13 +36,13 @@ export class GraphComfortHistory extends GraphComfortBase {
             .duration(function() {
                 return 800;
             })
-            .attr("cx", function(data:ComfortUserChoice, index) {
+            .attr("cx", function(data: ComfortUserChoice, index) {
                 const angle = polarDivision * index;
-                return Point.toCartesian(new Polar(data.distance, angle), new Point(400,400)).x;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).x;
             })
-            .attr("cy", function(data:ComfortUserChoice, index) {
+            .attr("cy", function(data: ComfortUserChoice, index) {
                 const angle = polarDivision * index;
-                return Point.toCartesian(new Polar(data.distance, angle), new Point(400,400)).y;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).y;
             });
 
 
@@ -53,7 +52,7 @@ export class GraphComfortHistory extends GraphComfortBase {
         return Thenable;
     }
 
-    public hide():Thenable<number> {
+    public hide(): Thenable<number> {
         return null;
     }
 }

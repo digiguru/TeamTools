@@ -1,19 +1,19 @@
-import {ComfortUserChoice} from './ComfortUserChoice';
-import {BreadcrumbControl} from '../Shared/BreadcrumbControl';
-import {User} from '../Shared/User';
-import {FormUserChoice} from '../Shared/FormUserChoice';
-import {GraphComfortEntry} from './GraphComfortEntry';
-import {GraphComfortHistory} from './GraphComfortHistory';
+import {ComfortUserChoice} from "./ComfortUserChoice";
+import {BreadcrumbControl} from "../Shared/BreadcrumbControl";
+import {User} from "../Shared/User";
+import {FormUserChoice} from "../Shared/FormUserChoice";
+import {GraphComfortEntry} from "./GraphComfortEntry";
+import {GraphComfortHistory} from "./GraphComfortHistory";
 
 
 export class Mediator {
 
-    userChoiceHistory : Array<ComfortUserChoice>;
-    formUserChoice : FormUserChoice;
-    graphComfortEntry : GraphComfortEntry;
+    userChoiceHistory: Array<ComfortUserChoice>;
+    formUserChoice: FormUserChoice;
+    graphComfortEntry: GraphComfortEntry;
     graphComfortHistory: GraphComfortHistory;
     breadcrumbControl: BreadcrumbControl;
-    
+
     constructor() {
         console.log("START everything");
         this.userChoiceHistory = new Array<ComfortUserChoice>();
@@ -21,9 +21,8 @@ export class Mediator {
         this.breadcrumbControl = new BreadcrumbControl();
     }
 
-    public do(command:string, params:any) {
-        switch (command)
-        {
+    public do(command: string, params: any) {
+        switch (command) {
             case "addUser":
                 this.addUser(params);
                 break;
@@ -43,18 +42,18 @@ export class Mediator {
                 this.showGraphComfortHistory();
                 break;
             case "showGraphComfortChoice":
-                const comfortuser:User = params;
+                const comfortuser: User = params;
                 this.showGraphComfortEntry(comfortuser);
                 break;
 
         }
     }
-    
-    public addUser(user:User) {
+
+    public addUser(user: User) {
         this.formUserChoice.addUser(user);
     }
 
-    public setUsers(users:Array<User>) {
+    public setUsers(users: Array<User>) {
         this.formUserChoice.setUsers(users);
     }
 
@@ -62,16 +61,16 @@ export class Mediator {
         this.formUserChoice.show();
     }
 
-    private showGraphComfortEntry(user:User) {
-        if(!this.graphComfortEntry) {
+    private showGraphComfortEntry(user: User) {
+        if (!this.graphComfortEntry) {
             this.graphComfortEntry = new GraphComfortEntry();
         }
         this.graphComfortEntry.show(user);
     }
-    
+
     public showComfortHistory(history) {
-        var afterHide = function() {
-           if(!this.graphComfortHistory) {
+        let afterHide = function() {
+           if (!this.graphComfortHistory) {
                 this.graphComfortEntry = null;
                 this.graphComfortHistory = new GraphComfortHistory();
             }
@@ -80,17 +79,17 @@ export class Mediator {
         if (this.graphComfortEntry) {
             this.graphComfortEntry.hide().then(afterHide);
         } else {
-            if(this.formUserChoice) {
+            if (this.formUserChoice) {
                 this.formUserChoice.hide();
             }
             afterHide();
         }
-        
-       
+
+
     }
 
     private showGraphComfortHistory() {
-        if(!this.graphComfortHistory) {
+        if (!this.graphComfortHistory) {
             this.graphComfortEntry = null;
             this.graphComfortHistory = new GraphComfortHistory();
         }
@@ -103,32 +102,31 @@ export class Mediator {
             this.formUserChoice.hide();
             this.showGraphComfortEntry(user);
         });
-        
+
     }
 
-    public saveGraph(area:string, distance:number, user:User) {
+    public saveGraph(area: string, distance: number, user: User) {
         this.formUserChoice.markUserDone(user);
         this.addUserChoiceHistory(area, distance, user);
         this.next();
     }
 
-    private addUserChoiceHistory(area:string, distance:number, user:User) {
+    private addUserChoiceHistory(area: string, distance: number, user: User) {
         const thisUserChoice = this.userChoiceHistory.filter(function(x) {
             return x.user.id === user.id;
         });
-        if(thisUserChoice.length) {
+        if (thisUserChoice.length) {
             thisUserChoice[0].area = area;
             thisUserChoice[0].distance = distance;
         } else {
-            const userChoice = new ComfortUserChoice(user,distance,area);
+            const userChoice = new ComfortUserChoice(user, distance, area);
             this.userChoiceHistory.push(userChoice);
         }
-    }  
+    }
 
     private next() {
-        //const prom = new Promsie()
         console.log("ACTION nextUser", this);
-        var afterHide = function() {
+        let afterHide = function() {
             this.formUserChoice.hasMoreUsers().then((result) => {
                 if (result) {
                     console.log("Users left...", this);
@@ -139,10 +137,7 @@ export class Mediator {
                 }
             });
         }.bind(this);
-        
+
         this.graphComfortEntry.hide().then(afterHide);
     }
-
-    //setupUsers
-    //
 }

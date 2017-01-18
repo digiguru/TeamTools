@@ -1,8 +1,8 @@
 
-import {User} from './User';
-import {InMemoryUsers} from './Users';
-import {BrowserUsers} from './BrowserUsers';
-import {IAllUserRepostiory, IUserRepo} from './IUsers';
+import {User} from "./User";
+import {InMemoryUsers} from "./Users";
+import {BrowserUsers} from "./BrowserUsers";
+import {IAllUserRepostiory, IUserRepo} from "./IUsers";
 
 export class InMemoryBrowserUsers implements IUserRepo  {
     cache:InMemoryUsers;
@@ -37,7 +37,7 @@ export class InMemoryBrowserUsers implements IUserRepo  {
         return Promise.resolve(result);
     }
     setUsers(users:User[]) : Thenable<User[]> {
-        
+
         const promCache = this.cache.setUsers(users);
         const promRepo = this.repo.saveUsers(users);
         return promCache;

@@ -31,7 +31,6 @@ define("Shared/Cache", ["require", "exports"], function (require, exports) {
         GenericCache.prototype.set = function (items) {
             this.store = items;
             return Promise.resolve(this.store);
-            ;
         };
         return GenericCache;
     }());
@@ -200,23 +199,23 @@ define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Sh
 /// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
 /// <reference path="../Shared/UserConstructor.ts"/>
 requirejs.config({
-    baseUrl: '/'
+    baseUrl: "/"
 });
 var users;
-require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, c) {
+require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function (u, c) {
     users = new u.InMemoryBrowserUsers(window);
     var UIEntry = (function () {
         function UIEntry() {
-            document.getElementById('new').addEventListener("mousedown", function () {
+            document.getElementById("new").addEventListener("mousedown", function () {
                 UI.ClearUsers();
             });
-            document.getElementById('user').addEventListener("keyup", function (e) {
+            document.getElementById("user").addEventListener("keyup", function (e) {
                 var code = e.keyCode;
                 if (code === 13) {
                     AddUser();
                 }
             });
-            document.getElementById('add').addEventListener("mousedown", function () {
+            document.getElementById("add").addEventListener("mousedown", function () {
                 AddUser();
             });
         }
@@ -237,38 +236,38 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
             var newNode = document.createElement("li");
             newNode.appendChild(textNode);
             newNode.appendChild(deleteButton);
-            document.getElementById('users').appendChild(newNode);
+            document.getElementById("users").appendChild(newNode);
         };
         UIEntry.prototype.ClearUser = function (username) {
-            var parent = document.getElementById('users');
+            var parent = document.getElementById("users");
             var nodeList = parent.childNodes;
             for (var i = nodeList.length; i--; i > 0) {
                 if (username === nodeList[i].textContent) {
-                    document.getElementById('users').removeChild(nodeList[i]);
+                    document.getElementById("users").removeChild(nodeList[i]);
                 }
             }
         };
         UIEntry.prototype.ClearUsers = function () {
-            var parent = document.getElementById('users');
+            var parent = document.getElementById("users");
             var nodeList = parent.childNodes;
             for (var i = nodeList.length; i--; i > 0) {
-                document.getElementById('users').removeChild(nodeList[i]);
+                document.getElementById("users").removeChild(nodeList[i]);
             }
         };
         UIEntry.prototype.GetUsername = function () {
-            return document.getElementById('user').value;
+            return document.getElementById("user").value;
         };
         UIEntry.prototype.ShowError = function (error) {
             alert(error);
         };
         UIEntry.prototype.ClearUsername = function () {
-            document.getElementById('user').value = "";
+            document.getElementById("user").value = "";
         };
         UIEntry.prototype.FocusUsername = function () {
-            document.getElementById('user').focus();
+            document.getElementById("user").focus();
         };
         UIEntry.prototype.GetUsers = function () {
-            var entry = document.getElementById('users').getElementsByClassName('user');
+            var entry = document.getElementById("users").getElementsByClassName("user");
             var usernames = new Array();
             for (var i = 0; i < entry.length; i++) {
                 usernames.push(entry.item(i).textContent);
@@ -297,7 +296,9 @@ require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function (u, 
                 usernames = UI.GetUsers();
                 saveUsers(usernames);
                 UI.ClearUsername();
-                setTimeout(function () { UI.FocusUsername(); }, 10);
+                setTimeout(function () {
+                    UI.FocusUsername();
+                }, 10);
             }
             else {
                 UI.ShowError("already entered user" + username);

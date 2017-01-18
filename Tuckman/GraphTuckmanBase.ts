@@ -1,6 +1,6 @@
-import {Timed} from '../Shared/Timed';
-import {TuckmanZones} from './TuckmanZones';
-import {Point} from '../Shared/Point';
+import {Timed} from "../Shared/Timed";
+import {TuckmanZones} from "./TuckmanZones";
+import {Point} from "../Shared/Point";
 
 
 export class GraphTuckmanBase {
@@ -14,13 +14,13 @@ export class GraphTuckmanBase {
     }
 
     private setupArea () {
-        
+
         this.startPoint = new Point(0, 400);
 
         const zones = [
-            new TuckmanZones("forming", 0, 200), 
-            new TuckmanZones("storming", 200, 200), 
-            new TuckmanZones("norming", 400, 200), 
+            new TuckmanZones("forming", 0, 200),
+            new TuckmanZones("storming", 200, 200),
+            new TuckmanZones("norming", 400, 200),
             new TuckmanZones("performing", 600, 200)
             ];
         const d3zones = d3.select("g#zones")
@@ -34,19 +34,19 @@ export class GraphTuckmanBase {
                 .attr("id", function(d:TuckmanZones) {
                     return d.name;
             });
-        
 
-        this.forming = document.getElementById('forming');
-        this.storming = document.getElementById('storming');
-        this.norming = document.getElementById('norming');
-        this.performing = document.getElementById('performing');
-        
+
+        this.forming = document.getElementById("forming");
+        this.storming = document.getElementById("storming");
+        this.norming = document.getElementById("norming");
+        this.performing = document.getElementById("performing");
+
 
     }
     public hide():Thenable<number> {
         console.log("HIDE comfortGRAPH");
-        
-        const d3zones = d3.select("g#zones")    
+
+        const d3zones = d3.select("g#zones")
             .selectAll("rect")
                 .transition()
                 .duration(1000)
@@ -54,13 +54,13 @@ export class GraphTuckmanBase {
                 .attr("width", 0);
 
         const d3drops = d3.select("#stage")
-            .selectAll("circle.dropper")   
+            .selectAll("circle.dropper")
             .transition()
                 .delay(250)
                 .duration(250)
                 .attr("r", 0);
         return Timed.for(1000);
-                
+
     }
     public showBase():Thenable<number> {
         console.log("SHOW graph");
@@ -72,15 +72,15 @@ export class GraphTuckmanBase {
                 .duration(1000)
                 .delay(function(d, i) { return i * 100; })
                 .ease("elastic")
-                .attr("x", function(d:TuckmanZones) { 
-                    return d.left; 
+                .attr("x", function(d:TuckmanZones) {
+                    return d.left;
                 })
-                .attr("width", function(d:TuckmanZones) { 
-                    return d.width; 
-                }); 
-        
+                .attr("width", function(d:TuckmanZones) {
+                    return d.width;
+                });
+
         return Timed.for(1000);
-        
+
     }
 
 }

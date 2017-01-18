@@ -36,7 +36,6 @@ define("Shared/Cache", ["require", "exports"], function (require, exports) {
         GenericCache.prototype.set = function (items) {
             this.store = items;
             return Promise.resolve(this.store);
-            ;
         };
         return GenericCache;
     }());
@@ -259,8 +258,8 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
     var FormUserChoice = (function () {
         function FormUserChoice() {
             var _this = this;
-            this.userRepo = new Users_2.InMemoryUsers(); //DI this
-            this.userZone = document.getElementById('users');
+            this.userRepo = new Users_2.InMemoryUsers(); // TODO: DI this
+            this.userZone = document.getElementById("users");
             this.d3Users = d3.select("g#users");
             this.userRepo.getUsers().then(function (users) {
                 if (users && users.length) {
@@ -342,23 +341,22 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                 .data(users);
         };
         FormUserChoice.prototype.clickUser = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 console.log("CLICK - User - up  UserChocieForm");
-                //const name = this.getAttribute("data-name");
                 var id = this.getAttribute("data-id");
-                var event = new CustomEvent('selectUser', { "detail": { "id": id } });
+                var event = new CustomEvent("selectUser", { "detail": { "id": id } });
                 document.dispatchEvent(event);
                 console.log("This was clicked", that);
             };
         };
         FormUserChoice.prototype.overUser = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 d3.select(this.parentNode)
                     .selectAll("text")
                     .transition()
@@ -369,10 +367,10 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             };
         };
         FormUserChoice.prototype.leaveUser = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 d3.select(this.parentNode)
                     .selectAll("text")
                     .transition()
@@ -387,8 +385,6 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
         FormUserChoice.prototype.eachUser = function () {
             var that = this;
             return function (e, i) {
-                //Event.add(['mousedown'], this.stage, this.chooseUser);
-                //Event.add(["mouseover"], this, thisStage.checkOverUsers);
                 var d3Item = d3.select(this);
                 d3Item.append("rect")
                     .attr("y", function (e) {
@@ -466,7 +462,6 @@ define("Shared/Polar", ["require", "exports"], function (require, exports) {
     }());
     exports.Polar = Polar;
 });
-//import Polar = require('Polar');
 define("Shared/Point", ["require", "exports", "Shared/Polar"], function (require, exports, Polar_1) {
     "use strict";
     var Point = (function () {
@@ -513,7 +508,6 @@ define("Shared/Point", ["require", "exports", "Shared/Polar"], function (require
     }());
     exports.Point = Point;
 });
-//});
 define("ComfortZone/GraphComfortBase", ["require", "exports", "Shared/Timed", "ComfortZone/ComfortZones", "Shared/Point"], function (require, exports, Timed_2, ComfortZones_1, Point_1) {
     "use strict";
     var GraphComfortBase = (function () {
@@ -533,11 +527,11 @@ define("ComfortZone/GraphComfortBase", ["require", "exports", "Shared/Timed", "C
                 .attr("id", function (d) {
                 return d.name;
             });
-            this.chaos = document.getElementById('chaos');
-            this.stretch = document.getElementById('stretch');
-            this.comfort = document.getElementById('comfort');
-            var centerX = Number(this.comfort.getAttribute('cx'));
-            var centerY = Number(this.comfort.getAttribute('cy'));
+            this.chaos = document.getElementById("chaos");
+            this.stretch = document.getElementById("stretch");
+            this.comfort = document.getElementById("comfort");
+            var centerX = Number(this.comfort.getAttribute("cx"));
+            var centerY = Number(this.comfort.getAttribute("cy"));
             this.centerPoint = new Point_1.Point(centerX, centerY);
         };
         GraphComfortBase.prototype.hide = function () {
@@ -588,7 +582,6 @@ define("Shared/SVG", ["require", "exports"], function (require, exports) {
             el.setAttribute("cy", y);
             el.setAttribute("class", className);
             return el;
-            //<circle id="stretch" r="300" cx="400" cy="400" />
         };
         return SVG;
     }());
@@ -600,13 +593,13 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
         __extends(GraphComfortEntry, _super);
         function GraphComfortEntry() {
             var _this = _super.call(this) || this;
-            _this.clickArea = document.getElementById('clickable');
+            _this.clickArea = document.getElementById("clickable");
             _this.setupOverActivity();
             return _this;
         }
         GraphComfortEntry.prototype.setupOverActivity = function () {
             var that = this;
-            d3.select("#stage").on("mousemove", this.graphMove()); //this.checkArea);
+            d3.select("#stage").on("mousemove", this.graphMove());
         };
         GraphComfortEntry.prototype.setupClickActivity = function () {
             console.log("SETUP graph click");
@@ -614,10 +607,10 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
             d3.select("#stage").on("mousedown", this.graphDown());
         };
         GraphComfortEntry.prototype.graphMove = function () {
-            /// 'that' is the instance of graph 
+            /// "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 var coord = d3.mouse(this);
                 var distance = Point_2.Point.distance(that.centerPoint, Point_2.Point.fromCoords(coord));
                 var area = GraphComfortEntry.calculateDistance(distance);
@@ -625,10 +618,10 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
             };
         };
         GraphComfortEntry.prototype.graphUp = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 var coord = Point_2.Point.fromCoords(d3.mouse(this));
                 var distance = Point_2.Point.distance(that.centerPoint, coord);
                 var area = GraphComfortEntry.calculateDistance(distance);
@@ -636,18 +629,16 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
             };
         };
         GraphComfortEntry.prototype.graphDown = function () {
-            // 'that' is the instance of graph 
+            // "that" is the instance of graph
             var that = this;
             return function (d, i) {
-                // 'this' is the DOM element 
+                // "this" is the DOM element
                 var coord = Point_2.Point.fromCoords(d3.mouse(this));
                 var el = SVG_1.SVG.circle(8, coord.x, coord.y, "dropper");
                 that.addDropper(el);
             };
         };
         GraphComfortEntry.prototype.highlight = function (area) {
-            //<circle id="stretch" r="300" cx="400" cy="400" />
-            //<circle id="comfort" r="100" cx="400" cy="400" />
             var d3zones = d3.select("svg")
                 .selectAll(".area")
                 .transition()
@@ -670,7 +661,7 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
         };
         GraphComfortEntry.prototype.addDropper = function (el) {
             this.dropper = el;
-            document.getElementById('stage').insertBefore(el, this.clickArea);
+            document.getElementById("stage").insertBefore(el, this.clickArea);
         };
         GraphComfortEntry.calculateDistance = function (distance) {
             if (distance < 100) {
@@ -698,8 +689,8 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
         GraphComfortEntry.prototype.saveTheInteraction = function (area, distance) {
             console.log("saveTheInteraction");
             this.removeInteractions();
-            //TODO: Put in the line below
-            var event = new CustomEvent('saveGraph', {
+            // TODO: Put in the line below
+            var event = new CustomEvent("saveGraph", {
                 "detail": {
                     "area": area,
                     "distance": distance,
@@ -707,7 +698,6 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
                 }
             });
             document.dispatchEvent(event);
-            //mediator.saveGraph();
         };
         GraphComfortEntry.prototype.show = function (user) {
             this.currentUser = user;
@@ -727,7 +717,6 @@ define("ComfortZone/GraphComfortHistory", ["require", "exports", "ComfortZone/Gr
             var _this = _super.call(this) || this;
             _this.graphData = new Array();
             return _this;
-            //this.setupHistory();
         }
         GraphComfortHistory.prototype.show = function (graphData) {
             this.graphData = graphData;
@@ -745,7 +734,7 @@ define("ComfortZone/GraphComfortHistory", ["require", "exports", "ComfortZone/Gr
                 return d.user.name;
             });
             var totalPoints = graphData.length;
-            var radian = 6.2831853072; //360 * Math.PI / 180;
+            var radian = 6.2831853072; // 360 * Math.PI / 180;
             var polarDivision = radian / totalPoints;
             d3.select("g#history")
                 .selectAll("circle")
@@ -875,7 +864,6 @@ define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserCh
             }
         };
         Mediator.prototype.next = function () {
-            //const prom = new Promsie()
             console.log("ACTION nextUser", this);
             var afterHide = function () {
                 var _this = this;
@@ -904,9 +892,9 @@ define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserCh
 /// <reference path="../ComfortZone/Mediator.ts"/>
 var mediator, userLoader;
 requirejs.config({
-    baseUrl: '/'
+    baseUrl: "/"
 });
-require(['ComfortZone/Mediator', 'Shared/User', 'Shared/InMemoryBrowserUsers'], function (m, u, b) {
+require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function (m, u, b) {
     console.log("Starting");
     mediator = new m.Mediator(23, 23);
     console.log(mediator);
@@ -931,29 +919,8 @@ require(['ComfortZone/Mediator', 'Shared/User', 'Shared/InMemoryBrowserUsers'], 
         var o = e.detail;
         mediator.saveGraph(o.area, o.distance, o.currentUser);
     });
-    //;")
     console.log(mediator);
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"},
-   {name:"Fred Hall",id:"1xx1"},
-   {name:"Bob Hall",id:"1xx2"}
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
 define("ComfortZone/ComfortUserChoiceHistory", ["require", "exports"], function (require, exports) {
     "use strict";
     var ComfortUserChoiceHistory = (function () {

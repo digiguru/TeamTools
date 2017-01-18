@@ -1,4 +1,4 @@
-import {User} from './User';
+import {User} from "./User";
 
 export class UserConstructor {
     static notEmpty(input) {
@@ -9,7 +9,7 @@ export class UserConstructor {
         const users = filtered.map((v, i) => {
             return this.createUser(v,i);
         });
-        return users; 
+        return users;
     }
     static createUser(name:string, index:number) {
         return new User(name, "user"+index);
