@@ -8,9 +8,9 @@ import {GraphComfortHistory} from "./GraphComfortHistory";
 
 export class Mediator {
 
-    userChoiceHistory : Array<ComfortUserChoice>;
-    formUserChoice : FormUserChoice;
-    graphComfortEntry : GraphComfortEntry;
+    userChoiceHistory: Array<ComfortUserChoice>;
+    formUserChoice: FormUserChoice;
+    graphComfortEntry: GraphComfortEntry;
     graphComfortHistory: GraphComfortHistory;
     breadcrumbControl: BreadcrumbControl;
 
@@ -21,9 +21,8 @@ export class Mediator {
         this.breadcrumbControl = new BreadcrumbControl();
     }
 
-    public do(command:string, params:any) {
-        switch (command)
-        {
+    public do(command: string, params: any) {
+        switch (command) {
             case "addUser":
                 this.addUser(params);
                 break;
@@ -43,18 +42,18 @@ export class Mediator {
                 this.showGraphComfortHistory();
                 break;
             case "showGraphComfortChoice":
-                const comfortuser:User = params;
+                const comfortuser: User = params;
                 this.showGraphComfortEntry(comfortuser);
                 break;
 
         }
     }
 
-    public addUser(user:User) {
+    public addUser(user: User) {
         this.formUserChoice.addUser(user);
     }
 
-    public setUsers(users:Array<User>) {
+    public setUsers(users: Array<User>) {
         this.formUserChoice.setUsers(users);
     }
 
@@ -62,7 +61,7 @@ export class Mediator {
         this.formUserChoice.show();
     }
 
-    private showGraphComfortEntry(user:User) {
+    private showGraphComfortEntry(user: User) {
         if (!this.graphComfortEntry) {
             this.graphComfortEntry = new GraphComfortEntry();
         }
@@ -106,13 +105,13 @@ export class Mediator {
 
     }
 
-    public saveGraph(area:string, distance:number, user:User) {
+    public saveGraph(area: string, distance: number, user: User) {
         this.formUserChoice.markUserDone(user);
         this.addUserChoiceHistory(area, distance, user);
         this.next();
     }
 
-    private addUserChoiceHistory(area:string, distance:number, user:User) {
+    private addUserChoiceHistory(area: string, distance: number, user: User) {
         const thisUserChoice = this.userChoiceHistory.filter(function(x) {
             return x.user.id === user.id;
         });
@@ -120,7 +119,7 @@ export class Mediator {
             thisUserChoice[0].area = area;
             thisUserChoice[0].distance = distance;
         } else {
-            const userChoice = new ComfortUserChoice(user,distance,area);
+            const userChoice = new ComfortUserChoice(user, distance, area);
             this.userChoiceHistory.push(userChoice);
         }
     }

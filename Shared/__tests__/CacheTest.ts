@@ -1,10 +1,10 @@
 
-import {GenericCache,IIndexableObject} from "../Cache";
+import {GenericCache, IIndexableObject} from "../Cache";
 
 class Indexable implements IIndexableObject {
     id: string;
     input: string;
-    constructor(id:string, input:string) {
+    constructor(id: string, input: string) {
         this.id = id;
         this.input = input;
     }
@@ -21,7 +21,7 @@ it("You can add to the cache", () => {
     expect(result.length).toBe(1);
     expect(resultToObj.id).toBe("ref");
     expect(resultToObj.input).toBe("Hello");
-  })
+  });
 });
 
 it("Collisions in cache are not allowed", () => {
@@ -31,7 +31,7 @@ it("Collisions in cache are not allowed", () => {
   let input2 = new Indexable("ref", "World");
   let result1;
   let result2;
-  expect(() => {result1 = c.add(input1)}).not.toThrow();
+  expect(() => {result1 = c.add(input1); }).not.toThrow();
   let failTest = (error) => {
     debugger;
     expect(error).toBeUndefined();
@@ -45,7 +45,7 @@ it("Collisions in cache are not allowed", () => {
     expect(resultToObj1.input).toBe("Hello");
 
     // Inner Act
-    expect(() => {result2 = c.add(input2)}).not.toThrow();
+    expect(() => {result2 = c.add(input2); }).not.toThrow();
     result2.then((result2) => {
       let resultToObj2 = (<Indexable>result2[1]);
       // Assert

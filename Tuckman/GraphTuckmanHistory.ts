@@ -12,7 +12,7 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
         super();
     }
 
-    public show(graphData : Array<TuckmanUserChoice>):Thenable<number> {
+    public show(graphData: Array<TuckmanUserChoice>): Thenable<number> {
         this.graphData = graphData;
         const Thenable = this.showBase();
 
@@ -26,12 +26,12 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
                 .enter()
                 .append("circle")
                 .attr("cx", 0)
-                .attr("cy", function(data:TuckmanUserChoice, index) {
+                .attr("cy", function(data: TuckmanUserChoice, index) {
                     return (heightDivision * index) + 100;
                 })
                 .attr("r", 10)
                 .attr("class", "point")
-                .attr("id", function(d:TuckmanUserChoice) {
+                .attr("id", function(d: TuckmanUserChoice) {
                     return d.user.name;
                 });
         d3.select("g#history")
@@ -40,10 +40,10 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
             .duration(function() {
                 return 800;
             })
-            .attr("cx", function(data:TuckmanUserChoice, index) {
+            .attr("cx", function(data: TuckmanUserChoice, index) {
                 return data.distance;
             })
-            .attr("cy", function(data:TuckmanUserChoice, index) {
+            .attr("cy", function(data: TuckmanUserChoice, index) {
                 return (heightDivision * index) + 100;
             });
 
@@ -54,7 +54,7 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
         return Thenable;
     }
 
-    public hide():Thenable<number> {
+    public hide(): Thenable<number> {
         return null;
     }
 }

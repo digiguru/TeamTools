@@ -5,7 +5,7 @@ import {SVG} from "../Shared/SVG";
 
 export class GraphComfortEntry extends GraphComfortBase {
     clickArea: HTMLElement;
-    currentUser:User;
+    currentUser: User;
     dropper: SVGAElement;
 
     constructor() {
@@ -27,40 +27,40 @@ export class GraphComfortEntry extends GraphComfortBase {
 
     private graphMove() {
         /// "that" is the instance of graph
-        const that : GraphComfortEntry = this;
-        return function(d:void, i:number) {
+        const that: GraphComfortEntry = this;
+        return function(d: void, i: number) {
             // "this" is the DOM element
             const coord = d3.mouse(this);
             const distance = Point.distance(that.centerPoint, Point.fromCoords(coord));
             const area = GraphComfortEntry.calculateDistance(distance);
             that.highlight(area);
-        }
+        };
     }
 
     private graphUp() {
         // "that" is the instance of graph
-        const that : GraphComfortEntry = this;
-        return function(d:void, i :number) {
+        const that: GraphComfortEntry = this;
+        return function(d: void, i: number) {
             // "this" is the DOM element
             const coord = Point.fromCoords(d3.mouse(this));
             const distance = Point.distance(that.centerPoint, coord);
             const area = GraphComfortEntry.calculateDistance(distance);
             that.saveTheInteraction(area, distance);
-        }
+        };
     }
 
     private graphDown() {
         // "that" is the instance of graph
         const that = this;
-        return function(d:void, i:number) {
+        return function(d: void, i: number) {
             // "this" is the DOM element
             const coord = Point.fromCoords(d3.mouse(this));
             const el = SVG.circle(8, coord.x, coord.y, "dropper");
             that.addDropper(el);
-        }
+        };
     }
 
-    public highlight (area : string) {
+    public highlight (area: string) {
         const d3zones = d3.select("svg")
             .selectAll(".area")
             .transition()
@@ -84,7 +84,7 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
 
-    public addDropper (el : SVGAElement)  {
+    public addDropper (el: SVGAElement)  {
         this.dropper = el;
         document.getElementById("stage").insertBefore(el, this.clickArea);
     }
@@ -113,21 +113,21 @@ export class GraphComfortEntry extends GraphComfortBase {
         });
 
     }
-    public saveTheInteraction (area:string, distance:number) {
+    public saveTheInteraction (area: string, distance: number) {
         console.log("saveTheInteraction");
         this.removeInteractions();
 
         // TODO: Put in the line below
         let event = new CustomEvent("saveGraph", {
             "detail": {
-                "area":area,
-                "distance":distance,
-                "currentUser":this.currentUser
+                "area": area,
+                "distance": distance,
+                "currentUser": this.currentUser
             }
         });
         document.dispatchEvent(event);
     }
-    public show(user:User) {
+    public show(user: User) {
         this.currentUser = user;
         const Thenable = this.showBase();
         this.setupOverActivity();

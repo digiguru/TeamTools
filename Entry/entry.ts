@@ -17,7 +17,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             document.getElementById("new").addEventListener("mousedown", () => {
                 UI.ClearUsers();
             });
-            document.getElementById("user").addEventListener("keyup", (e:KeyboardEvent) => {
+            document.getElementById("user").addEventListener("keyup", (e: KeyboardEvent) => {
                 let code = e.keyCode;
                 if (code === 13) {
                     AddUser();
@@ -37,7 +37,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
             let deleteButton = document.createElement("a");
             deleteButton.setAttribute("href", "void(0);");
             deleteButton.textContent = "X";
-            deleteButton.addEventListener("mousedown", (e:MouseEvent) => {
+            deleteButton.addEventListener("mousedown", (e: MouseEvent) => {
                 let el = (<Element>e.target).parentNode;
                 this.ClearUser(el.textContent);
 
@@ -55,7 +55,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
         ClearUser (username) {
             let parent = document.getElementById("users");
             let nodeList = parent.childNodes;
-            for (let i=nodeList.length;i--;i>0) {
+            for (let i = nodeList.length; i--; i > 0) {
                 if (username === nodeList[i].textContent) {
                     document.getElementById("users").removeChild(nodeList[i]);
                 }
@@ -64,11 +64,11 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
         ClearUsers () {
             let parent = document.getElementById("users");
             let nodeList = parent.childNodes;
-            for (let i=nodeList.length;i--;i>0) {
+            for (let i = nodeList.length; i--; i > 0) {
                 document.getElementById("users").removeChild(nodeList[i]);
             }
         }
-        GetUsername () : string {
+        GetUsername (): string {
             return (<HTMLInputElement>document.getElementById("user")).value;
         }
         ShowError (error) {
@@ -80,10 +80,10 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
         FocusUsername () {
             (<HTMLInputElement>document.getElementById("user")).focus();
         }
-        GetUsers () : Array<string> {
+        GetUsers (): Array<string> {
             let entry = document.getElementById("users").getElementsByClassName("user");
             let usernames = new Array<string>();
-            for (let i=0;i<entry.length;i++) {
+            for (let i = 0; i < entry.length; i ++) {
                 usernames.push(entry.item(i).textContent);
             }
             return usernames;
@@ -97,7 +97,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
         users.setUsers(newusers).then((result) => {
             console.log("Set users", result);
         });
-    }
+    };
 
     let AddUser = () => {
         let username = UI.GetUsername();
@@ -111,7 +111,9 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
                 usernames = UI.GetUsers();
                 saveUsers(usernames);
                 UI.ClearUsername();
-                setTimeout(() => { UI.FocusUsername()},10);
+                setTimeout(() => {
+                    UI.FocusUsername();
+                }, 10);
             } else {
                 UI.ShowError("already entered user" + username);
             }
@@ -122,10 +124,10 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c
         UI.ClearUsers();
         UI.FocusUsername();
         if (data && data.length) {
-            const strings:string[] = data.map((user) => {
+            const strings: string[] = data.map((user) => {
                 return user.name;
             });
-            for (let i=0;i<strings.length;i++) {
+            for (let i = 0; i < strings.length; i++) {
                 UI.AddUser(strings[i]);
             }
         }
