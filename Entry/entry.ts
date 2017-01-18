@@ -3,60 +3,133 @@
 /// <reference path="../typings/requirejs/require.d.ts"/>
 /// <reference path="../Shared/InMemoryBrowserUsers.ts"/>
 /// <reference path="../Shared/UserConstructor.ts"/>
-var users;
 requirejs.config( {
     baseUrl : '/'
 });
 
+var users;
 
 require(['Shared/InMemoryBrowserUsers', 'Shared/UserConstructor'], function(u, c) {
-
-    console.log("Starting");
     users = new u.InMemoryBrowserUsers(window);
     
+    class UIEntry {
+        constructor() {
+            document.getElementById('new').addEventListener("mousedown", () => {
+                UI.ClearUsers();
+            });
+            document.getElementById('user').addEventListener("keyup", (e:KeyboardEvent) => {
+                var code = e.keyCode;
+                if(code === 13) {
+                    AddUser();
+                }
+            });
+            document.getElementById('add').addEventListener("mousedown", () => {
+                AddUser();
+            });     
+        }
+
+        AddUser(username) {
+            
+            var textNode = document.createElement("span");
+            textNode.setAttribute("class", "user");
+            textNode.textContent = username;
+
+            var deleteButton = document.createElement("a");
+            deleteButton.setAttribute("href", "void(0);");
+            deleteButton.textContent = "X";
+            deleteButton.addEventListener("mousedown", (e:MouseEvent) => {
+                var el = (<Element>e.target).parentNode;
+                this.ClearUser(el.textContent);
+                
+                var usernames = UI.GetUsers();
+                saveUsers(usernames);
+                        
+            });
+
+            var newNode = document.createElement("li");
+            newNode.appendChild(textNode);
+            newNode.appendChild(deleteButton);
+
+            document.getElementById('users').appendChild(newNode);
+        }
+        ClearUser (username) {
+            var parent = document.getElementById('users');
+            var nodeList = parent.childNodes;
+            for (var i=nodeList.length;i--;i>0) {
+                if(username === nodeList[i].textContent) {
+                    document.getElementById('users').removeChild(nodeList[i]);
+                }  
+            }
+        }
+        ClearUsers () {
+            var parent = document.getElementById('users');
+            var nodeList = parent.childNodes;
+            for (var i=nodeList.length;i--;i>0){
+                document.getElementById('users').removeChild(nodeList[i]);
+            }
+        }
+        GetUsername () : string {
+            return (<HTMLInputElement>document.getElementById('user')).value;
+        }
+        ShowError (error) {
+            alert(error);
+        }
+        ClearUsername () {
+            (<HTMLInputElement>document.getElementById('user')).value = "";
+        }
+        FocusUsername () {
+            (<HTMLInputElement>document.getElementById('user')).focus();
+        }
+        GetUsers () : Array<string> {
+            var entry = document.getElementById('users').getElementsByClassName('user');
+            var usernames = new Array<string>();
+            for (var i=0;i<entry.length;i++) {
+                usernames.push(entry.item(i).textContent);
+            }
+            return usernames;            
+        };
+
+    }
+    var UI = new UIEntry();
+    
+    var saveUsers = (usernames) => {
+        var newusers = c.UserConstructor.createUsersByNames(usernames);
+        users.setUsers(newusers).then((result) => {
+            console.log("Set users", result);
+        });
+    }
+
+    var AddUser = () => {
+        var username = UI.GetUsername();
+        if (username) {
+            var usernames = UI.GetUsers();
+            var isUnique = !(usernames.filter((value) => {
+                return value === username;
+            }).length);
+            if(isUnique) {
+                UI.AddUser(username);
+                usernames = UI.GetUsers();
+                saveUsers(usernames);
+                UI.ClearUsername();
+                setTimeout(() => { UI.FocusUsername()},10);
+            } else {
+                UI.ShowError("already entered user" + username);
+            }   
+        }
+    };
+
     users.getUsers().then((data) => {
-        console.log("Have these users", data);
-        if (data.length) {
+        UI.ClearUsers();
+        UI.FocusUsername();
+        if (data && data.length) {
             const strings:string[] = data.map((user) => {
                 return user.name;
             });
-            console.log("see", strings);
-            const text = strings.join("\n");
-            console.log("is", text);
-            document.getElementById('users').value = text;
+            for (var i=0;i<strings.length;i++) {
+                UI.AddUser(strings[i]);
+            }
         }
-        document.getElementById('save').addEventListener("mousedown", () => {
-            var entry :string = document.getElementById('users').value;
-            var usernames = entry.split("\n");
-            var newusers = c.UserConstructor.createUsersByNames(usernames);
-            window.users.setUsers(newusers).then((result) => {
-                console.log("Set users", result);
-            });
-        });
     });
     
 });
-/*
-Commands you can throw into the mediator....
-
-mediator.setUsers([
-   {name:"Nigel Hall",id:"1xx0"}, 
-   {name:"Fred Hall",id:"1xx1"}, 
-   {name:"Bob Hall",id:"1xx2"} 
-]);
-
-mediator.addUser({name:"Mandy", id:"981298129"})
-
-*/
-
-//import {Mediator} from 'Mediator';
-//import {User} from 'User';
-
-
-//const stage = new Comfort.Stage();
-//const mediator = new Mediator();
-/*mediator.setUsers([
-   
-]);*/
-//export mediator;
 

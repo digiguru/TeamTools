@@ -235,9 +235,10 @@ define("Tuckman/GraphTuckmanEntry", ["require", "exports", "Tuckman/GraphTuckman
     var GraphTuckmanEntry = (function (_super) {
         __extends(GraphTuckmanEntry, _super);
         function GraphTuckmanEntry() {
-            _super.call(this);
-            this.clickArea = document.getElementById('clickable');
-            this.setupOverActivity();
+            var _this = _super.call(this) || this;
+            _this.clickArea = document.getElementById('clickable');
+            _this.setupOverActivity();
+            return _this;
         }
         GraphTuckmanEntry.prototype.setupOverActivity = function () {
             var that = this;
@@ -374,8 +375,9 @@ define("Tuckman/GraphTuckmanHistory", ["require", "exports", "Tuckman/GraphTuckm
     var GraphTuckmanHistory = (function (_super) {
         __extends(GraphTuckmanHistory, _super);
         function GraphTuckmanHistory() {
-            _super.call(this);
-            this.graphData = new Array();
+            var _this = _super.call(this) || this;
+            _this.graphData = new Array();
+            return _this;
             //this.setupHistory();
         }
         GraphTuckmanHistory.prototype.show = function (graphData) {
@@ -554,7 +556,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                         resolve(true);
                     }
                     else {
-                        reject(false);
+                        resolve(false);
                     }
                 });
             });
@@ -807,14 +809,17 @@ define("Tuckman/Mediator", ["require", "exports", "Tuckman/TuckmanUserChoice", "
             //const prom = new Promsie()
             console.log("ACTION nextUser", this);
             var afterHide = function () {
-                if (this.formUserChoice.hasMoreUsers()) {
-                    console.log("Users left...", this);
-                    this.showUserChoice();
-                }
-                else {
-                    console.log("NO users left", this);
-                    this.showGraphTuckmanHistory();
-                }
+                var _this = this;
+                this.formUserChoice.hasMoreUsers().then(function (result) {
+                    if (result) {
+                        console.log("Users left...", _this);
+                        _this.showUserChoice();
+                    }
+                    else {
+                        console.log("NO users left", _this);
+                        _this.showGraphTuckmanHistory();
+                    }
+                });
             }.bind(this);
             this.graphTuckmanEntry.hide().then(afterHide);
         };
@@ -970,4 +975,5 @@ define("Tuckman/TuckmanUserChoiceHistory", ["require", "exports"], function (req
     }());
     exports.TuckmanUserChoiceHistory = TuckmanUserChoiceHistory;
 });
+
 //# sourceMappingURL=compiled.js.map

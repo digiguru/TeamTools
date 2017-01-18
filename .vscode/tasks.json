@@ -2,38 +2,21 @@
     // See https://go.microsoft.com/fwlink/?LinkId=733558
     // for the documentation about the tasks.json format
     "version": "0.1.0",
-    "command": "tsc",
-    "isShellCommand": true,
-    "showOutput": "always",
-    "problemMatcher": "$tsc",
+    "command": "npm",
+    "isShellCommand": true,   
     "suppressTaskName": true,
-    /*"args": ["-p", "./Tuckman"]*/
-     "tasks": [
-        { 
-            "taskName": "ComfortTask",
+    "tasks": [
+        {
+            "taskName": "bundle",
+            "args": ["run","bundle"],
             "isBuildCommand": true,
-            "args": ["-p", "./ComfortZone"]
+            "isWatching": false
         },
-        { 
-            "taskName": "TuckmanTask",
-            "isBuildCommand": true,
-            "args": ["-p", "./Tuckman"]
-        },
-        { 
-            "taskName": "EntryTask",
-            "isBuildCommand": true,
-            "args": ["-p", "./Entry"]
+        {
+            "taskName": "test",
+            "args": ["test"],
+            "isTestCommand": true,
+            "isWatching": false
         }
-     ]
-    /*
-     "tasks": [
-        { 
-            "taskName": "ComfortTask",
-            "isBuildCommand": true,
-            "args": ["-p", "./ComfortZone"]
-        },
-       
-    ]*/
-
-
+    ]
 }

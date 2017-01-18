@@ -7,13 +7,9 @@
         "sourceMap": true,
         "diagnostics": true,
         "noFallthroughCasesInSwitch": true,
-        /*"noImplicitAny": true,*/
         "noImplicitReturns": true,
-        /*"noImplicitThis": true,
-        "noUnusedLocals": true,
-        "noUnusedParameters": true,*/
         "traceResolution": true,
-        "declarationDir": "out",
+        "declaration": true,
         "outFile": "js/compiled.js"
         
     }

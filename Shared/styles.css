@@ -2,6 +2,18 @@
 #stage, textarea, button, input {
     font-family: 'Share Tech Mono', sans-serif;
 }
+#users li {
+    background-color: black;
+    color: white;
+    list-style: none;
+    width: 200px;
+}
+#users a {
+    color: white;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
 #users rect {
     cursor: hand;
 }

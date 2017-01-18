@@ -1,6 +1,7 @@
 import {User} from './User';
 import {Timed} from './Timed';
-import {IUserRepo, InMemoryUsers} from './Users';
+import {InMemoryUsers} from './Users';
+import {IUserRepo} from './IUsers';
 
 export class FormUserChoice {
     userZone : HTMLElement;
@@ -44,7 +45,7 @@ export class FormUserChoice {
                 if(unvotedUsers.length) {
                     resolve(true);
                 } else {
-                    reject(false);
+                    resolve(false);
                 }
             });
         });

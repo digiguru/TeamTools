@@ -62,9 +62,13 @@ define("Shared/UserConstructor", ["require", "exports", "Shared/User"], function
     var UserConstructor = (function () {
         function UserConstructor() {
         }
+        UserConstructor.notEmpty = function (input) {
+            return (input !== "");
+        };
         UserConstructor.createUsersByNames = function (names) {
             var _this = this;
-            var users = names.map(function (v, i) {
+            var filtered = names.filter(UserConstructor.notEmpty);
+            var users = filtered.map(function (v, i) {
                 return _this.createUser(v, i);
             });
             return users;
@@ -292,7 +296,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                         resolve(true);
                     }
                     else {
-                        reject(false);
+                        resolve(false);
                     }
                 });
             });
@@ -595,9 +599,10 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
     var GraphComfortEntry = (function (_super) {
         __extends(GraphComfortEntry, _super);
         function GraphComfortEntry() {
-            _super.call(this);
-            this.clickArea = document.getElementById('clickable');
-            this.setupOverActivity();
+            var _this = _super.call(this) || this;
+            _this.clickArea = document.getElementById('clickable');
+            _this.setupOverActivity();
+            return _this;
         }
         GraphComfortEntry.prototype.setupOverActivity = function () {
             var that = this;
@@ -719,8 +724,9 @@ define("ComfortZone/GraphComfortHistory", ["require", "exports", "ComfortZone/Gr
     var GraphComfortHistory = (function (_super) {
         __extends(GraphComfortHistory, _super);
         function GraphComfortHistory() {
-            _super.call(this);
-            this.graphData = new Array();
+            var _this = _super.call(this) || this;
+            _this.graphData = new Array();
+            return _this;
             //this.setupHistory();
         }
         GraphComfortHistory.prototype.show = function (graphData) {
@@ -872,14 +878,17 @@ define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserCh
             //const prom = new Promsie()
             console.log("ACTION nextUser", this);
             var afterHide = function () {
-                if (this.formUserChoice.hasMoreUsers()) {
-                    console.log("Users left...", this);
-                    this.showUserChoice();
-                }
-                else {
-                    console.log("NO users left", this);
-                    this.showGraphComfortHistory();
-                }
+                var _this = this;
+                this.formUserChoice.hasMoreUsers().then(function (result) {
+                    if (result) {
+                        console.log("Users left...", _this);
+                        _this.showUserChoice();
+                    }
+                    else {
+                        console.log("NO users left", _this);
+                        _this.showGraphComfortHistory();
+                    }
+                });
             }.bind(this);
             this.graphComfortEntry.hide().then(afterHide);
         };
@@ -954,4 +963,5 @@ define("ComfortZone/ComfortUserChoiceHistory", ["require", "exports"], function 
     }());
     exports.ComfortUserChoiceHistory = ComfortUserChoiceHistory;
 });
+
 //# sourceMappingURL=compiled.js.map
