@@ -3,7 +3,7 @@ export class Breadcrumb {
     command: string;
     params: any;
     enabled: boolean;
-    constructor(name:string, command:string, params:any) {
+    constructor(name: string, command: string, params: any) {
         this.name = name;
         this.command = command;
         this.params = params;

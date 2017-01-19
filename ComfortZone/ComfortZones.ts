@@ -1,6 +1,6 @@
 
 export class ComfortZones {
-    name : string;
+    name: string;
     radius: number;
     constructor(name: string, radius: number) {
         this.name = name;
