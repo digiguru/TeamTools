@@ -58,6 +58,11 @@
         "no-trailing-whitespace": true,
         "no-unsafe-finally": true,
         "no-var-keyword": true,
+        "no-unused-expression": true,
+        "no-switch-case-fall-through": true,
+        "no-empty": true,
+        "no-unused-new": true,
+        //"no-use-before-declare": true,
         "one-line": [
             true,
             "check-open-brace",
