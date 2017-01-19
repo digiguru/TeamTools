@@ -69,7 +69,7 @@ export class Mediator {
     }
 
     public showComfortHistory(history) {
-        let afterHide = function() {
+        const afterHide = function() {
            if (!this.graphComfortHistory) {
                 this.graphComfortEntry = null;
                 this.graphComfortHistory = new GraphComfortHistory();
@@ -124,7 +124,7 @@ export class Mediator {
 
     private next() {
         console.log("ACTION nextUser", this);
-        let afterHide = function() {
+        const afterHide = function() {
             this.formUserChoice.hasMoreUsers().then((result) => {
                 if (result) {
                     console.log("Users left...", this);

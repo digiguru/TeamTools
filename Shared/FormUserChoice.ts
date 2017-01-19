@@ -95,7 +95,7 @@ export class FormUserChoice {
             console.log("CLICK - User - up  UserChocieForm");
             const id = this.getAttribute("data-id");
 
-            let event = new CustomEvent("selectUser", { "detail": {"id": id} });
+            const event = new CustomEvent("selectUser", { "detail": {"id": id} });
             document.dispatchEvent(event);
             console.log("This was clicked", that);
         };

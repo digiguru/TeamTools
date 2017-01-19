@@ -36,7 +36,7 @@ require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], 
         mediator.selectUser(e.detail.id);
     });
     document.addEventListener("saveGraph", (e: CustomEvent) => {
-        let o = e.detail;
+        const o = e.detail;
         mediator.saveGraph(o.area, o.distance, o.currentUser);
     });
     console.log(mediator);

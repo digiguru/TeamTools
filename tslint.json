@@ -63,12 +63,13 @@
             "check-open-brace",
             "check-whitespace"
         ],
+        "prefer-const": true,
         //"only-arrow-functions": true,
         "quotemark": [
             true,
             "double"
         ],
-        "radix": "true",
+        "radix": true,
         "semicolon": [
             true,
             "always"

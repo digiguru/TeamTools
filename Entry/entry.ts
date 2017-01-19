@@ -18,7 +18,7 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], (u, c) => {
                 UI.ClearUsers();
             });
             document.getElementById("user").addEventListener("keyup", (e: KeyboardEvent) => {
-                let code = e.keyCode;
+                const code = e.keyCode;
                 if (code === 13) {
                     AddUser();
                 }
@@ -30,31 +30,31 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], (u, c) => {
 
         AddUser(username) {
 
-            let textNode = document.createElement("span");
+            const textNode = document.createElement("span");
             textNode.setAttribute("class", "user");
             textNode.textContent = username;
 
-            let deleteButton = document.createElement("a");
+            const deleteButton = document.createElement("a");
             deleteButton.setAttribute("href", "void(0);");
             deleteButton.textContent = "X";
             deleteButton.addEventListener("mousedown", (e: MouseEvent) => {
-                let el = (<Element>e.target).parentNode;
+                const el = (<Element>e.target).parentNode;
                 this.ClearUser(el.textContent);
 
-                let usernames = UI.GetUsers();
+                const usernames = UI.GetUsers();
                 saveUsers(usernames);
 
             });
 
-            let newNode = document.createElement("li");
+            const newNode = document.createElement("li");
             newNode.appendChild(textNode);
             newNode.appendChild(deleteButton);
 
             document.getElementById("users").appendChild(newNode);
         }
         ClearUser (username) {
-            let parent = document.getElementById("users");
-            let nodeList = parent.childNodes;
+            const parent = document.getElementById("users");
+            const nodeList = parent.childNodes;
             for (let i = nodeList.length; i--; i > 0) {
                 if (username === nodeList[i].textContent) {
                     document.getElementById("users").removeChild(nodeList[i]);
@@ -62,8 +62,8 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], (u, c) => {
             }
         }
         ClearUsers () {
-            let parent = document.getElementById("users");
-            let nodeList = parent.childNodes;
+            const parent = document.getElementById("users");
+            const nodeList = parent.childNodes;
             for (let i = nodeList.length; i--; i > 0) {
                 document.getElementById("users").removeChild(nodeList[i]);
             }
@@ -81,8 +81,8 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], (u, c) => {
             (<HTMLInputElement>document.getElementById("user")).focus();
         }
         GetUsers (): Array<string> {
-            let entry = document.getElementById("users").getElementsByClassName("user");
-            let usernames = new Array<string>();
+            const entry = document.getElementById("users").getElementsByClassName("user");
+            const usernames = new Array<string>();
             for (let i = 0; i < entry.length; i ++) {
                 usernames.push(entry.item(i).textContent);
             }
@@ -90,20 +90,20 @@ require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], (u, c) => {
         };
 
     }
-    let UI = new UIEntry();
+    const UI = new UIEntry();
 
-    let saveUsers = (usernames) => {
-        let newusers = c.UserConstructor.createUsersByNames(usernames);
+    const saveUsers = (usernames) => {
+        const newusers = c.UserConstructor.createUsersByNames(usernames);
         users.setUsers(newusers).then((result) => {
             console.log("Set users", result);
         });
     };
 
-    let AddUser = () => {
-        let username = UI.GetUsername();
+    const AddUser = () => {
+        const username = UI.GetUsername();
         if (username) {
             let usernames = UI.GetUsers();
-            let isUnique = !(usernames.filter((value) => {
+            const isUnique = !(usernames.filter((value) => {
                 return value === username;
             }).length);
             if (isUnique) {

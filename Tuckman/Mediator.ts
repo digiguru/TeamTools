@@ -69,7 +69,7 @@ export class Mediator {
     }
 
     public showTuckmanHistory(history) {
-        let afterHide = function() {
+        const afterHide = function() {
            if (!this.graphTuckmanHistory) {
                 this.graphTuckmanEntry = null;
                 this.graphTuckmanHistory = new GraphTuckmanHistory();
@@ -126,7 +126,7 @@ export class Mediator {
 
     private next() {
         console.log("ACTION nextUser", this);
-        let afterHide = function() {
+        const afterHide = function() {
             this.formUserChoice.hasMoreUsers().then((result) => {
                 if (result) {
                     console.log("Users left...", this);
