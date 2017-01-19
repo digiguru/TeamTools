@@ -112,9 +112,7 @@ export class Mediator {
     }
 
     private addUserChoiceHistory(area: string, distance: number, user: User) {
-        const thisUserChoice = this.userChoiceHistory.filter(function(x) {
-            return x.user.id === user.id;
-        });
+        const thisUserChoice = this.userChoiceHistory.filter((x) => x.user.id === user.id);
         if (thisUserChoice.length) {
             thisUserChoice[0].area = area;
             thisUserChoice[0].distance = distance;

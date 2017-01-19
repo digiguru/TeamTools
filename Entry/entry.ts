@@ -9,7 +9,7 @@ requirejs.config( {
 
 let users;
 
-require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function(u, c) {
+require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], (u, c) => {
     users = new u.InMemoryBrowserUsers(window);
 
     class UIEntry {

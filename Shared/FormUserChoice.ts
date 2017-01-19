@@ -39,9 +39,7 @@ export class FormUserChoice {
     public hasMoreUsers(): Thenable<boolean> { // Move to user repo?
         return new Promise((resolve, reject) => {
             this.userRepo.getUsers().then(users => {
-                const unvotedUsers = users.filter(function(x) {
-                    return !x.voted;
-                });
+                const unvotedUsers = users.filter((x) => !x.voted);
                 if (unvotedUsers.length) {
                     resolve(true);
                 } else {
@@ -55,19 +53,17 @@ export class FormUserChoice {
         console.log("SHOW UserChocieForm");
         d3.select(this.userZone)
             .transition()
-            .duration(function() {
-                    return 800;
-            })
+            .duration(() => 800)
             .style("fill-opacity", 1)
             .attr("transform", "matrix(1,0,0,1,0,0)");
 
-        this.d3Users.selectAll("g").attr("class", function(e) {
-                if (e.voted) {
-                    return "user-group-complete";
-                } else {
-                    return "user-group";
-                }
-            });
+        this.d3Users.selectAll("g").attr("class", (e) => {
+            if (e.voted) {
+                return "user-group-complete";
+            } else {
+                return "user-group";
+            }
+        });
 
         return Timed.for(800).then(this.afterShow.bind(this));
     }
@@ -75,14 +71,12 @@ export class FormUserChoice {
         console.log("HIDE userEntry");
         d3.select(this.userZone)
             .transition()
-            .duration(function() {
-                    return 800;
-            })
+            .duration(() => 800)
             .style("fill-opacity", 0)
             .attr("transform", "matrix(2,0,0,2,-400,-90)");
         d3.select("g#users")
             .selectAll("rect")
-            .on("mouseup", function(e) {
+            .on("mouseup", (e) => {
                 console.log("NOCLICK User - This was clicked, but ignored", this);
             });
         return Timed.for(800);
@@ -115,9 +109,7 @@ export class FormUserChoice {
                 .selectAll("text")
                 .transition()
                 .duration(250)
-                .style("fill", function() {
-                    return "#00D7FE";
-                });
+                .style("fill", () => "#00D7FE");
         };
     }
     private leaveUser() {
@@ -128,12 +120,8 @@ export class FormUserChoice {
             d3.select(this.parentNode)
                 .selectAll("text")
                 .transition()
-                .duration(function() {
-                    return 250;
-                })
-                .style("fill", function() {
-                    return "grey";
-                });
+                .duration(() => 250)
+                .style("fill", () => "grey");
         };
     }
     private eachUser () {
@@ -142,9 +130,7 @@ export class FormUserChoice {
             const d3Item = d3.select(this);
 
             d3Item.append("rect")
-                .attr("y", function(e) {
-                    return 60 + (i * 90);
-                })
+                .attr("y", (e) => 60 + (i * 90))
                 .attr("x", 0)
                 .attr("width", 800)
                 .attr("height", 90)
@@ -155,16 +141,12 @@ export class FormUserChoice {
 
             d3Item.append("text")
                 .attr("class", "username")
-                .attr("y", function(e) {
-                    return 30 + ((i + 1) * 90);
-                })
+                .attr("y", (e) => 30 + ((i + 1) * 90))
                 .attr("x", 60)
                 .attr("data-name", e.name)
                 .style("font-size", 60)
                 .style("font-family", "Share Tech Mono")
-                .text(function(j) {
-                    return e.name;
-                });
+                .text((j) => e.name);
         };
     }
 
@@ -188,9 +170,7 @@ export class FormUserChoice {
     private setupUsers (users: User[]) {
         const items = this.rebind(users);
         items.enter().append("g")
-            .attr("id", (e) => {
-                return e.id;
-            })
+            .attr("id", (e) => e.id)
             .each(this.eachUser());
     }
 

@@ -36,9 +36,7 @@ export class GenericCache implements ICache<IIndexableObject> {
     }
 
     getById(id: string): Thenable<IIndexableObject> {
-        const store = this.store.filter(function(x: IIndexableObject) {
-            return x.id === id;
-        });
+        const store = this.store.filter((x: IIndexableObject) => x.id === id);
         if (store.length) {
             return Promise.resolve(store[0]);
         }

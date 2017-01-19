@@ -13,12 +13,12 @@ requirejs.config( {
 });
 
 
-require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], function(m, u, b) {
+require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], (m, u, b) => {
     console.log("Starting");
     mediator = new m.Mediator(23, 23);
     console.log(mediator);
     userLoader = new b.InMemoryBrowserUsers(window);
-    userLoader.getUsers().then(function(users) {
+    userLoader.getUsers().then((users) => {
         if (users) {
             mediator.setUsers(users);
         } else {
@@ -32,10 +32,10 @@ require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], 
 
     });
 
-    document.addEventListener("selectUser", function(e: CustomEvent) {
+    document.addEventListener("selectUser", (e: CustomEvent) => {
         mediator.selectUser(e.detail.id);
     });
-    document.addEventListener("saveGraph", function(e: CustomEvent) {
+    document.addEventListener("saveGraph", (e: CustomEvent) => {
         let o = e.detail;
         mediator.saveGraph(o.area, o.distance, o.currentUser);
     });

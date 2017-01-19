@@ -26,30 +26,20 @@ export class GraphTuckmanHistory extends GraphTuckmanBase {
                 .enter()
                 .append("circle")
                 .attr("cx", 0)
-                .attr("cy", function(data: TuckmanUserChoice, index) {
-                    return (heightDivision * index) + 100;
-                })
+                .attr("cy", (data: TuckmanUserChoice, index) => (heightDivision * index) + 100)
                 .attr("r", 10)
                 .attr("class", "point")
-                .attr("id", function(d: TuckmanUserChoice) {
-                    return d.user.name;
-                });
+                .attr("id", (d: TuckmanUserChoice) => d.user.name);
         d3.select("g#history")
             .selectAll("circle")
             .transition()
-            .duration(function() {
-                return 800;
-            })
-            .attr("cx", function(data: TuckmanUserChoice, index) {
-                return data.distance;
-            })
-            .attr("cy", function(data: TuckmanUserChoice, index) {
-                return (heightDivision * index) + 100;
-            });
+            .duration(() => 800)
+            .attr("cx", (data: TuckmanUserChoice, index) => data.distance)
+            .attr("cy", (data: TuckmanUserChoice, index) => (heightDivision * index) + 100);
 
 
-        Thenable.then(function() {
-        console.log("SHOWED base graph - now what?");
+        Thenable.then(() => {
+            console.log("SHOWED base graph - now what?");
         });
         return Thenable;
     }

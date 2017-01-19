@@ -31,7 +31,7 @@ export class GraphTuckmanBase {
                 .attr("x", 0)
                 .attr("y", 400)
                 .attr("class", "area")
-                .attr("id", function(d: TuckmanZones) {
+                .attr("id", (d: TuckmanZones) => {
                     return d.name;
             });
 
@@ -70,14 +70,10 @@ export class GraphTuckmanBase {
                 .attr("width", 0)
             .transition()
                 .duration(1000)
-                .delay(function(d, i) { return i * 100; })
+                .delay((d, i) => i * 100)
                 .ease("elastic")
-                .attr("x", function(d: TuckmanZones) {
-                    return d.left;
-                })
-                .attr("width", function(d: TuckmanZones) {
-                    return d.width;
-                });
+                .attr("x", (d: TuckmanZones) => d.left)
+                .attr("width", (d: TuckmanZones) => d.width);
 
         return Timed.for(1000);
 

@@ -52,6 +52,7 @@
             true,
             "spaces"
         ],
+        "max-classes-per-file": [true, 1],
         "no-eval": true,
         "no-internal-module": true,
         "no-trailing-whitespace": true,
@@ -62,10 +63,12 @@
             "check-open-brace",
             "check-whitespace"
         ],
+        //"only-arrow-functions": true,
         "quotemark": [
             true,
             "double"
         ],
+        "radix": "true",
         "semicolon": [
             true,
             "always"
@@ -84,6 +87,7 @@
                 "variable-declaration": "nospace"
             }
         ],
+        
         "variable-name": [
             true,
             "ban-keywords"

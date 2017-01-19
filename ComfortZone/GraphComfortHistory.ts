@@ -24,30 +24,26 @@ export class GraphComfortHistory extends GraphComfortBase {
                 .attr("cy", 400)
                 .attr("r", 10)
                 .attr("class", "point")
-                .attr("id", function(d: ComfortUserChoice) {
-                    return d.user.name;
-                });
+                .attr("id", (d: ComfortUserChoice) => d.user.name);
         const totalPoints = graphData.length;
         const radian = 6.2831853072; // 360 * Math.PI / 180;
         const polarDivision = radian / totalPoints;
         d3.select("g#history")
             .selectAll("circle")
             .transition()
-            .duration(function() {
-                return 800;
-            })
-            .attr("cx", function(data: ComfortUserChoice, index) {
+            .duration(() => 800)
+            .attr("cx", (data: ComfortUserChoice, index) => {
                 const angle = polarDivision * index;
                 return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).x;
             })
-            .attr("cy", function(data: ComfortUserChoice, index) {
+            .attr("cy", (data: ComfortUserChoice, index) => {
                 const angle = polarDivision * index;
                 return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).y;
             });
 
 
-        Thenable.then(function() {
-        console.log("SHOWED base graph - now what?");
+        Thenable.then(() => {
+            console.log("SHOWED base graph - now what?");
         });
         return Thenable;
     }

@@ -71,9 +71,7 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
                     return 100;
                 })
                 .ease("cubic")
-                .duration(function() {
-                    return 250;
-                })
+                .duration(() => 250)
                 .style("fill", function() {
                     if (this.getAttribute("id") === area) {
                         return "rgb(0, 180, 219)";
@@ -104,13 +102,13 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
 
     public removeInteractions () {
         console.log("REMOVE activiteis from GraphTuckmanEntry");
-        d3.select("#stage").on("mouseup", function() {
+        d3.select("#stage").on("mouseup", () => {
             console.log("UNCLICK - Graphup - No longer interactive stage");
         });
-        d3.select("#stage").on("mousedown", function() {
+        d3.select("#stage").on("mousedown", () => {
             console.log("UNCLICK - Graphdown - No longer interactive stage");
         });
-        d3.select("#stage").on("mousemove", function() {
+        d3.select("#stage").on("mousemove", () => {
             console.log("UNMove - mousemove - No longer interactive stage");
         });
     }

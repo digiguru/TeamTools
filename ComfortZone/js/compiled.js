@@ -25,9 +25,7 @@ define("Shared/Cache", ["require", "exports"], function (require, exports) {
             return Promise.resolve(this.store);
         };
         GenericCache.prototype.getById = function (id) {
-            var store = this.store.filter(function (x) {
-                return x.id === id;
-            });
+            var store = this.store.filter(function (x) { return x.id === id; });
             if (store.length) {
                 return Promise.resolve(store[0]);
             }
@@ -288,9 +286,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             var _this = this;
             return new Promise(function (resolve, reject) {
                 _this.userRepo.getUsers().then(function (users) {
-                    var unvotedUsers = users.filter(function (x) {
-                        return !x.voted;
-                    });
+                    var unvotedUsers = users.filter(function (x) { return !x.voted; });
                     if (unvotedUsers.length) {
                         resolve(true);
                     }
@@ -304,9 +300,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             console.log("SHOW UserChocieForm");
             d3.select(this.userZone)
                 .transition()
-                .duration(function () {
-                return 800;
-            })
+                .duration(function () { return 800; })
                 .style("fill-opacity", 1)
                 .attr("transform", "matrix(1,0,0,1,0,0)");
             this.d3Users.selectAll("g").attr("class", function (e) {
@@ -320,18 +314,17 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             return Timed_1.Timed.for(800).then(this.afterShow.bind(this));
         };
         FormUserChoice.prototype.hide = function () {
+            var _this = this;
             console.log("HIDE userEntry");
             d3.select(this.userZone)
                 .transition()
-                .duration(function () {
-                return 800;
-            })
+                .duration(function () { return 800; })
                 .style("fill-opacity", 0)
                 .attr("transform", "matrix(2,0,0,2,-400,-90)");
             d3.select("g#users")
                 .selectAll("rect")
                 .on("mouseup", function (e) {
-                console.log("NOCLICK User - This was clicked, but ignored", this);
+                console.log("NOCLICK User - This was clicked, but ignored", _this);
             });
             return Timed_1.Timed.for(800);
         };
@@ -361,9 +354,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                     .selectAll("text")
                     .transition()
                     .duration(250)
-                    .style("fill", function () {
-                    return "#00D7FE";
-                });
+                    .style("fill", function () { return "#00D7FE"; });
             };
         };
         FormUserChoice.prototype.leaveUser = function () {
@@ -374,12 +365,8 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                 d3.select(this.parentNode)
                     .selectAll("text")
                     .transition()
-                    .duration(function () {
-                    return 250;
-                })
-                    .style("fill", function () {
-                    return "grey";
-                });
+                    .duration(function () { return 250; })
+                    .style("fill", function () { return "grey"; });
             };
         };
         FormUserChoice.prototype.eachUser = function () {
@@ -387,9 +374,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
             return function (e, i) {
                 var d3Item = d3.select(this);
                 d3Item.append("rect")
-                    .attr("y", function (e) {
-                    return 60 + (i * 90);
-                })
+                    .attr("y", function (e) { return 60 + (i * 90); })
                     .attr("x", 0)
                     .attr("width", 800)
                     .attr("height", 90)
@@ -399,16 +384,12 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
                     .on("mouseleave", that.leaveUser());
                 d3Item.append("text")
                     .attr("class", "username")
-                    .attr("y", function (e) {
-                    return 30 + ((i + 1) * 90);
-                })
+                    .attr("y", function (e) { return 30 + ((i + 1) * 90); })
                     .attr("x", 60)
                     .attr("data-name", e.name)
                     .style("font-size", 60)
                     .style("font-family", "Share Tech Mono")
-                    .text(function (j) {
-                    return e.name;
-                });
+                    .text(function (j) { return e.name; });
             };
         };
         FormUserChoice.prototype.addUser = function (user) {
@@ -431,9 +412,7 @@ define("Shared/FormUserChoice", ["require", "exports", "Shared/Timed", "Shared/U
         FormUserChoice.prototype.setupUsers = function (users) {
             var items = this.rebind(users);
             items.enter().append("g")
-                .attr("id", function (e) {
-                return e.id;
-            })
+                .attr("id", function (e) { return e.id; })
                 .each(this.eachUser());
         };
         return FormUserChoice;
@@ -649,9 +628,7 @@ define("ComfortZone/GraphComfortEntry", ["require", "exports", "ComfortZone/Grap
                 return 100;
             })
                 .ease("cubic")
-                .duration(function () {
-                return 250;
-            })
+                .duration(function () { return 250; })
                 .style("fill", function () {
                 if (this.getAttribute("id") === area) {
                     return "rgb(0, 180, 219)";
@@ -730,18 +707,14 @@ define("ComfortZone/GraphComfortHistory", ["require", "exports", "ComfortZone/Gr
                 .attr("cy", 400)
                 .attr("r", 10)
                 .attr("class", "point")
-                .attr("id", function (d) {
-                return d.user.name;
-            });
+                .attr("id", function (d) { return d.user.name; });
             var totalPoints = graphData.length;
             var radian = 6.2831853072; // 360 * Math.PI / 180;
             var polarDivision = radian / totalPoints;
             d3.select("g#history")
                 .selectAll("circle")
                 .transition()
-                .duration(function () {
-                return 800;
-            })
+                .duration(function () { return 800; })
                 .attr("cx", function (data, index) {
                 var angle = polarDivision * index;
                 return Point_3.Point.toCartesian(new Polar_2.Polar(data.distance, angle), new Point_3.Point(400, 400)).x;
@@ -851,9 +824,7 @@ define("ComfortZone/Mediator", ["require", "exports", "ComfortZone/ComfortUserCh
             this.next();
         };
         Mediator.prototype.addUserChoiceHistory = function (area, distance, user) {
-            var thisUserChoice = this.userChoiceHistory.filter(function (x) {
-                return x.user.id === user.id;
-            });
+            var thisUserChoice = this.userChoiceHistory.filter(function (x) { return x.user.id === user.id; });
             if (thisUserChoice.length) {
                 thisUserChoice[0].area = area;
                 thisUserChoice[0].distance = distance;

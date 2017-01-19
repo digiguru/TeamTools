@@ -20,9 +20,7 @@ define("Shared/Cache", ["require", "exports"], function (require, exports) {
             return Promise.resolve(this.store);
         };
         GenericCache.prototype.getById = function (id) {
-            var store = this.store.filter(function (x) {
-                return x.id === id;
-            });
+            var store = this.store.filter(function (x) { return x.id === id; });
             if (store.length) {
                 return Promise.resolve(store[0]);
             }
