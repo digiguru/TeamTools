@@ -2,6 +2,8 @@
   "name": "teamtools",
   "devDependencies": {
     "@types/jasmine": "^2.5.40",
+    "@types/react": "^15.0.1",
+    "@types/react-dom": "^0.14.20",
     "gulp": "^3.9.1",
     "gulp-sourcemaps": "^2.1.0",
     "gulp-typescript": "^3.1.4",
