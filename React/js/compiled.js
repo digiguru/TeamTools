@@ -42,9 +42,15 @@ var UserList = (function (_super) {
     };
     return UserList;
 }(React.Component));
+var UserObject = (function () {
+    function UserObject(name) {
+        this.name = name;
+    }
+    return UserObject;
+}());
 var USERS = [
-    { name: "bob" },
-    { name: "Donald" }
+    new UserObject("Bob"),
+    new UserObject("Donald")
 ];
 ReactDOM.render(React.createElement(UserList, { users: USERS }), document.getElementById("container"));
 

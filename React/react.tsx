@@ -13,17 +13,23 @@ class User extends React.Component<any, any> {
 }
 class UserList extends React.Component<any, any> {
     render() {
-        let users = [];
+        const users = [];
 
-        this.props.users.forEach(function(user) {
+        this.props.users.forEach(function(user: UserObject) {
             users.push(<User user={user} username={user.name} key={user.name} />);
         });
         return <ul id="users">{users}</ul>;
     }
 }
+class UserObject {
+    name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+}
 let USERS = [
-    {name: "bob"},
-    {name: "Donald"}
+    new UserObject("Bob"),
+    new UserObject("Donald")
 ];
 ReactDOM.render(
   <UserList users={USERS} />,
