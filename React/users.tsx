@@ -1,22 +1,38 @@
 /*
 <ul id="users"><li><span class="user">Adam Hall</span><a href="void(0);">X</a></li><li><span class="user">Billie Davey</span><a href="void(0);">X</a></li><li><span class="user">Laura Rowe</span><a href="void(0);">X</a></li><li><span class="user">Simon Dawson</span><a href="void(0);">X</a></li><li><span class="user">Fred</span><a href="void(0);">X</a></li></ul>
 */
-class Delete extends React.Component<any, any> {
+
+import * as React from "react";
+import * as ReactDOM from "react-dom";
+
+class Delete extends React.Component<undefined, undefined> {
     render() {
         return <a href="void(0);">X</a>;
     }
 }
-class User extends React.Component<any, any> {
+class User extends React.Component<IUsername, undefined> {
   render() {
     return <li><span className="user">{this.props.username}</span><Delete /></li>;
   }
 }
-class UserList extends React.Component<any, any> {
+class NewTeam extends React.Component<undefined, undefined> {
+  render() {
+    return <input type="button" value="new team" id="new" />;
+  }
+}
+class EntryPage extends React.Component<any, undefined> {
+  render() {
+    return <UserList users={USERS} />;
+  }
+}
+
+  
+class UserList extends React.Component<IUserList, undefined> {
     render() {
         const users = [];
 
         this.props.users.forEach(function(user: UserObject) {
-            users.push(<User user={user} username={user.name} key={user.name} />);
+            users.push(<User username={user.name} key={user.name} />);
         });
         return <ul id="users">{users}</ul>;
     }
@@ -27,7 +43,9 @@ class UserObject {
         this.name = name;
     }
 }
-let USERS = [
+interface IUsername { username: string; }
+interface IUserList { users: Array<UserObject> }
+const USERS = [
     new UserObject("Bob"),
     new UserObject("Donald")
 ];
