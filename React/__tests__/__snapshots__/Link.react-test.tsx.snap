@@ -6,6 +6,13 @@ exports[`test Link changes the class when hovered 1`] = `
   onMouseLeave={[Function]}>
   Facebook
 </a>
+------------HTML PREVIEW---------------
+<a
+  class="normal"
+  href="http://www.facebook.com"
+>
+  Facebook
+</a>
 `;
 
 exports[`test Link changes the class when hovered 2`] = `
@@ -16,6 +23,13 @@ exports[`test Link changes the class when hovered 2`] = `
   onMouseLeave={[Function]}>
   Facebook
 </a>
+------------HTML PREVIEW---------------
+<a
+  class="hovered"
+  href="http://www.facebook.com"
+>
+  Facebook
+</a>
 `;
 
 exports[`test Link changes the class when hovered 3`] = `
@@ -24,6 +38,13 @@ exports[`test Link changes the class when hovered 3`] = `
   href="http://www.facebook.com"
   onMouseEnter={[Function]}
   onMouseLeave={[Function]}>
+  Facebook
+</a>
+------------HTML PREVIEW---------------
+<a
+  class="normal"
+  href="http://www.facebook.com"
+>
   Facebook
 </a>
 `;
