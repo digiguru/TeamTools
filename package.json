@@ -20,9 +20,10 @@
   "scripts": {
     "test": "jest",
     "jest": "jest",
+    "jest-update": "jest -- -u",
     "bundle": "gulp Build",
     "build": "",
-    "jest-html": "jest-html"
+    "jest-html": "jest-html -p 8081 -c **/*.css"
   },
   "repository": {
     "type": "git",

@@ -10,7 +10,8 @@
         "noImplicitReturns": true,
         "traceResolution": true,
         "declaration": true,
-        "outFile": "js/compiled.js"
+        "outFile": "js/compiled.js",
+        "jsx": "react"
 
     }
 }
