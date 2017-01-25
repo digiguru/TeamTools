@@ -34,10 +34,12 @@ define("Link.react", ["require", "exports", "react"], function (require, exports
     Object.defineProperty(exports, "__esModule", { value: true });
     exports.default = Link;
 });
-define("__tests__/Link.react-test", ["require", "exports", "react", "Link.react", "react-test-renderer"], function (require, exports, React, Link_react_1, react_test_renderer_1) {
+define("__tests__/Link.react-test", ["require", "exports", "react", "Link.react"], function (require, exports, React, Link_react_1) {
     "use strict";
-    test('Link changes the class when hovered', function () {
-        var component = react_test_renderer_1.default.create(React.createElement(Link_react_1.default, { page: "http://www.facebook.com" }, "Facebook"));
+    var renderizer = require('react-test-renderer');
+    it('Link changes the class when hovered', function () {
+        debugger;
+        var component = renderizer.create(React.createElement(Link_react_1.default, { page: "http://www.facebook.com" }, "Facebook"));
         var tree = component.toJSON();
         expect(tree).toMatchSnapshot();
         // manually trigger the callback

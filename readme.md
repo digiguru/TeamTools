@@ -29,7 +29,7 @@ Or hit debug button in VSCode
 
 If you want to update the snapshots produced by the tests use
 
-{{npm run jest -- -u}}
+{{npm run jest-update}}
 
 And to load the snapshot previewer use...
 

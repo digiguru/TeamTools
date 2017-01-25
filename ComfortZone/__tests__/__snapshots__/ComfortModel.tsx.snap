@@ -1,68 +1,165 @@
-exports[`test Should show the comfort model 1`] = `
+exports[`test Should show the chaos area 1`] = `
 <svg
   height="800"
   id="stage"
   width="800">
-  <g
-    fill-opacity="0.0"
-    id="assets">
-    <path
-      d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z"
-      fill="#007f00"
-      id="asset-tick"
-      stroke="#007f00"
-      stroke-miterlimit="4"
-      stroke-width="0" />
-  </g>
-  <rect
-    className="area js-area-standard"
-    height="800"
-    id="chaos"
-    style="{styleChaos}"
-    width="800" />
-  <g
-    id="zones">
-    <circle
+  <g>
+    <rect
       className="area js-area-standard"
-      cx="400"
-      cy="400"
-      id="stretch"
-      r="300.12599083141845"
-      style="{styleStretch}" />
+      height="800"
+      id="chaos"
+      style="{this.state.style}"
+      width="800" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="400"
+      y="50">
+      chaos
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <rect
+      class="area js-area-standard"
+      height="800"
+      id="chaos"
+      style="{this.state.style}"
+      width="800"
+    >
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="400"
+      y="50"
+    >
+      chaos
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the comfort area 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
     <circle
       className="area js-area-standard"
       cx="400"
       cy="400"
       id="comfort"
       r="97.516770592797"
-      style="{styleComfort}" />
+      style="{this.state.style}" />
+    <text
+      className="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      x="400"
+      y="400">
+      comfort
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="area js-area-standard"
+      cx="400"
+      cy="400"
+      id="comfort"
+      r="97.516770592797"
+      style="{this.state.style}"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      x="400"
+      y="400"
+    >
+      comfort
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the comfort model 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <rect
+      className="area js-area-standard"
+      height="800"
+      id="chaos"
+      style="{this.state.style}"
+      width="800" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="400"
+      y="50">
+      chaos
+    </text>
+  </g>
+  <g
+    id="zones">
+    <g>
+      <circle
+        className="area js-area-standard"
+        cx="400"
+        cy="400"
+        id="stretch"
+        r="300.12599083141845"
+        style="{this.state.style}" />
+      <text
+        className="area-label"
+        id="label-stretch"
+        text-anchor="middle"
+        x="400"
+        y="200">
+        stretch
+      </text>
+    </g>
+    <g>
+      <circle
+        className="area js-area-standard"
+        cx="400"
+        cy="400"
+        id="comfort"
+        r="97.516770592797"
+        style="{this.state.style}" />
+      <text
+        className="area-label"
+        id="label-comfort"
+        text-anchor="middle"
+        x="400"
+        y="400">
+        comfort
+      </text>
+    </g>
   </g>
   <g
     id="history" />
-  <text
-    className="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50">
-    chaos
-  </text>
-  <text
-    className="area-label"
-    id="label-stretch"
-    text-anchor="middle"
-    x="400"
-    y="200">
-    stretch
-  </text>
-  <text
-    className="area-label"
-    id="label-comfort"
-    text-anchor="middle"
-    x="400"
-    y="400">
-    comfort
-  </text>
   <rect
     fill-opacity="0.0"
     height="800"
@@ -75,76 +172,68 @@ exports[`test Should show the comfort model 1`] = `
   id="stage"
   width="800"
 >
-  <g
-    fill-opacity="0.0"
-    id="assets"
-  >
-    <path
-      d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z"
-      fill="#007f00"
-      id="asset-tick"
-      stroke="#007f00"
-      stroke-miterlimit="4"
-      stroke-width="0"
+  <g>
+    <rect
+      class="area js-area-standard"
+      height="800"
+      id="chaos"
+      style="{this.state.style}"
+      width="800"
     >
-    </path>
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="400"
+      y="50"
+    >
+      chaos
+    </text>
   </g>
-  <rect
-    class="area js-area-standard"
-    height="800"
-    id="chaos"
-    style="{styleChaos}"
-    width="800"
-  >
-  </rect>
   <g id="zones">
-    <circle
-      class="area js-area-standard"
-      cx="400"
-      cy="400"
-      id="stretch"
-      r="300.12599083141845"
-      style="{styleStretch}"
-    >
-    </circle>
-    <circle
-      class="area js-area-standard"
-      cx="400"
-      cy="400"
-      id="comfort"
-      r="97.516770592797"
-      style="{styleComfort}"
-    >
-    </circle>
+    <g>
+      <circle
+        class="area js-area-standard"
+        cx="400"
+        cy="400"
+        id="stretch"
+        r="300.12599083141845"
+        style="{this.state.style}"
+      >
+      </circle>
+      <text
+        class="area-label"
+        id="label-stretch"
+        text-anchor="middle"
+        x="400"
+        y="200"
+      >
+        stretch
+      </text>
+    </g>
+    <g>
+      <circle
+        class="area js-area-standard"
+        cx="400"
+        cy="400"
+        id="comfort"
+        r="97.516770592797"
+        style="{this.state.style}"
+      >
+      </circle>
+      <text
+        class="area-label"
+        id="label-comfort"
+        text-anchor="middle"
+        x="400"
+        y="400"
+      >
+        comfort
+      </text>
+    </g>
   </g>
   <g id="history"></g>
-  <text
-    class="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50"
-  >
-    chaos
-  </text>
-  <text
-    class="area-label"
-    id="label-stretch"
-    text-anchor="middle"
-    x="400"
-    y="200"
-  >
-    stretch
-  </text>
-  <text
-    class="area-label"
-    id="label-comfort"
-    text-anchor="middle"
-    x="400"
-    y="400"
-  >
-    comfort
-  </text>
   <rect
     fill-opacity="0.0"
     height="800"
@@ -152,5 +241,57 @@ exports[`test Should show the comfort model 1`] = `
     width="800"
   >
   </rect>
+</svg>
+`;
+
+exports[`test Should show the stretch area 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="area js-area-standard"
+      cx="400"
+      cy="400"
+      id="stretch"
+      r="300.12599083141845"
+      style="{this.state.style}" />
+    <text
+      className="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      x="400"
+      y="200">
+      stretch
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="area js-area-standard"
+      cx="400"
+      cy="400"
+      id="stretch"
+      r="300.12599083141845"
+      style="{this.state.style}"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      x="400"
+      y="200"
+    >
+      stretch
+    </text>
+  </g>
 </svg>
 `;
