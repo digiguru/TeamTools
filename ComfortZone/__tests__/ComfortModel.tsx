@@ -4,16 +4,17 @@ const renderizer = require('react-test-renderer');
 
 it('Should show the chaos area', () => {
     const component = renderizer.create(
-        <Stage><ChaosArea></ChaosArea></Stage>
+        <ChaosArea></ChaosArea>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
 
-    /*tree.props.onMouseEnter();
+    debugger;
+    tree.children[0].props.onMouseEnter();
     expect(tree).toMatchSnapshot();
 
-    tree.props.onMouseLeave();
-    expect(tree).toMatchSnapshot();*/
+    tree.children[0].props.onMouseLeave();
+    expect(tree).toMatchSnapshot();
 
 
 });

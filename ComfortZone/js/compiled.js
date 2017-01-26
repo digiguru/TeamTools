@@ -50,7 +50,7 @@ define("ComfortZone/ComfortReact", ["require", "exports", "react"], function (re
         };
         StretchArea.prototype.render = function () {
             return React.createElement("g", null,
-                React.createElement("circle", { className: "area js-area-standard", id: "stretch", r: "300.12599083141845", cx: "400", cy: "400", style: "{this.state.style}" }),
+                React.createElement("circle", { onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave, className: "area js-area-standard", id: "stretch", r: "300.12599083141845", cx: "400", cy: "400", style: "{this.state.style}" }),
                 React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", x: "400", y: "200" }, "stretch"));
         };
         return StretchArea;
@@ -87,9 +87,6 @@ define("ComfortZone/ComfortReact", ["require", "exports", "react"], function (re
         Stage.prototype.render = function () {
             return React.createElement("svg", { id: "stage", width: "800", height: "800" }, this.props.children);
         };
-        Stage.full = function (props) {
-            return React.createElement("svg", { id: "stage", width: "800", height: "800" }, props.children);
-        };
         return Stage;
     }(React.Component));
     exports.Stage = Stage;
@@ -100,12 +97,6 @@ define("ComfortZone/ComfortReact", ["require", "exports", "react"], function (re
             _this.state = { style: styleStandard };
             return _this;
         }
-        ComfortReact.prototype._onMouseEnter = function () {
-            this.setState({ style: styleHighlight });
-        };
-        ComfortReact.prototype._onMouseLeave = function () {
-            this.setState({ style: styleStandard });
-        };
         ComfortReact.prototype.render = function () {
             return React.createElement(Stage, null,
                 React.createElement(ChaosArea, null),
@@ -123,15 +114,14 @@ define("ComfortZone/__tests__/ComfortModel", ["require", "exports", "react", "Co
     "use strict";
     var renderizer = require('react-test-renderer');
     it('Should show the chaos area', function () {
-        var component = renderizer.create(React.createElement(ComfortReact_1.Stage, null,
-            React.createElement(ComfortReact_1.ChaosArea, null)));
+        debugger;
+        var component = renderizer.create(React.createElement(ComfortReact_1.ChaosArea, null));
         var tree = component.toJSON();
         expect(tree).toMatchSnapshot();
-        /*tree.props.onMouseEnter();
+        tree.props.onMouseEnter();
         expect(tree).toMatchSnapshot();
-    
         tree.props.onMouseLeave();
-        expect(tree).toMatchSnapshot();*/
+        expect(tree).toMatchSnapshot();
     });
     it('Should show the stretch area', function () {
         var component = renderizer.create(React.createElement(ComfortReact_1.Stage, null,
