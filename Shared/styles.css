@@ -2,6 +2,12 @@
 #stage, textarea, button, input {
     font-family: 'Share Tech Mono', sans-serif;
 }
+svg .in-focus {
+    fill: rgb(0, 180, 219);
+}
+svg .not-in-focus {
+    fill: #00D7FE;
+}
 #users li {
     background-color: black;
     color: white;

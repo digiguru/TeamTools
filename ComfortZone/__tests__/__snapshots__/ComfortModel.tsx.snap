@@ -3,13 +3,23 @@ exports[`test Should show the chaos area 1`] = `
   height="100%"
   id="stage"
   width="100%">
-  <rect
-    className="not-in-focus"
-    height="100%"
-    id="chaos"
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    width="100%" />
+  <g>
+    <rect
+      className="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      width="100%" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="50%"
+      y="50">
+      chaos
+    </text>
+  </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
@@ -17,13 +27,24 @@ exports[`test Should show the chaos area 1`] = `
   id="stage"
   width="100%"
 >
-  <rect
-    class="not-in-focus"
-    height="100%"
-    id="chaos"
-    width="100%"
-  >
-  </rect>
+  <g>
+    <rect
+      class="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      width="100%"
+    >
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="50%"
+      y="50"
+    >
+      chaos
+    </text>
+  </g>
 </svg>
 `;
 
@@ -32,13 +53,23 @@ exports[`test Should show the chaos area 2`] = `
   height="100%"
   id="stage"
   width="100%">
-  <rect
-    className="not-in-focus"
-    height="100%"
-    id="chaos"
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    width="100%" />
+  <g>
+    <rect
+      className="in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      width="100%" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="50%"
+      y="50">
+      chaos
+    </text>
+  </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
@@ -46,13 +77,24 @@ exports[`test Should show the chaos area 2`] = `
   id="stage"
   width="100%"
 >
-  <rect
-    class="not-in-focus"
-    height="100%"
-    id="chaos"
-    width="100%"
-  >
-  </rect>
+  <g>
+    <rect
+      class="in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      width="100%"
+    >
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="50%"
+      y="50"
+    >
+      chaos
+    </text>
+  </g>
 </svg>
 `;
 
@@ -61,13 +103,23 @@ exports[`test Should show the chaos area 3`] = `
   height="100%"
   id="stage"
   width="100%">
-  <rect
-    className="not-in-focus"
-    height="100%"
-    id="chaos"
-    onMouseEnter={[Function]}
-    onMouseLeave={[Function]}
-    width="100%" />
+  <g>
+    <rect
+      className="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      width="100%" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="50%"
+      y="50">
+      chaos
+    </text>
+  </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
@@ -75,13 +127,24 @@ exports[`test Should show the chaos area 3`] = `
   id="stage"
   width="100%"
 >
-  <rect
-    class="not-in-focus"
-    height="100%"
-    id="chaos"
-    width="100%"
-  >
-  </rect>
+  <g>
+    <rect
+      class="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      width="100%"
+    >
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      x="50%"
+      y="50"
+    >
+      chaos
+    </text>
+  </g>
 </svg>
 `;
 
@@ -145,13 +208,23 @@ exports[`test Should show the comfort model 1`] = `
     height="100%"
     id="stage"
     width="100%">
-    <rect
-      className="not-in-focus"
-      height="100%"
-      id="chaos"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
-      width="100%" />
+    <g>
+      <rect
+        className="not-in-focus area js-area-standard"
+        height="100%"
+        id="chaos"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        width="100%" />
+      <text
+        className="area-label"
+        id="label-choas"
+        text-anchor="middle"
+        x="50%"
+        y="50">
+        chaos
+      </text>
+    </g>
     <g
       id="zones">
       <g>
@@ -211,13 +284,24 @@ exports[`test Should show the comfort model 1`] = `
     id="stage"
     width="100%"
   >
-    <rect
-      class="not-in-focus"
-      height="100%"
-      id="chaos"
-      width="100%"
-    >
-    </rect>
+    <g>
+      <rect
+        class="not-in-focus area js-area-standard"
+        height="100%"
+        id="chaos"
+        width="100%"
+      >
+      </rect>
+      <text
+        class="area-label"
+        id="label-choas"
+        text-anchor="middle"
+        x="50%"
+        y="50"
+      >
+        chaos
+      </text>
+    </g>
     <g id="zones">
       <g>
         <circle

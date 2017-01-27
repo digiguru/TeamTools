@@ -29,9 +29,9 @@ export class ChaosArea extends React.Component<any, iComfortState> {
 
     render() {
         debugger;
-        //const style: string = this.state.focus + " area js-area-standard";
+        const style: string = this.state.focus + " area js-area-standard";
         return <g>
-            <rect className={this.state.focus} onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} id="chaos" width={this.state.width} height={this.state.height}></rect>
+            <rect className={style} onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} id="chaos" width={this.state.width} height={this.state.height}></rect>
             <text className="area-label" id="label-choas" text-anchor="middle" x="50%" y="50">chaos</text>
         </g>;
     }
