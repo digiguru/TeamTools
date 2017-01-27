@@ -3,21 +3,23 @@ import {ChaosArea, StretchArea, ComfortArea, ComfortReact, Stage} from "../Comfo
 const renderizer = require("react-test-renderer");
 
 it("Should show the chaos area", () => {
-    //Arrange
+    // Arrange
     const component = renderizer.create(
         <Stage><ChaosArea></ChaosArea></Stage>
     );
 
-    let tree = component.toJSON();
+    const tree = component.toJSON();
     const mouseOverArea = tree.children[0].children[0];
     expect(tree).toMatchSnapshot();
 
-    //Act snapshot 1
+    // Act snapshot 2
     mouseOverArea.props.onMouseEnter();
+    // Assert Snapshot 2
     expect(component.toJSON()).toMatchSnapshot();
 
+    // Act snapshot 3
     mouseOverArea.props.onMouseLeave();
-
+    // Assert Snapshot 3
     expect(component.toJSON()).toMatchSnapshot();
 
 });
@@ -27,7 +29,18 @@ it("Should show the stretch area", () => {
         <Stage><StretchArea></StretchArea></Stage>
     );
     const tree = component.toJSON();
+    const mouseOverArea = tree.children[0].children[0];
     expect(tree).toMatchSnapshot();
+
+    // Act snapshot 2
+    mouseOverArea.props.onMouseEnter();
+    // Assert Snapshot 2
+    expect(component.toJSON()).toMatchSnapshot();
+
+    // Act snapshot 3
+    mouseOverArea.props.onMouseLeave();
+    // Assert Snapshot 3
+    expect(component.toJSON()).toMatchSnapshot();
 
 });
 
@@ -37,13 +50,25 @@ it("Should show the comfort area", () => {
         <Stage><ComfortArea></ComfortArea></Stage>
     );
     const tree = component.toJSON();
+    debugger;
+    const mouseOverArea = tree.children[0].children[0];
     expect(tree).toMatchSnapshot();
+
+    // Act snapshot 2
+    mouseOverArea.props.onMouseEnter();
+    // Assert Snapshot 2
+    expect(component.toJSON()).toMatchSnapshot();
+
+    // Act snapshot 3
+    mouseOverArea.props.onMouseLeave();
+    // Assert Snapshot 3
+    expect(component.toJSON()).toMatchSnapshot();
 
 });
 
-it("Should show the comfort model", () => {
+it("The complete comfort model", () => {
     const component = renderizer.create(
-        <Stage><ComfortReact></ComfortReact></Stage>
+        <Stage width="800" height="800"><ComfortReact></ComfortReact></Stage>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
