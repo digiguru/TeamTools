@@ -4,16 +4,14 @@ const renderizer = require('react-test-renderer');
 
 it('Should show the chaos area', () => {
     const component = renderizer.create(
-        <ChaosArea></ChaosArea>
+        <Stage><ChaosArea></ChaosArea></Stage>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();
-
     debugger;
-    tree.children[0].props.onMouseEnter();
+    tree.children[0].children[0].props.onMouseEnter();
     expect(tree).toMatchSnapshot();
 
-    tree.children[0].props.onMouseLeave();
     expect(tree).toMatchSnapshot();
 
 
@@ -40,7 +38,7 @@ it('Should show the comfort area', () => {
 
 it('Should show the comfort model', () => {
     const component = renderizer.create(
-        <ComfortReact></ComfortReact>
+        <Stage><ComfortReact></ComfortReact></Stage>
     );
     const tree = component.toJSON();
     expect(tree).toMatchSnapshot();

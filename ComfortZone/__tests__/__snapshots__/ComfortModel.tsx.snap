@@ -1,171 +1,134 @@
 exports[`test Should show the chaos area 1`] = `
-<g>
+<svg
+  height="100%"
+  id="stage"
+  width="100%">
   <rect
-    className="area js-area-standard"
-    height="800"
+    className="not-in-focus"
+    height="100%"
     id="chaos"
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
-    style="{this.state.style}"
-    width="800" />
-  <text
-    className="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50">
-    chaos
-  </text>
-</g>
+    width="100%" />
+</svg>
 ------------HTML PREVIEW---------------
-<g>
+<svg
+  height="100%"
+  id="stage"
+  width="100%"
+>
   <rect
-    class="area js-area-standard"
-    height="800"
+    class="not-in-focus"
+    height="100%"
     id="chaos"
-    style="{this.state.style}"
-    width="800"
+    width="100%"
   >
   </rect>
-  <text
-    class="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50"
-  >
-    chaos
-  </text>
-</g>
+</svg>
 `;
 
 exports[`test Should show the chaos area 2`] = `
-<g>
+<svg
+  height="100%"
+  id="stage"
+  width="100%">
   <rect
-    className="area js-area-standard"
-    height="800"
+    className="not-in-focus"
+    height="100%"
     id="chaos"
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
-    style="{this.state.style}"
-    width="800" />
-  <text
-    className="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50">
-    chaos
-  </text>
-</g>
+    width="100%" />
+</svg>
 ------------HTML PREVIEW---------------
-<g>
+<svg
+  height="100%"
+  id="stage"
+  width="100%"
+>
   <rect
-    class="area js-area-standard"
-    height="800"
+    class="not-in-focus"
+    height="100%"
     id="chaos"
-    style="{this.state.style}"
-    width="800"
+    width="100%"
   >
   </rect>
-  <text
-    class="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50"
-  >
-    chaos
-  </text>
-</g>
+</svg>
 `;
 
 exports[`test Should show the chaos area 3`] = `
-<g>
+<svg
+  height="100%"
+  id="stage"
+  width="100%">
   <rect
-    className="area js-area-standard"
-    height="800"
+    className="not-in-focus"
+    height="100%"
     id="chaos"
     onMouseEnter={[Function]}
     onMouseLeave={[Function]}
-    style="{this.state.style}"
-    width="800" />
-  <text
-    className="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50">
-    chaos
-  </text>
-</g>
+    width="100%" />
+</svg>
 ------------HTML PREVIEW---------------
-<g>
+<svg
+  height="100%"
+  id="stage"
+  width="100%"
+>
   <rect
-    class="area js-area-standard"
-    height="800"
+    class="not-in-focus"
+    height="100%"
     id="chaos"
-    style="{this.state.style}"
-    width="800"
+    width="100%"
   >
   </rect>
-  <text
-    class="area-label"
-    id="label-choas"
-    text-anchor="middle"
-    x="400"
-    y="50"
-  >
-    chaos
-  </text>
-</g>
+</svg>
 `;
 
 exports[`test Should show the comfort area 1`] = `
 <svg
-  height="800"
+  height="100%"
   id="stage"
-  width="800">
+  width="100%">
   <g>
     <circle
       className="area js-area-standard"
-      cx="400"
-      cy="400"
+      cx="50%"
+      cy="50%"
       id="comfort"
-      r="97.516770592797"
-      style="{this.state.style}" />
+      r="35%"
+      style={undefined} />
     <text
       className="area-label"
       id="label-comfort"
       text-anchor="middle"
-      x="400"
-      y="400">
+      x="50%"
+      y="50%">
       comfort
     </text>
   </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="800"
+  height="100%"
   id="stage"
-  width="800"
+  width="100%"
 >
   <g>
     <circle
       class="area js-area-standard"
-      cx="400"
-      cy="400"
+      cx="50%"
+      cy="50%"
       id="comfort"
-      r="97.516770592797"
-      style="{this.state.style}"
+      r="35%"
     >
     </circle>
     <text
       class="area-label"
       id="label-comfort"
       text-anchor="middle"
-      x="400"
-      y="400"
+      x="50%"
+      y="50%"
     >
       comfort
     </text>
@@ -175,199 +138,184 @@ exports[`test Should show the comfort area 1`] = `
 
 exports[`test Should show the comfort model 1`] = `
 <svg
-  height="800"
+  height="100%"
   id="stage"
-  width="800">
-  <g>
+  width="100%">
+  <svg
+    height="100%"
+    id="stage"
+    width="100%">
     <rect
-      className="area js-area-standard"
-      height="800"
+      className="not-in-focus"
+      height="100%"
       id="chaos"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      style="{this.state.style}"
-      width="800" />
-    <text
-      className="area-label"
-      id="label-choas"
-      text-anchor="middle"
-      x="400"
-      y="50">
-      chaos
-    </text>
-  </g>
-  <g
-    id="zones">
-    <g>
-      <circle
-        className="area js-area-standard"
-        cx="400"
-        cy="400"
-        id="stretch"
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
-        r="300.12599083141845"
-        style="{this.state.style}" />
-      <text
-        className="area-label"
-        id="label-stretch"
-        text-anchor="middle"
-        x="400"
-        y="200">
-        stretch
-      </text>
+      width="100%" />
+    <g
+      id="zones">
+      <g>
+        <circle
+          className="area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="stretch"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          r="33%"
+          style={undefined} />
+        <text
+          className="area-label"
+          id="label-stretch"
+          text-anchor="middle"
+          x="50%"
+          y="25%">
+          stretch
+        </text>
+      </g>
+      <g>
+        <circle
+          className="area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="comfort"
+          r="35%"
+          style={undefined} />
+        <text
+          className="area-label"
+          id="label-comfort"
+          text-anchor="middle"
+          x="50%"
+          y="50%">
+          comfort
+        </text>
+      </g>
     </g>
-    <g>
-      <circle
-        className="area js-area-standard"
-        cx="400"
-        cy="400"
-        id="comfort"
-        r="97.516770592797"
-        style="{this.state.style}" />
-      <text
-        className="area-label"
-        id="label-comfort"
-        text-anchor="middle"
-        x="400"
-        y="400">
-        comfort
-      </text>
-    </g>
-  </g>
-  <g
-    id="history" />
-  <rect
-    fill-opacity="0.0"
-    height="800"
-    id="clickable"
-    width="800" />
+    <g
+      id="history" />
+    <rect
+      fill-opacity="0.0"
+      height="100%"
+      id="clickable"
+      width="100%" />
+  </svg>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="800"
+  height="100%"
   id="stage"
-  width="800"
+  width="100%"
 >
-  <g>
+  <svg
+    height="100%"
+    id="stage"
+    width="100%"
+  >
     <rect
-      class="area js-area-standard"
-      height="800"
+      class="not-in-focus"
+      height="100%"
       id="chaos"
-      style="{this.state.style}"
-      width="800"
+      width="100%"
     >
     </rect>
-    <text
-      class="area-label"
-      id="label-choas"
-      text-anchor="middle"
-      x="400"
-      y="50"
+    <g id="zones">
+      <g>
+        <circle
+          class="area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="stretch"
+          r="33%"
+        >
+        </circle>
+        <text
+          class="area-label"
+          id="label-stretch"
+          text-anchor="middle"
+          x="50%"
+          y="25%"
+        >
+          stretch
+        </text>
+      </g>
+      <g>
+        <circle
+          class="area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="comfort"
+          r="35%"
+        >
+        </circle>
+        <text
+          class="area-label"
+          id="label-comfort"
+          text-anchor="middle"
+          x="50%"
+          y="50%"
+        >
+          comfort
+        </text>
+      </g>
+    </g>
+    <g id="history"></g>
+    <rect
+      fill-opacity="0.0"
+      height="100%"
+      id="clickable"
+      width="100%"
     >
-      chaos
-    </text>
-  </g>
-  <g id="zones">
-    <g>
-      <circle
-        class="area js-area-standard"
-        cx="400"
-        cy="400"
-        id="stretch"
-        r="300.12599083141845"
-        style="{this.state.style}"
-      >
-      </circle>
-      <text
-        class="area-label"
-        id="label-stretch"
-        text-anchor="middle"
-        x="400"
-        y="200"
-      >
-        stretch
-      </text>
-    </g>
-    <g>
-      <circle
-        class="area js-area-standard"
-        cx="400"
-        cy="400"
-        id="comfort"
-        r="97.516770592797"
-        style="{this.state.style}"
-      >
-      </circle>
-      <text
-        class="area-label"
-        id="label-comfort"
-        text-anchor="middle"
-        x="400"
-        y="400"
-      >
-        comfort
-      </text>
-    </g>
-  </g>
-  <g id="history"></g>
-  <rect
-    fill-opacity="0.0"
-    height="800"
-    id="clickable"
-    width="800"
-  >
-  </rect>
+    </rect>
+  </svg>
 </svg>
 `;
 
 exports[`test Should show the stretch area 1`] = `
 <svg
-  height="800"
+  height="100%"
   id="stage"
-  width="800">
+  width="100%">
   <g>
     <circle
       className="area js-area-standard"
-      cx="400"
-      cy="400"
+      cx="50%"
+      cy="50%"
       id="stretch"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="300.12599083141845"
-      style="{this.state.style}" />
+      r="33%"
+      style={undefined} />
     <text
       className="area-label"
       id="label-stretch"
       text-anchor="middle"
-      x="400"
-      y="200">
+      x="50%"
+      y="25%">
       stretch
     </text>
   </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="800"
+  height="100%"
   id="stage"
-  width="800"
+  width="100%"
 >
   <g>
     <circle
       class="area js-area-standard"
-      cx="400"
-      cy="400"
+      cx="50%"
+      cy="50%"
       id="stretch"
-      r="300.12599083141845"
-      style="{this.state.style}"
+      r="33%"
     >
     </circle>
     <text
       class="area-label"
       id="label-stretch"
       text-anchor="middle"
-      x="400"
-      y="200"
+      x="50%"
+      y="25%"
     >
       stretch
     </text>
