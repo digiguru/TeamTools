@@ -14,9 +14,9 @@ exports[`test Should show the chaos area 1`] = `
     <text
       className="area-label"
       id="label-choas"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
-      y="50">
+      y="20">
       chaos
     </text>
   </g>
@@ -38,9 +38,9 @@ exports[`test Should show the chaos area 1`] = `
     <text
       class="area-label"
       id="label-choas"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
-      y="50"
+      y="20"
     >
       chaos
     </text>
@@ -64,9 +64,9 @@ exports[`test Should show the chaos area 2`] = `
     <text
       className="area-label"
       id="label-choas"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
-      y="50">
+      y="20">
       chaos
     </text>
   </g>
@@ -88,9 +88,9 @@ exports[`test Should show the chaos area 2`] = `
     <text
       class="area-label"
       id="label-choas"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
-      y="50"
+      y="20"
     >
       chaos
     </text>
@@ -114,9 +114,9 @@ exports[`test Should show the chaos area 3`] = `
     <text
       className="area-label"
       id="label-choas"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
-      y="50">
+      y="20">
       chaos
     </text>
   </g>
@@ -138,9 +138,9 @@ exports[`test Should show the chaos area 3`] = `
     <text
       class="area-label"
       id="label-choas"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
-      y="50"
+      y="20"
     >
       chaos
     </text>
@@ -161,11 +161,20 @@ exports[`test Should show the comfort area 1`] = `
       id="comfort"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="35%" />
+      r="20%">
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        dur="0.8s"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%; 25%; 18%; 21%; 20%" />
+    </circle>
     <text
       className="area-label"
       id="label-comfort"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="50%">
       comfort
@@ -184,13 +193,23 @@ exports[`test Should show the comfort area 1`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      r="35%"
+      r="20%"
     >
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        dur="0.8s"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%; 25%; 18%; 21%; 20%"
+      >
+      </animate>
     </circle>
     <text
       class="area-label"
       id="label-comfort"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="50%"
     >
@@ -213,11 +232,20 @@ exports[`test Should show the comfort area 2`] = `
       id="comfort"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="35%" />
+      r="20%">
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        dur="0.8s"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%; 25%; 18%; 21%; 20%" />
+    </circle>
     <text
       className="area-label"
       id="label-comfort"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="50%">
       comfort
@@ -236,13 +264,23 @@ exports[`test Should show the comfort area 2`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      r="35%"
+      r="20%"
     >
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        dur="0.8s"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%; 25%; 18%; 21%; 20%"
+      >
+      </animate>
     </circle>
     <text
       class="area-label"
       id="label-comfort"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="50%"
     >
@@ -265,11 +303,20 @@ exports[`test Should show the comfort area 3`] = `
       id="comfort"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="35%" />
+      r="20%">
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        dur="0.8s"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%; 25%; 18%; 21%; 20%" />
+    </circle>
     <text
       className="area-label"
       id="label-comfort"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="50%">
       comfort
@@ -288,13 +335,23 @@ exports[`test Should show the comfort area 3`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      r="35%"
+      r="20%"
     >
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        dur="0.8s"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%; 25%; 18%; 21%; 20%"
+      >
+      </animate>
     </circle>
     <text
       class="area-label"
       id="label-comfort"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="50%"
     >
@@ -317,11 +374,11 @@ exports[`test Should show the stretch area 1`] = `
       id="stretch"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="33%" />
+      r="45%" />
     <text
       className="area-label"
       id="label-stretch"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="25%">
       stretch
@@ -340,13 +397,13 @@ exports[`test Should show the stretch area 1`] = `
       cx="50%"
       cy="50%"
       id="stretch"
-      r="33%"
+      r="45%"
     >
     </circle>
     <text
       class="area-label"
       id="label-stretch"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="25%"
     >
@@ -369,11 +426,11 @@ exports[`test Should show the stretch area 2`] = `
       id="stretch"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="33%" />
+      r="45%" />
     <text
       className="area-label"
       id="label-stretch"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="25%">
       stretch
@@ -392,13 +449,13 @@ exports[`test Should show the stretch area 2`] = `
       cx="50%"
       cy="50%"
       id="stretch"
-      r="33%"
+      r="45%"
     >
     </circle>
     <text
       class="area-label"
       id="label-stretch"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="25%"
     >
@@ -421,11 +478,11 @@ exports[`test Should show the stretch area 3`] = `
       id="stretch"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="33%" />
+      r="45%" />
     <text
       className="area-label"
       id="label-stretch"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="25%">
       stretch
@@ -444,13 +501,13 @@ exports[`test Should show the stretch area 3`] = `
       cx="50%"
       cy="50%"
       id="stretch"
-      r="33%"
+      r="45%"
     >
     </circle>
     <text
       class="area-label"
       id="label-stretch"
-      text-anchor="middle"
+      textAnchor="middle"
       x="50%"
       y="25%"
     >
@@ -480,9 +537,9 @@ exports[`test The complete comfort model 1`] = `
       <text
         className="area-label"
         id="label-choas"
-        text-anchor="middle"
+        textAnchor="middle"
         x="50%"
-        y="50">
+        y="20">
         chaos
       </text>
     </g>
@@ -496,11 +553,11 @@ exports[`test The complete comfort model 1`] = `
           id="stretch"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
-          r="33%" />
+          r="45%" />
         <text
           className="area-label"
           id="label-stretch"
-          text-anchor="middle"
+          textAnchor="middle"
           x="50%"
           y="25%">
           stretch
@@ -514,11 +571,20 @@ exports[`test The complete comfort model 1`] = `
           id="comfort"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
-          r="35%" />
+          r="20%">
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            dur="0.8s"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%; 25%; 18%; 21%; 20%" />
+        </circle>
         <text
           className="area-label"
           id="label-comfort"
-          text-anchor="middle"
+          textAnchor="middle"
           x="50%"
           y="50%">
           comfort
@@ -527,11 +593,6 @@ exports[`test The complete comfort model 1`] = `
     </g>
     <g
       id="history" />
-    <rect
-      fill-opacity="0.0"
-      height="100%"
-      id="clickable"
-      width="100%" />
   </svg>
 </svg>
 ------------HTML PREVIEW---------------
@@ -556,9 +617,9 @@ exports[`test The complete comfort model 1`] = `
       <text
         class="area-label"
         id="label-choas"
-        text-anchor="middle"
+        textAnchor="middle"
         x="50%"
-        y="50"
+        y="20"
       >
         chaos
       </text>
@@ -570,13 +631,13 @@ exports[`test The complete comfort model 1`] = `
           cx="50%"
           cy="50%"
           id="stretch"
-          r="33%"
+          r="45%"
         >
         </circle>
         <text
           class="area-label"
           id="label-stretch"
-          text-anchor="middle"
+          textAnchor="middle"
           x="50%"
           y="25%"
         >
@@ -589,13 +650,23 @@ exports[`test The complete comfort model 1`] = `
           cx="50%"
           cy="50%"
           id="comfort"
-          r="35%"
+          r="20%"
         >
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            dur="0.8s"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%; 25%; 18%; 21%; 20%"
+          >
+          </animate>
         </circle>
         <text
           class="area-label"
           id="label-comfort"
-          text-anchor="middle"
+          textAnchor="middle"
           x="50%"
           y="50%"
         >
@@ -604,13 +675,6 @@ exports[`test The complete comfort model 1`] = `
       </g>
     </g>
     <g id="history"></g>
-    <rect
-      fill-opacity="0.0"
-      height="100%"
-      id="clickable"
-      width="100%"
-    >
-    </rect>
   </svg>
 </svg>
 `;

@@ -37,7 +37,7 @@ export class ChaosArea extends React.Component<any, IResizableInteractiveModelSt
         const className: string = this.state.focus + " area js-area-standard";
         return <g>
             <rect className={className} onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} id="chaos" width={this.state.width} height={this.state.height}></rect>
-            <text className="area-label" id="label-choas" text-anchor="middle" x="50%" y="50">chaos</text>
+            <text className="area-label" id="label-choas" textAnchor="middle" x="50%" y="20">chaos</text>
         </g>;
     }
 }
@@ -67,8 +67,8 @@ export class StretchArea extends React.Component<any, IResizableInteractiveModel
     render() {
         const className: string = this.state.focus + " area js-area-standard";
         return <g>
-            <circle onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className={className} id="stretch" r="33%" cx="50%" cy="50%"></circle>
-            <text className="area-label" id="label-stretch" text-anchor="middle" x="50%" y="25%">stretch</text>
+            <circle onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className={className} id="stretch" r="45%" cx="50%" cy="50%"></circle>
+            <text className="area-label" id="label-stretch" textAnchor="middle" x="50%" y="25%">stretch</text>
         </g>;
     }
 }
@@ -100,9 +100,16 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
         return <g>
             <circle onMouseEnter={this._onMouseEnter}
                 onMouseLeave={this._onMouseLeave}
-                className={className} id="comfort" r="35%" cx="50%" cy="50%"></circle>
-            <text className="area-label" id="label-comfort" text-anchor="middle" x="50%" y="50%">comfort</text>
+                className={className} id="comfort" r="20%" cx="50%" cy="50%">
+                <animate attributeType="XML" attributeName="r" from="0%" to="20%" dur="0.8s" 
+                values="0%; 25%; 18%; 21%; 20%"
+    keyTimes="0; 0.3; 0.6; 0.8; 1"
+    />
+            </circle>
+            <text className="area-label" id="label-comfort" textAnchor="middle" x="50%" y="50%">comfort</text>
         </g>;
+        // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;" 
+    
     }
 }
 export class Stage extends React.Component<any, any> {
@@ -130,8 +137,9 @@ export class ComfortReact extends React.Component<any, any> {
                     </g>
                     <g id="history">
                     </g>
-                    <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
                 </Stage>;
+                //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
+            
     }
 
 }

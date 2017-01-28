@@ -4,52 +4,20 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
+import {UserObject, UserList} from "userComponents";
+import {ComfortReact} from "ComfortReact";
 
-class Delete extends React.Component<undefined, undefined> {
-    render() {
-        return <a href="void(0);">X</a>;
-    }
-}
-class User extends React.Component<IUsername, undefined> {
-  render() {
-    return <li><span className="user">{this.props.username}</span><Delete /></li>;
-  }
-}
-class NewTeam extends React.Component<undefined, undefined> {
-  render() {
-    return <input type="button" value="new team" id="new" />;
-  }
-}
-class EntryPage extends React.Component<any, undefined> {
-  render() {
-    return <UserList users={USERS} />;
-  }
-}
-
-  
-class UserList extends React.Component<IUserList, undefined> {
-    render() {
-        const users = [];
-
-        this.props.users.forEach(function(user: UserObject) {
-            users.push(<User username={user.name} key={user.name} />);
-        });
-        return <ul id="users">{users}</ul>;
-    }
-}
-class UserObject {
-    name: string;
-    constructor(name: string) {
-        this.name = name;
-    }
-}
-interface IUsername { username: string; }
-interface IUserList { users: Array<UserObject> }
-const USERS = [
+export const USERS = [
     new UserObject("Bob"),
     new UserObject("Donald")
 ];
+
 ReactDOM.render(
   <UserList users={USERS} />,
   document.getElementById("container")
+);
+
+ReactDOM.render(
+    <ComfortReact />,
+    document.getElementById("comfort")
 );
