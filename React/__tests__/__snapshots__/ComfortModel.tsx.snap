@@ -1,8 +1,59 @@
+exports[`test Renders weirdly 1`] = `
+<svg
+  height="400"
+  width="400">
+  <circle
+    cx="50%"
+    cy="50%"
+    fill="#bada55"
+    r="200" />
+  <text
+    textAnchor="middle"
+    x="50%"
+    y="25%">
+    no hyphen
+  </text>
+  <text
+    text-anchor="middle"
+    x="50%"
+    y="75%">
+    with hyphen
+  </text>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="400"
+  width="400"
+>
+  <circle
+    cx="50%"
+    cy="50%"
+    fill="#bada55"
+    r="200"
+  >
+  </circle>
+  <text
+    textAnchor="middle"
+    x="50%"
+    y="25%"
+  >
+    no hyphen
+  </text>
+  <text
+    text-anchor="middle"
+    x="50%"
+    y="75%"
+  >
+    with hyphen
+  </text>
+</svg>
+`;
+
 exports[`test Should show the chaos area 1`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <rect
       className="not-in-focus area js-area-standard"
@@ -14,6 +65,7 @@ exports[`test Should show the chaos area 1`] = `
     <text
       className="area-label"
       id="label-choas"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="20">
@@ -23,9 +75,9 @@ exports[`test Should show the chaos area 1`] = `
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <rect
@@ -38,6 +90,7 @@ exports[`test Should show the chaos area 1`] = `
     <text
       class="area-label"
       id="label-choas"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="20"
@@ -50,9 +103,9 @@ exports[`test Should show the chaos area 1`] = `
 
 exports[`test Should show the chaos area 2`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <rect
       className="in-focus area js-area-standard"
@@ -64,6 +117,7 @@ exports[`test Should show the chaos area 2`] = `
     <text
       className="area-label"
       id="label-choas"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="20">
@@ -73,9 +127,9 @@ exports[`test Should show the chaos area 2`] = `
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <rect
@@ -88,6 +142,7 @@ exports[`test Should show the chaos area 2`] = `
     <text
       class="area-label"
       id="label-choas"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="20"
@@ -100,9 +155,9 @@ exports[`test Should show the chaos area 2`] = `
 
 exports[`test Should show the chaos area 3`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <rect
       className="not-in-focus area js-area-standard"
@@ -114,6 +169,7 @@ exports[`test Should show the chaos area 3`] = `
     <text
       className="area-label"
       id="label-choas"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="20">
@@ -123,9 +179,9 @@ exports[`test Should show the chaos area 3`] = `
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <rect
@@ -138,6 +194,7 @@ exports[`test Should show the chaos area 3`] = `
     <text
       class="area-label"
       id="label-choas"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="20"
@@ -148,11 +205,11 @@ exports[`test Should show the chaos area 3`] = `
 </svg>
 `;
 
-exports[`test Should show the comfort area 1`] = `
+exports[`test Should show the comfort area - animated 1`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <circle
       className="not-in-focus area js-area-standard"
@@ -161,19 +218,22 @@ exports[`test Should show the comfort area 1`] = `
       id="comfort"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="20%">
+      r="0%">
       <animate
         attributeName="r"
         attributeType="XML"
+        begin="0s"
         dur="0.8s"
+        fill="freeze"
         from="0%"
         keyTimes="0; 0.3; 0.6; 0.8; 1"
         to="20%"
-        values="0%; 25%; 18%; 21%; 20%" />
+        values="0%;25%;18%;21%;20%" />
     </circle>
     <text
       className="area-label"
       id="label-comfort"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="50%">
@@ -183,9 +243,9 @@ exports[`test Should show the comfort area 1`] = `
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <circle
@@ -193,22 +253,25 @@ exports[`test Should show the comfort area 1`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      r="20%"
+      r="0%"
     >
       <animate
         attributeName="r"
         attributeType="XML"
+        begin="0s"
         dur="0.8s"
+        fill="freeze"
         from="0%"
         keyTimes="0; 0.3; 0.6; 0.8; 1"
         to="20%"
-        values="0%; 25%; 18%; 21%; 20%"
+        values="0%;25%;18%;21%;20%"
       >
       </animate>
     </circle>
     <text
       class="area-label"
       id="label-comfort"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="50%"
@@ -219,11 +282,65 @@ exports[`test Should show the comfort area 1`] = `
 </svg>
 `;
 
-exports[`test Should show the comfort area 2`] = `
+exports[`test Should show the comfort area - standard 1`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
+  <g>
+    <circle
+      className="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%" />
+    <text
+      className="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%">
+      comfort
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      r="0%"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%"
+    >
+      comfort
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the comfort area - standard 2`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
   <g>
     <circle
       className="in-focus area js-area-standard"
@@ -232,19 +349,11 @@ exports[`test Should show the comfort area 2`] = `
       id="comfort"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="20%">
-      <animate
-        attributeName="r"
-        attributeType="XML"
-        dur="0.8s"
-        from="0%"
-        keyTimes="0; 0.3; 0.6; 0.8; 1"
-        to="20%"
-        values="0%; 25%; 18%; 21%; 20%" />
-    </circle>
+      r="0%" />
     <text
       className="area-label"
       id="label-comfort"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="50%">
@@ -254,9 +363,9 @@ exports[`test Should show the comfort area 2`] = `
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <circle
@@ -264,22 +373,13 @@ exports[`test Should show the comfort area 2`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      r="20%"
+      r="0%"
     >
-      <animate
-        attributeName="r"
-        attributeType="XML"
-        dur="0.8s"
-        from="0%"
-        keyTimes="0; 0.3; 0.6; 0.8; 1"
-        to="20%"
-        values="0%; 25%; 18%; 21%; 20%"
-      >
-      </animate>
     </circle>
     <text
       class="area-label"
       id="label-comfort"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="50%"
@@ -290,11 +390,11 @@ exports[`test Should show the comfort area 2`] = `
 </svg>
 `;
 
-exports[`test Should show the comfort area 3`] = `
+exports[`test Should show the comfort area - standard 3`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <circle
       className="not-in-focus area js-area-standard"
@@ -303,19 +403,11 @@ exports[`test Should show the comfort area 3`] = `
       id="comfort"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="20%">
-      <animate
-        attributeName="r"
-        attributeType="XML"
-        dur="0.8s"
-        from="0%"
-        keyTimes="0; 0.3; 0.6; 0.8; 1"
-        to="20%"
-        values="0%; 25%; 18%; 21%; 20%" />
-    </circle>
+      r="0%" />
     <text
       className="area-label"
       id="label-comfort"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="50%">
@@ -325,9 +417,9 @@ exports[`test Should show the comfort area 3`] = `
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <circle
@@ -335,22 +427,13 @@ exports[`test Should show the comfort area 3`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      r="20%"
+      r="0%"
     >
-      <animate
-        attributeName="r"
-        attributeType="XML"
-        dur="0.8s"
-        from="0%"
-        keyTimes="0; 0.3; 0.6; 0.8; 1"
-        to="20%"
-        values="0%; 25%; 18%; 21%; 20%"
-      >
-      </animate>
     </circle>
     <text
       class="area-label"
       id="label-comfort"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
       y="50%"
@@ -363,9 +446,9 @@ exports[`test Should show the comfort area 3`] = `
 
 exports[`test Should show the stretch area 1`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <circle
       className="not-in-focus area js-area-standard"
@@ -374,22 +457,23 @@ exports[`test Should show the stretch area 1`] = `
       id="stretch"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="45%" />
+      r="0%" />
     <text
       className="area-label"
       id="label-stretch"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
-      y="25%">
+      y="20%">
       stretch
     </text>
   </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <circle
@@ -397,15 +481,16 @@ exports[`test Should show the stretch area 1`] = `
       cx="50%"
       cy="50%"
       id="stretch"
-      r="45%"
+      r="0%"
     >
     </circle>
     <text
       class="area-label"
       id="label-stretch"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
-      y="25%"
+      y="20%"
     >
       stretch
     </text>
@@ -415,9 +500,9 @@ exports[`test Should show the stretch area 1`] = `
 
 exports[`test Should show the stretch area 2`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <circle
       className="in-focus area js-area-standard"
@@ -426,22 +511,23 @@ exports[`test Should show the stretch area 2`] = `
       id="stretch"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="45%" />
+      r="0%" />
     <text
       className="area-label"
       id="label-stretch"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
-      y="25%">
+      y="20%">
       stretch
     </text>
   </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <circle
@@ -449,15 +535,16 @@ exports[`test Should show the stretch area 2`] = `
       cx="50%"
       cy="50%"
       id="stretch"
-      r="45%"
+      r="0%"
     >
     </circle>
     <text
       class="area-label"
       id="label-stretch"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
-      y="25%"
+      y="20%"
     >
       stretch
     </text>
@@ -467,9 +554,9 @@ exports[`test Should show the stretch area 2`] = `
 
 exports[`test Should show the stretch area 3`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <g>
     <circle
       className="not-in-focus area js-area-standard"
@@ -478,22 +565,23 @@ exports[`test Should show the stretch area 3`] = `
       id="stretch"
       onMouseEnter={[Function]}
       onMouseLeave={[Function]}
-      r="45%" />
+      r="0%" />
     <text
       className="area-label"
       id="label-stretch"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
-      y="25%">
+      y="20%">
       stretch
     </text>
   </g>
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <g>
     <circle
@@ -501,15 +589,16 @@ exports[`test Should show the stretch area 3`] = `
       cx="50%"
       cy="50%"
       id="stretch"
-      r="45%"
+      r="0%"
     >
     </circle>
     <text
       class="area-label"
       id="label-stretch"
+      text-anchor="middle"
       textAnchor="middle"
       x="50%"
-      y="25%"
+      y="20%"
     >
       stretch
     </text>
@@ -519,13 +608,13 @@ exports[`test Should show the stretch area 3`] = `
 
 exports[`test The complete comfort model 1`] = `
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%">
+  width="800">
   <svg
-    height="100%"
+    height="800"
     id="stage"
-    width="100%">
+    width="800">
     <g>
       <rect
         className="not-in-focus area js-area-standard"
@@ -537,6 +626,7 @@ exports[`test The complete comfort model 1`] = `
       <text
         className="area-label"
         id="label-choas"
+        text-anchor="middle"
         textAnchor="middle"
         x="50%"
         y="20">
@@ -553,13 +643,25 @@ exports[`test The complete comfort model 1`] = `
           id="stretch"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
-          r="45%" />
+          r="0%">
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            begin="0s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;56.25%;40.5%;47.25%;45%" />
+        </circle>
         <text
           className="area-label"
           id="label-stretch"
+          text-anchor="middle"
           textAnchor="middle"
           x="50%"
-          y="25%">
+          y="20%">
           stretch
         </text>
       </g>
@@ -571,19 +673,22 @@ exports[`test The complete comfort model 1`] = `
           id="comfort"
           onMouseEnter={[Function]}
           onMouseLeave={[Function]}
-          r="20%">
+          r="0%">
           <animate
             attributeName="r"
             attributeType="XML"
+            begin="0.5s"
             dur="0.8s"
+            fill="freeze"
             from="0%"
             keyTimes="0; 0.3; 0.6; 0.8; 1"
             to="20%"
-            values="0%; 25%; 18%; 21%; 20%" />
+            values="0%;25%;18%;21%;20%" />
         </circle>
         <text
           className="area-label"
           id="label-comfort"
+          text-anchor="middle"
           textAnchor="middle"
           x="50%"
           y="50%">
@@ -597,14 +702,14 @@ exports[`test The complete comfort model 1`] = `
 </svg>
 ------------HTML PREVIEW---------------
 <svg
-  height="100%"
+  height="800"
   id="stage"
-  width="100%"
+  width="800"
 >
   <svg
-    height="100%"
+    height="800"
     id="stage"
-    width="100%"
+    width="800"
   >
     <g>
       <rect
@@ -617,6 +722,7 @@ exports[`test The complete comfort model 1`] = `
       <text
         class="area-label"
         id="label-choas"
+        text-anchor="middle"
         textAnchor="middle"
         x="50%"
         y="20"
@@ -631,15 +737,28 @@ exports[`test The complete comfort model 1`] = `
           cx="50%"
           cy="50%"
           id="stretch"
-          r="45%"
+          r="0%"
         >
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            begin="0s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;56.25%;40.5%;47.25%;45%"
+          >
+          </animate>
         </circle>
         <text
           class="area-label"
           id="label-stretch"
+          text-anchor="middle"
           textAnchor="middle"
           x="50%"
-          y="25%"
+          y="20%"
         >
           stretch
         </text>
@@ -650,22 +769,25 @@ exports[`test The complete comfort model 1`] = `
           cx="50%"
           cy="50%"
           id="comfort"
-          r="20%"
+          r="0%"
         >
           <animate
             attributeName="r"
             attributeType="XML"
+            begin="0.5s"
             dur="0.8s"
+            fill="freeze"
             from="0%"
             keyTimes="0; 0.3; 0.6; 0.8; 1"
             to="20%"
-            values="0%; 25%; 18%; 21%; 20%"
+            values="0%;25%;18%;21%;20%"
           >
           </animate>
         </circle>
         <text
           class="area-label"
           id="label-comfort"
+          text-anchor="middle"
           textAnchor="middle"
           x="50%"
           y="50%"

@@ -5,6 +5,20 @@ var __extends = (this && this.__extends) || function (d, b) {
 };
 define("ComfortReact", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
+    var WeirdExample = (function (_super) {
+        __extends(WeirdExample, _super);
+        function WeirdExample() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        WeirdExample.prototype.render = function () {
+            return React.createElement("svg", { width: "400", height: "400" },
+                React.createElement("circle", { fill: "#bada55", r: "200", cx: "50%", cy: "50%" }),
+                React.createElement("text", { textAnchor: "middle", x: "50%", y: "25%" }, "no hyphen"),
+                React.createElement("text", { "text-anchor": "middle", x: "50%", y: "75%" }, "with hyphen"));
+        };
+        return WeirdExample;
+    }(React.Component));
+    exports.WeirdExample = WeirdExample;
     var ChaosArea = (function (_super) {
         __extends(ChaosArea, _super);
         function ChaosArea(props) {
@@ -128,16 +142,23 @@ define("ComfortReact", ["require", "exports", "react"], function (require, expor
 define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact"], function (require, exports, React, ComfortReact_1) {
     "use strict";
     var renderizer = require("react-test-renderer");
+    it("Renders weirdly", function () {
+        var component = renderizer.create(React.createElement(ComfortReact_1.WeirdExample, null));
+        var tree = component.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
     it("Should show the chaos area", function () {
         // Arrange
         var component = renderizer.create(React.createElement(ComfortReact_1.Stage, null,
             React.createElement(ComfortReact_1.ChaosArea, null)));
+        debugger;
         var tree = component.toJSON();
         var mouseOverArea = tree.children[0].children[0];
         expect(tree).toMatchSnapshot();
         // Act snapshot 2
         mouseOverArea.props.onMouseEnter();
         // Assert Snapshot 2
+        debugger;
         expect(component.toJSON()).toMatchSnapshot();
         // Act snapshot 3
         mouseOverArea.props.onMouseLeave();
@@ -301,8 +322,13 @@ define("users", ["require", "exports", "react", "react-dom", "userComponents", "
         new userComponents_1.UserObject("Bob"),
         new userComponents_1.UserObject("Donald")
     ];
-    ReactDOM.render(React.createElement(userComponents_1.UserList, { users: exports.USERS }), document.getElementById("container"));
-    ReactDOM.render(React.createElement(ComfortReact_2.ComfortReact, null), document.getElementById("comfort"));
+    if (document.getElementById("container")) {
+        ReactDOM.render(React.createElement(userComponents_1.UserList, { users: exports.USERS }), document.getElementById("container"));
+        ReactDOM.render(React.createElement(ComfortReact_2.ComfortReact, null), document.getElementById("comfort"));
+    }
+    else {
+        ReactDOM.render(React.createElement(ComfortReact_2.WeirdExample, null), document.getElementById("weird"));
+    }
 });
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>

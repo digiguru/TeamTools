@@ -12,7 +12,14 @@ export interface IResizableInteractiveModelState extends IInteractiveModelState 
     width: string;
     height: string;
 }
-
+export class WeirdExample extends React.Component<any, any> {
+     render() {
+        return <svg width="400" height="400">
+            <circle fill="#bada55" r="200" cx="50%" cy="50%"></circle>
+            <text textAnchor="middle" x="50%" y="25%">no hyphen</text>
+            <text text-anchor="middle" x="50%" y="75%">with hyphen</text>
+    </svg>;
+}
 export class ChaosArea extends React.Component<any, IResizableInteractiveModelState> {
      constructor(props) {
         super(props);
@@ -37,7 +44,7 @@ export class ChaosArea extends React.Component<any, IResizableInteractiveModelSt
         const className: string = this.state.focus + " area js-area-standard";
         return <g>
             <rect className={className} onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} id="chaos" width={this.state.width} height={this.state.height}></rect>
-            <text className="area-label" id="label-choas" textAnchor="middle" x="50%" y="20">chaos</text>
+            <text className="area-label" id="label-choas" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
         </g>;
     }
 }
@@ -67,12 +74,39 @@ export class StretchArea extends React.Component<any, IResizableInteractiveModel
     render() {
         const className: string = this.state.focus + " area js-area-standard";
         return <g>
-            <circle onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} className={className} id="stretch" r="45%" cx="50%" cy="50%"></circle>
-            <text className="area-label" id="label-stretch" textAnchor="middle" x="50%" y="25%">stretch</text>
+            <circle 
+                onMouseEnter={this._onMouseEnter} 
+                onMouseLeave={this._onMouseLeave} 
+                className={className} id="stretch" r="0%" cx="50%" cy="50%">
+                {this.props.children}
+            </circle>
+            <text className="area-label" id="label-stretch" text-anchor="middle" textAnchor="middle" x="50%" y="20%">stretch</text>
         </g>;
     }
 }
-
+export class BouncyAnimation extends React.Component<any, any> {
+     render() {
+         const delay = this.props.delay || "0s";
+         const duration = this.props.duration || "0.8s";
+         const toValue = parseInt(this.props.value || (20), 10);
+         const toValueType = this.props.valueType || "%";
+         const values = [
+            0 + toValueType,
+            (toValue + toValue / 4) + toValueType,
+            (toValue - toValue / 10) + toValueType,
+            (toValue + toValue / 20) + toValueType,
+            (toValue) + toValueType,
+         ];
+         const valuesToString = values.join(";");
+         return <animate attributeType="XML" attributeName="r" from="0%" to="20%" 
+                    dur={duration} 
+                    begin={delay} 
+                    values={valuesToString}
+                    keyTimes="0; 0.3; 0.6; 0.8; 1"
+                    fill="freeze"
+                    />;
+     }
+}
 export class ComfortArea extends React.Component<any, IResizableInteractiveModelState> {
      constructor(props) {
         super(props);
@@ -97,16 +131,15 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
 
     render() {
         const className: string = this.state.focus + " area js-area-standard";
+        //const startValue = 0 || this.props.value;
+        const value = this.props.value || 20;
         return <g>
             <circle onMouseEnter={this._onMouseEnter}
                 onMouseLeave={this._onMouseLeave}
-                className={className} id="comfort" r="20%" cx="50%" cy="50%">
-                <animate attributeType="XML" attributeName="r" from="0%" to="20%" dur="0.8s" 
-                values="0%; 25%; 18%; 21%; 20%"
-    keyTimes="0; 0.3; 0.6; 0.8; 1"
-    />
+                className={className} id="comfort" r="0%" cx="50%" cy="50%">
+                {this.props.children}
             </circle>
-            <text className="area-label" id="label-comfort" textAnchor="middle" x="50%" y="50%">comfort</text>
+            <text className="area-label" id="label-comfort" text-anchor="middle" textAnchor="middle" x="50%" y="50%">comfort</text>
         </g>;
         // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;" 
     
@@ -117,8 +150,8 @@ export class Stage extends React.Component<any, any> {
     constructor(props) {
         super(props);
         this.state = {
-            width: "100%",
-            height: "100%"
+            width: "800",
+            height: "800"
         };
     }
 
@@ -132,8 +165,8 @@ export class ComfortReact extends React.Component<any, any> {
         return <Stage>
                     <ChaosArea />
                     <g id="zones">
-                        <StretchArea />
-                        <ComfortArea />
+                        <StretchArea><BouncyAnimation value="45" /></StretchArea>
+                        <ComfortArea><BouncyAnimation value="20" delay="0.5s" /></ComfortArea>
                     </g>
                     <g id="history">
                     </g>

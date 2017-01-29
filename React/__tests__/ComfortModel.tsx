@@ -1,13 +1,19 @@
 import * as React from "react";
-import {ChaosArea, StretchArea, ComfortArea, ComfortReact, Stage} from "../ComfortReact";
+import {BouncyAnimation, WeirdExample, ChaosArea, StretchArea, ComfortArea, ComfortReact, Stage} from "../ComfortReact";
 const renderizer = require("react-test-renderer");
+
+it("Renders weirdly", () => {
+    const component = renderizer.create(<WeirdExample />);
+    const tree = component.toJSON();
+    expect(tree).toMatchSnapshot();
+
+});
 
 it("Should show the chaos area", () => {
     // Arrange
     const component = renderizer.create(
         <Stage><ChaosArea></ChaosArea></Stage>
     );
-debugger;
     const tree = component.toJSON();
     const mouseOverArea = tree.children[0].children[0];
     expect(tree).toMatchSnapshot();
@@ -46,7 +52,15 @@ it("Should show the stretch area", () => {
 });
 
 
-it("Should show the comfort area", () => {
+it("Should show the comfort area - animated", () => {
+    const component = renderizer.create(
+        <Stage><ComfortArea><BouncyAnimation /></ComfortArea></Stage>
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+
+});
+
+it("Should show the comfort area - standard", () => {
     const component = renderizer.create(
         <Stage><ComfortArea></ComfortArea></Stage>
     );
@@ -66,7 +80,6 @@ it("Should show the comfort area", () => {
     expect(component.toJSON()).toMatchSnapshot();
 
 });
-
 it("The complete comfort model", () => {
     const component = renderizer.create(
         <Stage width="800" height="800"><ComfortReact></ComfortReact></Stage>

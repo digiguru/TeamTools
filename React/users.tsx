@@ -5,19 +5,28 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {UserObject, UserList} from "userComponents";
-import {ComfortReact} from "ComfortReact";
+import {ComfortReact, WeirdExample} from "ComfortReact";
 
 export const USERS = [
     new UserObject("Bob"),
     new UserObject("Donald")
 ];
+if(document.getElementById("container")) {
+    ReactDOM.render(
+        <UserList users={USERS} />,
+        document.getElementById("container")
+    );
+    ReactDOM.render(
+        <ComfortReact />,
+        document.getElementById("comfort")
+    );
+} else {
+    ReactDOM.render(
+        <WeirdExample />,
+        document.getElementById("weird")
+    );
 
-ReactDOM.render(
-  <UserList users={USERS} />,
-  document.getElementById("container")
-);
+}
 
-ReactDOM.render(
-    <ComfortReact />,
-    document.getElementById("comfort")
-);
+
+
