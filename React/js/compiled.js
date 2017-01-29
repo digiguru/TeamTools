@@ -3,22 +3,50 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define("ComfortReact", ["require", "exports", "react"], function (require, exports, React) {
+define("SVGComponents", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
-    var WeirdExample = (function (_super) {
-        __extends(WeirdExample, _super);
-        function WeirdExample() {
+    var Stage = (function (_super) {
+        __extends(Stage, _super);
+        function Stage(props) {
+            var _this = _super.call(this, props) || this;
+            _this.state = {
+                width: "800",
+                height: "800"
+            };
+            return _this;
+        }
+        Stage.prototype.render = function () {
+            return React.createElement("svg", { id: "stage", width: this.state.width, height: this.state.height }, this.props.children);
+        };
+        return Stage;
+    }(React.Component));
+    exports.Stage = Stage;
+    var BouncyAnimation = (function (_super) {
+        __extends(BouncyAnimation, _super);
+        function BouncyAnimation() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
-        WeirdExample.prototype.render = function () {
-            return React.createElement("svg", { width: "400", height: "400" },
-                React.createElement("circle", { fill: "#bada55", r: "200", cx: "50%", cy: "50%" }),
-                React.createElement("text", { textAnchor: "middle", x: "50%", y: "25%" }, "no hyphen"),
-                React.createElement("text", { "text-anchor": "middle", x: "50%", y: "75%" }, "with hyphen"));
+        BouncyAnimation.prototype.render = function () {
+            var delay = this.props.delay || "0s";
+            var duration = this.props.duration || "0.8s";
+            var toValue = parseInt(this.props.value || (20), 10);
+            var toValueType = this.props.valueType || "%";
+            var values = [
+                0 + toValueType,
+                (toValue + toValue / 4) + toValueType,
+                (toValue - toValue / 10) + toValueType,
+                (toValue + toValue / 20) + toValueType,
+                (toValue) + toValueType,
+            ];
+            var valuesToString = values.join(";");
+            return React.createElement("animate", { attributeType: "XML", attributeName: "r", from: "0%", to: "20%", dur: duration, begin: delay, values: valuesToString, keyTimes: "0; 0.3; 0.6; 0.8; 1", fill: "freeze" });
         };
-        return WeirdExample;
+        return BouncyAnimation;
     }(React.Component));
-    exports.WeirdExample = WeirdExample;
+    exports.BouncyAnimation = BouncyAnimation;
+});
+define("ComfortReact", ["require", "exports", "react", "SVGComponents"], function (require, exports, React, SVGComponents_1) {
+    "use strict";
     var ChaosArea = (function (_super) {
         __extends(ChaosArea, _super);
         function ChaosArea(props) {
@@ -42,7 +70,7 @@ define("ComfortReact", ["require", "exports", "react"], function (require, expor
             var className = this.state.focus + " area js-area-standard";
             return React.createElement("g", null,
                 React.createElement("rect", { className: className, onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave, id: "chaos", width: this.state.width, height: this.state.height }),
-                React.createElement("text", { className: "area-label", id: "label-choas", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
+                React.createElement("text", { className: "area-label", id: "label-choas", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
         };
         return ChaosArea;
     }(React.Component));
@@ -69,8 +97,8 @@ define("ComfortReact", ["require", "exports", "react"], function (require, expor
         StretchArea.prototype.render = function () {
             var className = this.state.focus + " area js-area-standard";
             return React.createElement("g", null,
-                React.createElement("circle", { onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave, className: className, id: "stretch", r: "45%", cx: "50%", cy: "50%" }),
-                React.createElement("text", { className: "area-label", id: "label-stretch", textAnchor: "middle", x: "50%", y: "25%" }, "stretch"));
+                React.createElement("circle", { onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave, className: className, id: "stretch", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
+                React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
         };
         return StretchArea;
     }(React.Component));
@@ -96,42 +124,29 @@ define("ComfortReact", ["require", "exports", "react"], function (require, expor
         };
         ComfortArea.prototype.render = function () {
             var className = this.state.focus + " area js-area-standard";
+            // const startValue = 0 || this.props.value;
+            var value = this.props.value || 20;
             return React.createElement("g", null,
-                React.createElement("circle", { onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave, className: className, id: "comfort", r: "20%", cx: "50%", cy: "50%" },
-                    React.createElement("animate", { attributeType: "XML", attributeName: "r", from: "0%", to: "20%", dur: "0.8s", values: "0%; 25%; 18%; 21%; 20%", keyTimes: "0; 0.3; 0.6; 0.8; 1" })),
-                React.createElement("text", { className: "area-label", id: "label-comfort", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
+                React.createElement("circle", { onMouseEnter: this._onMouseEnter, onMouseLeave: this._onMouseLeave, className: className, id: "comfort", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
+                React.createElement("text", { className: "area-label", id: "label-comfort", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
             // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;" 
         };
         return ComfortArea;
     }(React.Component));
     exports.ComfortArea = ComfortArea;
-    var Stage = (function (_super) {
-        __extends(Stage, _super);
-        function Stage(props) {
-            var _this = _super.call(this, props) || this;
-            _this.state = {
-                width: "100%",
-                height: "100%"
-            };
-            return _this;
-        }
-        Stage.prototype.render = function () {
-            return React.createElement("svg", { id: "stage", width: this.state.width, height: this.state.height }, this.props.children);
-        };
-        return Stage;
-    }(React.Component));
-    exports.Stage = Stage;
     var ComfortReact = (function (_super) {
         __extends(ComfortReact, _super);
         function ComfortReact() {
             return _super !== null && _super.apply(this, arguments) || this;
         }
         ComfortReact.prototype.render = function () {
-            return React.createElement(Stage, null,
+            return React.createElement(SVGComponents_1.Stage, null,
                 React.createElement(ChaosArea, null),
                 React.createElement("g", { id: "zones" },
-                    React.createElement(StretchArea, null),
-                    React.createElement(ComfortArea, null)),
+                    React.createElement(StretchArea, null,
+                        React.createElement(SVGComponents_1.BouncyAnimation, { value: "45" })),
+                    React.createElement(ComfortArea, null,
+                        React.createElement(SVGComponents_1.BouncyAnimation, { value: "20", delay: "0.5s" }))),
                 React.createElement("g", { id: "history" }));
             //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
         };
@@ -139,19 +154,13 @@ define("ComfortReact", ["require", "exports", "react"], function (require, expor
     }(React.Component));
     exports.ComfortReact = ComfortReact;
 });
-define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact"], function (require, exports, React, ComfortReact_1) {
+define("__tests__/ComfortModel", ["require", "exports", "react", "SVGComponents", "ComfortReact"], function (require, exports, React, SVGComponents_2, ComfortReact_1) {
     "use strict";
     var renderizer = require("react-test-renderer");
-    it("Renders weirdly", function () {
-        var component = renderizer.create(React.createElement(ComfortReact_1.WeirdExample, null));
-        var tree = component.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
     it("Should show the chaos area", function () {
         // Arrange
-        var component = renderizer.create(React.createElement(ComfortReact_1.Stage, null,
+        var component = renderizer.create(React.createElement(SVGComponents_2.Stage, null,
             React.createElement(ComfortReact_1.ChaosArea, null)));
-        debugger;
         var tree = component.toJSON();
         var mouseOverArea = tree.children[0].children[0];
         expect(tree).toMatchSnapshot();
@@ -166,7 +175,7 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact"]
         expect(component.toJSON()).toMatchSnapshot();
     });
     it("Should show the stretch area", function () {
-        var component = renderizer.create(React.createElement(ComfortReact_1.Stage, null,
+        var component = renderizer.create(React.createElement(SVGComponents_2.Stage, null,
             React.createElement(ComfortReact_1.StretchArea, null)));
         var tree = component.toJSON();
         var mouseOverArea = tree.children[0].children[0];
@@ -180,8 +189,14 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact"]
         // Assert Snapshot 3
         expect(component.toJSON()).toMatchSnapshot();
     });
-    it("Should show the comfort area", function () {
-        var component = renderizer.create(React.createElement(ComfortReact_1.Stage, null,
+    it("Should show the comfort area - animated", function () {
+        var component = renderizer.create(React.createElement(SVGComponents_2.Stage, null,
+            React.createElement(ComfortReact_1.ComfortArea, null,
+                React.createElement(SVGComponents_2.BouncyAnimation, null))));
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+    it("Should show the comfort area - standard", function () {
+        var component = renderizer.create(React.createElement(SVGComponents_2.Stage, null,
             React.createElement(ComfortReact_1.ComfortArea, null)));
         var tree = component.toJSON();
         debugger;
@@ -197,7 +212,7 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact"]
         expect(component.toJSON()).toMatchSnapshot();
     });
     it("The complete comfort model", function () {
-        var component = renderizer.create(React.createElement(ComfortReact_1.Stage, { width: "800", height: "800" },
+        var component = renderizer.create(React.createElement(SVGComponents_2.Stage, { width: "800", height: "800" },
             React.createElement(ComfortReact_1.ComfortReact, null)));
         var tree = component.toJSON();
         expect(tree).toMatchSnapshot();
@@ -322,13 +337,8 @@ define("users", ["require", "exports", "react", "react-dom", "userComponents", "
         new userComponents_1.UserObject("Bob"),
         new userComponents_1.UserObject("Donald")
     ];
-    if (document.getElementById("container")) {
-        ReactDOM.render(React.createElement(userComponents_1.UserList, { users: exports.USERS }), document.getElementById("container"));
-        ReactDOM.render(React.createElement(ComfortReact_2.ComfortReact, null), document.getElementById("comfort"));
-    }
-    else {
-        ReactDOM.render(React.createElement(ComfortReact_2.WeirdExample, null), document.getElementById("weird"));
-    }
+    ReactDOM.render(React.createElement(userComponents_1.UserList, { users: exports.USERS }), document.getElementById("container"));
+    ReactDOM.render(React.createElement(ComfortReact_2.ComfortReact, null), document.getElementById("comfort"));
 });
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>

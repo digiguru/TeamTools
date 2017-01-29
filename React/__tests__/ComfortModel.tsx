@@ -1,5 +1,6 @@
 import * as React from "react";
-import {BouncyAnimation, ChaosArea, StretchArea, ComfortArea, ComfortReact, Stage} from "../ComfortReact";
+import {ChaosArea, StretchArea, ComfortArea, ComfortReact} from "../ComfortReact";
+import {Stage, BouncyAnimation} from "../SVGHelper";
 const renderizer = require("react-test-renderer");
 
 it("Should show the chaos area", () => {
