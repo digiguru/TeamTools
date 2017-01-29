@@ -1,13 +1,6 @@
 import * as React from "react";
-import {BouncyAnimation, WeirdExample, ChaosArea, StretchArea, ComfortArea, ComfortReact, Stage} from "../ComfortReact";
+import {BouncyAnimation, ChaosArea, StretchArea, ComfortArea, ComfortReact, Stage} from "../ComfortReact";
 const renderizer = require("react-test-renderer");
-
-it("Renders weirdly", () => {
-    const component = renderizer.create(<WeirdExample />);
-    const tree = component.toJSON();
-    expect(tree).toMatchSnapshot();
-
-});
 
 it("Should show the chaos area", () => {
     // Arrange

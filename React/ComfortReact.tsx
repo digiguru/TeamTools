@@ -12,14 +12,7 @@ export interface IResizableInteractiveModelState extends IInteractiveModelState 
     width: string;
     height: string;
 }
-export class WeirdExample extends React.Component<any, any> {
-     render() {
-        return <svg width="400" height="400">
-            <circle fill="#bada55" r="200" cx="50%" cy="50%"></circle>
-            <text textAnchor="middle" x="50%" y="25%">no hyphen</text>
-            <text text-anchor="middle" x="50%" y="75%">with hyphen</text>
-    </svg>;
-}
+
 export class ChaosArea extends React.Component<any, IResizableInteractiveModelState> {
      constructor(props) {
         super(props);
