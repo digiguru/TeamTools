@@ -26,3 +26,11 @@ Run the tests localy
 {{npm test}}
 
 Or hit debug button in VSCode
+
+If you want to update the snapshots produced by the tests use
+
+{{npm run jest-update}}
+
+And to load the snapshot previewer use...
+
+{{npm run jest-html}}

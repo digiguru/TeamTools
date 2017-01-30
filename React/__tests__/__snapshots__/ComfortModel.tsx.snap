@@ -1,0 +1,751 @@
+exports[`test Should show the chaos area 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <rect
+      className="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      width="100%" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20">
+      chaos
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <rect
+      class="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      width="100%"
+    >
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20"
+    >
+      chaos
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the chaos area 2`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <rect
+      className="in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      width="100%" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20">
+      chaos
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <rect
+      class="in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      width="100%"
+    >
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20"
+    >
+      chaos
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the chaos area 3`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <rect
+      className="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      width="100%" />
+    <text
+      className="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20">
+      chaos
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <rect
+      class="not-in-focus area js-area-standard"
+      height="100%"
+      id="chaos"
+      width="100%"
+    >
+    </rect>
+    <text
+      class="area-label"
+      id="label-choas"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20"
+    >
+      chaos
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the comfort area - animated 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%">
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        begin="0s"
+        dur="0.8s"
+        fill="freeze"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%;25%;18%;21%;20%" />
+    </circle>
+    <text
+      className="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%">
+      comfort
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      r="0%"
+    >
+      <animate
+        attributeName="r"
+        attributeType="XML"
+        begin="0s"
+        dur="0.8s"
+        fill="freeze"
+        from="0%"
+        keyTimes="0; 0.3; 0.6; 0.8; 1"
+        to="20%"
+        values="0%;25%;18%;21%;20%"
+      >
+      </animate>
+    </circle>
+    <text
+      class="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%"
+    >
+      comfort
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the comfort area - standard 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%" />
+    <text
+      className="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%">
+      comfort
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      r="0%"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%"
+    >
+      comfort
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the comfort area - standard 2`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%" />
+    <text
+      className="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%">
+      comfort
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      r="0%"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%"
+    >
+      comfort
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the comfort area - standard 3`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%" />
+    <text
+      className="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%">
+      comfort
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="comfort"
+      r="0%"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-comfort"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="50%"
+    >
+      comfort
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the stretch area 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="stretch"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%" />
+    <text
+      className="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20%">
+      stretch
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="stretch"
+      r="0%"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20%"
+    >
+      stretch
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the stretch area 2`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="stretch"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%" />
+    <text
+      className="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20%">
+      stretch
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="stretch"
+      r="0%"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20%"
+    >
+      stretch
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test Should show the stretch area 3`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <g>
+    <circle
+      className="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="stretch"
+      onMouseEnter={[Function]}
+      onMouseLeave={[Function]}
+      r="0%" />
+    <text
+      className="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20%">
+      stretch
+    </text>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <g>
+    <circle
+      class="not-in-focus area js-area-standard"
+      cx="50%"
+      cy="50%"
+      id="stretch"
+      r="0%"
+    >
+    </circle>
+    <text
+      class="area-label"
+      id="label-stretch"
+      text-anchor="middle"
+      textAnchor="middle"
+      x="50%"
+      y="20%"
+    >
+      stretch
+    </text>
+  </g>
+</svg>
+`;
+
+exports[`test The complete comfort model 1`] = `
+<svg
+  height="800"
+  id="stage"
+  width="800">
+  <svg
+    height="800"
+    id="stage"
+    width="800">
+    <g>
+      <rect
+        className="not-in-focus area js-area-standard"
+        height="100%"
+        id="chaos"
+        onMouseEnter={[Function]}
+        onMouseLeave={[Function]}
+        width="100%" />
+      <text
+        className="area-label"
+        id="label-choas"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="50%"
+        y="20">
+        chaos
+      </text>
+    </g>
+    <g
+      id="zones">
+      <g>
+        <circle
+          className="not-in-focus area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="stretch"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          r="0%">
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            begin="0s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;56.25%;40.5%;47.25%;45%" />
+        </circle>
+        <text
+          className="area-label"
+          id="label-stretch"
+          text-anchor="middle"
+          textAnchor="middle"
+          x="50%"
+          y="20%">
+          stretch
+        </text>
+      </g>
+      <g>
+        <circle
+          className="not-in-focus area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="comfort"
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          r="0%">
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            begin="0.5s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;25%;18%;21%;20%" />
+        </circle>
+        <text
+          className="area-label"
+          id="label-comfort"
+          text-anchor="middle"
+          textAnchor="middle"
+          x="50%"
+          y="50%">
+          comfort
+        </text>
+      </g>
+    </g>
+    <g
+      id="history" />
+  </svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  height="800"
+  id="stage"
+  width="800"
+>
+  <svg
+    height="800"
+    id="stage"
+    width="800"
+  >
+    <g>
+      <rect
+        class="not-in-focus area js-area-standard"
+        height="100%"
+        id="chaos"
+        width="100%"
+      >
+      </rect>
+      <text
+        class="area-label"
+        id="label-choas"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="50%"
+        y="20"
+      >
+        chaos
+      </text>
+    </g>
+    <g id="zones">
+      <g>
+        <circle
+          class="not-in-focus area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="stretch"
+          r="0%"
+        >
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            begin="0s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;56.25%;40.5%;47.25%;45%"
+          >
+          </animate>
+        </circle>
+        <text
+          class="area-label"
+          id="label-stretch"
+          text-anchor="middle"
+          textAnchor="middle"
+          x="50%"
+          y="20%"
+        >
+          stretch
+        </text>
+      </g>
+      <g>
+        <circle
+          class="not-in-focus area js-area-standard"
+          cx="50%"
+          cy="50%"
+          id="comfort"
+          r="0%"
+        >
+          <animate
+            attributeName="r"
+            attributeType="XML"
+            begin="0.5s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;25%;18%;21%;20%"
+          >
+          </animate>
+        </circle>
+        <text
+          class="area-label"
+          id="label-comfort"
+          text-anchor="middle"
+          textAnchor="middle"
+          x="50%"
+          y="50%"
+        >
+          comfort
+        </text>
+      </g>
+    </g>
+    <g id="history"></g>
+  </svg>
+</svg>
+`;

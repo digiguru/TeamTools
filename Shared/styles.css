@@ -2,6 +2,16 @@
 #stage, textarea, button, input {
     font-family: 'Share Tech Mono', sans-serif;
 }
+circle.area, rect.area { transition: fill .4s ease; }
+svg .in-focus {
+    fill: rgb(0, 180, 219);
+}
+svg .not-in-focus {
+    fill: #00D7FE;
+}
+svg text {
+     pointer-events: none;
+}
 #users li {
     background-color: black;
     color: white;

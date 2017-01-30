@@ -52,7 +52,7 @@
             true,
             "spaces"
         ],
-        "max-classes-per-file": [true, 1],
+        "max-classes-per-file": [true, 10],
         "no-eval": true,
         "no-internal-module": true,
         "no-trailing-whitespace": true,
