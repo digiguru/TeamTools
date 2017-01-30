@@ -6,7 +6,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import {UserObject, UserList} from "userComponents";
 import {ComfortReact} from "ComfortReact";
-
+import {TuckmanComponent} from "TuckmanReact";
 export const USERS = [
     new UserObject("Bob"),
     new UserObject("Donald")
@@ -18,6 +18,10 @@ ReactDOM.render(
 ReactDOM.render(
     <ComfortReact />,
     document.getElementById("comfort")
+);
+ReactDOM.render(
+    <TuckmanComponent />,
+    document.getElementById("tuckman")
 );
 
 

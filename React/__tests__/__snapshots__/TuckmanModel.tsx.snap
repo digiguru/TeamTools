@@ -13,59 +13,29 @@ exports[`test Should show the component 1`] = `
         <rect
           className="not-in-focus area js-area-standard"
           height="100%"
-          id="forming"
+          id="performing"
           width="25%"
           x="0"
           y="0">
           <animate
             attributeName="x"
             attributeType="XML"
-            begin="0s"
+            begin="0.6000000000000001s"
             dur="0.8s"
             fill="freeze"
             from="0%"
             keyTimes="0; 0.3; 0.6; 0.8; 1"
             to="20%"
-            values="0%;0%;0%;0%;0%" />
+            values="0%;93.75%;67.5%;78.75%;75%" />
         </rect>
         <text
           className="area-label"
-          id="forming-label"
+          id="performing-label"
           text-anchor="middle"
           textAnchor="middle"
-          x="12%"
+          x="87%"
           y="50%">
-          forming
-        </text>
-        ;
-      </g>
-      <g>
-        <rect
-          className="not-in-focus area js-area-standard"
-          height="100%"
-          id="storming"
-          width="25%"
-          x="0"
-          y="0">
-          <animate
-            attributeName="x"
-            attributeType="XML"
-            begin="0.2s"
-            dur="0.8s"
-            fill="freeze"
-            from="0%"
-            keyTimes="0; 0.3; 0.6; 0.8; 1"
-            to="20%"
-            values="0%;31.25%;22.5%;26.25%;25%" />
-        </rect>
-        <text
-          className="area-label"
-          id="storming-label"
-          text-anchor="middle"
-          textAnchor="middle"
-          x="37%"
-          y="50%">
-          storming
+          performing
         </text>
         ;
       </g>
@@ -103,29 +73,59 @@ exports[`test Should show the component 1`] = `
         <rect
           className="not-in-focus area js-area-standard"
           height="100%"
-          id="performing"
+          id="storming"
           width="25%"
           x="0"
           y="0">
           <animate
             attributeName="x"
             attributeType="XML"
-            begin="0.6000000000000001s"
+            begin="0.2s"
             dur="0.8s"
             fill="freeze"
             from="0%"
             keyTimes="0; 0.3; 0.6; 0.8; 1"
             to="20%"
-            values="0%;93.75%;67.5%;78.75%;75%" />
+            values="0%;31.25%;22.5%;26.25%;25%" />
         </rect>
         <text
           className="area-label"
-          id="performing-label"
+          id="storming-label"
           text-anchor="middle"
           textAnchor="middle"
-          x="87%"
+          x="37%"
           y="50%">
-          performing
+          storming
+        </text>
+        ;
+      </g>
+      <g>
+        <rect
+          className="not-in-focus area js-area-standard"
+          height="100%"
+          id="forming"
+          width="25%"
+          x="0"
+          y="0">
+          <animate
+            attributeName="x"
+            attributeType="XML"
+            begin="0s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;0%;0%;0%;0%" />
+        </rect>
+        <text
+          className="area-label"
+          id="forming-label"
+          text-anchor="middle"
+          textAnchor="middle"
+          x="12%"
+          y="50%">
+          forming
         </text>
         ;
       </g>
@@ -148,7 +148,7 @@ exports[`test Should show the component 1`] = `
         <rect
           class="not-in-focus area js-area-standard"
           height="100%"
-          id="forming"
+          id="performing"
           width="25%"
           x="0"
           y="0"
@@ -156,59 +156,25 @@ exports[`test Should show the component 1`] = `
           <animate
             attributeName="x"
             attributeType="XML"
-            begin="0s"
+            begin="0.6000000000000001s"
             dur="0.8s"
             fill="freeze"
             from="0%"
             keyTimes="0; 0.3; 0.6; 0.8; 1"
             to="20%"
-            values="0%;0%;0%;0%;0%"
+            values="0%;93.75%;67.5%;78.75%;75%"
           >
           </animate>
         </rect>
         <text
           class="area-label"
-          id="forming-label"
+          id="performing-label"
           text-anchor="middle"
           textAnchor="middle"
-          x="12%"
+          x="87%"
           y="50%"
         >
-          forming
-        </text>
-        ;
-      </g>
-      <g>
-        <rect
-          class="not-in-focus area js-area-standard"
-          height="100%"
-          id="storming"
-          width="25%"
-          x="0"
-          y="0"
-        >
-          <animate
-            attributeName="x"
-            attributeType="XML"
-            begin="0.2s"
-            dur="0.8s"
-            fill="freeze"
-            from="0%"
-            keyTimes="0; 0.3; 0.6; 0.8; 1"
-            to="20%"
-            values="0%;31.25%;22.5%;26.25%;25%"
-          >
-          </animate>
-        </rect>
-        <text
-          class="area-label"
-          id="storming-label"
-          text-anchor="middle"
-          textAnchor="middle"
-          x="37%"
-          y="50%"
-        >
-          storming
+          performing
         </text>
         ;
       </g>
@@ -250,7 +216,7 @@ exports[`test Should show the component 1`] = `
         <rect
           class="not-in-focus area js-area-standard"
           height="100%"
-          id="performing"
+          id="storming"
           width="25%"
           x="0"
           y="0"
@@ -258,25 +224,59 @@ exports[`test Should show the component 1`] = `
           <animate
             attributeName="x"
             attributeType="XML"
-            begin="0.6000000000000001s"
+            begin="0.2s"
             dur="0.8s"
             fill="freeze"
             from="0%"
             keyTimes="0; 0.3; 0.6; 0.8; 1"
             to="20%"
-            values="0%;93.75%;67.5%;78.75%;75%"
+            values="0%;31.25%;22.5%;26.25%;25%"
           >
           </animate>
         </rect>
         <text
           class="area-label"
-          id="performing-label"
+          id="storming-label"
           text-anchor="middle"
           textAnchor="middle"
-          x="87%"
+          x="37%"
           y="50%"
         >
-          performing
+          storming
+        </text>
+        ;
+      </g>
+      <g>
+        <rect
+          class="not-in-focus area js-area-standard"
+          height="100%"
+          id="forming"
+          width="25%"
+          x="0"
+          y="0"
+        >
+          <animate
+            attributeName="x"
+            attributeType="XML"
+            begin="0s"
+            dur="0.8s"
+            fill="freeze"
+            from="0%"
+            keyTimes="0; 0.3; 0.6; 0.8; 1"
+            to="20%"
+            values="0%;0%;0%;0%;0%"
+          >
+          </animate>
+        </rect>
+        <text
+          class="area-label"
+          id="forming-label"
+          text-anchor="middle"
+          textAnchor="middle"
+          x="12%"
+          y="50%"
+        >
+          forming
         </text>
         ;
       </g>

@@ -6,10 +6,10 @@ export class ChartArea extends React.Component<any, any> {
     render() {
         const index = parseInt(this.props.index || 0, 10);
         const label = this.props.label || 0;
-        const   textID = label + "-label";
+        const textID = label + "-label";
         const width:number = parseInt(this.props.width, 10);
-        const  offset:string = (25 * index) + "%";
-        const  textOffset:string = 12 + (25 * index) + "%";
+        const offset:string = (25 * index) + "%";
+        const textOffset:string = 12 + (25 * index) + "%";
         const delay:string = (0.2 * index) + "s";
         return <g>
             <rect className="not-in-focus area js-area-standard" id={label} x="0" y="0" width="25%" height="100%">
@@ -26,10 +26,10 @@ export class TuckmanComponent extends React.Component<any, any> {
     render() {
         return <Stage>
                     <g id="zones">
-                        <ChartArea label="forming"  index="0" />
-                        <ChartArea label="storming" index="1" />
-                        <ChartArea label="norming"   index="2" />
                         <ChartArea label="performing" index="3" />
+                        <ChartArea label="norming"    index="2" />
+                        <ChartArea label="storming"   index="1" />
+                        <ChartArea label="forming"    index="0" />
                     </g>
                 </Stage>;
                 //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
