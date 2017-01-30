@@ -6,9 +6,8 @@
 requirejs.config( {
     baseUrl : "/",
     paths: {
-        'react': '../node_modules/react/dist/react.min',
-        'react-dom': '../node_modules/react-dom/dist/react-dom.min',
-        'react-test-renderer': '../node_modules/react-test-renderer/index'
+        'react': '../3rdParty/react.min',
+        'react-dom': '../3rdParty/react-dom.min'
     }
 });
 require(["users"], (u) => {
