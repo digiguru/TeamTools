@@ -31,7 +31,7 @@ export class BouncyAnimation extends React.Component<any, any> {
             (toValue) + toValueType,
          ];
          const valuesToString = values.join(";");
-         return <animate attributeType="XML" attributeName="r" from="0%" to="20%"
+         return <animate attributeType="XML" attributeName={this.props.attributeName} from="0%" to="20%"
                     dur={duration}
                     begin={delay}
                     values={valuesToString}

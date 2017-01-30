@@ -48,7 +48,7 @@ it("Should show the stretch area", () => {
 
 it("Should show the comfort area - animated", () => {
     const component = renderizer.create(
-        <Stage><ComfortArea><BouncyAnimation /></ComfortArea></Stage>
+        <Stage><ComfortArea><BouncyAnimation attributeName="r" /></ComfortArea></Stage>
     );
     expect(component.toJSON()).toMatchSnapshot();
 

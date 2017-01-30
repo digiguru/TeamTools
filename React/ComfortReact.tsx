@@ -123,8 +123,8 @@ export class ComfortReact extends React.Component<any, any> {
         return <Stage>
                     <ChaosArea />
                     <g id="zones">
-                        <StretchArea><BouncyAnimation value="45" /></StretchArea>
-                        <ComfortArea><BouncyAnimation value="20" delay="0.5s" /></ComfortArea>
+                        <StretchArea><BouncyAnimation attributeName="r" value="45" /></StretchArea>
+                        <ComfortArea><BouncyAnimation attributeName="r" value="20" delay="0.5s" /></ComfortArea>
                     </g>
                     <g id="history">
                     </g>
