@@ -6,8 +6,8 @@
 requirejs.config( {
     baseUrl : "/",
     paths: {
-        'react': '../3rdParty/react.min',
-        'react-dom': '../3rdParty/react-dom.min'
+        "react": "../3rdParty/react.min",
+        "react-dom": "../3rdParty/react-dom.min"
     }
 });
 require(["users"], (u) => {

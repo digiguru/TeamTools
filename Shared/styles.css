@@ -9,6 +9,9 @@ svg .in-focus {
 svg .not-in-focus {
     fill: #00D7FE;
 }
+svg .active {
+    fill: #000000;
+}
 svg text {
      pointer-events: none;
 }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Stage, BouncyAnimation} from "./SVGHelper";
+import {Stage, BouncyAnimation, Events} from "./SVGHelper";
 
 export interface IResizableModel {
     width: string;
@@ -13,42 +13,52 @@ export interface IResizableInteractiveModelState extends IInteractiveModelState 
     width: string;
     height: string;
 }
+export interface IMouseEvents {
+    onMouseEnter: any;
+    onMouseLeave: any;
+    onMouseUp: any;
+    onMouseDown: any;
+}
+export interface IResizableMouseEvents extends IResizableModel, IMouseEvents {
+
+}
 
 export class ChaosArea extends React.Component<any, IResizableInteractiveModelState> {
-     constructor(props) {
+     constructor(props: IResizableMouseEvents) {
         super(props);
-        this._onMouseEnter = this._onMouseEnter.bind(this);
-        this._onMouseLeave = this._onMouseLeave.bind(this);
+        this.props.onMouseEnter = Events.mouseEnter.bind(this);
+        this.props.onMouseLeave = Events.mouseLeave.bind(this);
+        this.props.onMouseUp = Events.mouseUp.bind(this);
+        this.props.onMouseDown = Events.mouseDown.bind(this);
         this.state = {
             focus: "not-in-focus",
             width: props.width || "100%",
-            height: props.height || "100%"
+            height: props.height || "100%",
         };
-    }
-
-    _onMouseEnter() {
-        this.setState({focus: "in-focus"});
-    }
-
-    _onMouseLeave() {
-        this.setState({focus: "not-in-focus"});
     }
 
     render() {
         const className: string = this.state.focus + " area js-area-standard";
         return <g>
-            <rect className={className} onMouseEnter={this._onMouseEnter} onMouseLeave={this._onMouseLeave} id="chaos" width={this.state.width} height={this.state.height}></rect>
+            <rect id="chaos" className={className}
+                onMouseUp={this.props.onMouseUp}
+                onMouseDown={this.props.onMouseDown}
+                onMouseEnter={this.props.onMouseEnter}
+                onMouseLeave={this.props.onMouseLeave}
+                width={this.state.width} height={this.state.height}></rect>
             <text className="area-label" id="label-choas" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
         </g>;
     }
 }
 
 export class StretchArea extends React.Component<any, IResizableInteractiveModelState> {
-    constructor(props) {
+    constructor(props: IResizableMouseEvents) {
         super(props);
 
-        this._onMouseEnter = this._onMouseEnter.bind(this);
-        this._onMouseLeave = this._onMouseLeave.bind(this);
+        this.props.onMouseEnter = Events.mouseEnter.bind(this);
+        this.props.onMouseLeave = Events.mouseLeave.bind(this);
+        this.props.onMouseUp = Events.mouseUp.bind(this);
+        this.props.onMouseDown = Events.mouseDown.bind(this);
 
         this.state = {
             focus: "not-in-focus",
@@ -57,20 +67,14 @@ export class StretchArea extends React.Component<any, IResizableInteractiveModel
         };
     }
 
-    _onMouseEnter() {
-        this.setState({focus: "in-focus"});
-    }
-
-    _onMouseLeave() {
-        this.setState({focus: "not-in-focus"});
-    }
-
     render() {
         const className: string = this.state.focus + " area js-area-standard";
         return <g>
             <circle
-                onMouseEnter={this._onMouseEnter}
-                onMouseLeave={this._onMouseLeave}
+                onMouseUp={this.props.onMouseUp}
+                onMouseDown={this.props.onMouseDown}
+                onMouseEnter={this.props.onMouseEnter}
+                onMouseLeave={this.props.onMouseLeave}
                 className={className} id="stretch" r="0%" cx="50%" cy="50%">
                 {this.props.children}
             </circle>
@@ -80,12 +84,13 @@ export class StretchArea extends React.Component<any, IResizableInteractiveModel
 }
 
 export class ComfortArea extends React.Component<any, IResizableInteractiveModelState> {
-     constructor(props) {
+     constructor(props: IResizableMouseEvents) {
         super(props);
 
-        this._onMouseEnter = this._onMouseEnter.bind(this);
-        this._onMouseLeave = this._onMouseLeave.bind(this);
-
+        this.props.onMouseEnter = Events.mouseEnter.bind(this);
+        this.props.onMouseLeave = Events.mouseLeave.bind(this);
+        this.props.onMouseUp = Events.mouseUp.bind(this);
+        this.props.onMouseDown = Events.mouseDown.bind(this);
         this.state = {
             focus: "not-in-focus",
             width: props.width || "100%",
@@ -93,21 +98,16 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
         };
     }
 
-    _onMouseEnter() {
-        this.setState({focus: "in-focus"});
-    }
-
-    _onMouseLeave() {
-        this.setState({focus: "not-in-focus"});
-    }
-
     render() {
         const className: string = this.state.focus + " area js-area-standard";
         // const startValue = 0 || this.props.value;
         const value = this.props.value || 20;
         return <g>
-            <circle onMouseEnter={this._onMouseEnter}
-                onMouseLeave={this._onMouseLeave}
+            <circle
+                onMouseUp={this.props.onMouseUp}
+                onMouseDown={this.props.onMouseDown}
+                onMouseEnter={this.props.onMouseEnter}
+                onMouseLeave={this.props.onMouseLeave}
                 className={className} id="comfort" r="0%" cx="50%" cy="50%">
                 {this.props.children}
             </circle>
@@ -117,7 +117,7 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
     }
 }
 
-export class ComfortReact extends React.Component<any, any> {
+export class ComfortReact extends React.Component<any, IResizableInteractiveModelState> {
 
     render() {
         return <Stage>

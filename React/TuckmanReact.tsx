@@ -1,18 +1,40 @@
 import * as React from "react";
-import {Stage, BouncyAnimation} from "./SVGHelper";
+import {Events, Stage, BouncyAnimation} from "./SVGHelper";
+
+
 
 export class ChartArea extends React.Component<any, any> {
+    constructor(props) {
+        super(props);
 
+        this.props.onMouseEnter = Events.mouseEnter.bind(this);
+        this.props.onMouseLeave = Events.mouseLeave.bind(this);
+        this.props.onMouseUp = Events.mouseUp.bind(this);
+        this.props.onMouseDown = Events.mouseDown.bind(this);
+
+        this.state = {
+            focus: "not-in-focus",
+            width: props.width || "100%",
+            height: props.height || "100%",
+        };
+    }
     render() {
         const index = parseInt(this.props.index || 0, 10);
         const label = this.props.label || 0;
         const textID = label + "-label";
-        const width:number = parseInt(this.props.width, 10);
-        const offset:string = (25 * index) + "%";
-        const textOffset:string = 12 + (25 * index) + "%";
-        const delay:string = (0.2 * index) + "s";
+        const width: number = parseInt(this.props.width, 10);
+        const offset: string = (25 * index) + "%";
+        const textOffset: string = 12 + (25 * index) + "%";
+        const delay: string = (0.2 * index) + "s";
+        const className: string = this.state.focus + " area okay js-area-standard";
+
         return <g>
-            <rect className="not-in-focus area js-area-standard" id={label} x="0" y="0" width="25%" height="100%">
+            <rect className={className} id={label}
+                onMouseUp={this.props.onMouseUp}
+                onMouseDown={this.props.onMouseDown}
+                onMouseEnter={this.props.onMouseEnter}
+                onMouseLeave={this.props.onMouseLeave}
+                x="0" y="0" width="25%" height="100%">
                 <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
             </rect>
             <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{label}</text>;

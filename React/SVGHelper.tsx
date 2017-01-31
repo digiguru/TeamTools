@@ -1,5 +1,26 @@
 import * as React from "react";
 
+export class Events {
+
+    public static mouseEnter() {
+        this.setState({focus: "in-focus"});
+    }
+
+    public static mouseDown() {
+        this.setState({focus: "active"});
+    }
+
+    public static mouseUp(a) {
+        console.log(this,a, a.type, a.clientX, a.clientY);
+        this.setState({focus: "not-in-focus"})
+    }
+
+    public static mouseLeave() {
+        this.setState({focus: "not-in-focus"});
+    }
+
+}
+
 export class Stage extends React.Component<any, any> {
 
     constructor(props) {
