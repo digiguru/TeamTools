@@ -36,7 +36,6 @@ export class ChaosArea extends React.Component<any, IResizableInteractiveModelSt
             height: props.height || "100%",
         };
     }
-
     render() {
         const className: string = this.state.focus + " area js-area-standard";
         return <g>

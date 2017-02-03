@@ -1,4 +1,29 @@
+
 import * as React from "react";
+import {Point} from "Point";
+/*require(["../Coords/Polar"], (u) => {
+    console.log(new u.Polar(1,20));
+});*/
+//const r = new Polar(1,20);
+
+export class SVGEvents {
+    public static getDistnace(x: number, y: number, target: SVGElement) {
+        return Point.distance(new Point(x, y), SVGEvents.getCenter(target));
+    }
+    public static getCenter(target: SVGElement) {
+        const rect = target.getBoundingClientRect();
+        return new Point(
+            rect.left + (rect.width / 2),
+            rect.top + (rect.height / 2)
+        )
+        /*
+        return {
+            x:rect.left + (rect.width / 2),
+            y:rect.top + (rect.height / 2)
+        }
+        */
+    }
+}
 
 export class Events {
 
@@ -11,8 +36,8 @@ export class Events {
     }
 
     public static mouseUp(a) {
-        console.log(this,a, a.type, a.clientX, a.clientY);
-        this.setState({focus: "not-in-focus"})
+        console.log(SVGEvents.getCenter(a.target));
+        this.setState({focus: "not-in-focus"});
     }
 
     public static mouseLeave() {

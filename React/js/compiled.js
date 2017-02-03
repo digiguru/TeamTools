@@ -3,8 +3,88 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
-define("SVGHelper", ["require", "exports", "react"], function (require, exports, React) {
+define("Polar", ["require", "exports"], function (require, exports) {
     "use strict";
+    var Polar = (function () {
+        function Polar(radius, angle) {
+            this.radius = radius;
+            this.angle = angle;
+        }
+        return Polar;
+    }());
+    exports.Polar = Polar;
+});
+define("Point", ["require", "exports", "Polar"], function (require, exports, Polar_1) {
+    "use strict";
+    var Point = (function () {
+        function Point(x, y) {
+            this.x = x;
+            this.y = y;
+        }
+        Point.fromCoords = function (coords) {
+            return new Point(coords[0], coords[1]);
+        };
+        Point.fromOffset = function (point, origin) {
+            var dx = point.x - origin.x;
+            var dy = point.y - origin.y;
+            return new Point(dx, dy);
+        };
+        Point.toOffset = function (point, origin) {
+            var dx = point.x + origin.x;
+            var dy = point.y + origin.y;
+            return new Point(dx, dy);
+        };
+        Point.distance = function (point, origin) {
+            var offset = Point.fromOffset(point, origin);
+            return Point.distanceFromOffset(offset);
+        };
+        Point.distanceFromOffset = function (offset) {
+            return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
+        };
+        Point.toCartesianNoOffset = function (polar) {
+            var x = polar.radius * Math.cos(polar.angle);
+            var y = polar.radius * Math.sin(polar.angle);
+            return new Point(x, y);
+        };
+        Point.toCartesian = function (polar, origin) {
+            var point = Point.toCartesianNoOffset(polar);
+            return Point.toOffset(point, origin);
+        };
+        Point.toPolar = function (point, origin) {
+            var offset = Point.fromOffset(point, origin);
+            var radius = Point.distanceFromOffset(offset);
+            var angle = Math.atan2(offset.y, offset.x);
+            return new Polar_1.Polar(radius, angle);
+        };
+        return Point;
+    }());
+    exports.Point = Point;
+});
+define("SVGHelper", ["require", "exports", "react", "Point"], function (require, exports, React, Point_1) {
+    "use strict";
+    /*require(["../Coords/Polar"], (u) => {
+        console.log(new u.Polar(1,20));
+    });*/
+    //const r = new Polar(1,20);
+    var SVGEvents = (function () {
+        function SVGEvents() {
+        }
+        SVGEvents.getDistnace = function (x, y, target) {
+            return Point_1.Point.distance(new Point_1.Point(x, y), SVGEvents.getCenter(target));
+        };
+        SVGEvents.getCenter = function (target) {
+            var rect = target.getBoundingClientRect();
+            return new Point_1.Point(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
+            /*
+            return {
+                x:rect.left + (rect.width / 2),
+                y:rect.top + (rect.height / 2)
+            }
+            */
+        };
+        return SVGEvents;
+    }());
+    exports.SVGEvents = SVGEvents;
     var Events = (function () {
         function Events() {
         }
@@ -15,7 +95,7 @@ define("SVGHelper", ["require", "exports", "react"], function (require, exports,
             this.setState({ focus: "active" });
         };
         Events.mouseUp = function (a) {
-            console.log(this, a, a.type, a.clientX, a.clientY);
+            console.log(SVGEvents.getCenter(a.target));
             this.setState({ focus: "not-in-focus" });
         };
         Events.mouseLeave = function () {

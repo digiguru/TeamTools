@@ -22,7 +22,7 @@ export class GraphTuckmanBase {
             new TuckmanZones("storming", 200, 200),
             new TuckmanZones("norming", 400, 200),
             new TuckmanZones("performing", 600, 200)
-            ];
+        ];
         const d3zones = d3.select("g#zones")
             .selectAll("rect")
             .data(zones);
