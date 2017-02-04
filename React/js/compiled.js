@@ -69,7 +69,7 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
     var SVGEvents = (function () {
         function SVGEvents() {
         }
-        SVGEvents.getDistnace = function (x, y, target) {
+        SVGEvents.getDistance = function (x, y, target) {
             return Point_1.Point.distance(new Point_1.Point(x, y), SVGEvents.getCenter(target));
         };
         SVGEvents.getCenter = function (target) {
@@ -95,7 +95,10 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
             this.setState({ focus: "active" });
         };
         Events.mouseUp = function (a) {
-            console.log(SVGEvents.getCenter(a.target));
+            var target = a.target;
+            var center = SVGEvents.getCenter(target);
+            var distance = SVGEvents.getDistance(a.clientX, a.clientY, target);
+            console.log(distance);
             this.setState({ focus: "not-in-focus" });
         };
         Events.mouseLeave = function () {

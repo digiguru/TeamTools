@@ -7,7 +7,8 @@ import {Point} from "Point";
 //const r = new Polar(1,20);
 
 export class SVGEvents {
-    public static getDistnace(x: number, y: number, target: SVGElement) {
+
+    public static getDistance(x: number, y: number, target: SVGElement) {
         return Point.distance(new Point(x, y), SVGEvents.getCenter(target));
     }
     public static getCenter(target: SVGElement) {
@@ -36,7 +37,10 @@ export class Events {
     }
 
     public static mouseUp(a) {
-        console.log(SVGEvents.getCenter(a.target));
+        const target: SVGElement = a.target;
+        const center = SVGEvents.getCenter(target);
+        const distance = SVGEvents.getDistance(a.clientX, a.clientY, target);
+        console.log(distance);
         this.setState({focus: "not-in-focus"});
     }
 
