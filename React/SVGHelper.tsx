@@ -28,6 +28,16 @@ export class SVGEvents {
 
 export class Events {
 
+    public static calculateDistance(distance) {
+        if (distance < 100) {
+            return "comfort";
+        } else if (distance < 300) {
+            return "stretch";
+        } else {
+            return "chaos";
+        }
+    }
+
     public static mouseEnter() {
         this.setState({focus: "in-focus"});
     }

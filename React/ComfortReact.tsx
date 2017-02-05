@@ -1,6 +1,8 @@
 import * as React from "react";
 import {Stage, BouncyAnimation, Events} from "./SVGHelper";
 
+
+
 export interface IResizableModel {
     width: string;
     height: string;

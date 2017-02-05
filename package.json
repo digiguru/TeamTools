@@ -47,5 +47,8 @@
   },
   "author": "digiguru",
   "license": "MIT",
-  "homepage": "https://bitbucket.org/digiguru/teamtools#readme"
+  "homepage": "https://bitbucket.org/digiguru/teamtools#readme",
+  "dependencies": {
+    "react-redux": "^5.0.2"
+  }
 }
