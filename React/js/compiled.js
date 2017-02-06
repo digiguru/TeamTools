@@ -88,6 +88,17 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
     var Events = (function () {
         function Events() {
         }
+        Events.calculateDistance = function (distance) {
+            if (distance < 100) {
+                return "comfort";
+            }
+            else if (distance < 300) {
+                return "stretch";
+            }
+            else {
+                return "chaos";
+            }
+        };
         Events.mouseEnter = function () {
             this.setState({ focus: "in-focus" });
         };
@@ -452,6 +463,152 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "TuckmanReact",
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
+define("ComfortReactState", ["require", "exports", "immutable"], function (require, exports, immutable_1) {
+    "use strict";
+    var ChaosPickerUserChoiceState = (function () {
+        function ChaosPickerUserChoiceState() {
+        }
+        return ChaosPickerUserChoiceState;
+    }());
+    exports.ChaosPickerUserChoiceState = ChaosPickerUserChoiceState;
+    var ChaosPickerZoneRangeState = (function () {
+        function ChaosPickerZoneRangeState() {
+        }
+        return ChaosPickerZoneRangeState;
+    }());
+    exports.ChaosPickerZoneRangeState = ChaosPickerZoneRangeState;
+    var ChaosPickerZoneState = (function () {
+        function ChaosPickerZoneState() {
+        }
+        return ChaosPickerZoneState;
+    }());
+    exports.ChaosPickerZoneState = ChaosPickerZoneState;
+    var ChaosPickerState = (function () {
+        function ChaosPickerState() {
+        }
+        return ChaosPickerState;
+    }());
+    exports.ChaosPickerState = ChaosPickerState;
+    var ChaosPickerStateFactory = (function () {
+        function ChaosPickerStateFactory() {
+        }
+        ChaosPickerStateFactory.prototype.default = function () {
+            var zoneArr = [
+                { Name: "Comfort", Focus: false, Range: { Start: 0, End: 100 } },
+                { Name: "Stretch", Focus: false, Range: { Start: 100, End: 200 } },
+                { Name: "Chaos", Focus: false, Range: { Start: 200, End: 300 } }
+            ];
+            return {
+                UserList: immutable_1.List([]),
+                Zones: immutable_1.List(zoneArr),
+                ShowUserChoices: false,
+                UserChoices: immutable_1.List([])
+            };
+        };
+        ChaosPickerStateFactory.prototype.dummy = function () {
+            var userList = [
+                "Adam",
+                "Caroline",
+                "Lucas"
+            ];
+            var zones = [
+                { Name: "Comfort", Focus: false, Range: { Start: 0, End: 100 } },
+                { Name: "Stretch", Focus: true, Range: { Start: 100, End: 200 } },
+                { Name: "Chaos", Focus: false, Range: { Start: 200, End: 300 } }
+            ];
+            var userChoices = [
+                { User: "Adam", Zone: "Stretch", Distance: 165 },
+                { User: "Caroline", Zone: "Comfort", Distance: 28 }
+            ];
+            return {
+                UserList: immutable_1.List(userList),
+                CurrentUser: "Lucas",
+                Zones: immutable_1.List(zones),
+                ShowUserChoices: false,
+                UserChoices: immutable_1.List(userChoices)
+            };
+        };
+        return ChaosPickerStateFactory;
+    }());
+    exports.ChaosPickerStateFactory = ChaosPickerStateFactory;
+});
+define("ComfortReactReducer", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var createStore = require("redux").createStore;
+    var ComfortZoneActionFactory = (function () {
+        function ComfortZoneActionFactory() {
+        }
+        ComfortZoneActionFactory.prototype.setFocusToComfort = function () {
+            return { type: "SET_FOCUS", area: "comfort" };
+        };
+        ComfortZoneActionFactory.prototype.selectUserAdam = function () {
+            return { type: "SELECT_USER", user: "Adam" };
+        };
+        ComfortZoneActionFactory.prototype.adamChooseZoneStretch165 = function () {
+            return { type: "CHOOSE_ZONE", user: "Adam", area: "Stretch", distance: "165" };
+        };
+        ComfortZoneActionFactory.prototype.showChoices = function () {
+            return { type: "SHOW_CHOICES" };
+        };
+        return ComfortZoneActionFactory;
+    }());
+    exports.ComfortZoneActionFactory = ComfortZoneActionFactory;
+    var ComfortZoneAction = (function () {
+        function ComfortZoneAction() {
+        }
+        ComfortZoneAction.prototype.doAction = function (state, action) {
+            switch (action.type) {
+                case "SET_FOCUS":
+                    return this.setFocus(state, action.area);
+                case "SELECT_USER":
+                    return this.selectUser(state, action.user);
+                case "CHOOSE_ZONE":
+                    return this.chooseZone(state, action.user, action.area, action.distance);
+                case "SHOW_CHOICES":
+                    return this.showChoices(state);
+                default:
+                    return state;
+            }
+        };
+        ComfortZoneAction.prototype.setFocus = function (state, area) {
+            // Set focus to true on this zone, and all others to false.
+            state.Zones = state.Zones.map(function (v, i) {
+                var data = Immutable.Map(v).set("Focus", (v.Name === area));
+                return data.toJS();
+            }).toList();
+            return state;
+        };
+        ComfortZoneAction.prototype.selectUser = function (state, user) {
+            // Sets currentUser, and therefor hides the user choice menu
+            /*return Object.assign({}, state, {
+                CurrentUser: user,
+                ShowUserChoices: false
+            });*/
+            var data = Immutable.Map(state)
+                .set("CurrentUser", user)
+                .set("ShowUserChoices", false);
+            return data.toJS();
+        };
+        ComfortZoneAction.prototype.chooseZone = function (state, user, area, distance) {
+            // Adds to UserChoices, and sets currentUser to empty
+            var data = state.UserChoices.push({
+                User: user,
+                Zone: area,
+                Distance: distance
+            });
+            return Immutable.Map(state)
+                .delete("CurrentUser")
+                .set("UserChoices", data).toJS();
+        };
+        ComfortZoneAction.prototype.showChoices = function (state) {
+            // Set "showUserChoices" to true
+            return Immutable.Map(state)
+                .set("ShowUserChoices", true).toJS();
+        };
+        return ComfortZoneAction;
+    }());
+    exports.ComfortZoneAction = ComfortZoneAction;
+});
 define("userComponents", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     var Delete = (function (_super) {
@@ -528,12 +685,16 @@ define("users", ["require", "exports", "react", "react-dom", "userComponents", "
 /// <reference path="../typings/d3/d3.d.ts" />
 /// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
 /// <reference path="../typings/requirejs/require.d.ts"/>
+/// <reference path="../node_modules/immutable/dist/immutable.d.ts" />
+/// <reference path="../node_modules/redux/index.d.ts" />
 /// <reference path="users.tsx"/>
 requirejs.config({
     baseUrl: "/",
     paths: {
         "react": "../3rdParty/react.min",
-        "react-dom": "../3rdParty/react-dom.min"
+        "react-dom": "../3rdParty/react-dom.min",
+        "immutable": "../3rdParty/immutable.min",
+        "redux": "../3rdParty/redux.min"
     }
 });
 require(["users"], function (u) {

@@ -1,3 +1,4 @@
+import { List, Map } from "immutable";
 
 export class ChaosPickerUserChoiceState {
     User: String;
@@ -14,43 +15,47 @@ export class ChaosPickerZoneState {
     Range: ChaosPickerZoneRangeState;
 }
 export class ChaosPickerState {
-    UserList: Array<String>;
-    Zones: Array<ChaosPickerZoneState>;
+    UserList: List<String>;
+    Zones: List<ChaosPickerZoneState>;
     ShowUserChoices: Boolean;
     CurrentUser?: String;
-    UserChoices: Array<ChaosPickerUserChoiceState>;
+    UserChoices: List<ChaosPickerUserChoiceState>;
 }
 export class ChaosPickerStateFactory {
     default(): ChaosPickerState {
-        return {
-            UserList : [],
-            Zones : [ // all focus default to false
+        const zoneArr: Array<ChaosPickerZoneState> = [ // all focus default to false
                 {Name: "Comfort", Focus: false, Range: {Start: 0, End: 100}},
                 {Name: "Stretch", Focus: false, Range: {Start: 100, End: 200}},
                 {Name: "Chaos", Focus: false, Range: {Start: 200, End: 300}}
-            ],
+            ];
+        return {
+            UserList : List([]),
+            Zones : List(zoneArr),
             ShowUserChoices: false,
-            UserChoices: []
+            UserChoices: List([])
         };
     }
     dummy(): ChaosPickerState {
-        return {
-            UserList : [
+        const userList = [
                 "Adam",
                 "Caroline",
                 "Lucas"
-            ],
-            CurrentUser : "Lucas", // default to empty - which shows the UserChoice menu
-            Zones : [ // all focus default to false
+            ];
+        const zones: Array<ChaosPickerZoneState> = [ // all focus default to false
                 {Name: "Comfort", Focus: false, Range: {Start: 0, End: 100}},
                 {Name: "Stretch", Focus: true, Range: {Start: 100, End: 200}},
                 {Name: "Chaos", Focus: false, Range: {Start: 200, End: 300}}
-            ],
-            ShowUserChoices: false,
-            UserChoices : [ // default empty
+            ];
+        const userChoices: Array<ChaosPickerUserChoiceState> = [ // default empty
                 {User: "Adam", Zone: "Stretch", Distance: 165},
                 {User: "Caroline", Zone: "Comfort", Distance: 28}
-            ]
+            ];
+        return {
+            UserList : List(userList),
+            CurrentUser : "Lucas", // default to empty - which shows the UserChoice menu
+            Zones : List(zones),
+            ShowUserChoices: false,
+            UserChoices : List(userChoices)
         };
     }
 }
