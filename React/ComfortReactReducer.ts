@@ -1,6 +1,5 @@
 import {ChaosPickerState} from "ComfortReactState";
 import { List, Map } from "immutable";
-
 const createStore = require("redux").createStore;
 
 export interface IAction {
