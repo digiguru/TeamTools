@@ -22,19 +22,6 @@ export class ChaosPickerState {
     UserChoices: List<ChaosPickerUserChoiceState>;
 }
 export class ChaosPickerStateFactory {
-    default(): ChaosPickerState {
-        const zoneArr: Array<ChaosPickerZoneState> = [ // all focus default to false
-                {Name: "Comfort", Focus: false, Range: {Start: 0, End: 100}},
-                {Name: "Stretch", Focus: false, Range: {Start: 100, End: 200}},
-                {Name: "Chaos", Focus: false, Range: {Start: 200, End: 300}}
-            ];
-        return {
-            UserList : List([]),
-            Zones : List(zoneArr),
-            ShowUserChoices: false,
-            UserChoices: List([])
-        };
-    }
     dummy(): ChaosPickerState {
         const userList = [
                 "Adam",

@@ -4,6 +4,7 @@ var tsEntry = ts.createProject("Entry/tsconfig.json");
 var tsTuckman = ts.createProject("Tuckman/tsconfig.json");
 var tsComfortZone = ts.createProject("ComfortZone/tsconfig.json");
 var tsReact = ts.createProject("React/tsconfig.json");
+var tsRedux = ts.createProject("Redux/tsconfig.json");
 var sourcemaps = require('gulp-sourcemaps');
 
 gulp.task("BuildEntry", function () {
@@ -35,4 +36,11 @@ gulp.task("BuildReact", function () {
         .js.pipe(sourcemaps.write("."))
         .pipe(gulp.dest("React"));
 });
-gulp.task('Build', ['BuildEntry', 'BuildTuckman', 'BuildComfortZone', 'BuildReact']);
+gulp.task("BuildRedux", function () {
+    return tsRedux.src()
+        .pipe(sourcemaps.init())
+        .pipe(tsRedux())
+        .js.pipe(sourcemaps.write("."))
+        .pipe(gulp.dest("Redux"));
+});
+gulp.task('Build', ['BuildReact'/*,'BuildRedux','BuildEntry', 'BuildTuckman', 'BuildComfortZone'*/]);

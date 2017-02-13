@@ -1,18 +1,18 @@
 
 import {ComfortActions} from "ComfortActions";
 import {ChaosPickerZoneState, ChaosPickerState} from "ComfortReactModelState";
-import { fromJS, List, Map } from "immutable";
+import { List, Map } from "immutable";
 
 
 const initialState: ChaosPickerState = {
-    UserList : [],
-    Zones : {
-        Comfort: {Name: "Comfort", Focus: false, Range: {Start: 0, End: 100}},
-        Stretch: {Name: "Stretch", Focus: false, Range: {Start: 100, End: 200}},
-        Chaos: {Name: "Chaos", Focus: false, Range: {Start: 200, End: 300}}
-    },
+    UserList : List([]),
+    Zones : List(<Array<ChaosPickerZoneState>>[ // all focus default to false
+        {Name: "Comfort", Focus: false, Range: {Start: 0, End: 100}},
+        {Name: "Stretch", Focus: false, Range: {Start: 100, End: 200}},
+        {Name: "Chaos", Focus: false, Range: {Start: 200, End: 300}}
+    ]),
     ShowUserChoices: false,
-    UserChoices: []
+    UserChoices: List([])
 };
 export function comfortReactApp(state: ChaosPickerState = initialState, action): ChaosPickerState {
     switch (action.type) {
@@ -31,10 +31,11 @@ export function comfortReactApp(state: ChaosPickerState = initialState, action):
 class ComfortZoneAction {
     static setFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
         // Set focus to true on this zone, and all others to false.
-        return fromJS(state)
-            .setIn(["Zones", "Comfort", "Focus"], (area === "Comfort"))
-            .setIn(["Zones", "Stretch", "Focus"], (area === "Stretch"))
-            .setIn(["Zones", "Chaos", "Focus"], (area === "Chaos")).toJS();
+        state.Zones = state.Zones.map((v, i) => {
+            const data = Map(v).set("Focus", (v.Name === area));
+            return data.toJS();
+        }).toList();
+        return state;
     }
     static selectUser(state: ChaosPickerState, user: String): ChaosPickerState {
         // Sets currentUser, and therefor hides the user choice menu
@@ -47,7 +48,6 @@ class ComfortZoneAction {
             .set("ShowUserChoices", false);
         return data.toJS();
     }
-
     static chooseZone(state: ChaosPickerState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number): ChaosPickerState {
          // Adds to UserChoices, and sets currentUser to empty
         const data = state.UserChoices.push({
@@ -63,5 +63,5 @@ class ComfortZoneAction {
         // Set "showUserChoices" to true
         return Map(state)
             .set("ShowUserChoices", visible).toJS();
-    };
+    }
 }

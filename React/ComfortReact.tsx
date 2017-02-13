@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Stage, BouncyAnimation, Events} from "./SVGHelper";
-
+import {ChaosPickerState} from "ComfortReactModelState";
 
 
 export interface IResizableModel {
@@ -118,7 +118,7 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
     }
 }
 
-export class ComfortReact extends React.Component<any, IResizableInteractiveModelState> {
+export class ComfortReact extends React.Component<any, ChaosPickerState> {
 
     render() {
         return <Stage>
@@ -127,7 +127,7 @@ export class ComfortReact extends React.Component<any, IResizableInteractiveMode
                         <StretchArea><BouncyAnimation attributeName="r" value="45" /></StretchArea>
                         <ComfortArea><BouncyAnimation attributeName="r" value="20" delay="0.5s" /></ComfortArea>
                     </g>
-                    <g id="history">
+                    <g id="history" display={this.props.ShowUserChoices}>
                     </g>
                 </Stage>;
                 //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>

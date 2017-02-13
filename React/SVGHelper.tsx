@@ -4,7 +4,7 @@ import {Point} from "Point";
 /*require(["../Coords/Polar"], (u) => {
     console.log(new u.Polar(1,20));
 });*/
-//const r = new Polar(1,20);
+// const r = new Polar(1,20);
 
 export class SVGEvents {
 
@@ -16,7 +16,7 @@ export class SVGEvents {
         return new Point(
             rect.left + (rect.width / 2),
             rect.top + (rect.height / 2)
-        )
+        );
         /*
         return {
             x:rect.left + (rect.width / 2),

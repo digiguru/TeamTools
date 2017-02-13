@@ -11,7 +11,6 @@ requirejs.config( {
         "react": "../3rdParty/react.min",
         "react-dom": "../3rdParty/react-dom.min",
         "immutable": "../3rdParty/immutable.min",
-        "immutability-helper": "../3rdParty/index",
         "redux": "../3rdParty/redux.min"
     }
 });
