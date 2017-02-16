@@ -1,6 +1,7 @@
 
 export const ComfortActions = {
     SET_FOCUS: "SET_FOCUS",
+    SET_UNFOCUS: "SET_UNFOCUS",
     SELECT_USER: "SELECT_USER",
     CHOOSE_ZONE: "CHOOSE_ZONE",
     TOGGLE_CHOICES: "TOGGLE_CHOICES"
@@ -20,6 +21,9 @@ export function adamChooseZoneStretch165() {
 
 export function setFocus(area: "Chaos" | "Stretch" | "Comfort") {
     return {type: ComfortActions.SET_FOCUS, area: area};
+};
+export function setUnfocus(area: "Chaos" | "Stretch" | "Comfort") {
+    return {type: ComfortActions.SET_UNFOCUS, area: area};
 };
 export function selectUser(user: string) {
     return {type: ComfortActions.SELECT_USER, user: user};

@@ -1,4 +1,4 @@
-import * as Redux from "../3rdParty/redux.min";
+import * as Redux from "redux";
 
 import { setFocus, selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
 import {comfortReactApp} from "ComfortReactReducer";
