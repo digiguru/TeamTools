@@ -1,7 +1,9 @@
+import {Focus} from "ComfortReactModelState";
 
 export const ComfortActions = {
-    SET_FOCUS: "SET_FOCUS",
-    SET_UNFOCUS: "SET_UNFOCUS",
+    SET_OVERFOCUS: "SET_OVERFOCUS",
+    SET_OFFFOCUS: "SET_OFFFOCUS",
+    SET_ACTIVEFOCUS: "SET_ACTIVEFOCUS",
     SELECT_USER: "SELECT_USER",
     CHOOSE_ZONE: "CHOOSE_ZONE",
     TOGGLE_CHOICES: "TOGGLE_CHOICES"
@@ -19,11 +21,14 @@ export function adamChooseZoneStretch165() {
 }
 */
 
-export function setFocus(area: "Chaos" | "Stretch" | "Comfort") {
-    return {type: ComfortActions.SET_FOCUS, area: area};
+export function setOverFocus(area: "Chaos" | "Stretch" | "Comfort") {
+    return {type: ComfortActions.SET_OVERFOCUS, area: area};
 };
-export function setUnfocus(area: "Chaos" | "Stretch" | "Comfort") {
-    return {type: ComfortActions.SET_UNFOCUS, area: area};
+export function setOffFocus(area: "Chaos" | "Stretch" | "Comfort") {
+    return {type: ComfortActions.SET_OFFFOCUS, area: area};
+};
+export function setActiveFocus(area: "Chaos" | "Stretch" | "Comfort") {
+    return {type: ComfortActions.SET_ACTIVEFOCUS, area: area};
 };
 export function selectUser(user: string) {
     return {type: ComfortActions.SELECT_USER, user: user};

@@ -1,25 +1,26 @@
 
 import {ComfortActions} from "ComfortActions";
-import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "ComfortReactModelState";
+import {Focus, ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "ComfortReactModelState";
 import { fromJS, List, Map } from "immutable";
-
 
 const initialState: ChaosPickerState = {
     UserList : [],
     Zones : {
-        Comfort: {Name: "Comfort", Focus: false, Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
-        Stretch: {Name: "Stretch", Focus: false, Range: {Start: 100, End: 200}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
-        Chaos: {Name: "Chaos", Focus: false, Range: {Start: 200, End: 300}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
+        Comfort: {Name: "Comfort", Focus: Focus.Off, Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
+        Stretch: {Name: "Stretch", Focus: Focus.Off, Range: {Start: 100, End: 200}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
+        Chaos: {Name: "Chaos", Focus: Focus.Off, Range: {Start: 200, End: 300}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
     },
     ShowUserChoices: false,
     UserChoices: []
 };
 export function comfortReactApp(state: ChaosPickerState = initialState, action): ChaosPickerState {
     switch (action.type) {
-        case ComfortActions.SET_FOCUS:
-            return ComfortZoneAction.setFocus(state, (<any>action).area);
-        case ComfortActions.SET_UNFOCUS:
-            return ComfortZoneAction.setUnfocus(state, (<any>action).area);
+        case ComfortActions.SET_OVERFOCUS:
+            return ComfortZoneAction.setOverFocus(state, (<any>action).area);
+        case ComfortActions.SET_OFFFOCUS:
+            return ComfortZoneAction.setOffFocus(state, (<any>action).area);
+        case ComfortActions.SET_ACTIVEFOCUS:
+            return ComfortZoneAction.setActiveFocus(state, (<any>action).area);
         case ComfortActions.SELECT_USER:
             return ComfortZoneAction.selectUser(state, (<any>action).user);
         case ComfortActions.CHOOSE_ZONE:
@@ -31,22 +32,30 @@ export function comfortReactApp(state: ChaosPickerState = initialState, action):
     }
 }
 class ComfortZoneAction {
-    static setFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
+    static setOverFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
         // Set focus to true on this zone, and all others to false.
         return fromJS(state)
-            .setIn(["Zones", "Comfort", "Focus"], (area === "Comfort"))
-            .setIn(["Zones", "Stretch", "Focus"], (area === "Stretch"))
-            .setIn(["Zones", "Chaos", "Focus"], (area === "Chaos")).toJS();
+            .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? Focus.Over : Focus.Off)
+            .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? Focus.Over : Focus.Off)
+            .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? Focus.Over : Focus.Off).toJS();
     }
-    static setUnfocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
+    static setActiveFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
+        // Set focus to true on this zone, and all others to false.
+        return fromJS(state)
+            .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? Focus.Active : Focus.Off)
+            .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? Focus.Active : Focus.Off)
+            .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? Focus.Active : Focus.Off).toJS();
+    }
+    static setOffFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
         // Set focus to true on this zone, and all others to false.
         if ((area === "Comfort")) {
-            return fromJS(state).setIn(["Zones", "Comfort", "Focus"], false).toJS();
+            return fromJS(state).setIn(["Zones", "Comfort", "Focus"], Focus.Off).toJS();
         } else if ((area === "Stretch")) {
-            return fromJS(state).setIn(["Zones", "Stretch", "Focus"], false).toJS();
+            return fromJS(state).setIn(["Zones", "Stretch", "Focus"], Focus.Off).toJS();
         } else if ((area === "Chaos")) {
-            return fromJS(state).setIn(["Zones", "Chaos", "Focus"], false).toJS();
+            return fromJS(state).setIn(["Zones", "Chaos", "Focus"], Focus.Off).toJS();
         }
+        return state;
     }
     static selectUser(state: ChaosPickerState, user: String): ChaosPickerState {
         // Sets currentUser, and therefor hides the user choice menu

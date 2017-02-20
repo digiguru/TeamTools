@@ -1,23 +1,33 @@
+export enum Focus {
+    Off = 0,
+    Over = 1,
+    Active = 2
+}
+
 export class ChaosPickerUserChoiceState {
     User: String;
     Zone: "Chaos" | "Stretch" | "Comfort";
     Distance: number;
 }
+
 export class ChaosPickerZoneRangeState {
     Start: number;
     End: number;
 }
+
 export class ChaosPickerZoneState {
     Name: "Chaos" | "Stretch" | "Comfort";
-    Focus: Boolean;
+    Focus: Focus;
     Range: ChaosPickerZoneRangeState;
     Size: ISizable;
 }
+
 export class ChaosZoneList {
     Comfort: ChaosPickerZoneState;
     Stretch: ChaosPickerZoneState;
     Chaos: ChaosPickerZoneState;
 }
+
 export class DOMMeasurement implements IDOMMeasurement {
     constructor(input: string) {
 
@@ -38,14 +48,17 @@ export class DOMMeasurement implements IDOMMeasurement {
         return "" + this.Value + this.Unit;
     };
 }
+
 export interface IDOMMeasurement {
     Unit: "px" | "%";
     Value: number;
 }
+
 export interface ISizable {
     Width: IDOMMeasurement;
     Height: IDOMMeasurement;
 }
+
 export class ChaosPickerState {
     UserList: Array<String>;
     Zones: ChaosZoneList;

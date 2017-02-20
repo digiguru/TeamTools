@@ -160,6 +160,12 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
 });
 define("ComfortReactModelState", ["require", "exports"], function (require, exports) {
     "use strict";
+    var Focus;
+    (function (Focus) {
+        Focus[Focus["Off"] = 0] = "Off";
+        Focus[Focus["Over"] = 1] = "Over";
+        Focus[Focus["Active"] = 2] = "Active";
+    })(Focus = exports.Focus || (exports.Focus = {}));
     var ChaosPickerUserChoiceState = (function () {
         function ChaosPickerUserChoiceState() {
         }
@@ -521,8 +527,9 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "TuckmanReact",
 define("ComfortActions", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.ComfortActions = {
-        SET_FOCUS: "SET_FOCUS",
-        SET_UNFOCUS: "SET_UNFOCUS",
+        SET_OVERFOCUS: "SET_OVERFOCUS",
+        SET_OFFFOCUS: "SET_OFFFOCUS",
+        SET_ACTIVEFOCUS: "SET_ACTIVEFOCUS",
         SELECT_USER: "SELECT_USER",
         CHOOSE_ZONE: "CHOOSE_ZONE",
         TOGGLE_CHOICES: "TOGGLE_CHOICES"
@@ -538,15 +545,20 @@ define("ComfortActions", ["require", "exports"], function (require, exports) {
         return {type: ComfortActions.CHOOSE_ZONE, user: "Adam", area: "Stretch", distance: "165"};
     }
     */
-    function setFocus(area) {
-        return { type: exports.ComfortActions.SET_FOCUS, area: area };
+    function setOverFocus(area) {
+        return { type: exports.ComfortActions.SET_OVERFOCUS, area: area };
     }
-    exports.setFocus = setFocus;
+    exports.setOverFocus = setOverFocus;
     ;
-    function setUnfocus(area) {
-        return { type: exports.ComfortActions.SET_UNFOCUS, area: area };
+    function setOffFocus(area) {
+        return { type: exports.ComfortActions.SET_OFFFOCUS, area: area };
     }
-    exports.setUnfocus = setUnfocus;
+    exports.setOffFocus = setOffFocus;
+    ;
+    function setActiveFocus(area) {
+        return { type: exports.ComfortActions.SET_ACTIVEFOCUS, area: area };
+    }
+    exports.setActiveFocus = setActiveFocus;
     ;
     function selectUser(user) {
         return { type: exports.ComfortActions.SELECT_USER, user: user };
@@ -658,14 +670,18 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
     }(React.Component));
     exports.ComfortReact = ComfortReact;
 });
-define("ComfortReduxZone", ["require", "exports", "react"], function (require, exports, React) {
+define("ComfortReduxZone", ["require", "exports", "react", "ComfortReactModelState"], function (require, exports, React, ComfortReactModelState_1) {
     "use strict";
-    exports.ReduxChaosArea = function (state) { return (React.createElement("g", null,
-        React.createElement("rect", { id: "chaos", className: state.Focus ? "in-focus" : "not-in-focus", onMouseEnter: function () { return state.onZoneFocus(state.Name); }, onMouseLeave: function () { return state.onZoneUnfocus(state.Name); }, width: state.Size.Width.toString(), height: state.Size.Height.toString() }),
-        React.createElement("text", { className: "area-label", id: "label-choas", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"))); };
+    exports.ReduxChaosArea = function (state, userName) { return (React.createElement("g", null,
+        React.createElement("rect", { id: "chaos", className: state.Focus ? (state.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", onMouseEnter: function () { return state.onZoneOverFocus(state.Name); }, onMouseLeave: function () { return state.onZoneOffFocus(state.Name); }, onMouseDown: function () { return state.onZoneMouseDown(state.Name); }, onMouseUp: function (a) { return state.onZoneMouseUp(userName, state.Name, a); }, width: state.Size.Width.toString(), height: state.Size.Height.toString() }),
+        React.createElement("text", { className: "area-label", id: "label-choas", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"),
+        ";")); };
+    ;
 });
-define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "ComfortActions", "ComfortReduxZone"], function (require, exports, react_redux_1, ComfortActions_1, ComfortReduxZone_1) {
+define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "ComfortActions", "ComfortReduxZone", "Point"], function (require, exports, react_redux_1, ComfortActions_1, ComfortReduxZone_1, Point_2) {
     "use strict";
+    var _this = this;
+    /*import {SVG} from "../Shared/SVG";*/
     var mapStateToProps = function (state, ownProps) {
         if (ownProps.Name === "Comfort") {
             return state.Zones.Comfort;
@@ -679,11 +695,26 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
     };
     var mapDispatchToProps = function (dispatch) {
         return {
-            onZoneFocus: function (zone) {
-                dispatch(ComfortActions_1.setFocus(zone));
+            onZoneMouseDown: function (zone) {
+                dispatch(ComfortActions_1.setActiveFocus(zone));
             },
-            onZoneUnfocus: function (zone) {
-                dispatch(ComfortActions_1.setUnfocus(zone));
+            onZoneMouseUp: function (user, zone, event) {
+                dispatch(ComfortActions_1.setOffFocus(zone));
+                console.log(user, zone, event, _this);
+                debugger;
+                var coord = [event.clientX, event.clientY];
+                var boundingBox = event.currentTarget.getBBox();
+                var centerX = (boundingBox.width - boundingBox.x) / 2;
+                var centerY = (boundingBox.height - boundingBox.y) / 2;
+                var centerPoint = new Point_2.Point(centerX, centerY);
+                var distance = Point_2.Point.distance(centerPoint, Point_2.Point.fromCoords(coord));
+                dispatch(ComfortActions_1.chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+            },
+            onZoneOverFocus: function (zone) {
+                dispatch(ComfortActions_1.setOverFocus(zone));
+            },
+            onZoneOffFocus: function (zone) {
+                dispatch(ComfortActions_1.setOffFocus(zone));
             }
         };
     };
@@ -788,14 +819,14 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
         // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;"
     }
 }*/
-define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "immutable"], function (require, exports, ComfortActions_2, ComfortReactModelState_1, immutable_1) {
+define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "immutable"], function (require, exports, ComfortActions_2, ComfortReactModelState_2, immutable_1) {
     "use strict";
     var initialState = {
         UserList: [],
         Zones: {
-            Comfort: { Name: "Comfort", Focus: false, Range: { Start: 0, End: 100 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("50%"), Height: new ComfortReactModelState_1.DOMMeasurement("50%") } },
-            Stretch: { Name: "Stretch", Focus: false, Range: { Start: 100, End: 200 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("50%"), Height: new ComfortReactModelState_1.DOMMeasurement("50%") } },
-            Chaos: { Name: "Chaos", Focus: false, Range: { Start: 200, End: 300 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("100%"), Height: new ComfortReactModelState_1.DOMMeasurement("100%") } }
+            Comfort: { Name: "Comfort", Focus: ComfortReactModelState_2.Focus.Off, Range: { Start: 0, End: 100 }, Size: { Width: new ComfortReactModelState_2.DOMMeasurement("50%"), Height: new ComfortReactModelState_2.DOMMeasurement("50%") } },
+            Stretch: { Name: "Stretch", Focus: ComfortReactModelState_2.Focus.Off, Range: { Start: 100, End: 200 }, Size: { Width: new ComfortReactModelState_2.DOMMeasurement("50%"), Height: new ComfortReactModelState_2.DOMMeasurement("50%") } },
+            Chaos: { Name: "Chaos", Focus: ComfortReactModelState_2.Focus.Off, Range: { Start: 200, End: 300 }, Size: { Width: new ComfortReactModelState_2.DOMMeasurement("100%"), Height: new ComfortReactModelState_2.DOMMeasurement("100%") } }
         },
         ShowUserChoices: false,
         UserChoices: []
@@ -803,10 +834,12 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
     function comfortReactApp(state, action) {
         if (state === void 0) { state = initialState; }
         switch (action.type) {
-            case ComfortActions_2.ComfortActions.SET_FOCUS:
-                return ComfortZoneAction.setFocus(state, action.area);
-            case ComfortActions_2.ComfortActions.SET_UNFOCUS:
-                return ComfortZoneAction.setUnfocus(state, action.area);
+            case ComfortActions_2.ComfortActions.SET_OVERFOCUS:
+                return ComfortZoneAction.setOverFocus(state, action.area);
+            case ComfortActions_2.ComfortActions.SET_OFFFOCUS:
+                return ComfortZoneAction.setOffFocus(state, action.area);
+            case ComfortActions_2.ComfortActions.SET_ACTIVEFOCUS:
+                return ComfortZoneAction.setActiveFocus(state, action.area);
             case ComfortActions_2.ComfortActions.SELECT_USER:
                 return ComfortZoneAction.selectUser(state, action.user);
             case ComfortActions_2.ComfortActions.CHOOSE_ZONE:
@@ -821,24 +854,32 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
     var ComfortZoneAction = (function () {
         function ComfortZoneAction() {
         }
-        ComfortZoneAction.setFocus = function (state, area) {
+        ComfortZoneAction.setOverFocus = function (state, area) {
             // Set focus to true on this zone, and all others to false.
             return immutable_1.fromJS(state)
-                .setIn(["Zones", "Comfort", "Focus"], (area === "Comfort"))
-                .setIn(["Zones", "Stretch", "Focus"], (area === "Stretch"))
-                .setIn(["Zones", "Chaos", "Focus"], (area === "Chaos")).toJS();
+                .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? ComfortReactModelState_2.Focus.Over : ComfortReactModelState_2.Focus.Off)
+                .setIn(["Zones", "Stretch", "Focus"], area === "Stretch" ? ComfortReactModelState_2.Focus.Over : ComfortReactModelState_2.Focus.Off)
+                .setIn(["Zones", "Chaos", "Focus"], area === "Chaos" ? ComfortReactModelState_2.Focus.Over : ComfortReactModelState_2.Focus.Off).toJS();
         };
-        ComfortZoneAction.setUnfocus = function (state, area) {
+        ComfortZoneAction.setActiveFocus = function (state, area) {
+            // Set focus to true on this zone, and all others to false.
+            return immutable_1.fromJS(state)
+                .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? ComfortReactModelState_2.Focus.Active : ComfortReactModelState_2.Focus.Off)
+                .setIn(["Zones", "Stretch", "Focus"], area === "Stretch" ? ComfortReactModelState_2.Focus.Active : ComfortReactModelState_2.Focus.Off)
+                .setIn(["Zones", "Chaos", "Focus"], area === "Chaos" ? ComfortReactModelState_2.Focus.Active : ComfortReactModelState_2.Focus.Off).toJS();
+        };
+        ComfortZoneAction.setOffFocus = function (state, area) {
             // Set focus to true on this zone, and all others to false.
             if ((area === "Comfort")) {
-                return immutable_1.fromJS(state).setIn(["Zones", "Comfort", "Focus"], false).toJS();
+                return immutable_1.fromJS(state).setIn(["Zones", "Comfort", "Focus"], ComfortReactModelState_2.Focus.Off).toJS();
             }
             else if ((area === "Stretch")) {
-                return immutable_1.fromJS(state).setIn(["Zones", "Stretch", "Focus"], false).toJS();
+                return immutable_1.fromJS(state).setIn(["Zones", "Stretch", "Focus"], ComfortReactModelState_2.Focus.Off).toJS();
             }
             else if ((area === "Chaos")) {
-                return immutable_1.fromJS(state).setIn(["Zones", "Chaos", "Focus"], false).toJS();
+                return immutable_1.fromJS(state).setIn(["Zones", "Chaos", "Focus"], ComfortReactModelState_2.Focus.Off).toJS();
             }
+            return state;
         };
         ComfortZoneAction.selectUser = function (state, user) {
             // Sets currentUser, and therefor hides the user choice menu
