@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import {Stage, BouncyAnimation, Events} from "./SVGHelper";
 import {ChaosPickerState, ChaosPickerZoneState} from "ComfortReactModelState";
 import { selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
-import {ReduxZoneConnector} from "ComfortReactZoneConnector";
+import {ReduxChaosConnector, ReduxStretchConnector, ReduxComfortConnector} from "ComfortReactZoneConnector";
 
 /*
         <g id="users">
@@ -13,7 +13,9 @@ import {ReduxZoneConnector} from "ComfortReactZoneConnector";
 */
 export const ReduxComfortApp = () => (
     <Stage>
-        <ReduxZoneConnector />
+        <ReduxChaosConnector Name="Chaos" />
+        <ReduxStretchConnector Name="Stretch" />
+        <ReduxComfortConnector Name="Comfort" />
         <g id="zones">
         </g>
     </Stage>
@@ -42,7 +44,7 @@ export class ChaosArea extends React.Component<any, IResizableInteractiveModelSt
                 onMouseEnter={this.props.onMouseEnter}
                 onMouseLeave={this.props.onMouseLeave}
                 width={this.state.width} height={this.state.height}></rect>
-            <text className="area-label" id="label-choas" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
+            <text className="area-label" id="label-chaos" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
         </g>;
     }
 }

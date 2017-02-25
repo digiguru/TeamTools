@@ -240,7 +240,7 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
             var className = this.state.focus + " area js-area-standard";
             return React.createElement("g", null,
                 React.createElement("rect", { id: "chaos", className: className, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, width: this.state.width, height: this.state.height }),
-                React.createElement("text", { className: "area-label", id: "label-choas", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
+                React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
         };
         return ChaosArea;
     }(React.Component));
@@ -329,7 +329,6 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact",
         // Act snapshot 2
         mouseOverArea.props.onMouseEnter();
         // Assert Snapshot 2
-        debugger;
         expect(component.toJSON()).toMatchSnapshot();
         // Act snapshot 3
         mouseOverArea.props.onMouseLeave();
@@ -361,7 +360,6 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact",
         var component = renderizer.create(React.createElement(SVGHelper_2.Stage, null,
             React.createElement(ComfortReact_1.ComfortArea, null)));
         var tree = component.toJSON();
-        debugger;
         var mouseOverArea = tree.children[0].children[0];
         expect(tree).toMatchSnapshot();
         // Act snapshot 2
@@ -594,7 +592,7 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
             var className = this.state.focus + " area js-area-standard";
             return React.createElement("g", null,
                 React.createElement("rect", { id: "chaos", className: className, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, width: this.state.width, height: this.state.height }),
-                React.createElement("text", { className: "area-label", id: "label-choas", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
+                React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
         };
         return ChaosArea;
     }(React.Component));
@@ -673,11 +671,20 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
 define("ComfortReduxZone", ["require", "exports", "react", "ComfortReactModelState"], function (require, exports, React, ComfortReactModelState_1) {
     "use strict";
     exports.ReduxChaosArea = function (state) {
-        ; // , onZoneUnfocus, onZoneClick, onZoneActive) => (
         return React.createElement("g", null,
-            React.createElement("rect", { id: "chaos", className: state.zone.Focus ? (state.zone.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (a) { return state.events.onZoneMouseUp(state.user, state.zone.Name, a); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
-            React.createElement("text", { className: "area-label", id: "label-choas", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20", "data-name": state.user }, "chaos"),
+            React.createElement("rect", { id: "chaos", className: state.zone.Focus ? (state.zone.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
+            React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"),
             ";");
+    };
+    exports.ReduxStretchArea = function (state) {
+        return React.createElement("g", null,
+            React.createElement("circle", { className: state.zone.Focus ? (state.zone.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", id: "stretch", r: "33%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
+            React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
+    };
+    exports.ReduxComfortArea = function (state) {
+        return React.createElement("g", null,
+            React.createElement("circle", { className: state.zone.Focus ? (state.zone.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", id: "stretch", r: "15%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
+            React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
     };
 });
 /*
@@ -729,7 +736,9 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
             }
         };
     };
-    exports.ReduxZoneConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxChaosArea);
+    exports.ReduxChaosConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxChaosArea);
+    exports.ReduxStretchConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxStretchArea);
+    exports.ReduxComfortConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxComfortArea);
 });
 define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortReactZoneConnector"], function (require, exports, React, SVGHelper_6, ComfortReactZoneConnector_1) {
     "use strict";
@@ -740,7 +749,9 @@ define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortR
             <ReduxUserConnector />
     */
     exports.ReduxComfortApp = function () { return (React.createElement(SVGHelper_6.Stage, null,
-        React.createElement(ComfortReactZoneConnector_1.ReduxZoneConnector, null),
+        React.createElement(ComfortReactZoneConnector_1.ReduxChaosConnector, { Name: "Chaos" }),
+        React.createElement(ComfortReactZoneConnector_1.ReduxStretchConnector, { Name: "Stretch" }),
+        React.createElement(ComfortReactZoneConnector_1.ReduxComfortConnector, { Name: "Comfort" }),
         React.createElement("g", { id: "zones" }))); };
 });
 /*
@@ -766,7 +777,7 @@ export class ChaosArea extends React.Component<any, IResizableInteractiveModelSt
                 onMouseEnter={this.props.onMouseEnter}
                 onMouseLeave={this.props.onMouseLeave}
                 width={this.state.width} height={this.state.height}></rect>
-            <text className="area-label" id="label-choas" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
+            <text className="area-label" id="label-chaos" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
         </g>;
     }
 }
@@ -910,16 +921,20 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
             return data.toJS();
         };
         ComfortZoneAction.chooseZone = function (state, user, area, distance) {
-            // Adds to UserChoices, and sets currentUser to empty
-            debugger;
+            // Add the user choice
             var newUserChoices = immutable_1.fromJS(state.UserChoices).push({
                 User: user,
                 Zone: area,
                 Distance: distance
             });
+            // Remove the user from the choice list
             var newUserList = immutable_1.List(state.UserList).filter(function (item) { return item !== user; });
+            // Show the user list
+            var showUserChoice = newUserList.count();
+            // Return
             return immutable_1.Map(state)
                 .delete("CurrentUser")
+                .set("ShowUserChoices", showUserChoice)
                 .set("UserChoices", newUserChoices)
                 .set("UserList", newUserList).toJS();
         };

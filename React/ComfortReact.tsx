@@ -47,7 +47,7 @@ export class ChaosArea extends React.Component<any, IResizableInteractiveModelSt
                 onMouseEnter={this.props.onMouseEnter}
                 onMouseLeave={this.props.onMouseLeave}
                 width={this.state.width} height={this.state.height}></rect>
-            <text className="area-label" id="label-choas" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
+            <text className="area-label" id="label-chaos" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
         </g>;
     }
 }

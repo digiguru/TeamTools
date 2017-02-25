@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
 import { setOverFocus, setOffFocus, setActiveFocus, chooseZone } from "ComfortActions";
 import {ChaosPickerState, ChaosPickerZoneState} from "ComfortReactModelState";
-import {ReduxChaosArea} from "ComfortReduxZone";
+import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "ComfortReduxZone";
 import {Point} from "Point";
 /*import {SVG} from "../Shared/SVG";*/
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) => {
+    
     if (ownProps.Name === "Comfort") {
       return {zone: state.Zones.Comfort, user: "Adam Hall"};
     } else if (ownProps.Name === "Chaos") {
@@ -23,6 +24,7 @@ const getCenterPointFromElement = (el) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
+  
   return {
     events: {
       onZoneMouseDown: (zone) => {
@@ -36,6 +38,7 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
       onZoneOverFocus: (zone) => {
+        
         dispatch(setOverFocus(zone));
       },
       onZoneOffFocus: (zone) => {
@@ -45,8 +48,20 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export const ReduxZoneConnector = connect(
+export const ReduxChaosConnector = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ReduxChaosArea);
+
+export const ReduxStretchConnector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReduxStretchArea);
+
+export const ReduxComfortConnector = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(ReduxComfortArea);
+
+
 

@@ -13,7 +13,7 @@ exports[`test Should show the chaos area 1`] = `
       width="100%" />
     <text
       className="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -38,7 +38,7 @@ exports[`test Should show the chaos area 1`] = `
     </rect>
     <text
       class="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -65,7 +65,7 @@ exports[`test Should show the chaos area 2`] = `
       width="100%" />
     <text
       className="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -90,7 +90,7 @@ exports[`test Should show the chaos area 2`] = `
     </rect>
     <text
       class="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -117,7 +117,7 @@ exports[`test Should show the chaos area 3`] = `
       width="100%" />
     <text
       className="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -142,7 +142,7 @@ exports[`test Should show the chaos area 3`] = `
     </rect>
     <text
       class="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -574,7 +574,7 @@ exports[`test The complete comfort model 1`] = `
         width="100%" />
       <text
         className="area-label"
-        id="label-choas"
+        id="label-chaos"
         text-anchor="middle"
         textAnchor="middle"
         x="50%"
@@ -670,7 +670,7 @@ exports[`test The complete comfort model 1`] = `
       </rect>
       <text
         class="area-label"
-        id="label-choas"
+        id="label-chaos"
         text-anchor="middle"
         textAnchor="middle"
         x="50%"

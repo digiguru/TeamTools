@@ -33,7 +33,7 @@ it("Collisions in cache are not allowed", () => {
   let result2;
   expect(() => {result1 = c.add(input1); }).not.toThrow();
   let failTest = (error) => {
-    debugger;
+    
     expect(error).toBeUndefined();
   };
   // Act

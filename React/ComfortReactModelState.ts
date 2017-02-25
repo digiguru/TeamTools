@@ -17,19 +17,19 @@ export class ChaosPickerZoneRangeState {
 export interface IUserable {
   user: string;
 }
-export interface IChoasPickerZoneEventFunction {
+export interface IChaosPickerZoneEventFunction {
   (zone: "Comfort" | "Chaos" | "Stretch"): void;
 }
-export interface IChoasPickerZoneEvents {
+export interface IChaosPickerZoneEvents {
   onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
   onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => Function;
   onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
   onZoneOffFocus: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
 }
-export interface IChoasPickerZoneConnector {
+export interface IChaosPickerZoneConnector {
     zone: ChaosPickerZoneState;
     user: string;
-    events: IChoasPickerZoneEvents;
+    events: IChaosPickerZoneEvents;
 }
 
 export class ChaosPickerZoneState {
