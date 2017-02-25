@@ -2,14 +2,19 @@ import * as React from "react";
 import { connect } from "react-redux";
 import {Stage, BouncyAnimation, Events} from "./SVGHelper";
 import {ChaosPickerState, ChaosPickerZoneState} from "ComfortReactModelState";
-import { setFocus, selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
+import { selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
 import {ReduxZoneConnector} from "ComfortReactZoneConnector";
 
+/*
+        <g id="users">
+        </g>
 
+        <ReduxUserConnector />
+*/
 export const ReduxComfortApp = () => (
     <Stage>
         <ReduxZoneConnector />
-        < g id="zones">
+        <g id="zones">
         </g>
     </Stage>
 );

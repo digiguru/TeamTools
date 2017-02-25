@@ -7,36 +7,40 @@ import {Point} from "Point";
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) => {
     if (ownProps.Name === "Comfort") {
-      return state.Zones.Comfort;
+      return {zone: state.Zones.Comfort, user: "Adam Hall"};
     } else if (ownProps.Name === "Chaos") {
-      return state.Zones.Chaos;
+      return {zone: state.Zones.Chaos, user: "Adam Hall"};
     } else {
-      return state.Zones.Stretch;
+      return {zone: state.Zones.Stretch, user: "Adam Hall"};
     }
+};
+
+const getCenterPointFromElement = (el) => {
+  const boundingBox = el.getBBox();
+  const centerX = (boundingBox.width - boundingBox.x) / 2;
+  const centerY = (boundingBox.height - boundingBox.y) / 2;
+  return new Point(centerX, centerY);
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    onZoneMouseDown: (zone) => {
-      dispatch(setActiveFocus(zone));
-    },
-    onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => {
-      dispatch(setOffFocus(zone));
-      console.log(user, zone, event, this);
-      debugger;
-      const coord = [event.clientX, event.clientY];
-      const boundingBox = event.currentTarget.getBBox();
-      const centerX = (boundingBox.width - boundingBox.x) / 2;
-      const centerY = (boundingBox.height - boundingBox.y) / 2;
-      const centerPoint = new Point(centerX, centerY);
-      const distance = Point.distance(centerPoint, Point.fromCoords(coord));
-      dispatch(chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
-    },
-    onZoneOverFocus: (zone) => {
-      dispatch(setOverFocus(zone));
-    },
-    onZoneOffFocus: (zone) => {
-      dispatch(setOffFocus(zone));
+    events: {
+      onZoneMouseDown: (zone) => {
+        dispatch(setActiveFocus(zone));
+      },
+      onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => {
+        dispatch(setOffFocus(zone));
+        const coord = [event.clientX, event.clientY];
+        const centerPoint = getCenterPointFromElement(event.currentTarget);
+        const distance = Point.distance(centerPoint, Point.fromCoords(coord));
+        dispatch(chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+      },
+      onZoneOverFocus: (zone) => {
+        dispatch(setOverFocus(zone));
+      },
+      onZoneOffFocus: (zone) => {
+        dispatch(setOffFocus(zone));
+      }
     }
   };
 };

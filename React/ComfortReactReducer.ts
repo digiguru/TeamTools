@@ -4,7 +4,7 @@ import {Focus, ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "Com
 import { fromJS, List, Map } from "immutable";
 
 const initialState: ChaosPickerState = {
-    UserList : [],
+    UserList : ["Adam Hall", "Caroline Hall"],
     Zones : {
         Comfort: {Name: "Comfort", Focus: Focus.Off, Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
         Stretch: {Name: "Stretch", Focus: Focus.Off, Range: {Start: 100, End: 200}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
@@ -71,14 +71,17 @@ class ComfortZoneAction {
 
     static chooseZone(state: ChaosPickerState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number): ChaosPickerState {
          // Adds to UserChoices, and sets currentUser to empty
-        const data = state.UserChoices.push({
-                User: user,
-                Zone: area,
-                Distance: distance
-            });
+        debugger;
+        const newUserChoices = fromJS(state.UserChoices).push({
+            User: user,
+            Zone: area,
+            Distance: distance
+        });
+        const newUserList = List(state.UserList).filter((item) => item !== user);
         return Map(state)
             .delete("CurrentUser")
-            .set("UserChoices", data).toJS();
+            .set("UserChoices", newUserChoices)
+            .set("UserList", newUserList).toJS();
     }
     static toggleChoiceVisibility(state: ChaosPickerState, visible: Boolean): ChaosPickerState {
         // Set "showUserChoices" to true

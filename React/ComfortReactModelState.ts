@@ -14,6 +14,23 @@ export class ChaosPickerZoneRangeState {
     Start: number;
     End: number;
 }
+export interface IUserable {
+  user: string;
+}
+export interface IChoasPickerZoneEventFunction {
+  (zone: "Comfort" | "Chaos" | "Stretch"): void;
+}
+export interface IChoasPickerZoneEvents {
+  onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
+  onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => Function;
+  onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
+  onZoneOffFocus: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
+}
+export interface IChoasPickerZoneConnector {
+    zone: ChaosPickerZoneState;
+    user: string;
+    events: IChoasPickerZoneEvents;
+}
 
 export class ChaosPickerZoneState {
     Name: "Chaos" | "Stretch" | "Comfort";

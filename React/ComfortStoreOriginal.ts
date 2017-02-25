@@ -1,6 +1,6 @@
 import * as Redux from "redux";
 
-import { setFocus, selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
+import { setActiveFocus, setOverFocus, selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
 import {comfortReactApp} from "ComfortReactReducer";
 const store = Redux.createStore(comfortReactApp);
 
@@ -11,10 +11,11 @@ const unsubscribe = store.subscribe(() =>
 );
 
 // Dispatch some actions
-store.dispatch(setFocus("Chaos"));
-store.dispatch(setFocus("Comfort"));
-store.dispatch(setFocus("Stretch"));
+store.dispatch(setOverFocus("Chaos"));
+store.dispatch(setOverFocus("Comfort"));
+store.dispatch(setOverFocus("Stretch"));
 store.dispatch(selectUser("Adam Hall"));
+store.dispatch(setActiveFocus("Stretch"));
 store.dispatch(chooseZone("Adam Hall", "Chaos", 150));
 store.dispatch(toggleChoiceVisibility(true));
 
