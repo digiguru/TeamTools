@@ -6,7 +6,6 @@ import {Point} from "Point";
 /*import {SVG} from "../Shared/SVG";*/
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) => {
-    
     if (ownProps.Name === "Comfort") {
       return {zone: state.Zones.Comfort, user: "Adam Hall"};
     } else if (ownProps.Name === "Chaos") {
@@ -24,7 +23,6 @@ const getCenterPointFromElement = (el) => {
 };
 
 const mapDispatchToProps = (dispatch) => {
-  
   return {
     events: {
       onZoneMouseDown: (zone) => {
@@ -38,7 +36,6 @@ const mapDispatchToProps = (dispatch) => {
         dispatch(chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
       onZoneOverFocus: (zone) => {
-        
         dispatch(setOverFocus(zone));
       },
       onZoneOffFocus: (zone) => {

@@ -34,4 +34,4 @@ export class UserObject {
 }
 
 export interface IUsername { username: string; }
-export interface IUserList { users: Array<UserObject> }
+export interface IUserList { users: Array<UserObject>; }
