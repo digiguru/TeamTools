@@ -4,7 +4,7 @@ import {Stage, BouncyAnimation, Events} from "./SVGHelper";
 import {ChaosPickerState, ChaosPickerZoneState} from "ComfortReactModelState";
 import { selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
 import {ReduxChaosConnector, ReduxStretchConnector, ReduxComfortConnector} from "ComfortReactZoneConnector";
-import {UserListConnector} from "UserListConnector";
+import {ReduxUserConnector} from "UserListConnector";
 
 /*
         <g id="users">
@@ -17,7 +17,7 @@ export const ReduxComfortApp = () => (
         <ReduxChaosConnector Name="Chaos" />
         <ReduxStretchConnector Name="Stretch" />
         <ReduxComfortConnector Name="Comfort" />
-        <UserListConnector />
+        <ReduxUserConnector />
     </Stage>
 );
 

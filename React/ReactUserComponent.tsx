@@ -14,7 +14,7 @@
 import * as React from "react";
 import { IUser, IUserList } from "UserListConnector";
 
-export const ReduxUserList = (state: IUserList) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
+export const ReduxUserList = (state: Array<IUser>) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     return <g id="users">
         {state.users.map((user, i) =>
             <ReduxUser {...user} />

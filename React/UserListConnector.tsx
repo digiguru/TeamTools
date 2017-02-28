@@ -20,17 +20,19 @@ export class UserObject implements IUser {
     }
 }
 
-const mapStateToProps = (state: ChaosPickerState, ownProps: IUserList) => {
-    return state.UserList.map((u, i) => {
-        return new UserObject(u, i);
-    });
+const mapStateToProps = (state: ChaosPickerState, ownProps: IUserList): IUserList => {
+    return {
+      users: state.UserList.users.map((u, i) => {
+        return new UserObject(u.username, i);
+      })
+    };
 };
 
 
 const mapDispatchToProps = (dispatch) => {
   return {
     events: {
-      onZoneMouseDown: (zone) => {
+      /*onZoneMouseDown: (zone) => {
         dispatch(setActiveFocus(zone));
       },
       onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => {
@@ -45,12 +47,12 @@ const mapDispatchToProps = (dispatch) => {
       },
       onZoneOffFocus: (zone) => {
         dispatch(setOffFocus(zone));
-      }
+      }*/
     }
   };
 };
 
-export const ReduxChaosConnector = connect(
+export const ReduxUserConnector = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ReduxUserList);

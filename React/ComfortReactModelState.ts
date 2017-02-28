@@ -1,3 +1,5 @@
+import { IUser, IUserList } from "UserListConnector";
+
 export enum Focus {
     Off = 0,
     Over = 1,
@@ -77,7 +79,7 @@ export interface ISizable {
 }
 
 export class ChaosPickerState {
-    UserList: Array<String>;
+    UserList: IUserList;
     Zones: ChaosZoneList;
     ShowUserChoices: Boolean;
     CurrentUser?: String;
