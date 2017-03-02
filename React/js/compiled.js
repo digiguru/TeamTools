@@ -979,7 +979,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
                 Distance: distance
             });
             // Remove the user from the choice list
-            var newUserList = immutable_1.List(state.UserList).filter(function (item) { return item !== user; });
+            var newUserList = immutable_1.List(state.UserList.users).filter(function (item) { return item.username !== user; });
             // Show the user list
             var showUserChoice = newUserList.count();
             // Return
@@ -987,7 +987,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
                 .delete("CurrentUser")
                 .set("ShowUserChoices", showUserChoice)
                 .set("UserChoices", newUserChoices)
-                .set("UserList", newUserList).toJS();
+                .set("UserList", { users: newUserList }).toJS();
         };
         ComfortZoneAction.toggleChoiceVisibility = function (state, visible) {
             // Set "showUserChoices" to true
@@ -1092,20 +1092,13 @@ define("userComponents", ["require", "exports", "react"], function (require, exp
         UserList.prototype.render = function () {
             var users = [];
             this.props.users.forEach(function (user) {
-                users.push(React.createElement(User, { username: user.name, key: user.name }));
+                users.push(React.createElement(User, { username: user.username }));
             });
             return React.createElement("ul", { id: "users" }, users);
         };
         return UserList;
     }(React.Component));
     exports.UserList = UserList;
-    var UserObject = (function () {
-        function UserObject(name) {
-            this.name = name;
-        }
-        return UserObject;
-    }());
-    exports.UserObject = UserObject;
 });
 /*
 <ul id="users"><li><span class="user">Adam Hall</span><a href="void(0);">X</a></li><li><span class="user">Billie Davey</span><a href="void(0);">X</a></li><li><span class="user">Laura Rowe</span><a href="void(0);">X</a></li><li><span class="user">Simon Dawson</span><a href="void(0);">X</a></li><li><span class="user">Fred</span><a href="void(0);">X</a></li></ul>
@@ -1113,8 +1106,8 @@ define("userComponents", ["require", "exports", "react"], function (require, exp
 define("users", ["require", "exports", "react", "react-dom", "userComponents", "ComfortReact", "TuckmanReact"], function (require, exports, React, ReactDOM, userComponents_1, ComfortReact_2, TuckmanReact_2) {
     "use strict";
     exports.USERS = [
-        new userComponents_1.UserObject("Bob"),
-        new userComponents_1.UserObject("Donald")
+        { username: "Bob" },
+        { username: "Donald" }
     ];
     ReactDOM.render(React.createElement(userComponents_1.UserList, { users: exports.USERS }), document.getElementById("container"));
     ReactDOM.render(React.createElement(ComfortReact_2.ComfortReact, null), document.getElementById("comfort"));

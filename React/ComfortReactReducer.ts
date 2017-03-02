@@ -5,7 +5,7 @@ import { fromJS, List, Map } from "immutable";
 
 const initialState: ChaosPickerState = {
     UserList : {
-        users: [{username:"Adam Hall"}, {username:"Caroline Hall"}]
+        users: [{username: "Adam Hall"}, {username: "Caroline Hall"}]
     },
     Zones : {
         Comfort: {Name: "Comfort", Focus: Focus.Off, Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
@@ -84,7 +84,7 @@ class ComfortZoneAction {
             Distance: distance
         });
         // Remove the user from the choice list
-        const newUserList = List(state.UserList).filter((item) => item !== user);
+        const newUserList = List(state.UserList.users).filter((item) => item.username !== user);
         // Show the user list
         const showUserChoice = newUserList.count();
         // Return
@@ -92,7 +92,7 @@ class ComfortZoneAction {
             .delete("CurrentUser")
             .set("ShowUserChoices", showUserChoice)
             .set("UserChoices", newUserChoices)
-            .set("UserList", newUserList).toJS();
+            .set("UserList", {users: newUserList}).toJS();
     }
     static toggleChoiceVisibility(state: ChaosPickerState, visible: Boolean): ChaosPickerState {
         // Set "showUserChoices" to true

@@ -4,12 +4,18 @@ import {ChaosPickerState, ChaosPickerZoneState} from "ComfortReactModelState";
 import {ReduxUserList} from "ReactUserComponent";
 
 export interface IUser {
-    username: String;
-    y: number;
+  username: String;
 }
+
+export interface IUserUI extends IUser {
+  y: number;
+  focal: String;
+}
+
+
 export interface IUserList { users: Array<IUser>; }
 
-export class UserObject implements IUser {
+export class UserObject implements IUserUI {
     username: String;
     y: number;
     focal: String;

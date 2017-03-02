@@ -12,17 +12,17 @@
 */
 
 import * as React from "react";
-import { IUser, IUserList } from "UserListConnector";
+import { IUserUI, IUserList } from "UserListConnector";
 
-export const ReduxUserList = (state: Array<IUser>) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
+export const ReduxUserList = (state: IUserList) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     return <g id="users">
-        {state.users.map((user, i) =>
+        {state.users.map((user: IUserUI, i) =>
             <ReduxUser {...user} />
         )}
     </g >;
 };
 
-export const ReduxUser = (state: IUser) => {
+export const ReduxUser = (state: IUserUI) => {
     // 60 , 150, 240
     return <g className="user-group">
         <rect y="60" x="0" width="800" height="90"></rect>

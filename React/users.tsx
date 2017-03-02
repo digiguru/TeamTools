@@ -4,13 +4,16 @@
 
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import {UserObject, UserList} from "userComponents";
+import {UserList} from "userComponents";
 import {ComfortReact} from "ComfortReact";
 import {TuckmanComponent} from "TuckmanReact";
-export const USERS = [
-    new UserObject("Bob"),
-    new UserObject("Donald")
+import {IUser} from "UserListConnector";
+
+export const USERS: IUser[] = [
+    {username: "Bob"},
+    {username: "Donald"}
 ];
+
 ReactDOM.render(
     <UserList users={USERS} />,
     document.getElementById("container")
