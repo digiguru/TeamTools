@@ -256,12 +256,6 @@ define("UserListConnector", ["require", "exports", "react-redux", "ReactUserComp
 // UserListConnector 
 define("ComfortReactModelState", ["require", "exports"], function (require, exports) {
     "use strict";
-    var Focus;
-    (function (Focus) {
-        Focus[Focus["Off"] = 0] = "Off";
-        Focus[Focus["Over"] = 1] = "Over";
-        Focus[Focus["Active"] = 2] = "Active";
-    })(Focus = exports.Focus || (exports.Focus = {}));
     var ChaosPickerUserChoiceState = (function () {
         function ChaosPickerUserChoiceState() {
         }
@@ -715,32 +709,25 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
     }(React.Component));
     exports.ComfortReact = ComfortReact;
 });
-define("ComfortReduxZone", ["require", "exports", "react", "ComfortReactModelState"], function (require, exports, React, ComfortReactModelState_1) {
+define("ComfortReduxZone", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.ReduxChaosArea = function (state) {
         return React.createElement("g", null,
-            React.createElement("rect", { id: "chaos", className: state.zone.Focus ? (state.zone.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
+            React.createElement("rect", { id: "chaos", className: state.zone.Focus, onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
             React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"),
             ";");
     };
     exports.ReduxStretchArea = function (state) {
         return React.createElement("g", null,
-            React.createElement("circle", { className: state.zone.Focus ? (state.zone.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", id: "stretch", r: "33%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
+            React.createElement("circle", { className: state.zone.Focus, id: "stretch", r: "33%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
             React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
     };
     exports.ReduxComfortArea = function (state) {
         return React.createElement("g", null,
-            React.createElement("circle", { className: state.zone.Focus ? (state.zone.Focus === ComfortReactModelState_1.Focus.Over ? "in-focus" : "active") : "not-in-focus", id: "stretch", r: "15%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
+            React.createElement("circle", { className: state.zone.Focus, id: "stretch", r: "15%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.events.onZoneOverFocus(state.zone.Name); }, onMouseLeave: function () { return state.events.onZoneOffFocus(state.zone.Name); }, onMouseDown: function () { return state.events.onZoneMouseDown(state.zone.Name); }, onMouseUp: function (event) { return state.events.onZoneMouseUp(state.user, state.zone.Name, event); }, width: state.zone.Size.Width.toString(), height: state.zone.Size.Height.toString() }),
             React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
     };
 });
-/*
-           
-   
-   onMouseUp={onZoneClick(state.Name)}
-           onMouseDown={onZoneActive(state.Name)}
-           onMouseEnter={onZoneFocus(state.Name)}
-           onMouseLeave={onZoneUnfocus(state.Name)}*/ 
 define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "ComfortActions", "ComfortReduxZone", "Point"], function (require, exports, react_redux_2, ComfortActions_1, ComfortReduxZone_1, Point_2) {
     "use strict";
     /*import {SVG} from "../Shared/SVG";*/
@@ -894,16 +881,16 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
         // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;"
     }
 }*/
-define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "immutable"], function (require, exports, ComfortActions_2, ComfortReactModelState_2, immutable_1) {
+define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "immutable"], function (require, exports, ComfortActions_2, ComfortReactModelState_1, immutable_1) {
     "use strict";
     var initialState = {
         UserList: {
             users: [{ username: "Adam Hall" }, { username: "Caroline Hall" }]
         },
         Zones: {
-            Comfort: { Name: "Comfort", Focus: ComfortReactModelState_2.Focus.Off, Range: { Start: 0, End: 100 }, Size: { Width: new ComfortReactModelState_2.DOMMeasurement("50%"), Height: new ComfortReactModelState_2.DOMMeasurement("50%") } },
-            Stretch: { Name: "Stretch", Focus: ComfortReactModelState_2.Focus.Off, Range: { Start: 100, End: 200 }, Size: { Width: new ComfortReactModelState_2.DOMMeasurement("50%"), Height: new ComfortReactModelState_2.DOMMeasurement("50%") } },
-            Chaos: { Name: "Chaos", Focus: ComfortReactModelState_2.Focus.Off, Range: { Start: 200, End: 300 }, Size: { Width: new ComfortReactModelState_2.DOMMeasurement("100%"), Height: new ComfortReactModelState_2.DOMMeasurement("100%") } }
+            Comfort: { Name: "Comfort", Focus: "not-in-focus", Range: { Start: 0, End: 100 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("50%"), Height: new ComfortReactModelState_1.DOMMeasurement("50%") } },
+            Stretch: { Name: "Stretch", Focus: "not-in-focus", Range: { Start: 100, End: 200 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("50%"), Height: new ComfortReactModelState_1.DOMMeasurement("50%") } },
+            Chaos: { Name: "Chaos", Focus: "not-in-focus", Range: { Start: 200, End: 300 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("100%"), Height: new ComfortReactModelState_1.DOMMeasurement("100%") } }
         },
         ShowUserChoices: false,
         UserChoices: []

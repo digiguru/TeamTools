@@ -1,5 +1,3 @@
-import {Focus} from "ComfortReactModelState";
-
 export const ComfortActions = {
     SET_ZONEFOCUS: "SET_ZONEFOCUS",
     SELECT_USER: "SELECT_USER",

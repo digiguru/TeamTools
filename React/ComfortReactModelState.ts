@@ -1,10 +1,5 @@
 import { IUser, IUserList } from "UserListConnector";
 
-export enum Focus {
-    Off = 0,
-    Over = 1,
-    Active = 2
-}
 
 export class ChaosPickerUserChoiceState {
     User: String;
@@ -36,7 +31,7 @@ export interface IChaosPickerZoneConnector {
 
 export class ChaosPickerZoneState {
     Name: "Chaos" | "Stretch" | "Comfort";
-    Focus: Focus;
+    Focus: "in-focus" | "active" | "not-in-focus";
     Range: ChaosPickerZoneRangeState;
     Size: ISizable;
 }
