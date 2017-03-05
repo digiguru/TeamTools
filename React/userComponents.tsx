@@ -8,7 +8,7 @@ export class Delete extends React.Component<undefined, undefined> {
 }
 export class User extends React.Component<IUser, undefined> {
   render() {
-    return <li><span className="user">{this.props.username}</span><Delete /></li>;
+    return <li><span className="user">{this.props.Username}</span><Delete /></li>;
   }
 }
 export class NewTeam extends React.Component<undefined, undefined> {
@@ -21,8 +21,8 @@ export class UserList extends React.Component<IUserList, undefined> {
     render() {
         const users = [];
 
-        this.props.users.forEach(function(user: IUserUI) {
-            users.push(<User username={user.username} />);
+        this.props.Users.forEach(function(user: IUserUI) {
+            users.push(<User {... user} />);
         });
         return <ul id="users">{users}</ul>;
     }

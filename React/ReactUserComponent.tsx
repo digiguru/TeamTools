@@ -14,18 +14,24 @@
 import * as React from "react";
 import { IUserUI, IUserList } from "UserListConnector";
 
-export const ReduxUserList = (state: IUserList) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
+export const ReduxUserList = (state) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     return <g id="users">
-        {state.users.map((user: IUserUI, i) =>
-            <ReduxUser {...user} />
+        {state.Users.map((user: IUserUI, i) =>
+            <ReduxUser {...user} events={state.events} />
         )}
     </g >;
 };
 
-export const ReduxUser = (state: IUserUI) => {
+export const ReduxUser = (state) => {
     // 60 , 150, 240
     return <g className="user-group">
-        <rect y="60" x="0" width="800" height="90"></rect>
+        <rect
+            className={state.Focus}
+            onMouseEnter={() => state.events.onUserOverFocus(state.username)}
+            onMouseLeave={() => state.events.onUserOffFocus(state.username)}
+            onMouseDown={() => state.events.onUserMouseDown(state.username)}
+            onMouseUp={(event) => state.events.onUserMouseUp(state.username, event)}
+         y={state.y} x="0" width="800" height="90"></rect>
         <text className="username" y={state.y} x="60">{state.username}</text>
     </g>;
 };

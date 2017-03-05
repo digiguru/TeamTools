@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { setFocus, chooseZone } from "ComfortActions";
+import { setZoneFocus, chooseZone } from "ComfortActions";
 import {ChaosPickerState, ChaosPickerZoneState} from "ComfortReactModelState";
 import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "ComfortReduxZone";
 import {Point} from "Point";
@@ -26,20 +26,20 @@ const mapDispatchToProps = (dispatch) => {
   return {
     events: {
       onZoneMouseDown: (zone) => {
-        dispatch(setFocus(zone, "active"));
+        dispatch(setZoneFocus(zone, "active"));
       },
       onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => {
-        dispatch(setFocus(zone, "not-in-focus"));
+        dispatch(setZoneFocus(zone, "not-in-focus"));
         const coord = [event.clientX, event.clientY];
         const centerPoint = getCenterPointFromElement(event.currentTarget);
         const distance = Point.distance(centerPoint, Point.fromCoords(coord));
         dispatch(chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
       onZoneOverFocus: (zone) => {
-        dispatch(setFocus(zone, "in-focus"));
+        dispatch(setZoneFocus(zone, "in-focus"));
       },
       onZoneOffFocus: (zone) => {
-        dispatch(setFocus(zone, "not-in-focus"));
+        dispatch(setZoneFocus(zone, "not-in-focus"));
       }
     }
   };

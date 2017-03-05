@@ -1,35 +1,24 @@
 import { connect } from "react-redux";
-import { selectUser } from "ComfortActions";
+import { selectUser, setUserFocus } from "ComfortActions";
 import {ChaosPickerState, ChaosPickerZoneState} from "ComfortReactModelState";
 import {ReduxUserList} from "ReactUserComponent";
-
+import { fromJS } from "immutable";
 export interface IUser {
-  username: String;
+  Username: String;
 }
 
 export interface IUserUI extends IUser {
-  y: number;
-  focal: String;
+  Y: number;
+  Focus: String;
 }
 
 
-export interface IUserList { users: Array<IUser>; }
-
-export class UserObject implements IUserUI {
-    username: String;
-    y: number;
-    focal: String;
-    constructor(name: String, index: number) {
-        this.username = name;
-        this.y = (index * 90) + 60;
-        this.focal = "no-focus";
-    }
-}
+export interface IUserList { Users: Array<IUser|IUserUI>; }
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: IUserList): IUserList => {
     return {
-      users: state.UserList.users.map((u, i) => {
-        return new UserObject(u.username, i);
+      Users: state.UserList.Users.map((u, i) => {
+        return fromJS(u).set("Y", (i * 90) + 60).toJS();
       })
     };
 };
@@ -38,22 +27,23 @@ const mapStateToProps = (state: ChaosPickerState, ownProps: IUserList): IUserLis
 const mapDispatchToProps = (dispatch) => {
   return {
     events: {
-      /*onZoneMouseDown: (zone) => {
-        dispatch(setActiveFocus(zone));
+      onUserMouseDown: (user: string) => {
+        dispatch(setUserFocus(user, "active"));
       },
-      onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => {
-        dispatch(setOffFocus(zone));
-        const coord = [event.clientX, event.clientY];
+      onUserMouseUp: (user: string, event: any) => {
+        dispatch(setUserFocus(user, "not-in-focus"));
+        /*const coord = [event.clientX, event.clientY];
         const centerPoint = getCenterPointFromElement(event.currentTarget);
-        const distance = Point.distance(centerPoint, Point.fromCoords(coord));
-        dispatch(chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+        const distance = Point.distance(centerPoint, Point.fromCoords(coord));*/
+
+        dispatch(selectUser(user)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
-      onZoneOverFocus: (zone) => {
-        dispatch(setOverFocus(zone));
+      onUserOverFocus: (user: string) => {
+        dispatch(setUserFocus(user, "in-focus"));
       },
-      onZoneOffFocus: (zone) => {
-        dispatch(setOffFocus(zone));
-      }*/
+      onUserOffFocus: (user: string) => {
+        dispatch(setUserFocus(user, "not-in-focus"));
+      }
     }
   };
 };

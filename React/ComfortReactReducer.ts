@@ -5,7 +5,10 @@ import { fromJS, List, Map } from "immutable";
 
 const initialState: ChaosPickerState = {
     UserList : {
-        users: [{username: "Adam Hall"}, {username: "Caroline Hall"}]
+        Users: [
+            {Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
+            {Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
+        ]
     },
     Zones : {
         Comfort: {Name: "Comfort", Focus: "not-in-focus", Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
@@ -17,8 +20,10 @@ const initialState: ChaosPickerState = {
 };
 export function comfortReactApp(state: ChaosPickerState = initialState, action): ChaosPickerState {
     switch (action.type) {
+        case ComfortActions.SET_USERFOCUS:
+            return ComfortZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
         case ComfortActions.SET_ZONEFOCUS:
-            return ComfortZoneAction.setFocus(state, (<any>action).area, (<any>action).focus);
+            return ComfortZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
         case ComfortActions.SELECT_USER:
             return ComfortZoneAction.selectUser(state, (<any>action).user);
         case ComfortActions.CHOOSE_ZONE:
@@ -30,39 +35,20 @@ export function comfortReactApp(state: ChaosPickerState = initialState, action):
     }
 }
 class ComfortZoneAction {
-    static setFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus"): ChaosPickerState {
+    static setZoneFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus"): ChaosPickerState {
         return fromJS(state)
             .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
             .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? focus : "not-in-focus")
             .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? focus : "not-in-focus").toJS();
     }
-    /*
-    static setOverFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
-        // Set focus to true on this zone, and all others to false.
+    static setUserFocus(state: ChaosPickerState, user: string, focus: "in-focus" | "active" | "not-in-focus"): ChaosPickerState {
+        const originalList = List(state.UserList.Users);
+        const newUserList = originalList.update(
+            originalList.findIndex(item => item.Username === user),
+            (item) => fromJS(item).set("Focus", focus)).toJS();
         return fromJS(state)
-            .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? Focus.Over : Focus.Off)
-            .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? Focus.Over : Focus.Off)
-            .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? Focus.Over : Focus.Off).toJS();
+            .set("UserList", {Users: newUserList}).toJS();
     }
-    static setActiveFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
-        // Set focus to true on this zone, and all others to false.
-        return fromJS(state)
-            .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? Focus.Active : Focus.Off)
-            .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? Focus.Active : Focus.Off)
-            .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? Focus.Active : Focus.Off).toJS();
-    }
-    static setOffFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort"): ChaosPickerState {
-        // Set focus to true on this zone, and all others to false.
-        if ((area === "Comfort")) {
-            return fromJS(state).setIn(["Zones", "Comfort", "Focus"], Focus.Off).toJS();
-        } else if ((area === "Stretch")) {
-            return fromJS(state).setIn(["Zones", "Stretch", "Focus"], Focus.Off).toJS();
-        } else if ((area === "Chaos")) {
-            return fromJS(state).setIn(["Zones", "Chaos", "Focus"], Focus.Off).toJS();
-        }
-        return state;
-    }
-    */
     static selectUser(state: ChaosPickerState, user: String): ChaosPickerState {
         // Sets currentUser, and therefor hides the user choice menu
         /*return Object.assign({}, state, {
@@ -84,7 +70,7 @@ class ComfortZoneAction {
             Distance: distance
         });
         // Remove the user from the choice list
-        const newUserList = List(state.UserList.users).filter((item) => item.username !== user);
+        const newUserList = List(state.UserList.Users).filter((item) => item.Username !== user);
         // Show the user list
         const showUserChoice = newUserList.count();
         // Return
@@ -92,7 +78,7 @@ class ComfortZoneAction {
             .delete("CurrentUser")
             .set("ShowUserChoices", showUserChoice)
             .set("UserChoices", newUserChoices)
-            .set("UserList", {users: newUserList}).toJS();
+            .set("UserList", {Users: newUserList}).toJS();
     }
     static toggleChoiceVisibility(state: ChaosPickerState, visible: Boolean): ChaosPickerState {
         // Set "showUserChoices" to true

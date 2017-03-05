@@ -10,12 +10,12 @@ import {TuckmanComponent} from "TuckmanReact";
 import {IUser} from "UserListConnector";
 
 export const USERS: IUser[] = [
-    {username: "Bob"},
-    {username: "Donald"}
+    {Username: "Bob"},
+    {Username: "Donald"}
 ];
 
 ReactDOM.render(
-    <UserList users={USERS} />,
+    <UserList Users={USERS} />,
     document.getElementById("container")
 );
 ReactDOM.render(
