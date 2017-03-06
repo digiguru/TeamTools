@@ -19,6 +19,7 @@ const initialState: ChaosPickerState = {
     UserChoices: []
 };
 export function comfortReactApp(state: ChaosPickerState = initialState, action): ChaosPickerState {
+    console.log(action.type, action);
     switch (action.type) {
         case ComfortActions.SET_USERFOCUS:
             return ComfortZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);

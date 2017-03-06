@@ -721,6 +721,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
     };
     function comfortReactApp(state, action) {
         if (state === void 0) { state = initialState; }
+        console.log(action.type, action);
         switch (action.type) {
             case ComfortActions_3.ComfortActions.SET_USERFOCUS:
                 return ComfortZoneAction.setUserFocus(state, action.user, action.focus);
