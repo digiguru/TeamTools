@@ -11,9 +11,13 @@ exports[`test Should show the component 1`] = `
       id="zones">
       <g>
         <rect
-          className="not-in-focus area js-area-standard"
+          className="not-in-focus area okay js-area-standard"
           height="100%"
           id="performing"
+          onMouseDown={undefined}
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+          onMouseUp={undefined}
           width="25%"
           x="0"
           y="0">
@@ -41,9 +45,13 @@ exports[`test Should show the component 1`] = `
       </g>
       <g>
         <rect
-          className="not-in-focus area js-area-standard"
+          className="not-in-focus area okay js-area-standard"
           height="100%"
           id="norming"
+          onMouseDown={undefined}
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+          onMouseUp={undefined}
           width="25%"
           x="0"
           y="0">
@@ -71,9 +79,13 @@ exports[`test Should show the component 1`] = `
       </g>
       <g>
         <rect
-          className="not-in-focus area js-area-standard"
+          className="not-in-focus area okay js-area-standard"
           height="100%"
           id="storming"
+          onMouseDown={undefined}
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+          onMouseUp={undefined}
           width="25%"
           x="0"
           y="0">
@@ -101,9 +113,13 @@ exports[`test Should show the component 1`] = `
       </g>
       <g>
         <rect
-          className="not-in-focus area js-area-standard"
+          className="not-in-focus area okay js-area-standard"
           height="100%"
           id="forming"
+          onMouseDown={undefined}
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+          onMouseUp={undefined}
           width="25%"
           x="0"
           y="0">
@@ -146,7 +162,7 @@ exports[`test Should show the component 1`] = `
     <g id="zones">
       <g>
         <rect
-          class="not-in-focus area js-area-standard"
+          class="not-in-focus area okay js-area-standard"
           height="100%"
           id="performing"
           width="25%"
@@ -180,7 +196,7 @@ exports[`test Should show the component 1`] = `
       </g>
       <g>
         <rect
-          class="not-in-focus area js-area-standard"
+          class="not-in-focus area okay js-area-standard"
           height="100%"
           id="norming"
           width="25%"
@@ -214,7 +230,7 @@ exports[`test Should show the component 1`] = `
       </g>
       <g>
         <rect
-          class="not-in-focus area js-area-standard"
+          class="not-in-focus area okay js-area-standard"
           height="100%"
           id="storming"
           width="25%"
@@ -248,7 +264,7 @@ exports[`test Should show the component 1`] = `
       </g>
       <g>
         <rect
-          class="not-in-focus area js-area-standard"
+          class="not-in-focus area okay js-area-standard"
           height="100%"
           id="forming"
           width="25%"
@@ -292,9 +308,13 @@ exports[`test Should show the stretch area 1`] = `
   width="800">
   <g>
     <rect
-      className="not-in-focus area js-area-standard"
+      className="not-in-focus area okay js-area-standard"
       height="100%"
       id="example"
+      onMouseDown={undefined}
+      onMouseEnter={undefined}
+      onMouseLeave={undefined}
+      onMouseUp={undefined}
       width="25%"
       x="0"
       y="0">
@@ -329,7 +349,7 @@ exports[`test Should show the stretch area 1`] = `
 >
   <g>
     <rect
-      class="not-in-focus area js-area-standard"
+      class="not-in-focus area okay js-area-standard"
       height="100%"
       id="example"
       width="25%"

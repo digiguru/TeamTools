@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Stage, BouncyAnimation, Events} from "./SVGHelper";
-import {ChaosPickerState} from "ComfortReactModelState";
+import {ChaosPickerState} from "./ComfortReactModelState";
 
 
 export interface IResizableModel {
@@ -21,21 +21,21 @@ export interface IMouseEvents {
     onMouseUp: any;
     onMouseDown: any;
 }
-export interface IResizableMouseEvents extends IResizableModel, IMouseEvents {
+export interface IResizableMouseEvents extends IResizableInteractiveModelState, IMouseEvents {
 
 }
 
-export class ChaosArea extends React.Component<any, IResizableInteractiveModelState> {
+export class ChaosArea extends React.Component<any, IResizableMouseEvents> {
      constructor(props: IResizableMouseEvents) {
         super(props);
-        this.props.onMouseEnter = Events.mouseEnter.bind(this);
-        this.props.onMouseLeave = Events.mouseLeave.bind(this);
-        this.props.onMouseUp = Events.mouseUp.bind(this);
-        this.props.onMouseDown = Events.mouseDown.bind(this);
         this.state = {
             focus: "not-in-focus",
             width: props.width || "100%",
             height: props.height || "100%",
+            onMouseEnter: Events.mouseEnter.bind(this),
+            onMouseLeave: Events.mouseLeave.bind(this),
+            onMouseUp: Events.mouseUp.bind(this),
+            onMouseDown: Events.mouseDown.bind(this)
         };
     }
     render() {
@@ -52,19 +52,18 @@ export class ChaosArea extends React.Component<any, IResizableInteractiveModelSt
     }
 }
 
-export class StretchArea extends React.Component<any, IResizableInteractiveModelState> {
+export class StretchArea extends React.Component<any, IResizableMouseEvents> {
     constructor(props: IResizableMouseEvents) {
         super(props);
-
-        this.props.onMouseEnter = Events.mouseEnter.bind(this);
-        this.props.onMouseLeave = Events.mouseLeave.bind(this);
-        this.props.onMouseUp = Events.mouseUp.bind(this);
-        this.props.onMouseDown = Events.mouseDown.bind(this);
 
         this.state = {
             focus: "not-in-focus",
             width: props.width || "100%",
-            height: props.height || "100%"
+            height: props.height || "100%",
+            onMouseEnter: Events.mouseEnter.bind(this),
+            onMouseLeave: Events.mouseLeave.bind(this),
+            onMouseUp: Events.mouseUp.bind(this),
+            onMouseDown: Events.mouseDown.bind(this)
         };
     }
 
@@ -84,18 +83,18 @@ export class StretchArea extends React.Component<any, IResizableInteractiveModel
     }
 }
 
-export class ComfortArea extends React.Component<any, IResizableInteractiveModelState> {
+export class ComfortArea extends React.Component<any, IResizableMouseEvents> {
      constructor(props: IResizableMouseEvents) {
         super(props);
 
-        this.props.onMouseEnter = Events.mouseEnter.bind(this);
-        this.props.onMouseLeave = Events.mouseLeave.bind(this);
-        this.props.onMouseUp = Events.mouseUp.bind(this);
-        this.props.onMouseDown = Events.mouseDown.bind(this);
         this.state = {
             focus: "not-in-focus",
             width: props.width || "100%",
-            height: props.height || "100%"
+            height: props.height || "100%",
+            onMouseEnter: Events.mouseEnter.bind(this),
+            onMouseLeave: Events.mouseLeave.bind(this),
+            onMouseUp: Events.mouseUp.bind(this),
+            onMouseDown: Events.mouseDown.bind(this)
         };
     }
 

@@ -9,8 +9,8 @@ export const ReduxChaosArea = (state: IChaosPickerZoneConnector) => { // , onZon
             onMouseDown={() => state.events.onZoneMouseDown(state.zone.Name)}
             onMouseUp={(event) => state.events.onZoneMouseUp(state.user, state.zone.Name, event)}
             width={state.zone.Size.Width.toString()} height={state.zone.Size.Height.toString()}></rect>
-        <text className="area-label" id="label-chaos" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>;
-    </g >;
+        <text className="area-label" id="label-chaos" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
+    </g>;
 };
 
 export const ReduxStretchArea = (state: IChaosPickerZoneConnector) => {
@@ -38,4 +38,3 @@ export const ReduxComfortArea = (state: IChaosPickerZoneConnector) => {
             <text className="area-label" id="label-stretch" text-anchor="middle" textAnchor="middle" x="50%" y="50%">comfort</text>
         </g>;
 };
- 

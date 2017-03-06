@@ -1,7 +1,7 @@
 
-import {ComfortActions} from "ComfortActions";
-import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "ComfortReactModelState";
-import { fromJS, List, Map } from "immutable";
+import {ComfortActions} from "./ComfortActions";
+import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "./ComfortReactModelState";
+import { fromJS, List, Map } from "../3rdParty/immutable.min";
 
 const initialState: ChaosPickerState = {
     UserList : {

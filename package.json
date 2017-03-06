@@ -45,7 +45,7 @@
     "snapshotSerializers": [
       "<rootDir>/node_modules/jest-html"
     ],
-    "testRegex": "/__tests__/.*\\.(ts|tsx|js)$"
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js|jsx)$"
   },
   "author": "digiguru",
   "license": "MIT",

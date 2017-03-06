@@ -1,6 +1,6 @@
 
 import * as React from "react";
-import {Point} from "Point";
+import {Point} from "./Point";
 /*require(["../Coords/Polar"], (u) => {
     console.log(new u.Polar(1,20));
 });*/

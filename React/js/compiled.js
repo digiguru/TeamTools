@@ -328,14 +328,14 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
         __extends(ChaosArea, _super);
         function ChaosArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_1.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_1.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_1.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_1.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
                 height: props.height || "100%",
+                onMouseEnter: SVGHelper_1.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_1.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_1.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_1.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -352,14 +352,14 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
         __extends(StretchArea, _super);
         function StretchArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_1.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_1.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_1.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_1.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
-                height: props.height || "100%"
+                height: props.height || "100%",
+                onMouseEnter: SVGHelper_1.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_1.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_1.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_1.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -376,14 +376,14 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
         __extends(ComfortArea, _super);
         function ComfortArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_1.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_1.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_1.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_1.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
-                height: props.height || "100%"
+                height: props.height || "100%",
+                onMouseEnter: SVGHelper_1.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_1.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_1.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_1.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -531,197 +531,6 @@ define("__tests__/Link.react-test", ["require", "exports", "react", "Link.react"
         expect(tree).toMatchSnapshot();
     });
 });
-define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_3) {
-    "use strict";
-    var ChartArea = (function (_super) {
-        __extends(ChartArea, _super);
-        function ChartArea(props) {
-            var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_3.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_3.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_3.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_3.Events.mouseDown.bind(_this);
-            _this.state = {
-                focus: "not-in-focus",
-                width: props.width || "100%",
-                height: props.height || "100%",
-            };
-            return _this;
-        }
-        ChartArea.prototype.render = function () {
-            var index = parseInt(this.props.index || 0, 10);
-            var label = this.props.label || 0;
-            var textID = label + "-label";
-            var width = parseInt(this.props.width, 10);
-            var offset = (25 * index) + "%";
-            var textOffset = 12 + (25 * index) + "%";
-            var delay = (0.2 * index) + "s";
-            var className = this.state.focus + " area okay js-area-standard";
-            return React.createElement("g", null,
-                React.createElement("rect", { className: className, id: label, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, x: "0", y: "0", width: "25%", height: "100%" },
-                    React.createElement(SVGHelper_3.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
-                React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, label),
-                ";");
-        };
-        return ChartArea;
-    }(React.Component));
-    exports.ChartArea = ChartArea;
-    var TuckmanComponent = (function (_super) {
-        __extends(TuckmanComponent, _super);
-        function TuckmanComponent() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        TuckmanComponent.prototype.render = function () {
-            return React.createElement(SVGHelper_3.Stage, null,
-                React.createElement("g", { id: "zones" },
-                    React.createElement(ChartArea, { label: "performing", index: "3" }),
-                    React.createElement(ChartArea, { label: "norming", index: "2" }),
-                    React.createElement(ChartArea, { label: "storming", index: "1" }),
-                    React.createElement(ChartArea, { label: "forming", index: "0" })));
-            //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
-        };
-        return TuckmanComponent;
-    }(React.Component));
-    exports.TuckmanComponent = TuckmanComponent;
-});
-/*
-<svg id="stage" width="800" height="800">
-            <g id="assets" fill-opacity="0.0">
-                <path id="asset-tick" stroke-miterlimit="4" stroke-width="0" stroke="#007f00" fill="#007f00" d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z"></path>
-            </g>
-
-
-
-            <g id="zones">
-                <rect class="area js-area-standard" id="storming" x="200" y="0" width="200" height="800"></rect>
-                <rect class="area js-area-standard" id="norming" x="400" y="0" width="200" height="800"></rect>
-                <rect class="area js-area-standard" id="performing" x="600" y="0" width="200" height="800"></rect>
-            </g>
-            <g id="history">
-            </g>
-            <text class="area-label" id="label-storming" text-anchor="middle" x="300" y="400">storming</text>
-            <text class="area-label" id="label-norming" text-anchor="middle" x="500" y="400">norming</text>
-            <text class="area-label" id="label-performing" text-anchor="middle" x="700" y="400">performing</text>
-
-            <rect id="clickable" width="800" height="800" fill-opacity="0.0"></rect>
-            <g id="users" transform="">
-
-            <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
-        </svg>
-        */
-define("__tests__/TuckmanModel", ["require", "exports", "react", "TuckmanReact", "SVGHelper"], function (require, exports, React, TuckmanReact_1, SVGHelper_4) {
-    "use strict";
-    var renderizer = require("react-test-renderer");
-    it("Should show the component", function () {
-        // Arrange
-        var component = renderizer.create(React.createElement(SVGHelper_4.Stage, null,
-            React.createElement(TuckmanReact_1.TuckmanComponent, null)));
-        expect(component.toJSON()).toMatchSnapshot();
-    });
-    it("Should show the stretch area", function () {
-        // Arrange
-        var component = renderizer.create(React.createElement(SVGHelper_4.Stage, null,
-            React.createElement(TuckmanReact_1.ChartArea, { width: "200", offset: "100", label: "example" })));
-        expect(component.toJSON()).toMatchSnapshot();
-    });
-});
-define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_5) {
-    "use strict";
-    var ChaosArea = (function (_super) {
-        __extends(ChaosArea, _super);
-        function ChaosArea(props) {
-            var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
-            _this.state = {
-                focus: "not-in-focus",
-                width: props.width || "100%",
-                height: props.height || "100%",
-            };
-            return _this;
-        }
-        ChaosArea.prototype.render = function () {
-            var className = this.state.focus + " area js-area-standard";
-            return React.createElement("g", null,
-                React.createElement("rect", { id: "chaos", className: className, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, width: this.state.width, height: this.state.height }),
-                React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
-        };
-        return ChaosArea;
-    }(React.Component));
-    exports.ChaosArea = ChaosArea;
-    var StretchArea = (function (_super) {
-        __extends(StretchArea, _super);
-        function StretchArea(props) {
-            var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
-            _this.state = {
-                focus: "not-in-focus",
-                width: props.width || "100%",
-                height: props.height || "100%"
-            };
-            return _this;
-        }
-        StretchArea.prototype.render = function () {
-            var className = this.state.focus + " area js-area-standard";
-            return React.createElement("g", null,
-                React.createElement("circle", { onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, className: className, id: "stretch", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
-                React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
-        };
-        return StretchArea;
-    }(React.Component));
-    exports.StretchArea = StretchArea;
-    var ComfortArea = (function (_super) {
-        __extends(ComfortArea, _super);
-        function ComfortArea(props) {
-            var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
-            _this.state = {
-                focus: "not-in-focus",
-                width: props.width || "100%",
-                height: props.height || "100%"
-            };
-            return _this;
-        }
-        ComfortArea.prototype.render = function () {
-            var className = this.state.focus + " area js-area-standard";
-            // const startValue = 0 || this.props.value;
-            var value = this.props.value || 20;
-            return React.createElement("g", null,
-                React.createElement("circle", { onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, className: className, id: "comfort", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
-                React.createElement("text", { className: "area-label", id: "label-comfort", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
-            // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;" 
-        };
-        return ComfortArea;
-    }(React.Component));
-    exports.ComfortArea = ComfortArea;
-    var ComfortReact = (function (_super) {
-        __extends(ComfortReact, _super);
-        function ComfortReact() {
-            return _super !== null && _super.apply(this, arguments) || this;
-        }
-        ComfortReact.prototype.render = function () {
-            return React.createElement(SVGHelper_5.Stage, null,
-                React.createElement(ChaosArea, null),
-                React.createElement("g", { id: "zones" },
-                    React.createElement(StretchArea, null,
-                        React.createElement(SVGHelper_5.BouncyAnimation, { attributeName: "r", value: "45" })),
-                    React.createElement(ComfortArea, null,
-                        React.createElement(SVGHelper_5.BouncyAnimation, { attributeName: "r", value: "20", delay: "0.5s" }))),
-                React.createElement("g", { id: "history", display: this.props.ShowUserChoices }));
-            //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
-        };
-        return ComfortReact;
-    }(React.Component));
-    exports.ComfortReact = ComfortReact;
-});
 define("ComfortReduxZone", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.ReduxChaosArea = function (state) {
@@ -787,7 +596,7 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
     exports.ReduxStretchConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxStretchArea);
     exports.ReduxComfortConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxComfortArea);
 });
-define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortReactZoneConnector", "UserListConnector"], function (require, exports, React, SVGHelper_6, ComfortReactZoneConnector_1, UserListConnector_1) {
+define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortReactZoneConnector", "UserListConnector"], function (require, exports, React, SVGHelper_3, ComfortReactZoneConnector_1, UserListConnector_1) {
     "use strict";
     /*
             <g id="users">
@@ -795,7 +604,7 @@ define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortR
     
             <ReduxUserConnector />
     */
-    exports.ReduxComfortApp = function () { return (React.createElement(SVGHelper_6.Stage, null,
+    exports.ReduxComfortApp = function () { return (React.createElement(SVGHelper_3.Stage, null,
         React.createElement(ComfortReactZoneConnector_1.ReduxChaosConnector, { Name: "Chaos" }),
         React.createElement(ComfortReactZoneConnector_1.ReduxStretchConnector, { Name: "Stretch" }),
         React.createElement(ComfortReactZoneConnector_1.ReduxComfortConnector, { Name: "Comfort" }),
@@ -982,35 +791,239 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
         return ComfortZoneAction;
     }());
 });
-define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_1, ComfortReactReducer_1, react_dom_1, react_redux_3, ComfortActions_4) {
+define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "ComfortReactApp", "ComfortReactReducer", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_1, ComfortReactReducer_1, react_redux_3, ComfortActions_4) {
     "use strict";
-    var myStore = Redux.createStore(ComfortReactReducer_1.comfortReactApp);
+    var renderizer = require("react-test-renderer");
+    it("Should show the component", function () {
+        // Arrange
+        var myStore = Redux.createStore(ComfortReactReducer_1.comfortReactApp);
+        var component = renderizer.create(React.createElement(react_redux_3.Provider, { store: myStore },
+            React.createElement(ComfortReactApp_1.ReduxComfortApp, null)));
+        expect(component.toJSON()).toMatchSnapshot();
+        myStore.dispatch(ComfortActions_4.setUserFocus("Adam Hall", "in-focus"));
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+});
+define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_4) {
+    "use strict";
+    var ChartArea = (function (_super) {
+        __extends(ChartArea, _super);
+        function ChartArea(props) {
+            var _this = _super.call(this, props) || this;
+            _this.state = {
+                focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%",
+                onMouseEnter: SVGHelper_4.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_4.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_4.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_4.Events.mouseDown.bind(_this)
+            };
+            return _this;
+        }
+        ChartArea.prototype.render = function () {
+            var index = parseInt(this.props.index || 0, 10);
+            var label = this.props.label || 0;
+            var textID = label + "-label";
+            var width = parseInt(this.props.width, 10);
+            var offset = (25 * index) + "%";
+            var textOffset = 12 + (25 * index) + "%";
+            var delay = (0.2 * index) + "s";
+            var className = this.state.focus + " area okay js-area-standard";
+            return React.createElement("g", null,
+                React.createElement("rect", { className: className, id: label, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, x: "0", y: "0", width: "25%", height: "100%" },
+                    React.createElement(SVGHelper_4.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
+                React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, label),
+                ";");
+        };
+        return ChartArea;
+    }(React.Component));
+    exports.ChartArea = ChartArea;
+    var TuckmanComponent = (function (_super) {
+        __extends(TuckmanComponent, _super);
+        function TuckmanComponent() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        TuckmanComponent.prototype.render = function () {
+            return React.createElement(SVGHelper_4.Stage, null,
+                React.createElement("g", { id: "zones" },
+                    React.createElement(ChartArea, { label: "performing", index: "3" }),
+                    React.createElement(ChartArea, { label: "norming", index: "2" }),
+                    React.createElement(ChartArea, { label: "storming", index: "1" }),
+                    React.createElement(ChartArea, { label: "forming", index: "0" })));
+            //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
+        };
+        return TuckmanComponent;
+    }(React.Component));
+    exports.TuckmanComponent = TuckmanComponent;
+});
+/*
+<svg id="stage" width="800" height="800">
+            <g id="assets" fill-opacity="0.0">
+                <path id="asset-tick" stroke-miterlimit="4" stroke-width="0" stroke="#007f00" fill="#007f00" d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z"></path>
+            </g>
+
+
+
+            <g id="zones">
+                <rect class="area js-area-standard" id="storming" x="200" y="0" width="200" height="800"></rect>
+                <rect class="area js-area-standard" id="norming" x="400" y="0" width="200" height="800"></rect>
+                <rect class="area js-area-standard" id="performing" x="600" y="0" width="200" height="800"></rect>
+            </g>
+            <g id="history">
+            </g>
+            <text class="area-label" id="label-storming" text-anchor="middle" x="300" y="400">storming</text>
+            <text class="area-label" id="label-norming" text-anchor="middle" x="500" y="400">norming</text>
+            <text class="area-label" id="label-performing" text-anchor="middle" x="700" y="400">performing</text>
+
+            <rect id="clickable" width="800" height="800" fill-opacity="0.0"></rect>
+            <g id="users" transform="">
+
+            <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
+        </svg>
+        */
+define("__tests__/TuckmanModel", ["require", "exports", "react", "TuckmanReact", "SVGHelper"], function (require, exports, React, TuckmanReact_1, SVGHelper_5) {
+    "use strict";
+    var renderizer = require("react-test-renderer");
+    it("Should show the component", function () {
+        // Arrange
+        var component = renderizer.create(React.createElement(SVGHelper_5.Stage, null,
+            React.createElement(TuckmanReact_1.TuckmanComponent, null)));
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+    it("Should show the stretch area", function () {
+        // Arrange
+        var component = renderizer.create(React.createElement(SVGHelper_5.Stage, null,
+            React.createElement(TuckmanReact_1.ChartArea, { width: "200", offset: "100", label: "example" })));
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+});
+define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_6) {
+    "use strict";
+    var ChaosArea = (function (_super) {
+        __extends(ChaosArea, _super);
+        function ChaosArea(props) {
+            var _this = _super.call(this, props) || this;
+            _this.props.onMouseEnter = SVGHelper_6.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_6.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_6.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_6.Events.mouseDown.bind(_this);
+            _this.state = {
+                focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%",
+            };
+            return _this;
+        }
+        ChaosArea.prototype.render = function () {
+            var className = this.state.focus + " area js-area-standard";
+            return React.createElement("g", null,
+                React.createElement("rect", { id: "chaos", className: className, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, width: this.state.width, height: this.state.height }),
+                React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
+        };
+        return ChaosArea;
+    }(React.Component));
+    exports.ChaosArea = ChaosArea;
+    var StretchArea = (function (_super) {
+        __extends(StretchArea, _super);
+        function StretchArea(props) {
+            var _this = _super.call(this, props) || this;
+            _this.props.onMouseEnter = SVGHelper_6.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_6.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_6.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_6.Events.mouseDown.bind(_this);
+            _this.state = {
+                focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%"
+            };
+            return _this;
+        }
+        StretchArea.prototype.render = function () {
+            var className = this.state.focus + " area js-area-standard";
+            return React.createElement("g", null,
+                React.createElement("circle", { onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, className: className, id: "stretch", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
+                React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
+        };
+        return StretchArea;
+    }(React.Component));
+    exports.StretchArea = StretchArea;
+    var ComfortArea = (function (_super) {
+        __extends(ComfortArea, _super);
+        function ComfortArea(props) {
+            var _this = _super.call(this, props) || this;
+            _this.props.onMouseEnter = SVGHelper_6.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_6.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_6.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_6.Events.mouseDown.bind(_this);
+            _this.state = {
+                focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%"
+            };
+            return _this;
+        }
+        ComfortArea.prototype.render = function () {
+            var className = this.state.focus + " area js-area-standard";
+            // const startValue = 0 || this.props.value;
+            var value = this.props.value || 20;
+            return React.createElement("g", null,
+                React.createElement("circle", { onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, className: className, id: "comfort", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
+                React.createElement("text", { className: "area-label", id: "label-comfort", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
+            // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;" 
+        };
+        return ComfortArea;
+    }(React.Component));
+    exports.ComfortArea = ComfortArea;
+    var ComfortReact = (function (_super) {
+        __extends(ComfortReact, _super);
+        function ComfortReact() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ComfortReact.prototype.render = function () {
+            return React.createElement(SVGHelper_6.Stage, null,
+                React.createElement(ChaosArea, null),
+                React.createElement("g", { id: "zones" },
+                    React.createElement(StretchArea, null,
+                        React.createElement(SVGHelper_6.BouncyAnimation, { attributeName: "r", value: "45" })),
+                    React.createElement(ComfortArea, null,
+                        React.createElement(SVGHelper_6.BouncyAnimation, { attributeName: "r", value: "20", delay: "0.5s" }))),
+                React.createElement("g", { id: "history", display: this.props.ShowUserChoices }));
+            //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
+        };
+        return ComfortReact;
+    }(React.Component));
+    exports.ComfortReact = ComfortReact;
+});
+define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_4, ComfortActions_5) {
+    "use strict";
+    var myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
     console.log(myStore.getState());
     var unsubscribe = myStore.subscribe(function () {
         return console.log(myStore.getState());
     });
-    react_dom_1.render(React.createElement(react_redux_3.Provider, { store: myStore },
-        React.createElement(ComfortReactApp_1.ReduxComfortApp, null)), document.getElementById("stage"));
-    myStore.dispatch(ComfortActions_4.setUserFocus("Adam Hall", "in-focus"));
+    react_dom_1.render(React.createElement(react_redux_4.Provider, { store: myStore },
+        React.createElement(ComfortReactApp_2.ReduxComfortApp, null)), document.getElementById("stage"));
+    myStore.dispatch(ComfortActions_5.setUserFocus("Adam Hall", "in-focus"));
 });
 // Stop listening to state updates
 // unsubscribe(); ; 
-define("ComfortStoreOriginal", ["require", "exports", "redux", "ComfortActions", "ComfortReactReducer"], function (require, exports, Redux, ComfortActions_5, ComfortReactReducer_2) {
+define("ComfortStoreOriginal", ["require", "exports", "redux", "ComfortActions", "ComfortReactReducer"], function (require, exports, Redux, ComfortActions_6, ComfortReactReducer_3) {
     "use strict";
-    var store = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
+    var store = Redux.createStore(ComfortReactReducer_3.comfortReactApp);
     console.log(store.getState());
     var unsubscribe = store.subscribe(function () {
         return console.log(store.getState());
     });
     // Dispatch some actions
-    store.dispatch(ComfortActions_5.setUserFocus("Adam Hall", "in-focus"));
-    store.dispatch(ComfortActions_5.setZoneFocus("Chaos", "in-focus"));
-    store.dispatch(ComfortActions_5.setZoneFocus("Comfort", "in-focus"));
-    store.dispatch(ComfortActions_5.setZoneFocus("Stretch", "in-focus"));
-    store.dispatch(ComfortActions_5.selectUser("Adam Hall"));
-    store.dispatch(ComfortActions_5.setZoneFocus("Stretch", "active"));
-    store.dispatch(ComfortActions_5.chooseZone("Adam Hall", "Chaos", 150));
-    store.dispatch(ComfortActions_5.toggleChoiceVisibility(true));
+    store.dispatch(ComfortActions_6.setUserFocus("Adam Hall", "in-focus"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Chaos", "in-focus"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Comfort", "in-focus"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Stretch", "in-focus"));
+    store.dispatch(ComfortActions_6.selectUser("Adam Hall"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Stretch", "active"));
+    store.dispatch(ComfortActions_6.chooseZone("Adam Hall", "Chaos", 150));
+    store.dispatch(ComfortActions_6.toggleChoiceVisibility(true));
     // Stop listening to state updates
     unsubscribe();
 });

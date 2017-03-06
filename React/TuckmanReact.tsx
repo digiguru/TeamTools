@@ -1,21 +1,20 @@
 import * as React from "react";
 import {Events, Stage, BouncyAnimation} from "./SVGHelper";
+import {IResizableMouseEvents} from "ComfortReact";
 
 
-
-export class ChartArea extends React.Component<any, any> {
-    constructor(props) {
+export class ChartArea extends React.Component<any, IResizableMouseEvents> {
+    constructor(props: IResizableMouseEvents) {
         super(props);
-
-        this.props.onMouseEnter = Events.mouseEnter.bind(this);
-        this.props.onMouseLeave = Events.mouseLeave.bind(this);
-        this.props.onMouseUp = Events.mouseUp.bind(this);
-        this.props.onMouseDown = Events.mouseDown.bind(this);
 
         this.state = {
             focus: "not-in-focus",
             width: props.width || "100%",
             height: props.height || "100%",
+            onMouseEnter: Events.mouseEnter.bind(this),
+            onMouseLeave: Events.mouseLeave.bind(this),
+            onMouseUp: Events.mouseUp.bind(this),
+            onMouseDown: Events.mouseDown.bind(this)
         };
     }
     render() {
