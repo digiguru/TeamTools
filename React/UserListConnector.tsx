@@ -12,6 +12,13 @@ export interface IUserUI extends IUser {
   Focus: String;
 }
 
+export interface IUserUIWithEvents extends IUserUI {
+  onUserMouseDown;
+  onUserMouseUp;
+  onUserOverFocus;
+  onUserOffFocus;
+}
+
 
 export interface IUserList { Users: Array<IUser|IUserUI>; }
 

@@ -27,11 +27,11 @@ export const ReduxUser = (state) => {
     return <g className="user-group">
         <rect
             className={state.Focus}
-            onMouseEnter={() => state.events.onUserOverFocus(state.username)}
-            onMouseLeave={() => state.events.onUserOffFocus(state.username)}
-            onMouseDown={() => state.events.onUserMouseDown(state.username)}
-            onMouseUp={(event) => state.events.onUserMouseUp(state.username, event)}
-         y={state.y} x="0" width="800" height="90"></rect>
-        <text className="username" y={state.y} x="60">{state.username}</text>
+            onMouseEnter={() => state.events.onUserOverFocus(state.Username)}
+            onMouseLeave={() => state.events.onUserOffFocus(state.Username)}
+            onMouseDown={() => state.events.onUserMouseDown(state.Username)}
+            onMouseUp={(event) => state.events.onUserMouseUp(state.Username, event)}
+         y={state.Y} x="0" width="800" height="90"></rect>
+        <text className="username" y={state.Y} x="60">{state.Username}</text>
     </g>;
 };

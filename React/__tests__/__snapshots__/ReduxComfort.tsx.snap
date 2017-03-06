@@ -82,11 +82,13 @@ exports[`test Should show the component 1`] = `
         onMouseUp={[Function]}
         width="800"
         x="0"
-        y={undefined} />
+        y={60} />
       <text
         className="username"
         x="60"
-        y={undefined} />
+        y={60}>
+        Adam Hall
+      </text>
     </g>
     <g
       className="user-group">
@@ -99,11 +101,13 @@ exports[`test Should show the component 1`] = `
         onMouseUp={[Function]}
         width="800"
         x="0"
-        y={undefined} />
+        y={150} />
       <text
         className="username"
         x="60"
-        y={undefined} />
+        y={150}>
+        Caroline Hall
+      </text>
     </g>
   </g>
 </svg>
@@ -189,6 +193,7 @@ exports[`test Should show the component 1`] = `
         class="username"
         x="60"
       >
+        Adam Hall
       </text>
     </g>
     <g class="user-group">
@@ -203,6 +208,7 @@ exports[`test Should show the component 1`] = `
         class="username"
         x="60"
       >
+        Caroline Hall
       </text>
     </g>
   </g>
@@ -293,11 +299,13 @@ exports[`test Should show the component 2`] = `
         onMouseUp={[Function]}
         width="800"
         x="0"
-        y={undefined} />
+        y={60} />
       <text
         className="username"
         x="60"
-        y={undefined} />
+        y={60}>
+        Adam Hall
+      </text>
     </g>
     <g
       className="user-group">
@@ -310,11 +318,13 @@ exports[`test Should show the component 2`] = `
         onMouseUp={[Function]}
         width="800"
         x="0"
-        y={undefined} />
+        y={150} />
       <text
         className="username"
         x="60"
-        y={undefined} />
+        y={150}>
+        Caroline Hall
+      </text>
     </g>
   </g>
 </svg>
@@ -400,6 +410,7 @@ exports[`test Should show the component 2`] = `
         class="username"
         x="60"
       >
+        Adam Hall
       </text>
     </g>
     <g class="user-group">
@@ -414,6 +425,7 @@ exports[`test Should show the component 2`] = `
         class="username"
         x="60"
       >
+        Caroline Hall
       </text>
     </g>
   </g>
