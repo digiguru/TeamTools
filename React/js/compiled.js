@@ -223,14 +223,15 @@ define("ReactUserComponent", ["require", "exports", "react"], function (require,
     "use strict";
     exports.ReduxUserList = function (state) {
         return React.createElement("g", { id: "users" }, state.Users.map(function (user, i) {
-            return React.createElement(exports.ReduxUser, __assign({}, user, { events: state.events }));
+            return React.createElement(exports.ReduxUser, __assign({ key: user.Username }, user, { events: state.events }));
         }));
     };
     exports.ReduxUser = function (state) {
         // 60 , 150, 240
+        var textY = state.Y + 60;
         return React.createElement("g", { className: "user-group" },
             React.createElement("rect", { className: state.Focus, onMouseEnter: function () { return state.events.onUserOverFocus(state.Username); }, onMouseLeave: function () { return state.events.onUserOffFocus(state.Username); }, onMouseDown: function () { return state.events.onUserMouseDown(state.Username); }, onMouseUp: function (event) { return state.events.onUserMouseUp(state.Username, event); }, y: state.Y, x: "0", width: "800", height: "90" }),
-            React.createElement("text", { className: "username", y: state.Y, x: "60" }, state.Username));
+            React.createElement("text", { className: "username", y: textY, x: "60" }, state.Username));
     };
 });
 define("UserListConnector", ["require", "exports", "react-redux", "ComfortActions", "ReactUserComponent", "../3rdParty/immutable.min"], function (require, exports, react_redux_1, ComfortActions_1, ReactUserComponent_1, immutable_min_1) {
@@ -427,6 +428,7 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact",
         var component = renderizer.create(React.createElement(SVGHelper_2.Stage, null,
             React.createElement(ComfortReact_1.ChaosArea, null)));
         var tree = component.toJSON();
+        debugger;
         var mouseOverArea = tree.children[0].children[0];
         expect(tree).toMatchSnapshot();
         // Act snapshot 2
@@ -514,8 +516,8 @@ define("Link.react", ["require", "exports", "react"], function (require, exports
 });
 define("__tests__/Link.react-test", ["require", "exports", "react", "Link.react"], function (require, exports, React, Link_react_1) {
     "use strict";
-    var renderizer = require('react-test-renderer');
-    it('Link changes the class when hovered', function () {
+    var renderizer = require("react-test-renderer");
+    it("Link changes the class when hovered", function () {
         var component = renderizer.create(React.createElement(Link_react_1.default, { page: "http://www.facebook.com" }, "Facebook"));
         var tree = component.toJSON();
         expect(tree).toMatchSnapshot();

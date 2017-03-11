@@ -9,13 +9,13 @@ it("Should show the chaos area", () => {
         <Stage><ChaosArea></ChaosArea></Stage>
     );
     const tree = component.toJSON();
+    debugger;
     const mouseOverArea = tree.children[0].children[0];
     expect(tree).toMatchSnapshot();
 
     // Act snapshot 2
     mouseOverArea.props.onMouseEnter();
     // Assert Snapshot 2
-    
     expect(component.toJSON()).toMatchSnapshot();
 
     // Act snapshot 3
@@ -59,7 +59,7 @@ it("Should show the comfort area - standard", () => {
         <Stage><ComfortArea></ComfortArea></Stage>
     );
     const tree = component.toJSON();
-    
+
     const mouseOverArea = tree.children[0].children[0];
     expect(tree).toMatchSnapshot();
 

@@ -17,13 +17,14 @@ import { IUserUI, IUserList } from "UserListConnector";
 export const ReduxUserList = (state) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     return <g id="users">
         {state.Users.map((user: IUserUI, i) =>
-            <ReduxUser {...user} events={state.events} />
+            <ReduxUser key={user.Username} {...user} events={state.events} />
         )}
     </g >;
 };
 
 export const ReduxUser = (state) => {
     // 60 , 150, 240
+    const textY = state.Y + 60;
     return <g className="user-group">
         <rect
             className={state.Focus}
@@ -32,6 +33,6 @@ export const ReduxUser = (state) => {
             onMouseDown={() => state.events.onUserMouseDown(state.Username)}
             onMouseUp={(event) => state.events.onUserMouseUp(state.Username, event)}
          y={state.Y} x="0" width="800" height="90"></rect>
-        <text className="username" y={state.Y} x="60">{state.Username}</text>
+        <text className="username" y={textY} x="60">{state.Username}</text>
     </g>;
 };

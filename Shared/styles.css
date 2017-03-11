@@ -1,8 +1,21 @@
 @import url(//fonts.googleapis.com/css?family=Share+Tech+Mono);
+.user-group text {
+    font-size: 60px; font-family: "Share Tech Mono"; fill: rgb(128, 128, 128);
+}
+
 #stage, textarea, button, input {
     font-family: 'Share Tech Mono', sans-serif;
 }
 circle.area, rect.area { transition: fill .4s ease; }
+svg #users .in-focus {
+    fill: #FFFFFF;
+}
+svg #users .not-in-focus {
+    fill: #000000;
+}
+svg #users svg .active {
+    fill: rgb(128, 128, 128);
+}
 svg .in-focus {
     fill: rgb(0, 180, 219);
 }
