@@ -222,7 +222,8 @@ define("ComfortActions", ["require", "exports"], function (require, exports) {
 define("ReactUserComponent", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.ReduxUserList = function (state) {
-        return React.createElement("g", { id: "users" }, state.Users.map(function (user, i) {
+        var className = state.ShowUsers ? "appear" : "disappear";
+        return React.createElement("g", { id: "users", className: className }, state.Users.map(function (user, i) {
             return React.createElement(exports.ReduxUser, __assign({ key: user.Username }, user, { events: state.events }));
         }));
     };
@@ -238,6 +239,7 @@ define("UserListConnector", ["require", "exports", "react-redux", "ComfortAction
     "use strict";
     var mapStateToProps = function (state, ownProps) {
         return {
+            ShowUsers: state.UserList.ShowUsers,
             Users: state.UserList.Users.map(function (u, i) {
                 return immutable_min_1.fromJS(u).set("Y", (i * 90) + 60).toJS();
             })
@@ -708,6 +710,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
     "use strict";
     var initialState = {
         UserList: {
+            ShowUsers: true,
             Users: [
                 { Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
                 { Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
@@ -753,7 +756,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
             var originalList = immutable_min_2.List(state.UserList.Users);
             var newUserList = originalList.update(originalList.findIndex(function (item) { return item.Username === user; }), function (item) { return immutable_min_2.fromJS(item).set("Focus", focus); }).toJS();
             return immutable_min_2.fromJS(state)
-                .set("UserList", { Users: newUserList }).toJS();
+                .setIn(["UserList", "Users"], newUserList).toJS();
         };
         ComfortZoneAction.selectUser = function (state, user) {
             // Sets currentUser, and therefor hides the user choice menu
@@ -761,9 +764,10 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
                 CurrentUser: user,
                 ShowUserChoices: false
             });*/
-            var data = immutable_min_2.Map(state)
+            var data = immutable_min_2.fromJS(state)
                 .set("CurrentUser", user)
-                .set("ShowUserChoices", false);
+                .set("ShowUserChoices", false)
+                .setIn(["UserList", "ShowUsers"], false);
             return data.toJS();
         };
         ComfortZoneAction.chooseZone = function (state, user, area, distance) {
@@ -774,15 +778,16 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
                 Distance: distance
             });
             // Remove the user from the choice list
-            var newUserList = immutable_min_2.List(state.UserList.Users).filter(function (item) { return item.Username !== user; });
+            var newUserList = immutable_min_2.List(state.UserList.Users).filter(function (item) { return item.Username !== user; }).toJS();
             // Show the user list
-            var showUserChoice = newUserList.count();
+            var showUserChoice = !!(newUserList.length);
             // Return
-            return immutable_min_2.Map(state)
+            return immutable_min_2.fromJS(state)
                 .delete("CurrentUser")
                 .set("ShowUserChoices", showUserChoice)
                 .set("UserChoices", newUserChoices)
-                .set("UserList", { Users: newUserList }).toJS();
+                .setIn(["UserList", "Users"], newUserList)
+                .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
         };
         ComfortZoneAction.toggleChoiceVisibility = function (state, visible) {
             // Set "showUserChoices" to true
@@ -1092,10 +1097,11 @@ define("userComponents", ["require", "exports", "react"], function (require, exp
         }
         UserList.prototype.render = function () {
             var users = [];
+            var className = this.props.ShowUsers ? "appear" : "disappear";
             this.props.Users.forEach(function (user) {
                 users.push(React.createElement(User, __assign({}, user)));
             });
-            return React.createElement("ul", { id: "users" }, users);
+            return React.createElement("ul", { className: className, id: "users" }, users);
         };
         return UserList;
     }(React.Component));

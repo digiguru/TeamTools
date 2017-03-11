@@ -20,10 +20,14 @@ export interface IUserUIWithEvents extends IUserUI {
 }
 
 
-export interface IUserList { Users: Array<IUser|IUserUI>; }
+export interface IUserList {
+  ShowUsers: boolean;
+  Users: Array<IUser|IUserUI>;
+}
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: IUserList): IUserList => {
     return {
+      ShowUsers: state.UserList.ShowUsers,
       Users: state.UserList.Users.map((u, i) => {
         return fromJS(u).set("Y", (i * 90) + 60).toJS();
       })

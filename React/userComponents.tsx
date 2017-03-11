@@ -21,9 +21,12 @@ export class UserList extends React.Component<IUserList, undefined> {
     render() {
         const users = [];
 
+        const className = this.props.ShowUsers ? "appear" : "disappear";
+
         this.props.Users.forEach(function(user: IUserUI) {
             users.push(<User {... user} />);
         });
-        return <ul id="users">{users}</ul>;
+
+        return <ul className={className} id="users">{users}</ul>;
     }
 }

@@ -15,7 +15,9 @@ import * as React from "react";
 import { IUserUI, IUserList } from "UserListConnector";
 
 export const ReduxUserList = (state) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
-    return <g id="users">
+    const className = state.ShowUsers ? "appear" : "disappear";
+
+    return <g id="users" className={className}>
         {state.Users.map((user: IUserUI, i) =>
             <ReduxUser key={user.Username} {...user} events={state.events} />
         )}

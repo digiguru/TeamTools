@@ -5,6 +5,7 @@ import { fromJS, List, Map } from "../3rdParty/immutable.min";
 
 const initialState: ChaosPickerState = {
     UserList : {
+        ShowUsers: true,
         Users: [
             {Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
             {Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
@@ -48,7 +49,7 @@ class ComfortZoneAction {
             originalList.findIndex(item => item.Username === user),
             (item) => fromJS(item).set("Focus", focus)).toJS();
         return fromJS(state)
-            .set("UserList", {Users: newUserList}).toJS();
+            .setIn(["UserList", "Users"], newUserList).toJS();
     }
     static selectUser(state: ChaosPickerState, user: String): ChaosPickerState {
         // Sets currentUser, and therefor hides the user choice menu
@@ -56,9 +57,11 @@ class ComfortZoneAction {
             CurrentUser: user,
             ShowUserChoices: false
         });*/
-        const data = Map(state)
+        const data = fromJS(state)
             .set("CurrentUser", user)
-            .set("ShowUserChoices", false);
+            .set("ShowUserChoices", false)
+            .setIn(["UserList", "ShowUsers"], false);
+
         return data.toJS();
     }
 
@@ -71,15 +74,16 @@ class ComfortZoneAction {
             Distance: distance
         });
         // Remove the user from the choice list
-        const newUserList = List(state.UserList.Users).filter((item) => item.Username !== user);
+        const newUserList = List(state.UserList.Users).filter((item) => item.Username !== user).toJS();
         // Show the user list
-        const showUserChoice = newUserList.count();
+        const showUserChoice = !!(newUserList.length);
         // Return
-        return Map(state)
+        return fromJS(state)
             .delete("CurrentUser")
             .set("ShowUserChoices", showUserChoice)
             .set("UserChoices", newUserChoices)
-            .set("UserList", {Users: newUserList}).toJS();
+            .setIn(["UserList", "Users"], newUserList)
+            .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
     }
     static toggleChoiceVisibility(state: ChaosPickerState, visible: Boolean): ChaosPickerState {
         // Set "showUserChoices" to true
