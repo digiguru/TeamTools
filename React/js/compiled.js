@@ -599,28 +599,51 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
     exports.ReduxStretchConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxStretchArea);
     exports.ReduxComfortConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxComfortArea);
 });
-define("ReactUserHistory", ["require", "exports", "react"], function (require, exports, React) {
+define("ReactUserHistory", ["require", "exports", "react", "Point", "Polar"], function (require, exports, React, Point_3, Polar_2) {
     "use strict";
     exports.ReduxUserHistoryArea = function (state) {
-        return React.createElement("g", { id: "history" }, state.map(function (userChoice, i) {
-            return React.createElement(exports.ReduxUserHistory, __assign({ key: userChoice.User }, userChoice));
-        }));
+        if (state && state.Choices.length) {
+            var totalPoints = state.Choices.length;
+            var radian = 6.2831853072; // 360 * Math.PI / 180;
+            var polarDivision_1 = radian / totalPoints;
+            /*
+            .attr("cx", (data: ComfortUserChoice, index) => {
+                const angle = polarDivision * index;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).x;
+            })
+            .attr("cy", (data: ComfortUserChoice, index) => {
+                const angle = polarDivision * index;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).y;
+            });
+            */
+            return React.createElement("g", { id: "history" }, state.Choices.map(function (userChoice, i) {
+                return React.createElement(exports.ReduxUserHistory, __assign({ key: userChoice.User }, userChoice, { index: i, polarDivision: polarDivision_1 }));
+            }));
+        }
+        else {
+            return React.createElement("p", null, "nothing");
+        }
     };
     exports.ReduxUserHistory = function (state) {
-        return React.createElement("circle", { cx: "647.1639132235935", cy: "400", r: "10", className: "point" });
+        //state.Distance
+        //state.User
+        //state.Zone
+        var angle = state.polarDivision * state.index;
+        var point = Point_3.Point.toCartesian(new Polar_2.Polar(state.Distance, angle), new Point_3.Point(400, 400));
+        return React.createElement("circle", { cx: point.x, cy: point.y, r: "10", className: "point" });
     };
 });
 define("UserHistoryConnector", ["require", "exports", "react-redux", "ReactUserHistory"], function (require, exports, react_redux_3, ReactUserHistory_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
-        return state.UserChoices;
+        return { Choices: state.UserChoices };
     };
     var mapDispatchToProps = function (dispatch) {
         return {};
     };
     exports.ReduxUserHistoryConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ReactUserHistory_1.ReduxUserHistoryArea);
 });
-// UserListConnector 
+// UserListConnector
 define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortReactZoneConnector", "UserListConnector", "UserHistoryConnector"], function (require, exports, React, SVGHelper_3, ComfortReactZoneConnector_1, UserListConnector_1, UserHistoryConnector_1) {
     "use strict";
     /*
@@ -795,13 +818,13 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
         };
         ComfortZoneAction.chooseZone = function (state, user, area, distance) {
             // Add the user choice
-            var newUserChoices = immutable_min_2.fromJS(state.UserChoices).push({
+            var newUserChoices = immutable_min_2.List(state.UserChoices).push({
                 User: user,
                 Zone: area,
                 Distance: distance
-            });
+            }).toJS();
             // Remove the user from the choice list
-            var newUserList = immutable_min_2.List(state.UserList.Users).filter(function (item) { return item.Username !== user; }).toJS();
+            var newUserList = immutable_min_2.List(state.UserList.Users).filter(function (item) { return item.Username !== user; }).toArray();
             // Show the user list
             var showUserChoice = !!(newUserList.length);
             // Return
@@ -1139,7 +1162,7 @@ define("users", ["require", "exports", "react", "react-dom", "userComponents", "
         { Username: "Bob" },
         { Username: "Donald" }
     ];
-    ReactDOM.render(React.createElement(userComponents_1.UserList, { Users: exports.USERS }), document.getElementById("container"));
+    ReactDOM.render(React.createElement(userComponents_1.UserList, { Users: exports.USERS, ShowUsers: true }), document.getElementById("container"));
     ReactDOM.render(React.createElement(ComfortReact_2.ComfortReact, null), document.getElementById("comfort"));
     ReactDOM.render(React.createElement(TuckmanReact_2.TuckmanComponent, null), document.getElementById("tuckman"));
 });

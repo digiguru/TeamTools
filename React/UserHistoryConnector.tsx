@@ -3,8 +3,12 @@ import {ReduxUserHistory, ReduxUserHistoryArea} from "./ReactUserHistory";
 import {ChaosPickerState, ChaosPickerUserChoiceState} from "./ComfortReactModelState";
 import { fromJS } from "../3rdParty/immutable.min";
 
-const mapStateToProps = (state: ChaosPickerState, ownProps: Array<ChaosPickerUserChoiceState>): Array<ChaosPickerUserChoiceState> => {
-    return state.UserChoices;
+export interface IUserChoiceState {
+  Choices: Array<ChaosPickerUserChoiceState>;
+}
+
+const mapStateToProps = (state: ChaosPickerState, ownProps: IUserChoiceState): IUserChoiceState => {
+    return {Choices: state.UserChoices};
 };
 
 

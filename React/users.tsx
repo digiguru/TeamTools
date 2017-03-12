@@ -15,7 +15,7 @@ export const USERS: IUser[] = [
 ];
 
 ReactDOM.render(
-    <UserList Users={USERS} />,
+    <UserList Users={USERS} ShowUsers={true} />,
     document.getElementById("container")
 );
 ReactDOM.render(

@@ -68,13 +68,13 @@ class ComfortZoneAction {
     static chooseZone(state: ChaosPickerState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number): ChaosPickerState {
 
         // Add the user choice
-        const newUserChoices = fromJS(state.UserChoices).push({
+        const newUserChoices = List(state.UserChoices).push({
             User: user,
             Zone: area,
             Distance: distance
-        });
+        }).toJS();
         // Remove the user from the choice list
-        const newUserList = List(state.UserList.Users).filter((item) => item.Username !== user).toJS();
+        const newUserList = List(state.UserList.Users).filter((item) => item.Username !== user).toArray();
         // Show the user list
         const showUserChoice = !!(newUserList.length);
         // Return

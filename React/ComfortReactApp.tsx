@@ -6,7 +6,7 @@ import { selectUser, chooseZone, toggleChoiceVisibility } from "./ComfortActions
 import {ReduxChaosConnector, ReduxStretchConnector, ReduxComfortConnector} from "./ComfortReactZoneConnector";
 import {ReduxUserConnector} from "./UserListConnector";
 import {ReduxUserHistoryConnector} from "./UserHistoryConnector";
-
+import {ReduxUserHistory, ReduxUserHistoryArea} from "./ReactUserHistory";
 /*
         <g id="users">
         </g>
