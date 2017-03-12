@@ -558,13 +558,13 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
     /*import {SVG} from "../Shared/SVG";*/
     var mapStateToProps = function (state, ownProps) {
         if (ownProps.Name === "Comfort") {
-            return { zone: state.Zones.Comfort, user: "Adam Hall" };
+            return { zone: state.Zones.Comfort, user: state.CurrentUser };
         }
         else if (ownProps.Name === "Chaos") {
-            return { zone: state.Zones.Chaos, user: "Adam Hall" };
+            return { zone: state.Zones.Chaos, user: state.CurrentUser };
         }
         else {
-            return { zone: state.Zones.Stretch, user: "Adam Hall" };
+            return { zone: state.Zones.Stretch, user: state.CurrentUser };
         }
     };
     var getCenterPointFromElement = function (el) {
@@ -599,7 +599,29 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
     exports.ReduxStretchConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxStretchArea);
     exports.ReduxComfortConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxComfortArea);
 });
-define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortReactZoneConnector", "UserListConnector"], function (require, exports, React, SVGHelper_3, ComfortReactZoneConnector_1, UserListConnector_1) {
+define("ReactUserHistory", ["require", "exports", "react"], function (require, exports, React) {
+    "use strict";
+    exports.ReduxUserHistoryArea = function (state) {
+        return React.createElement("g", { id: "history" }, state.map(function (userChoice, i) {
+            return React.createElement(exports.ReduxUserHistory, __assign({ key: userChoice.User }, userChoice));
+        }));
+    };
+    exports.ReduxUserHistory = function (state) {
+        return React.createElement("circle", { cx: "647.1639132235935", cy: "400", r: "10", className: "point" });
+    };
+});
+define("UserHistoryConnector", ["require", "exports", "react-redux", "ReactUserHistory"], function (require, exports, react_redux_3, ReactUserHistory_1) {
+    "use strict";
+    var mapStateToProps = function (state, ownProps) {
+        return state.UserChoices;
+    };
+    var mapDispatchToProps = function (dispatch) {
+        return {};
+    };
+    exports.ReduxUserHistoryConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ReactUserHistory_1.ReduxUserHistoryArea);
+});
+// UserListConnector 
+define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortReactZoneConnector", "UserListConnector", "UserHistoryConnector"], function (require, exports, React, SVGHelper_3, ComfortReactZoneConnector_1, UserListConnector_1, UserHistoryConnector_1) {
     "use strict";
     /*
             <g id="users">
@@ -611,7 +633,8 @@ define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortR
         React.createElement(ComfortReactZoneConnector_1.ReduxChaosConnector, { Name: "Chaos" }),
         React.createElement(ComfortReactZoneConnector_1.ReduxStretchConnector, { Name: "Stretch" }),
         React.createElement(ComfortReactZoneConnector_1.ReduxComfortConnector, { Name: "Comfort" }),
-        React.createElement(UserListConnector_1.ReduxUserConnector, null))); };
+        React.createElement(UserListConnector_1.ReduxUserConnector, null),
+        React.createElement(UserHistoryConnector_1.ReduxUserHistoryConnector, null))); };
 });
 /*
 export class ChaosArea extends React.Component<any, IResizableInteractiveModelState> {
@@ -1002,14 +1025,14 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
     }(React.Component));
     exports.ComfortReact = ComfortReact;
 });
-define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_3, ComfortActions_5) {
+define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_4, ComfortActions_5) {
     "use strict";
     var myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
     console.log(myStore.getState());
     var unsubscribe = myStore.subscribe(function () {
         return console.log(myStore.getState());
     });
-    react_dom_1.render(React.createElement(react_redux_3.Provider, { store: myStore },
+    react_dom_1.render(React.createElement(react_redux_4.Provider, { store: myStore },
         React.createElement(ComfortReactApp_2.ReduxComfortApp, null)), document.getElementById("stage"));
     myStore.dispatch(ComfortActions_5.setUserFocus("Adam Hall", "in-focus"));
 });

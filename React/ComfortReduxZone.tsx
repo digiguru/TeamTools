@@ -1,5 +1,7 @@
 import * as React from "react";
-import {ChaosPickerZoneState, IChaosPickerZoneConnector} from "ComfortReactModelState";
+import {IChaosPickerZoneConnector} from "ComfortReactModelState";
+
+
 
 export const ReduxChaosArea = (state: IChaosPickerZoneConnector) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     return <g>

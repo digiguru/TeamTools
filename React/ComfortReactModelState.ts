@@ -2,7 +2,7 @@ import { IUser, IUserList } from "UserListConnector";
 
 
 export class ChaosPickerUserChoiceState {
-    User: String;
+    User: string;
     Zone: "Chaos" | "Stretch" | "Comfort";
     Distance: number;
 }

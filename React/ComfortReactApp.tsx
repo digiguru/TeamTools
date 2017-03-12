@@ -5,6 +5,7 @@ import {ChaosPickerState, ChaosPickerZoneState} from "./ComfortReactModelState";
 import { selectUser, chooseZone, toggleChoiceVisibility } from "./ComfortActions";
 import {ReduxChaosConnector, ReduxStretchConnector, ReduxComfortConnector} from "./ComfortReactZoneConnector";
 import {ReduxUserConnector} from "./UserListConnector";
+import {ReduxUserHistoryConnector} from "./UserHistoryConnector";
 
 /*
         <g id="users">
@@ -18,6 +19,7 @@ export const ReduxComfortApp = () => (
         <ReduxStretchConnector Name="Stretch" />
         <ReduxComfortConnector Name="Comfort" />
         <ReduxUserConnector />
+        <ReduxUserHistoryConnector />
     </Stage>
 );
 

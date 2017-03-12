@@ -7,11 +7,11 @@ import {Point} from "./Point";
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) => {
     if (ownProps.Name === "Comfort") {
-      return {zone: state.Zones.Comfort, user: "Adam Hall"};
+      return {zone: state.Zones.Comfort, user: state.CurrentUser};
     } else if (ownProps.Name === "Chaos") {
-      return {zone: state.Zones.Chaos, user: "Adam Hall"};
+      return {zone: state.Zones.Chaos, user: state.CurrentUser};
     } else {
-      return {zone: state.Zones.Stretch, user: "Adam Hall"};
+      return {zone: state.Zones.Stretch, user: state.CurrentUser};
     }
 };
 
