@@ -1,5 +1,5 @@
 import { IUser, IUserList } from "UserListConnector";
-import { Point } from "./Point";
+import { Point, Size } from "./Point";
 
 
 export class ChaosPickerUserChoiceState {
@@ -83,6 +83,7 @@ export interface ISizable {
 }
 
 export class ChaosPickerState {
+    Size: Size;
     CenterPoint: Point;
     UserList: IUserList;
     Zones: ChaosZoneList;

@@ -1,6 +1,21 @@
 import * as React from "react";
-import { IChaosPickerZoneConnectorWithEvents } from "ComfortReactModelState";
+import { connect } from "react-redux";
+import { IChaosPickerZoneConnectorWithEvents, ChaosPickerState } from "ComfortReactModelState";
 import { Point } from "./Point";
+
+
+export const Stage = (state: ChaosPickerState) => {
+    const children = (state as any).children;
+    return <svg id="stage" width={state.Size.width} height={state.Size.height}>
+        {children}
+    </svg>;
+};
+
+export const StageConnector = connect(
+  (state) => {
+    return state;
+  }
+)(Stage);
 
 
 export const ReduxChaosArea = (state: IChaosPickerZoneConnectorWithEvents) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (

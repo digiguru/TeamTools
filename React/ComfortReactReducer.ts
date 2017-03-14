@@ -2,9 +2,11 @@
 import {ComfortActions} from "./ComfortActions";
 import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "./ComfortReactModelState";
 import { fromJS, List, Map } from "../3rdParty/immutable.min";
-import { Point } from "./Point";
+import { Point, Size } from "./Point";
 
+const initialSize: Size = {width: 800, height: 800};
 const initialState: ChaosPickerState = {
+    Size: initialSize,
     CenterPoint: new Point(400, 400),
     UserList : {
         ShowUsers: true,

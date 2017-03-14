@@ -24,6 +24,12 @@ define("Polar", ["require", "exports"], function (require, exports) {
 });
 define("Point", ["require", "exports", "Polar"], function (require, exports, Polar_1) {
     "use strict";
+    var Size = (function () {
+        function Size() {
+        }
+        return Size;
+    }());
+    exports.Size = Size;
     var Point = (function () {
         function Point(x, y) {
             this.x = x;
@@ -535,8 +541,15 @@ define("__tests__/Link.react-test", ["require", "exports", "react", "Link.react"
         expect(tree).toMatchSnapshot();
     });
 });
-define("ComfortReduxZone", ["require", "exports", "react"], function (require, exports, React) {
+define("ComfortReduxZone", ["require", "exports", "react", "react-redux"], function (require, exports, React, react_redux_2) {
     "use strict";
+    exports.Stage = function (state) {
+        var children = state.children;
+        return React.createElement("svg", { id: "stage", width: state.Size.width, height: state.Size.height }, children);
+    };
+    exports.StageConnector = react_redux_2.connect(function (state) {
+        return state;
+    })(exports.Stage);
     exports.ReduxChaosArea = function (state) {
         return React.createElement("g", null,
             React.createElement("rect", { id: "chaos", className: state.Zone.Focus, onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.User, state.Zone.Name, state.CenterPoint, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
@@ -553,7 +566,7 @@ define("ComfortReduxZone", ["require", "exports", "react"], function (require, e
             React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
     };
 });
-define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "ComfortActions", "ComfortReduxZone", "Point"], function (require, exports, react_redux_2, ComfortActions_2, ComfortReduxZone_1, Point_2) {
+define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "ComfortActions", "ComfortReduxZone", "Point"], function (require, exports, react_redux_3, ComfortActions_2, ComfortReduxZone_1, Point_2) {
     "use strict";
     /*import {SVG} from "../Shared/SVG";*/
     var mapStateToProps = function (state, ownProps) {
@@ -595,9 +608,9 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
             }
         };
     };
-    exports.ReduxChaosConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxChaosArea);
-    exports.ReduxStretchConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxStretchArea);
-    exports.ReduxComfortConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxComfortArea);
+    exports.ReduxChaosConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxChaosArea);
+    exports.ReduxStretchConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxStretchArea);
+    exports.ReduxComfortConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxComfortArea);
 });
 define("ReactUserHistory", ["require", "exports", "react", "Point", "Polar"], function (require, exports, React, Point_3, Polar_2) {
     "use strict";
@@ -633,7 +646,7 @@ define("ReactUserHistory", ["require", "exports", "react", "Point", "Polar"], fu
         return React.createElement("circle", { cx: point.x, cy: point.y, r: "10", className: "point" });
     };
 });
-define("UserHistoryConnector", ["require", "exports", "react-redux", "ReactUserHistory"], function (require, exports, react_redux_3, ReactUserHistory_1) {
+define("UserHistoryConnector", ["require", "exports", "react-redux", "ReactUserHistory"], function (require, exports, react_redux_4, ReactUserHistory_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
         return {
@@ -644,10 +657,10 @@ define("UserHistoryConnector", ["require", "exports", "react-redux", "ReactUserH
     var mapDispatchToProps = function (dispatch) {
         return {};
     };
-    exports.ReduxUserHistoryConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ReactUserHistory_1.ReduxUserHistoryArea);
+    exports.ReduxUserHistoryConnector = react_redux_4.connect(mapStateToProps, mapDispatchToProps)(ReactUserHistory_1.ReduxUserHistoryArea);
 });
 // UserListConnector
-define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortReactZoneConnector", "UserListConnector", "UserHistoryConnector"], function (require, exports, React, SVGHelper_3, ComfortReactZoneConnector_1, UserListConnector_1, UserHistoryConnector_1) {
+define("ComfortReactApp", ["require", "exports", "react", "ComfortReactZoneConnector", "UserListConnector", "UserHistoryConnector", "ComfortReduxZone"], function (require, exports, React, ComfortReactZoneConnector_1, UserListConnector_1, UserHistoryConnector_1, ComfortReduxZone_2) {
     "use strict";
     /*
             <g id="users">
@@ -655,7 +668,7 @@ define("ComfortReactApp", ["require", "exports", "react", "SVGHelper", "ComfortR
     
             <ReduxUserConnector />
     */
-    exports.ReduxComfortApp = function () { return (React.createElement(SVGHelper_3.Stage, null,
+    exports.ReduxComfortApp = function () { return (React.createElement(ComfortReduxZone_2.StageConnector, null,
         React.createElement(ComfortReactZoneConnector_1.ReduxChaosConnector, { Name: "Chaos" }),
         React.createElement(ComfortReactZoneConnector_1.ReduxStretchConnector, { Name: "Stretch" }),
         React.createElement(ComfortReactZoneConnector_1.ReduxComfortConnector, { Name: "Comfort" }),
@@ -757,7 +770,9 @@ export class ComfortArea extends React.Component<any, IResizableInteractiveModel
 }*/
 define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "../3rdParty/immutable.min", "Point"], function (require, exports, ComfortActions_3, ComfortReactModelState_1, immutable_min_2, Point_4) {
     "use strict";
+    var initialSize = { width: 800, height: 800 };
     var initialState = {
+        Size: initialSize,
         CenterPoint: new Point_4.Point(400, 400),
         UserList: {
             ShowUsers: true,
@@ -862,7 +877,7 @@ define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
-define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_4) {
+define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_3) {
     "use strict";
     var ChartArea = (function (_super) {
         __extends(ChartArea, _super);
@@ -872,10 +887,10 @@ define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (r
                 focus: "not-in-focus",
                 width: props.width || "100%",
                 height: props.height || "100%",
-                onMouseEnter: SVGHelper_4.Events.mouseEnter.bind(_this),
-                onMouseLeave: SVGHelper_4.Events.mouseLeave.bind(_this),
-                onMouseUp: SVGHelper_4.Events.mouseUp.bind(_this),
-                onMouseDown: SVGHelper_4.Events.mouseDown.bind(_this)
+                onMouseEnter: SVGHelper_3.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_3.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_3.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_3.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -890,7 +905,7 @@ define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (r
             var className = this.state.focus + " area okay js-area-standard";
             return React.createElement("g", null,
                 React.createElement("rect", { className: className, id: label, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, x: "0", y: "0", width: "25%", height: "100%" },
-                    React.createElement(SVGHelper_4.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
+                    React.createElement(SVGHelper_3.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
                 React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, label),
                 ";");
         };
@@ -903,7 +918,7 @@ define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (r
             return _super !== null && _super.apply(this, arguments) || this;
         }
         TuckmanComponent.prototype.render = function () {
-            return React.createElement(SVGHelper_4.Stage, null,
+            return React.createElement(SVGHelper_3.Stage, null,
                 React.createElement("g", { id: "zones" },
                     React.createElement(ChartArea, { label: "performing", index: "3" }),
                     React.createElement(ChartArea, { label: "norming", index: "2" }),
@@ -940,32 +955,32 @@ define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (r
             <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
         </svg>
         */
-define("__tests__/TuckmanModel", ["require", "exports", "react", "TuckmanReact", "SVGHelper"], function (require, exports, React, TuckmanReact_1, SVGHelper_5) {
+define("__tests__/TuckmanModel", ["require", "exports", "react", "TuckmanReact", "SVGHelper"], function (require, exports, React, TuckmanReact_1, SVGHelper_4) {
     "use strict";
     var renderizer = require("react-test-renderer");
     it("Should show the component", function () {
         // Arrange
-        var component = renderizer.create(React.createElement(SVGHelper_5.Stage, null,
+        var component = renderizer.create(React.createElement(SVGHelper_4.Stage, null,
             React.createElement(TuckmanReact_1.TuckmanComponent, null)));
         expect(component.toJSON()).toMatchSnapshot();
     });
     it("Should show the stretch area", function () {
         // Arrange
-        var component = renderizer.create(React.createElement(SVGHelper_5.Stage, null,
+        var component = renderizer.create(React.createElement(SVGHelper_4.Stage, null,
             React.createElement(TuckmanReact_1.ChartArea, { width: "200", offset: "100", label: "example" })));
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
-define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_6) {
+define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_5) {
     "use strict";
     var ChaosArea = (function (_super) {
         __extends(ChaosArea, _super);
         function ChaosArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_6.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_6.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_6.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_6.Events.mouseDown.bind(_this);
+            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
@@ -986,10 +1001,10 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
         __extends(StretchArea, _super);
         function StretchArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_6.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_6.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_6.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_6.Events.mouseDown.bind(_this);
+            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
@@ -1010,10 +1025,10 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
         __extends(ComfortArea, _super);
         function ComfortArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_6.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_6.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_6.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_6.Events.mouseDown.bind(_this);
+            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
@@ -1039,13 +1054,13 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
             return _super !== null && _super.apply(this, arguments) || this;
         }
         ComfortReact.prototype.render = function () {
-            return React.createElement(SVGHelper_6.Stage, null,
+            return React.createElement(SVGHelper_5.Stage, null,
                 React.createElement(ChaosArea, null),
                 React.createElement("g", { id: "zones" },
                     React.createElement(StretchArea, null,
-                        React.createElement(SVGHelper_6.BouncyAnimation, { attributeName: "r", value: "45" })),
+                        React.createElement(SVGHelper_5.BouncyAnimation, { attributeName: "r", value: "45" })),
                     React.createElement(ComfortArea, null,
-                        React.createElement(SVGHelper_6.BouncyAnimation, { attributeName: "r", value: "20", delay: "0.5s" }))),
+                        React.createElement(SVGHelper_5.BouncyAnimation, { attributeName: "r", value: "20", delay: "0.5s" }))),
                 React.createElement("g", { id: "history", display: this.props.ShowUserChoices }));
             //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
         };
@@ -1053,14 +1068,14 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
     }(React.Component));
     exports.ComfortReact = ComfortReact;
 });
-define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_4, ComfortActions_5) {
+define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_5, ComfortActions_5) {
     "use strict";
     var myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
     console.log(myStore.getState());
     var unsubscribe = myStore.subscribe(function () {
         return console.log(myStore.getState());
     });
-    react_dom_1.render(React.createElement(react_redux_4.Provider, { store: myStore },
+    react_dom_1.render(React.createElement(react_redux_5.Provider, { store: myStore },
         React.createElement(ComfortReactApp_2.ReduxComfortApp, null)), document.getElementById("stage"));
     myStore.dispatch(ComfortActions_5.setUserFocus("Adam Hall", "in-focus"));
 });

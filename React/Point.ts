@@ -1,5 +1,9 @@
 import {Polar} from "./Polar";
 
+export class Size {
+    width: number;
+    height: number;
+}
 export class Point {
     x: number;
     y: number;
