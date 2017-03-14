@@ -1,3 +1,5 @@
+import { Point } from "./Point";
+
 export const ComfortActions = {
     SET_ZONEFOCUS: "SET_ZONEFOCUS",
     SET_USERFOCUS: "SET_USERFOCUS",
@@ -26,9 +28,9 @@ export function setZoneFocus(area: "Chaos" | "Stretch" | "Comfort", focus: "in-f
 export function selectUser(user: string) {
     return {type: ComfortActions.SELECT_USER, user: user};
 }
-export function chooseZone(user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number) {
-    return {type: ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance};
+export function chooseZone(user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, centerPoint: Point) {
+    return {type: ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance, centerPoint: centerPoint};
 }
-export function toggleChoiceVisibility(visible: Boolean) {
+export function toggleChoiceVisibility(visible: boolean) {
     return {type: ComfortActions.TOGGLE_CHOICES, visible: visible};
 }

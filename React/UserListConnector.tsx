@@ -4,12 +4,12 @@ import {ChaosPickerState, ChaosPickerZoneState} from "./ComfortReactModelState";
 import {ReduxUserList} from "./ReactUserComponent";
 import { fromJS } from "../3rdParty/immutable.min";
 export interface IUser {
-  Username: String;
+  Username: string;
 }
 
 export interface IUserUI extends IUser {
   Y: number;
-  Focus: String;
+  Focus: string;
 }
 
 export interface IUserUIWithEvents extends IUserUI {

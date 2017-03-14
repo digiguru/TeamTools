@@ -2,8 +2,10 @@
 import {ComfortActions} from "./ComfortActions";
 import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "./ComfortReactModelState";
 import { fromJS, List, Map } from "../3rdParty/immutable.min";
+import { Point } from "./Point";
 
 const initialState: ChaosPickerState = {
+    CenterPoint: new Point(200, 200),
     UserList : {
         ShowUsers: true,
         Users: [
@@ -29,7 +31,7 @@ export function comfortReactApp(state: ChaosPickerState = initialState, action):
         case ComfortActions.SELECT_USER:
             return ComfortZoneAction.selectUser(state, (<any>action).user);
         case ComfortActions.CHOOSE_ZONE:
-            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance);
+            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance, (<any>action).centerPoint);
         case ComfortActions.TOGGLE_CHOICES:
             return ComfortZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
         default:
@@ -65,7 +67,7 @@ class ComfortZoneAction {
         return data.toJS();
     }
 
-    static chooseZone(state: ChaosPickerState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number): ChaosPickerState {
+    static chooseZone(state: ChaosPickerState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, centerPoint: Point): ChaosPickerState {
 
         // Add the user choice
         const newUserChoices = List(state.UserChoices).push({
@@ -80,12 +82,13 @@ class ComfortZoneAction {
         // Return
         return fromJS(state)
             .delete("CurrentUser")
+            .set("CenterPoint", centerPoint)
             .set("ShowUserChoices", showUserChoice)
             .set("UserChoices", newUserChoices)
             .setIn(["UserList", "Users"], newUserList)
             .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
     }
-    static toggleChoiceVisibility(state: ChaosPickerState, visible: Boolean): ChaosPickerState {
+    static toggleChoiceVisibility(state: ChaosPickerState, visible: boolean): ChaosPickerState {
         // Set "showUserChoices" to true
         return Map(state)
             .set("ShowUserChoices", visible).toJS();

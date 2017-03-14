@@ -1,17 +1,17 @@
 import { connect } from "react-redux";
 import { setZoneFocus, chooseZone } from "./ComfortActions";
-import {ChaosPickerState, ChaosPickerZoneState} from "./ComfortReactModelState";
+import {ChaosPickerState, ChaosPickerZoneState, IChaosPickerZoneConnector, IChaosPickerZoneEventObject} from "./ComfortReactModelState";
 import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "./ComfortReduxZone";
 import {Point} from "./Point";
 /*import {SVG} from "../Shared/SVG";*/
 
-const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) => {
+const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) : IChaosPickerZoneConnector => {
     if (ownProps.Name === "Comfort") {
-      return {zone: state.Zones.Comfort, user: state.CurrentUser};
+      return {Zone: state.Zones.Comfort, User: state.CurrentUser};
     } else if (ownProps.Name === "Chaos") {
-      return {zone: state.Zones.Chaos, user: state.CurrentUser};
+      return {Zone: state.Zones.Chaos, User: state.CurrentUser};
     } else {
-      return {zone: state.Zones.Stretch, user: state.CurrentUser};
+      return {Zone: state.Zones.Stretch, User: state.CurrentUser};
     }
 };
 
@@ -22,23 +22,24 @@ const getCenterPointFromElement = (el) => {
   return new Point(centerX, centerY);
 };
 
-const mapDispatchToProps = (dispatch) => {
+
+const mapDispatchToProps = (dispatch) : IChaosPickerZoneEventObject => {
   return {
-    events: {
-      onZoneMouseDown: (zone) => {
+    Events: {
+      onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "active"));
       },
-      onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => {
+      onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", centerPoint: Point, event: any): void => {
         dispatch(setZoneFocus(zone, "not-in-focus"));
         const coord = [event.clientX, event.clientY];
-        const centerPoint = getCenterPointFromElement(event.currentTarget);
+        // const centerPoint = getCenterPointFromElement(event.currentTarget);
         const distance = Point.distance(centerPoint, Point.fromCoords(coord));
-        dispatch(chooseZone(user, zone, distance)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+        dispatch(chooseZone(user, zone, distance, new Point(400, 400))); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
-      onZoneOverFocus: (zone) => {
+      onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "in-focus"));
       },
-      onZoneOffFocus: (zone) => {
+      onZoneOffFocus: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "not-in-focus"));
       }
     }

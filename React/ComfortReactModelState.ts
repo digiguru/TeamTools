@@ -1,4 +1,5 @@
 import { IUser, IUserList } from "UserListConnector";
+import { Point } from "./Point";
 
 
 export class ChaosPickerUserChoiceState {
@@ -12,23 +13,29 @@ export class ChaosPickerZoneRangeState {
     End: number;
 }
 export interface IUserable {
-  user: string;
-}
-export interface IChaosPickerZoneEventFunction {
-  (zone: "Comfort" | "Chaos" | "Stretch"): void;
-}
-export interface IChaosPickerZoneEvents {
-  onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
-  onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", event: any) => Function;
-  onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
-  onZoneOffFocus: (zone: "Comfort" | "Chaos" | "Stretch") => Function;
-}
-export interface IChaosPickerZoneConnector {
-    zone: ChaosPickerZoneState;
-    user: string;
-    events: IChaosPickerZoneEvents;
+  User: string;
 }
 
+export interface IChaosPickerZoneEvents {
+  onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch") => void;
+  onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", centerPoint: Point, event: any) => void;
+  onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch") => void;
+  onZoneOffFocus: (zone: "Comfort" | "Chaos" | "Stretch") => void;
+}
+
+export interface IChaosPickerZoneConnector {
+    Zone: ChaosPickerZoneState;
+    User: string;
+}
+
+export interface IChaosPickerZoneEventObject {
+    Events: IChaosPickerZoneEvents;
+}
+export interface IChaosPickerZoneConnectorWithEvents {
+    Zone: ChaosPickerZoneState;
+    User: string;
+    Events: IChaosPickerZoneEvents;
+}
 export class ChaosPickerZoneState {
     Name: "Chaos" | "Stretch" | "Comfort";
     Focus: "in-focus" | "active" | "not-in-focus";
@@ -74,9 +81,10 @@ export interface ISizable {
 }
 
 export class ChaosPickerState {
+    CenterPoint: Point;
     UserList: IUserList;
     Zones: ChaosZoneList;
-    ShowUserChoices: Boolean;
-    CurrentUser?: String;
+    ShowUserChoices: boolean;
+    CurrentUser?: string;
     UserChoices: Array<ChaosPickerUserChoiceState>;
 }
