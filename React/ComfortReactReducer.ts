@@ -5,7 +5,7 @@ import { fromJS, List, Map } from "../3rdParty/immutable.min";
 import { Point } from "./Point";
 
 const initialState: ChaosPickerState = {
-    CenterPoint: new Point(200, 200),
+    CenterPoint: new Point(400, 400),
     UserList : {
         ShowUsers: true,
         Users: [

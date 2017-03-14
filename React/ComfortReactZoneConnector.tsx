@@ -7,11 +7,11 @@ import {Point} from "./Point";
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) : IChaosPickerZoneConnector => {
     if (ownProps.Name === "Comfort") {
-      return {Zone: state.Zones.Comfort, User: state.CurrentUser};
+      return {Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint};
     } else if (ownProps.Name === "Chaos") {
-      return {Zone: state.Zones.Chaos, User: state.CurrentUser};
+      return {Zone: state.Zones.Chaos, User: state.CurrentUser, CenterPoint: state.CenterPoint};
     } else {
-      return {Zone: state.Zones.Stretch, User: state.CurrentUser};
+      return {Zone: state.Zones.Stretch, User: state.CurrentUser, CenterPoint: state.CenterPoint};
     }
 };
 
@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch) : IChaosPickerZoneEventObject => {
         const coord = [event.clientX, event.clientY];
         // const centerPoint = getCenterPointFromElement(event.currentTarget);
         const distance = Point.distance(centerPoint, Point.fromCoords(coord));
-        dispatch(chooseZone(user, zone, distance, new Point(400, 400))); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+        dispatch(chooseZone(user, zone, distance, centerPoint)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
       onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "in-focus"));

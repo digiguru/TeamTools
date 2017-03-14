@@ -26,6 +26,7 @@ export interface IChaosPickerZoneEvents {
 export interface IChaosPickerZoneConnector {
     Zone: ChaosPickerZoneState;
     User: string;
+    CenterPoint: Point;
 }
 
 export interface IChaosPickerZoneEventObject {
@@ -35,6 +36,7 @@ export interface IChaosPickerZoneConnectorWithEvents {
     Zone: ChaosPickerZoneState;
     User: string;
     Events: IChaosPickerZoneEvents;
+    CenterPoint: Point;
 }
 export class ChaosPickerZoneState {
     Name: "Chaos" | "Stretch" | "Comfort";
