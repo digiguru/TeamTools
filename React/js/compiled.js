@@ -979,7 +979,7 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
     }(React.Component));
     exports.ComfortReact = ComfortReact;
 });
-define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_5, ComfortActions_5) {
+define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions", "Point"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_5, ComfortActions_5, Point_5) {
     "use strict";
     exports.myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
     console.log(exports.myStore.getState());
@@ -988,15 +988,26 @@ define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp
     });
     react_dom_1.render(React.createElement(react_redux_5.Provider, { store: exports.myStore },
         React.createElement(ComfortReactApp_2.ReduxComfortApp, null)), document.getElementById("stage"));
-    function gogogo() {
-        exports.myStore.dispatch(ComfortActions_5.setUserFocus("Adam Hall", "in-focus"));
-        exports.myStore.dispatch(ComfortActions_5.setStageSize(400, 400));
+    function resizeImage() {
+        //calculations here...
+        var size = getWidthHeight();
+        if (size.width > size.height) {
+            exports.myStore.dispatch(ComfortActions_5.setStageSize(size.height, size.height));
+        }
+        else {
+            exports.myStore.dispatch(ComfortActions_5.setStageSize(size.width, size.width));
+        }
     }
-    exports.gogogo = gogogo;
+    function getWidthHeight() {
+        var w = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0], x = w.innerWidth || e.clientWidth || g.clientWidth, y = w.innerHeight || e.clientHeight || g.clientHeight;
+        return new Point_5.Size(x, y);
+    }
+    ;
+    window.addEventListener("resize", resizeImage, false);
 });
 // Stop listening to state updates
 // unsubscribe(); ; 
-define("ComfortStoreOriginal", ["require", "exports", "redux", "ComfortActions", "ComfortReactReducer", "Point"], function (require, exports, Redux, ComfortActions_6, ComfortReactReducer_3, Point_5) {
+define("ComfortStoreOriginal", ["require", "exports", "redux", "ComfortActions", "ComfortReactReducer", "Point"], function (require, exports, Redux, ComfortActions_6, ComfortReactReducer_3, Point_6) {
     "use strict";
     var store = Redux.createStore(ComfortReactReducer_3.comfortReactApp);
     console.log(store.getState());
@@ -1010,7 +1021,7 @@ define("ComfortStoreOriginal", ["require", "exports", "redux", "ComfortActions",
     store.dispatch(ComfortActions_6.setZoneFocus("Stretch", "in-focus"));
     store.dispatch(ComfortActions_6.selectUser("Adam Hall"));
     store.dispatch(ComfortActions_6.setZoneFocus("Stretch", "active"));
-    store.dispatch(ComfortActions_6.chooseZone("Adam Hall", "Chaos", 150, new Point_5.Point(400, 400)));
+    store.dispatch(ComfortActions_6.chooseZone("Adam Hall", "Chaos", 150, new Point_6.Point(400, 400)));
     store.dispatch(ComfortActions_6.toggleChoiceVisibility(true));
     // Stop listening to state updates
     unsubscribe();
