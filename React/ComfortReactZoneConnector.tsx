@@ -34,7 +34,7 @@ const mapDispatchToProps = (dispatch) : IChaosPickerZoneEventObject => {
         const coord = [event.clientX, event.clientY];
         // const centerPoint = getCenterPointFromElement(event.currentTarget);
         const distance = Point.distance(centerPoint, Point.fromCoords(coord));
-        dispatch(chooseZone(user, zone, distance, centerPoint)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+        dispatch(chooseZone(user, zone, distance, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
       onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "in-focus"));

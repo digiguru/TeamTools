@@ -25,7 +25,9 @@ define("Polar", ["require", "exports"], function (require, exports) {
 define("Point", ["require", "exports", "Polar"], function (require, exports, Polar_1) {
     "use strict";
     var Size = (function () {
-        function Size() {
+        function Size(width, height) {
+            this.width = width;
+            this.height = height;
         }
         return Size;
     }());
@@ -175,6 +177,7 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
 define("ComfortActions", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.ComfortActions = {
+        SET_STAGESIZE: "SET_STAGESIZE",
         SET_ZONEFOCUS: "SET_ZONEFOCUS",
         SET_USERFOCUS: "SET_USERFOCUS",
         SELECT_USER: "SELECT_USER",
@@ -192,6 +195,10 @@ define("ComfortActions", ["require", "exports"], function (require, exports) {
         return {type: ComfortActions.CHOOSE_ZONE, user: "Adam", area: "Stretch", distance: "165"};
     }
     */
+    function setStageSize(width, height) {
+        return { type: exports.ComfortActions.SET_STAGESIZE, width: width, height: height };
+    }
+    exports.setStageSize = setStageSize;
     function setUserFocus(user, focus) {
         return { type: exports.ComfortActions.SET_USERFOCUS, user: user, focus: focus };
     }
@@ -204,8 +211,8 @@ define("ComfortActions", ["require", "exports"], function (require, exports) {
         return { type: exports.ComfortActions.SELECT_USER, user: user };
     }
     exports.selectUser = selectUser;
-    function chooseZone(user, area, distance, centerPoint) {
-        return { type: exports.ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance, centerPoint: centerPoint };
+    function chooseZone(user, area, distance, x, y) {
+        return { type: exports.ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance, x: x, y: y };
     }
     exports.chooseZone = chooseZone;
     function toggleChoiceVisibility(visible) {
@@ -213,18 +220,6 @@ define("ComfortActions", ["require", "exports"], function (require, exports) {
     }
     exports.toggleChoiceVisibility = toggleChoiceVisibility;
 });
-/*
-<g id="users" transform="">
-    <g id="user1" class="user-group">
-        <rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect>
-        <text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text>
-    </g>
-    <g id="user2" class="user-group">
-        <rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect>
-        <text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text>
-    </g>
-</g>
-*/
 define("ReactUserComponent", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.ReduxUserList = function (state) {
@@ -597,7 +592,7 @@ define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Comfo
                     var coord = [event.clientX, event.clientY];
                     // const centerPoint = getCenterPointFromElement(event.currentTarget);
                     var distance = Point_2.Point.distance(centerPoint, Point_2.Point.fromCoords(coord));
-                    dispatch(ComfortActions_2.chooseZone(user, zone, distance, centerPoint)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+                    dispatch(ComfortActions_2.chooseZone(user, zone, distance, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
                 },
                 onZoneOverFocus: function (zone) {
                     dispatch(ComfortActions_2.setZoneFocus(zone, "in-focus"));
@@ -675,105 +670,12 @@ define("ComfortReactApp", ["require", "exports", "react", "ComfortReactZoneConne
         React.createElement(UserListConnector_1.ReduxUserConnector, null),
         React.createElement(UserHistoryConnector_1.ReduxUserHistoryConnector, null))); };
 });
-/*
-export class ChaosArea extends React.Component<any, IResizableInteractiveModelState> {
-     constructor(props: IResizableMouseEvents) {
-        super(props);
-        this.props.onMouseEnter = Events.mouseEnter.bind(this);
-        this.props.onMouseLeave = Events.mouseLeave.bind(this);
-        this.props.onMouseUp = Events.mouseUp.bind(this);
-        this.props.onMouseDown = Events.mouseDown.bind(this);
-        this.state = {
-            focus: "not-in-focus",
-            width: props.width || "100%",
-            height: props.height || "100%",
-        };
-    }
-    render() {
-        const className: string = this.state.focus + " area js-area-standard";
-        return <g>
-            <rect id="chaos" className={className}
-                onMouseUp={this.props.onMouseUp}
-                onMouseDown={this.props.onMouseDown}
-                onMouseEnter={this.props.onMouseEnter}
-                onMouseLeave={this.props.onMouseLeave}
-                width={this.state.width} height={this.state.height}></rect>
-            <text className="area-label" id="label-chaos" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
-        </g>;
-    }
-}
-
-export class StretchArea extends React.Component<any, IResizableInteractiveModelState> {
-    constructor(props: IResizableMouseEvents) {
-        super(props);
-
-        this.props.onMouseEnter = Events.mouseEnter.bind(this);
-        this.props.onMouseLeave = Events.mouseLeave.bind(this);
-        this.props.onMouseUp = Events.mouseUp.bind(this);
-        this.props.onMouseDown = Events.mouseDown.bind(this);
-
-        this.state = {
-            focus: "not-in-focus",
-            width: props.width || "100%",
-            height: props.height || "100%"
-        };
-    }
-
-    render() {
-        const className: string = this.state.focus + " area js-area-standard";
-        return <g>
-            <circle
-                onMouseUp={this.props.onMouseUp}
-                onMouseDown={this.props.onMouseDown}
-                onMouseEnter={this.props.onMouseEnter}
-                onMouseLeave={this.props.onMouseLeave}
-                className={className} id="stretch" r="0%" cx="50%" cy="50%">
-                {this.props.children}
-            </circle>
-            <text className="area-label" id="label-stretch" text-anchor="middle" textAnchor="middle" x="50%" y="20%">stretch</text>
-        </g>;
-    }
-}
-
-export class ComfortArea extends React.Component<any, IResizableInteractiveModelState> {
-     constructor(props: IResizableMouseEvents) {
-        super(props);
-
-        this.props.onMouseEnter = Events.mouseEnter.bind(this);
-        this.props.onMouseLeave = Events.mouseLeave.bind(this);
-        this.props.onMouseUp = Events.mouseUp.bind(this);
-        this.props.onMouseDown = Events.mouseDown.bind(this);
-        this.state = {
-            focus: "not-in-focus",
-            width: props.width || "100%",
-            height: props.height || "100%"
-        };
-    }
-
-    render() {
-        const className: string = this.state.focus + " area js-area-standard";
-        // const startValue = 0 || this.props.value;
-        const value = this.props.value || 20;
-        return <g>
-            <circle
-                onMouseUp={this.props.onMouseUp}
-                onMouseDown={this.props.onMouseDown}
-                onMouseEnter={this.props.onMouseEnter}
-                onMouseLeave={this.props.onMouseLeave}
-                className={className} id="comfort" r="0%" cx="50%" cy="50%">
-                {this.props.children}
-            </circle>
-            <text className="area-label" id="label-comfort" text-anchor="middle" textAnchor="middle" x="50%" y="50%">comfort</text>
-        </g>;
-        // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;"
-    }
-}*/
 define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "../3rdParty/immutable.min", "Point"], function (require, exports, ComfortActions_3, ComfortReactModelState_1, immutable_min_2, Point_4) {
     "use strict";
-    var initialSize = { width: 800, height: 800 };
+    var initialSize = new Point_4.Size(800, 800);
     var initialState = {
         Size: initialSize,
-        CenterPoint: new Point_4.Point(400, 400),
+        CenterPoint: new Point_4.Point(initialSize.width / 2, initialSize.height / 2),
         UserList: {
             ShowUsers: true,
             Users: [
@@ -793,6 +695,8 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
         if (state === void 0) { state = initialState; }
         console.log(action.type, action);
         switch (action.type) {
+            case ComfortActions_3.ComfortActions.SET_STAGESIZE:
+                return ComfortZoneAction.setStageSize(state, action.width, action.height);
             case ComfortActions_3.ComfortActions.SET_USERFOCUS:
                 return ComfortZoneAction.setUserFocus(state, action.user, action.focus);
             case ComfortActions_3.ComfortActions.SET_ZONEFOCUS:
@@ -800,7 +704,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
             case ComfortActions_3.ComfortActions.SELECT_USER:
                 return ComfortZoneAction.selectUser(state, action.user);
             case ComfortActions_3.ComfortActions.CHOOSE_ZONE:
-                return ComfortZoneAction.chooseZone(state, action.user, action.area, action.distance, action.centerPoint);
+                return ComfortZoneAction.chooseZone(state, action.user, action.area, action.distance, action.x, action.y);
             case ComfortActions_3.ComfortActions.TOGGLE_CHOICES:
                 return ComfortZoneAction.toggleChoiceVisibility(state, action.visible);
             default:
@@ -811,6 +715,13 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
     var ComfortZoneAction = (function () {
         function ComfortZoneAction() {
         }
+        ComfortZoneAction.setStageSize = function (state, width, height) {
+            var newCenter = new Point_4.Point(width / 2, height / 2);
+            return immutable_min_2.fromJS(state)
+                .set("Size", new Point_4.Size(width, height))
+                .set("CenterPoint", newCenter)
+                .toJS();
+        };
         ComfortZoneAction.setZoneFocus = function (state, area, focus) {
             return immutable_min_2.fromJS(state)
                 .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
@@ -835,7 +746,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
                 .setIn(["UserList", "ShowUsers"], false);
             return data.toJS();
         };
-        ComfortZoneAction.chooseZone = function (state, user, area, distance, centerPoint) {
+        ComfortZoneAction.chooseZone = function (state, user, area, distance, x, y) {
             // Add the user choice
             var newUserChoices = immutable_min_2.List(state.UserChoices).push({
                 User: user,
@@ -849,7 +760,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
             // Return
             return immutable_min_2.fromJS(state)
                 .delete("CurrentUser")
-                .set("CenterPoint", centerPoint)
+                .set("CenterPoint", new Point_4.Point(x, y))
                 .set("ShowUserChoices", showUserChoice)
                 .set("UserChoices", newUserChoices)
                 .setIn(["UserList", "Users"], newUserList)
@@ -1070,14 +981,18 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
 });
 define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_5, ComfortActions_5) {
     "use strict";
-    var myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
-    console.log(myStore.getState());
-    var unsubscribe = myStore.subscribe(function () {
-        return console.log(myStore.getState());
+    exports.myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
+    console.log(exports.myStore.getState());
+    var unsubscribe = exports.myStore.subscribe(function () {
+        return console.log(exports.myStore.getState());
     });
-    react_dom_1.render(React.createElement(react_redux_5.Provider, { store: myStore },
+    react_dom_1.render(React.createElement(react_redux_5.Provider, { store: exports.myStore },
         React.createElement(ComfortReactApp_2.ReduxComfortApp, null)), document.getElementById("stage"));
-    myStore.dispatch(ComfortActions_5.setUserFocus("Adam Hall", "in-focus"));
+    function gogogo() {
+        exports.myStore.dispatch(ComfortActions_5.setUserFocus("Adam Hall", "in-focus"));
+        exports.myStore.dispatch(ComfortActions_5.setStageSize(400, 400));
+    }
+    exports.gogogo = gogogo;
 });
 // Stop listening to state updates
 // unsubscribe(); ; 
@@ -1117,7 +1032,7 @@ requirejs.config({
     }
 });
 require(["ComfortStore"], function (u) {
-    console.log("Loaded");
+    u.gogogo();
 });
 define("userComponents", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";

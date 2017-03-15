@@ -4,9 +4,10 @@ import { ReduxComfortApp } from "ComfortReactApp";
 import {comfortReactApp} from "ComfortReactReducer";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { setUserFocus } from "ComfortActions";
+import { setStageSize, setUserFocus } from "./ComfortActions";
+import { Point, Size } from "./Point";
 
-const myStore = Redux.createStore(comfortReactApp);
+export const myStore = Redux.createStore(comfortReactApp);
 
 console.log(myStore.getState());
 
@@ -20,8 +21,10 @@ render(
   </Provider>,
   document.getElementById("stage")
 );
-
-myStore.dispatch(setUserFocus("Adam Hall", "in-focus"));
+export function gogogo() {
+  myStore.dispatch(setUserFocus("Adam Hall", "in-focus"));
+  myStore.dispatch(setStageSize(400, 400));
+}
 
 // Stop listening to state updates
 // unsubscribe(); ;

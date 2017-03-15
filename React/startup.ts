@@ -17,5 +17,5 @@ requirejs.config( {
     }
 });
 require(["ComfortStore"], (u) => {
-    console.log("Loaded");
+    u.gogogo();
 });
