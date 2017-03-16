@@ -24,8 +24,8 @@ render(
 
 function resizeImage() {
     //calculations here...
-    const size:Size = getWidthHeight();
-    if(size.width > size.height) {
+    const size: Size = getWidthHeight();
+    if (size.width > size.height) {
       myStore.dispatch(setStageSize(size.height, size.height));
     } else {
       myStore.dispatch(setStageSize(size.width, size.width));
