@@ -1,5 +1,3 @@
-import { Point, Size } from "./Point";
-
 export const ComfortActions = {
     SET_STAGESIZE: "SET_STAGESIZE",
     SET_ZONEFOCUS: "SET_ZONEFOCUS",
@@ -9,17 +7,6 @@ export const ComfortActions = {
     TOGGLE_CHOICES: "TOGGLE_CHOICES"
 };
 
-/*
-export function setFocusToComfort() {
-    return {type: ComfortActions.SET_FOCUS, area: "comfort"};
-};
-export function selectUserAdam() {
-    return {type: ComfortActions.SELECT_USER, user: "Adam"};
-}
-export function adamChooseZoneStretch165() {
-    return {type: ComfortActions.CHOOSE_ZONE, user: "Adam", area: "Stretch", distance: "165"};
-}
-*/
 export function setStageSize(width: number, height: number) {
     return {type: ComfortActions.SET_STAGESIZE, width: width, height: height};
 }

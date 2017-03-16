@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { selectUser, setUserFocus } from "./ComfortActions";
+import { selectUser, setUserFocus } from "./Models/ComfortActions";
 import {ChaosPickerState, ChaosPickerZoneState} from "./ComfortReactModelState";
 import {ReduxUserList} from "./ReactUserComponent";
 import { fromJS } from "../3rdParty/immutable.min";

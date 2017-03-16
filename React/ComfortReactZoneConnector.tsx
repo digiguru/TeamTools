@@ -1,5 +1,5 @@
 import { connect } from "react-redux";
-import { setZoneFocus, chooseZone } from "./ComfortActions";
+import { setZoneFocus, chooseZone } from "./Models/ComfortActions";
 import {ChaosPickerState, ChaosPickerZoneState, IChaosPickerZoneConnector, IChaosPickerZoneEventObject} from "./ComfortReactModelState";
 import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "./ComfortReduxZone";
 import {Point} from "./Point";

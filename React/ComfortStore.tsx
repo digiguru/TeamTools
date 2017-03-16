@@ -4,7 +4,7 @@ import { ReduxComfortApp } from "ComfortReactApp";
 import {comfortReactApp} from "ComfortReactReducer";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { setStageSize, setUserFocus } from "./ComfortActions";
+import { setStageSize, setUserFocus } from "./Models/ComfortActions";
 import { Point, Size } from "./Point";
 
 export const myStore = Redux.createStore(comfortReactApp);

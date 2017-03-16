@@ -2,7 +2,6 @@ import * as React from "react";
 import {Stage, BouncyAnimation, Events} from "./SVGHelper";
 import {ChaosPickerState} from "./ComfortReactModelState";
 
-
 export interface IResizableModel {
     width: string;
     height: string;

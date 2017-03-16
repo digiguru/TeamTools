@@ -1,5 +1,5 @@
 
-import {ComfortActions} from "./ComfortActions";
+import {ComfortActions} from "./Models/ComfortActions";
 import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "./ComfortReactModelState";
 import { fromJS, List, Map } from "../3rdParty/immutable.min";
 import { Point, Size } from "./Point";

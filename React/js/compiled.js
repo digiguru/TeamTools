@@ -174,7 +174,7 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
     }(React.Component));
     exports.BouncyAnimation = BouncyAnimation;
 });
-define("ComfortActions", ["require", "exports"], function (require, exports) {
+define("Models/ComfortActions", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.ComfortActions = {
         SET_STAGESIZE: "SET_STAGESIZE",
@@ -184,17 +184,6 @@ define("ComfortActions", ["require", "exports"], function (require, exports) {
         CHOOSE_ZONE: "CHOOSE_ZONE",
         TOGGLE_CHOICES: "TOGGLE_CHOICES"
     };
-    /*
-    export function setFocusToComfort() {
-        return {type: ComfortActions.SET_FOCUS, area: "comfort"};
-    };
-    export function selectUserAdam() {
-        return {type: ComfortActions.SELECT_USER, user: "Adam"};
-    }
-    export function adamChooseZoneStretch165() {
-        return {type: ComfortActions.CHOOSE_ZONE, user: "Adam", area: "Stretch", distance: "165"};
-    }
-    */
     function setStageSize(width, height) {
         return { type: exports.ComfortActions.SET_STAGESIZE, width: width, height: height };
     }
@@ -236,7 +225,7 @@ define("ReactUserComponent", ["require", "exports", "react"], function (require,
             React.createElement("text", { className: "username", y: textY, x: "60" }, state.Username));
     };
 });
-define("UserListConnector", ["require", "exports", "react-redux", "ComfortActions", "ReactUserComponent", "../3rdParty/immutable.min"], function (require, exports, react_redux_1, ComfortActions_1, ReactUserComponent_1, immutable_min_1) {
+define("UserListConnector", ["require", "exports", "react-redux", "Models/ComfortActions", "ReactUserComponent", "../3rdParty/immutable.min"], function (require, exports, react_redux_1, ComfortActions_1, ReactUserComponent_1, immutable_min_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
         return {
@@ -561,7 +550,7 @@ define("ComfortReduxZone", ["require", "exports", "react", "react-redux"], funct
             React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
     };
 });
-define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "ComfortActions", "ComfortReduxZone", "Point"], function (require, exports, react_redux_3, ComfortActions_2, ComfortReduxZone_1, Point_2) {
+define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "Models/ComfortActions", "ComfortReduxZone", "Point"], function (require, exports, react_redux_3, ComfortActions_2, ComfortReduxZone_1, Point_2) {
     "use strict";
     /*import {SVG} from "../Shared/SVG";*/
     var mapStateToProps = function (state, ownProps) {
@@ -670,7 +659,7 @@ define("ComfortReactApp", ["require", "exports", "react", "ComfortReactZoneConne
         React.createElement(UserListConnector_1.ReduxUserConnector, null),
         React.createElement(UserHistoryConnector_1.ReduxUserHistoryConnector, null))); };
 });
-define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "../3rdParty/immutable.min", "Point"], function (require, exports, ComfortActions_3, ComfortReactModelState_1, immutable_min_2, Point_4) {
+define("ComfortReactReducer", ["require", "exports", "Models/ComfortActions", "ComfortReactModelState", "../3rdParty/immutable.min", "Point"], function (require, exports, ComfortActions_3, ComfortReactModelState_1, immutable_min_2, Point_4) {
     "use strict";
     var initialSize = new Point_4.Size(800, 800);
     var initialState = {
@@ -775,7 +764,7 @@ define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortR
         return ComfortZoneAction;
     }());
 });
-define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "ComfortReactApp", "ComfortReactReducer", "../../3rdParty/react-redux.min", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_1, ComfortReactReducer_1, react_redux_min_1, ComfortActions_4) {
+define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "ComfortReactApp", "ComfortReactReducer", "../../3rdParty/react-redux.min", "../ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_1, ComfortReactReducer_1, react_redux_min_1, ComfortActions_4) {
     "use strict";
     var renderizer = require("react-test-renderer");
     it("Should show the component", function () {
@@ -979,7 +968,7 @@ define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function
     }(React.Component));
     exports.ComfortReact = ComfortReact;
 });
-define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions", "Point"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_5, ComfortActions_5, Point_5) {
+define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "Models/ComfortActions", "Point"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_5, ComfortActions_5, Point_5) {
     "use strict";
     exports.myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
     console.log(exports.myStore.getState());
@@ -1007,7 +996,7 @@ define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp
 });
 // Stop listening to state updates
 // unsubscribe(); ; 
-define("ComfortStoreOriginal", ["require", "exports", "redux", "ComfortActions", "ComfortReactReducer", "Point"], function (require, exports, Redux, ComfortActions_6, ComfortReactReducer_3, Point_6) {
+define("ComfortStoreOriginal", ["require", "exports", "redux", "Models/ComfortActions", "ComfortReactReducer", "Point"], function (require, exports, Redux, ComfortActions_6, ComfortReactReducer_3, Point_6) {
     "use strict";
     var store = Redux.createStore(ComfortReactReducer_3.comfortReactApp);
     console.log(store.getState());

@@ -1,6 +1,6 @@
 import * as Redux from "redux";
 
-import { setUserFocus, setZoneFocus, selectUser, chooseZone, toggleChoiceVisibility } from "ComfortActions";
+import { setUserFocus, setZoneFocus, selectUser, chooseZone, toggleChoiceVisibility } from "./Models/ComfortActions";
 import { comfortReactApp } from "ComfortReactReducer";
 import { Point } from "./Point";
 const store = Redux.createStore(comfortReactApp);
