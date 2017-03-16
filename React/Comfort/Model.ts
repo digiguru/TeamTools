@@ -1,5 +1,6 @@
-import { IUser, IUserList } from "UserListConnector";
-import { Point, Size } from "./Point";
+import { IUser, IUserList } from "../User/Connector";
+import { Point } from "../Models/Point";
+import { Size } from "../Models/Size";
 
 
 export class ChaosPickerUserChoiceState {

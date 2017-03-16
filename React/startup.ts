@@ -16,6 +16,6 @@ requirejs.config( {
         "react-redux": "../3rdParty/react-redux.min",
     }
 });
-require(["ComfortStore"], (u) => {
+require(["Comfort/Store"], (u) => {
     u.gogogo();
 });

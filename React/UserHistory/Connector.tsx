@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import {ReduxUserHistory, ReduxUserHistoryArea} from "./ReactUserHistory";
-import {ChaosPickerState, ChaosPickerUserChoiceState} from "./ComfortReactModelState";
-import { fromJS } from "../3rdParty/immutable.min";
-import { Point } from "./Point";
+import {ReduxUserHistory, ReduxUserHistoryArea} from "./Component";
+import {ChaosPickerState, ChaosPickerUserChoiceState} from "../Comfort/Model";
+import { fromJS } from "immutable";
+import { Point } from "../Models/Point";
 
 export interface IUserChoiceState {
   Choices: Array<ChaosPickerUserChoiceState>;

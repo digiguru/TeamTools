@@ -1,10 +1,10 @@
 import * as React from "react";
-import {Events, Stage, BouncyAnimation} from "./SVGHelper";
-import {IResizableMouseEvents} from "ComfortReact";
+import {Events, Stage, BouncyAnimation} from "../SVGHelper";
+//import {IResizableMouseEvents} from "../Comfort/React";
 
 
-export class ChartArea extends React.Component<any, IResizableMouseEvents> {
-    constructor(props: IResizableMouseEvents) {
+export class ChartArea extends React.Component<any, any> {
+    constructor(props: any) {
         super(props);
 
         this.state = {

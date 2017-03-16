@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { selectUser, setUserFocus } from "./Models/ComfortActions";
-import {ChaosPickerState, ChaosPickerZoneState} from "./ComfortReactModelState";
-import {ReduxUserList} from "./ReactUserComponent";
-import { fromJS } from "../3rdParty/immutable.min";
+import { selectUser, setUserFocus } from "../Comfort/Actions";
+import {ChaosPickerState, ChaosPickerZoneState} from "../Comfort/Model";
+import {ReduxUserList} from "./Component";
+import { fromJS } from "immutable";
 export interface IUser {
   Username: string;
 }

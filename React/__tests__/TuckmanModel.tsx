@@ -1,5 +1,5 @@
 import * as React from "react";
-import {TuckmanComponent, ChartArea} from "../TuckmanReact";
+import {TuckmanComponent, ChartArea} from "../Tuckman/Component";
 import {Stage, BouncyAnimation} from "../SVGHelper";
 const renderizer = require("react-test-renderer");
 

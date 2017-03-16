@@ -1,8 +1,8 @@
 import * as React from "react";
-import {ChaosPickerUserChoiceState, ChaosPickerState} from "ComfortReactModelState";
-import {Point} from "Point";
-import {Polar} from "Polar";
-import { IUserChoiceState } from "./UserHistoryConnector";
+import {ChaosPickerUserChoiceState, ChaosPickerState} from "../Comfort/Model";
+import {Point} from "../Models/Point";
+import {Polar} from "../Models/Polar";
+import { IUserChoiceState } from "./Connector";
 
 export const ReduxUserHistoryArea = (state: IUserChoiceState) => {
     if (state && state.Choices.length) {

@@ -1,11 +1,12 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { ReduxComfortApp } from "ComfortReactApp";
-import {comfortReactApp} from "ComfortReactReducer";
+import { ComfortApp } from "./ComponentApp";
+import {comfortReactApp} from "./Reducer";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { setStageSize, setUserFocus } from "./Models/ComfortActions";
-import { Point, Size } from "./Point";
+import { setStageSize, setUserFocus } from "./Actions";
+import { Point } from "../Models/Point";
+import { Size } from "../Models/Size";
 
 export const myStore = Redux.createStore(comfortReactApp);
 
@@ -17,7 +18,7 @@ const unsubscribe = myStore.subscribe(() =>
 
 render(
   <Provider store={myStore}>
-    <ReduxComfortApp />
+    <ComfortApp />
   </Provider>,
   document.getElementById("stage")
 );

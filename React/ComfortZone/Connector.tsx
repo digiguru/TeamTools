@@ -1,8 +1,8 @@
 import { connect } from "react-redux";
-import { setZoneFocus, chooseZone } from "./Models/ComfortActions";
-import {ChaosPickerState, ChaosPickerZoneState, IChaosPickerZoneConnector, IChaosPickerZoneEventObject} from "./ComfortReactModelState";
-import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "./ComfortReduxZone";
-import {Point} from "./Point";
+import { setZoneFocus, chooseZone } from "../Comfort/Actions";
+import {ChaosPickerState, ChaosPickerZoneState, IChaosPickerZoneConnector, IChaosPickerZoneEventObject} from "../Comfort/Model";
+import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "./Component";
+import {Point} from "../Models/Point";
 /*import {SVG} from "../Shared/SVG";*/
 
 const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) : IChaosPickerZoneConnector => {

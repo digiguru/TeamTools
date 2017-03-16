@@ -1,8 +1,10 @@
 
-import {ComfortActions} from "./Models/ComfortActions";
-import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "./ComfortReactModelState";
-import { fromJS, List, Map } from "../3rdParty/immutable.min";
-import { Point, Size } from "./Point";
+import {ComfortActions} from "./Actions";
+import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "./Model";
+import { fromJS, List, Map } from "immutable";
+import { Point } from "../Models/Point";
+import { Size } from "../Models/Size";
+
 
 const initialSize: Size = new Size(800, 800);
 const initialState: ChaosPickerState = {
@@ -66,10 +68,6 @@ class ComfortZoneAction {
     }
     static selectUser(state: ChaosPickerState, user: String): ChaosPickerState {
         // Sets currentUser, and therefor hides the user choice menu
-        /*return Object.assign({}, state, {
-            CurrentUser: user,
-            ShowUserChoices: false
-        });*/
         const data = fromJS(state)
             .set("CurrentUser", user)
             .set("ShowUserChoices", false)

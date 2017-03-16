@@ -1,5 +1,5 @@
 import * as React from "react";
-import { IUserUI, IUserList } from "UserListConnector";
+import { IUserUI, IUserList } from "./Connector";
 
 export const ReduxUserList = (state) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     const className = state.ShowUsers ? "appear" : "disappear";

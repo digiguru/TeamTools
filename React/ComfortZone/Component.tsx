@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { IChaosPickerZoneConnectorWithEvents, ChaosPickerState } from "ComfortReactModelState";
-import { Point } from "./Point";
+import { IChaosPickerZoneConnectorWithEvents, ChaosPickerState } from "../Comfort/Model";
+import { Point } from "../Models/Point";
 
 
 export const Stage = (state: ChaosPickerState) => {
