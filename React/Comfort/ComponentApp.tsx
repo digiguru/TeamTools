@@ -5,8 +5,8 @@ import {ChaosPickerState, ChaosPickerZoneState} from "./Model";
 import { selectUser, chooseZone, toggleChoiceVisibility } from "./Actions";
 import {ReduxChaosConnector, ReduxStretchConnector, ReduxComfortConnector} from "../ComfortZone/Connector";
 import {ReduxUserConnector} from "../User/Connector";
-import {ReduxUserHistoryConnector} from "../UserHistory/Connector";
-import { ReduxUserHistory, ReduxUserHistoryArea } from "../UserHistory/Component";
+import {ReduxUserHistoryConnector} from "../ComfortUserChoice/Connector";
+import { ReduxUserHistory, ReduxUserHistoryArea } from "../ComfortUserChoice/Component";
 import { StageConnector } from "../ComfortZone/Component";
 
 export const ComfortApp = () => (
