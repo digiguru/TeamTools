@@ -3,6 +3,14 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
 define("Polar", ["require", "exports"], function (require, exports) {
     "use strict";
     var Polar = (function () {
@@ -16,6 +24,14 @@ define("Polar", ["require", "exports"], function (require, exports) {
 });
 define("Point", ["require", "exports", "Polar"], function (require, exports, Polar_1) {
     "use strict";
+    var Size = (function () {
+        function Size(width, height) {
+            this.width = width;
+            this.height = height;
+        }
+        return Size;
+    }());
+    exports.Size = Size;
     var Point = (function () {
         function Point(x, y) {
             this.x = x;
@@ -65,7 +81,7 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
     /*require(["../Coords/Polar"], (u) => {
         console.log(new u.Polar(1,20));
     });*/
-    //const r = new Polar(1,20);
+    // const r = new Polar(1,20);
     var SVGEvents = (function () {
         function SVGEvents() {
         }
@@ -88,6 +104,17 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
     var Events = (function () {
         function Events() {
         }
+        Events.calculateDistance = function (distance) {
+            if (distance < 100) {
+                return "comfort";
+            }
+            else if (distance < 300) {
+                return "stretch";
+            }
+            else {
+                return "chaos";
+            }
+        };
         Events.mouseEnter = function () {
             this.setState({ focus: "in-focus" });
         };
@@ -147,20 +174,172 @@ define("SVGHelper", ["require", "exports", "react", "Point"], function (require,
     }(React.Component));
     exports.BouncyAnimation = BouncyAnimation;
 });
+define("ComfortActions", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.ComfortActions = {
+        SET_STAGESIZE: "SET_STAGESIZE",
+        SET_ZONEFOCUS: "SET_ZONEFOCUS",
+        SET_USERFOCUS: "SET_USERFOCUS",
+        SELECT_USER: "SELECT_USER",
+        CHOOSE_ZONE: "CHOOSE_ZONE",
+        TOGGLE_CHOICES: "TOGGLE_CHOICES"
+    };
+    /*
+    export function setFocusToComfort() {
+        return {type: ComfortActions.SET_FOCUS, area: "comfort"};
+    };
+    export function selectUserAdam() {
+        return {type: ComfortActions.SELECT_USER, user: "Adam"};
+    }
+    export function adamChooseZoneStretch165() {
+        return {type: ComfortActions.CHOOSE_ZONE, user: "Adam", area: "Stretch", distance: "165"};
+    }
+    */
+    function setStageSize(width, height) {
+        return { type: exports.ComfortActions.SET_STAGESIZE, width: width, height: height };
+    }
+    exports.setStageSize = setStageSize;
+    function setUserFocus(user, focus) {
+        return { type: exports.ComfortActions.SET_USERFOCUS, user: user, focus: focus };
+    }
+    exports.setUserFocus = setUserFocus;
+    function setZoneFocus(area, focus) {
+        return { type: exports.ComfortActions.SET_ZONEFOCUS, area: area, focus: focus };
+    }
+    exports.setZoneFocus = setZoneFocus;
+    function selectUser(user) {
+        return { type: exports.ComfortActions.SELECT_USER, user: user };
+    }
+    exports.selectUser = selectUser;
+    function chooseZone(user, area, distance, x, y) {
+        return { type: exports.ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance, x: x, y: y };
+    }
+    exports.chooseZone = chooseZone;
+    function toggleChoiceVisibility(visible) {
+        return { type: exports.ComfortActions.TOGGLE_CHOICES, visible: visible };
+    }
+    exports.toggleChoiceVisibility = toggleChoiceVisibility;
+});
+define("ReactUserComponent", ["require", "exports", "react"], function (require, exports, React) {
+    "use strict";
+    exports.ReduxUserList = function (state) {
+        var className = state.ShowUsers ? "appear" : "disappear";
+        return React.createElement("g", { id: "users", className: className }, state.Users.map(function (user, i) {
+            return React.createElement(exports.ReduxUser, __assign({ key: user.Username }, user, { events: state.events }));
+        }));
+    };
+    exports.ReduxUser = function (state) {
+        // 60 , 150, 240
+        var textY = state.Y + 60;
+        return React.createElement("g", { className: "user-group" },
+            React.createElement("rect", { className: state.Focus, onMouseEnter: function () { return state.events.onUserOverFocus(state.Username); }, onMouseLeave: function () { return state.events.onUserOffFocus(state.Username); }, onMouseDown: function () { return state.events.onUserMouseDown(state.Username); }, onMouseUp: function (event) { return state.events.onUserMouseUp(state.Username, event); }, y: state.Y, x: "0", width: "800", height: "90" }),
+            React.createElement("text", { className: "username", y: textY, x: "60" }, state.Username));
+    };
+});
+define("UserListConnector", ["require", "exports", "react-redux", "ComfortActions", "ReactUserComponent", "../3rdParty/immutable.min"], function (require, exports, react_redux_1, ComfortActions_1, ReactUserComponent_1, immutable_min_1) {
+    "use strict";
+    var mapStateToProps = function (state, ownProps) {
+        return {
+            ShowUsers: state.UserList.ShowUsers,
+            Users: state.UserList.Users.map(function (u, i) {
+                return immutable_min_1.fromJS(u).set("Y", (i * 90) + 60).toJS();
+            })
+        };
+    };
+    var mapDispatchToProps = function (dispatch) {
+        return {
+            events: {
+                onUserMouseDown: function (user) {
+                    dispatch(ComfortActions_1.setUserFocus(user, "active"));
+                },
+                onUserMouseUp: function (user, event) {
+                    dispatch(ComfortActions_1.setUserFocus(user, "not-in-focus"));
+                    /*const coord = [event.clientX, event.clientY];
+                    const centerPoint = getCenterPointFromElement(event.currentTarget);
+                    const distance = Point.distance(centerPoint, Point.fromCoords(coord));*/
+                    dispatch(ComfortActions_1.selectUser(user)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+                },
+                onUserOverFocus: function (user) {
+                    dispatch(ComfortActions_1.setUserFocus(user, "in-focus"));
+                },
+                onUserOffFocus: function (user) {
+                    dispatch(ComfortActions_1.setUserFocus(user, "not-in-focus"));
+                }
+            }
+        };
+    };
+    exports.ReduxUserConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(ReactUserComponent_1.ReduxUserList);
+});
+// UserListConnector 
+define("ComfortReactModelState", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var ChaosPickerUserChoiceState = (function () {
+        function ChaosPickerUserChoiceState() {
+        }
+        return ChaosPickerUserChoiceState;
+    }());
+    exports.ChaosPickerUserChoiceState = ChaosPickerUserChoiceState;
+    var ChaosPickerZoneRangeState = (function () {
+        function ChaosPickerZoneRangeState() {
+        }
+        return ChaosPickerZoneRangeState;
+    }());
+    exports.ChaosPickerZoneRangeState = ChaosPickerZoneRangeState;
+    var ChaosPickerZoneState = (function () {
+        function ChaosPickerZoneState() {
+        }
+        return ChaosPickerZoneState;
+    }());
+    exports.ChaosPickerZoneState = ChaosPickerZoneState;
+    var ChaosZoneList = (function () {
+        function ChaosZoneList() {
+        }
+        return ChaosZoneList;
+    }());
+    exports.ChaosZoneList = ChaosZoneList;
+    var DOMMeasurement = (function () {
+        function DOMMeasurement(input) {
+            if (input.indexOf("%") !== -1) {
+                this.Value = parseInt(input.substr(0, input.indexOf("%")), 10);
+                this.Unit = "%";
+            }
+            else if (input.indexOf("%") !== -1) {
+                this.Value = parseInt(input.substr(0, input.indexOf("px")), 10);
+                this.Unit = "px";
+            }
+            else {
+                this.Value = parseInt(input, 10);
+                this.Unit = "px";
+            }
+        }
+        DOMMeasurement.prototype.toString = function () {
+            return "" + this.Value + this.Unit;
+        };
+        ;
+        return DOMMeasurement;
+    }());
+    exports.DOMMeasurement = DOMMeasurement;
+    var ChaosPickerState = (function () {
+        function ChaosPickerState() {
+        }
+        return ChaosPickerState;
+    }());
+    exports.ChaosPickerState = ChaosPickerState;
+});
 define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_1) {
     "use strict";
     var ChaosArea = (function (_super) {
         __extends(ChaosArea, _super);
         function ChaosArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_1.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_1.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_1.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_1.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
                 height: props.height || "100%",
+                onMouseEnter: SVGHelper_1.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_1.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_1.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_1.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -168,7 +347,7 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
             var className = this.state.focus + " area js-area-standard";
             return React.createElement("g", null,
                 React.createElement("rect", { id: "chaos", className: className, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, width: this.state.width, height: this.state.height }),
-                React.createElement("text", { className: "area-label", id: "label-choas", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
+                React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
         };
         return ChaosArea;
     }(React.Component));
@@ -177,14 +356,14 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
         __extends(StretchArea, _super);
         function StretchArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_1.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_1.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_1.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_1.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
-                height: props.height || "100%"
+                height: props.height || "100%",
+                onMouseEnter: SVGHelper_1.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_1.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_1.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_1.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -201,14 +380,14 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
         __extends(ComfortArea, _super);
         function ComfortArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_1.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_1.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_1.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_1.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
-                height: props.height || "100%"
+                height: props.height || "100%",
+                onMouseEnter: SVGHelper_1.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_1.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_1.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_1.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -237,7 +416,7 @@ define("ComfortReact", ["require", "exports", "react", "SVGHelper"], function (r
                         React.createElement(SVGHelper_1.BouncyAnimation, { attributeName: "r", value: "45" })),
                     React.createElement(ComfortArea, null,
                         React.createElement(SVGHelper_1.BouncyAnimation, { attributeName: "r", value: "20", delay: "0.5s" }))),
-                React.createElement("g", { id: "history" }));
+                React.createElement("g", { id: "history", display: this.props.ShowUserChoices }));
             //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
         };
         return ComfortReact;
@@ -252,12 +431,12 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact",
         var component = renderizer.create(React.createElement(SVGHelper_2.Stage, null,
             React.createElement(ComfortReact_1.ChaosArea, null)));
         var tree = component.toJSON();
+        debugger;
         var mouseOverArea = tree.children[0].children[0];
         expect(tree).toMatchSnapshot();
         // Act snapshot 2
         mouseOverArea.props.onMouseEnter();
         // Assert Snapshot 2
-        debugger;
         expect(component.toJSON()).toMatchSnapshot();
         // Act snapshot 3
         mouseOverArea.props.onMouseLeave();
@@ -289,7 +468,6 @@ define("__tests__/ComfortModel", ["require", "exports", "react", "ComfortReact",
         var component = renderizer.create(React.createElement(SVGHelper_2.Stage, null,
             React.createElement(ComfortReact_1.ComfortArea, null)));
         var tree = component.toJSON();
-        debugger;
         var mouseOverArea = tree.children[0].children[0];
         expect(tree).toMatchSnapshot();
         // Act snapshot 2
@@ -341,8 +519,8 @@ define("Link.react", ["require", "exports", "react"], function (require, exports
 });
 define("__tests__/Link.react-test", ["require", "exports", "react", "Link.react"], function (require, exports, React, Link_react_1) {
     "use strict";
-    var renderizer = require('react-test-renderer');
-    it('Link changes the class when hovered', function () {
+    var renderizer = require("react-test-renderer");
+    it("Link changes the class when hovered", function () {
         var component = renderizer.create(React.createElement(Link_react_1.default, { page: "http://www.facebook.com" }, "Facebook"));
         var tree = component.toJSON();
         expect(tree).toMatchSnapshot();
@@ -358,20 +536,272 @@ define("__tests__/Link.react-test", ["require", "exports", "react", "Link.react"
         expect(tree).toMatchSnapshot();
     });
 });
+define("ComfortReduxZone", ["require", "exports", "react", "react-redux"], function (require, exports, React, react_redux_2) {
+    "use strict";
+    exports.Stage = function (state) {
+        var children = state.children;
+        return React.createElement("svg", { id: "stage", width: state.Size.width, height: state.Size.height }, children);
+    };
+    exports.StageConnector = react_redux_2.connect(function (state) {
+        return state;
+    })(exports.Stage);
+    exports.ReduxChaosArea = function (state) {
+        return React.createElement("g", null,
+            React.createElement("rect", { id: "chaos", className: state.Zone.Focus, onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.User, state.Zone.Name, state.CenterPoint, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
+            React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
+    };
+    exports.ReduxStretchArea = function (state) {
+        return React.createElement("g", null,
+            React.createElement("circle", { className: state.Zone.Focus, id: "stretch", r: "33%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.User, state.Zone.Name, state.CenterPoint, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
+            React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
+    };
+    exports.ReduxComfortArea = function (state) {
+        return React.createElement("g", null,
+            React.createElement("circle", { className: state.Zone.Focus, id: "stretch", r: "15%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.User, state.Zone.Name, state.CenterPoint, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
+            React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
+    };
+});
+define("ComfortReactZoneConnector", ["require", "exports", "react-redux", "ComfortActions", "ComfortReduxZone", "Point"], function (require, exports, react_redux_3, ComfortActions_2, ComfortReduxZone_1, Point_2) {
+    "use strict";
+    /*import {SVG} from "../Shared/SVG";*/
+    var mapStateToProps = function (state, ownProps) {
+        if (ownProps.Name === "Comfort") {
+            return { Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint };
+        }
+        else if (ownProps.Name === "Chaos") {
+            return { Zone: state.Zones.Chaos, User: state.CurrentUser, CenterPoint: state.CenterPoint };
+        }
+        else {
+            return { Zone: state.Zones.Stretch, User: state.CurrentUser, CenterPoint: state.CenterPoint };
+        }
+    };
+    var getCenterPointFromElement = function (el) {
+        var boundingBox = el.getBBox();
+        var centerX = (boundingBox.width - boundingBox.x) / 2;
+        var centerY = (boundingBox.height - boundingBox.y) / 2;
+        return new Point_2.Point(centerX, centerY);
+    };
+    var mapDispatchToProps = function (dispatch) {
+        return {
+            Events: {
+                onZoneMouseDown: function (zone) {
+                    dispatch(ComfortActions_2.setZoneFocus(zone, "active"));
+                },
+                onZoneMouseUp: function (user, zone, centerPoint, event) {
+                    dispatch(ComfortActions_2.setZoneFocus(zone, "not-in-focus"));
+                    var coord = [event.clientX, event.clientY];
+                    // const centerPoint = getCenterPointFromElement(event.currentTarget);
+                    var distance = Point_2.Point.distance(centerPoint, Point_2.Point.fromCoords(coord));
+                    dispatch(ComfortActions_2.chooseZone(user, zone, distance, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+                },
+                onZoneOverFocus: function (zone) {
+                    dispatch(ComfortActions_2.setZoneFocus(zone, "in-focus"));
+                },
+                onZoneOffFocus: function (zone) {
+                    dispatch(ComfortActions_2.setZoneFocus(zone, "not-in-focus"));
+                }
+            }
+        };
+    };
+    exports.ReduxChaosConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxChaosArea);
+    exports.ReduxStretchConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxStretchArea);
+    exports.ReduxComfortConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(ComfortReduxZone_1.ReduxComfortArea);
+});
+define("ReactUserHistory", ["require", "exports", "react", "Point", "Polar"], function (require, exports, React, Point_3, Polar_2) {
+    "use strict";
+    exports.ReduxUserHistoryArea = function (state) {
+        if (state && state.Choices.length) {
+            var totalPoints = state.Choices.length;
+            var radian = 6.2831853072; // 360 * Math.PI / 180;
+            var polarDivision_1 = radian / totalPoints;
+            /*
+            .attr("cx", (data: ComfortUserChoice, index) => {
+                const angle = polarDivision * index;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).x;
+            })
+            .attr("cy", (data: ComfortUserChoice, index) => {
+                const angle = polarDivision * index;
+                return Point.toCartesian(new Polar(data.distance, angle), new Point(400, 400)).y;
+            });
+            */
+            return React.createElement("g", { id: "history" }, state.Choices.map(function (userChoice, i) {
+                return React.createElement(exports.ReduxUserHistory, __assign({ CenterPoint: state.CenterPoint, key: userChoice.User }, userChoice, { index: i, polarDivision: polarDivision_1 }));
+            }));
+        }
+        else {
+            return React.createElement("p", null, "nothing");
+        }
+    };
+    exports.ReduxUserHistory = function (state) {
+        //state.Distance
+        //state.User
+        //state.Zone
+        var angle = state.polarDivision * state.index;
+        var point = Point_3.Point.toCartesian(new Polar_2.Polar(state.Distance, angle), state.CenterPoint);
+        return React.createElement("circle", { cx: point.x, cy: point.y, r: "10", className: "point" });
+    };
+});
+define("UserHistoryConnector", ["require", "exports", "react-redux", "ReactUserHistory"], function (require, exports, react_redux_4, ReactUserHistory_1) {
+    "use strict";
+    var mapStateToProps = function (state, ownProps) {
+        return {
+            Choices: state.UserChoices,
+            CenterPoint: state.CenterPoint
+        };
+    };
+    var mapDispatchToProps = function (dispatch) {
+        return {};
+    };
+    exports.ReduxUserHistoryConnector = react_redux_4.connect(mapStateToProps, mapDispatchToProps)(ReactUserHistory_1.ReduxUserHistoryArea);
+});
+// UserListConnector
+define("ComfortReactApp", ["require", "exports", "react", "ComfortReactZoneConnector", "UserListConnector", "UserHistoryConnector", "ComfortReduxZone"], function (require, exports, React, ComfortReactZoneConnector_1, UserListConnector_1, UserHistoryConnector_1, ComfortReduxZone_2) {
+    "use strict";
+    /*
+            <g id="users">
+            </g>
+    
+            <ReduxUserConnector />
+    */
+    exports.ReduxComfortApp = function () { return (React.createElement(ComfortReduxZone_2.StageConnector, null,
+        React.createElement(ComfortReactZoneConnector_1.ReduxChaosConnector, { Name: "Chaos" }),
+        React.createElement(ComfortReactZoneConnector_1.ReduxStretchConnector, { Name: "Stretch" }),
+        React.createElement(ComfortReactZoneConnector_1.ReduxComfortConnector, { Name: "Comfort" }),
+        React.createElement(UserListConnector_1.ReduxUserConnector, null),
+        React.createElement(UserHistoryConnector_1.ReduxUserHistoryConnector, null))); };
+});
+define("ComfortReactReducer", ["require", "exports", "ComfortActions", "ComfortReactModelState", "../3rdParty/immutable.min", "Point"], function (require, exports, ComfortActions_3, ComfortReactModelState_1, immutable_min_2, Point_4) {
+    "use strict";
+    var initialSize = new Point_4.Size(800, 800);
+    var initialState = {
+        Size: initialSize,
+        CenterPoint: new Point_4.Point(initialSize.width / 2, initialSize.height / 2),
+        UserList: {
+            ShowUsers: true,
+            Users: [
+                { Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
+                { Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
+            ]
+        },
+        Zones: {
+            Comfort: { Name: "Comfort", Focus: "not-in-focus", Range: { Start: 0, End: 100 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("50%"), Height: new ComfortReactModelState_1.DOMMeasurement("50%") } },
+            Stretch: { Name: "Stretch", Focus: "not-in-focus", Range: { Start: 100, End: 200 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("50%"), Height: new ComfortReactModelState_1.DOMMeasurement("50%") } },
+            Chaos: { Name: "Chaos", Focus: "not-in-focus", Range: { Start: 200, End: 300 }, Size: { Width: new ComfortReactModelState_1.DOMMeasurement("100%"), Height: new ComfortReactModelState_1.DOMMeasurement("100%") } }
+        },
+        ShowUserChoices: false,
+        UserChoices: []
+    };
+    function comfortReactApp(state, action) {
+        if (state === void 0) { state = initialState; }
+        console.log(action.type, action);
+        switch (action.type) {
+            case ComfortActions_3.ComfortActions.SET_STAGESIZE:
+                return ComfortZoneAction.setStageSize(state, action.width, action.height);
+            case ComfortActions_3.ComfortActions.SET_USERFOCUS:
+                return ComfortZoneAction.setUserFocus(state, action.user, action.focus);
+            case ComfortActions_3.ComfortActions.SET_ZONEFOCUS:
+                return ComfortZoneAction.setZoneFocus(state, action.area, action.focus);
+            case ComfortActions_3.ComfortActions.SELECT_USER:
+                return ComfortZoneAction.selectUser(state, action.user);
+            case ComfortActions_3.ComfortActions.CHOOSE_ZONE:
+                return ComfortZoneAction.chooseZone(state, action.user, action.area, action.distance, action.x, action.y);
+            case ComfortActions_3.ComfortActions.TOGGLE_CHOICES:
+                return ComfortZoneAction.toggleChoiceVisibility(state, action.visible);
+            default:
+                return state;
+        }
+    }
+    exports.comfortReactApp = comfortReactApp;
+    var ComfortZoneAction = (function () {
+        function ComfortZoneAction() {
+        }
+        ComfortZoneAction.setStageSize = function (state, width, height) {
+            var newCenter = new Point_4.Point(width / 2, height / 2);
+            return immutable_min_2.fromJS(state)
+                .set("Size", new Point_4.Size(width, height))
+                .set("CenterPoint", newCenter)
+                .toJS();
+        };
+        ComfortZoneAction.setZoneFocus = function (state, area, focus) {
+            return immutable_min_2.fromJS(state)
+                .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
+                .setIn(["Zones", "Stretch", "Focus"], area === "Stretch" ? focus : "not-in-focus")
+                .setIn(["Zones", "Chaos", "Focus"], area === "Chaos" ? focus : "not-in-focus").toJS();
+        };
+        ComfortZoneAction.setUserFocus = function (state, user, focus) {
+            var originalList = immutable_min_2.List(state.UserList.Users);
+            var newUserList = originalList.update(originalList.findIndex(function (item) { return item.Username === user; }), function (item) { return immutable_min_2.fromJS(item).set("Focus", focus); }).toJS();
+            return immutable_min_2.fromJS(state)
+                .setIn(["UserList", "Users"], newUserList).toJS();
+        };
+        ComfortZoneAction.selectUser = function (state, user) {
+            // Sets currentUser, and therefor hides the user choice menu
+            /*return Object.assign({}, state, {
+                CurrentUser: user,
+                ShowUserChoices: false
+            });*/
+            var data = immutable_min_2.fromJS(state)
+                .set("CurrentUser", user)
+                .set("ShowUserChoices", false)
+                .setIn(["UserList", "ShowUsers"], false);
+            return data.toJS();
+        };
+        ComfortZoneAction.chooseZone = function (state, user, area, distance, x, y) {
+            // Add the user choice
+            var newUserChoices = immutable_min_2.List(state.UserChoices).push({
+                User: user,
+                Zone: area,
+                Distance: distance
+            }).toJS();
+            // Remove the user from the choice list
+            var newUserList = immutable_min_2.List(state.UserList.Users).filter(function (item) { return item.Username !== user; }).toArray();
+            // Show the user list
+            var showUserChoice = !!(newUserList.length);
+            // Return
+            return immutable_min_2.fromJS(state)
+                .delete("CurrentUser")
+                .set("CenterPoint", new Point_4.Point(x, y))
+                .set("ShowUserChoices", showUserChoice)
+                .set("UserChoices", newUserChoices)
+                .setIn(["UserList", "Users"], newUserList)
+                .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
+        };
+        ComfortZoneAction.toggleChoiceVisibility = function (state, visible) {
+            // Set "showUserChoices" to true
+            return immutable_min_2.Map(state)
+                .set("ShowUserChoices", visible).toJS();
+        };
+        ;
+        return ComfortZoneAction;
+    }());
+});
+define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "ComfortReactApp", "ComfortReactReducer", "../../3rdParty/react-redux.min", "ComfortActions"], function (require, exports, React, Redux, ComfortReactApp_1, ComfortReactReducer_1, react_redux_min_1, ComfortActions_4) {
+    "use strict";
+    var renderizer = require("react-test-renderer");
+    it("Should show the component", function () {
+        // Arrange
+        var myStore = Redux.createStore(ComfortReactReducer_1.comfortReactApp);
+        var component = renderizer.create(React.createElement(react_redux_min_1.Provider, { store: myStore },
+            React.createElement(ComfortReactApp_1.ReduxComfortApp, null)));
+        expect(component.toJSON()).toMatchSnapshot();
+        myStore.dispatch(ComfortActions_4.setUserFocus("Adam Hall", "in-focus"));
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+});
 define("TuckmanReact", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_3) {
     "use strict";
     var ChartArea = (function (_super) {
         __extends(ChartArea, _super);
         function ChartArea(props) {
             var _this = _super.call(this, props) || this;
-            _this.props.onMouseEnter = SVGHelper_3.Events.mouseEnter.bind(_this);
-            _this.props.onMouseLeave = SVGHelper_3.Events.mouseLeave.bind(_this);
-            _this.props.onMouseUp = SVGHelper_3.Events.mouseUp.bind(_this);
-            _this.props.onMouseDown = SVGHelper_3.Events.mouseDown.bind(_this);
             _this.state = {
                 focus: "not-in-focus",
                 width: props.width || "100%",
                 height: props.height || "100%",
+                onMouseEnter: SVGHelper_3.Events.mouseEnter.bind(_this),
+                onMouseLeave: SVGHelper_3.Events.mouseLeave.bind(_this),
+                onMouseUp: SVGHelper_3.Events.mouseUp.bind(_this),
+                onMouseDown: SVGHelper_3.Events.mouseDown.bind(_this)
             };
             return _this;
         }
@@ -452,6 +882,169 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "TuckmanReact",
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
+define("ComfortReactAlt", ["require", "exports", "react", "SVGHelper"], function (require, exports, React, SVGHelper_5) {
+    "use strict";
+    var ChaosArea = (function (_super) {
+        __extends(ChaosArea, _super);
+        function ChaosArea(props) {
+            var _this = _super.call(this, props) || this;
+            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
+            _this.state = {
+                focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%",
+            };
+            return _this;
+        }
+        ChaosArea.prototype.render = function () {
+            var className = this.state.focus + " area js-area-standard";
+            return React.createElement("g", null,
+                React.createElement("rect", { id: "chaos", className: className, onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, width: this.state.width, height: this.state.height }),
+                React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
+        };
+        return ChaosArea;
+    }(React.Component));
+    exports.ChaosArea = ChaosArea;
+    var StretchArea = (function (_super) {
+        __extends(StretchArea, _super);
+        function StretchArea(props) {
+            var _this = _super.call(this, props) || this;
+            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
+            _this.state = {
+                focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%"
+            };
+            return _this;
+        }
+        StretchArea.prototype.render = function () {
+            var className = this.state.focus + " area js-area-standard";
+            return React.createElement("g", null,
+                React.createElement("circle", { onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, className: className, id: "stretch", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
+                React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
+        };
+        return StretchArea;
+    }(React.Component));
+    exports.StretchArea = StretchArea;
+    var ComfortArea = (function (_super) {
+        __extends(ComfortArea, _super);
+        function ComfortArea(props) {
+            var _this = _super.call(this, props) || this;
+            _this.props.onMouseEnter = SVGHelper_5.Events.mouseEnter.bind(_this);
+            _this.props.onMouseLeave = SVGHelper_5.Events.mouseLeave.bind(_this);
+            _this.props.onMouseUp = SVGHelper_5.Events.mouseUp.bind(_this);
+            _this.props.onMouseDown = SVGHelper_5.Events.mouseDown.bind(_this);
+            _this.state = {
+                focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%"
+            };
+            return _this;
+        }
+        ComfortArea.prototype.render = function () {
+            var className = this.state.focus + " area js-area-standard";
+            // const startValue = 0 || this.props.value;
+            var value = this.props.value || 20;
+            return React.createElement("g", null,
+                React.createElement("circle", { onMouseUp: this.props.onMouseUp, onMouseDown: this.props.onMouseDown, onMouseEnter: this.props.onMouseEnter, onMouseLeave: this.props.onMouseLeave, className: className, id: "comfort", r: "0%", cx: "50%", cy: "50%" }, this.props.children),
+                React.createElement("text", { className: "area-label", id: "label-comfort", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
+            // keySplines=".42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;.42 0 1 1;0 0 .59 1;" 
+        };
+        return ComfortArea;
+    }(React.Component));
+    exports.ComfortArea = ComfortArea;
+    var ComfortReact = (function (_super) {
+        __extends(ComfortReact, _super);
+        function ComfortReact() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        ComfortReact.prototype.render = function () {
+            return React.createElement(SVGHelper_5.Stage, null,
+                React.createElement(ChaosArea, null),
+                React.createElement("g", { id: "zones" },
+                    React.createElement(StretchArea, null,
+                        React.createElement(SVGHelper_5.BouncyAnimation, { attributeName: "r", value: "45" })),
+                    React.createElement(ComfortArea, null,
+                        React.createElement(SVGHelper_5.BouncyAnimation, { attributeName: "r", value: "20", delay: "0.5s" }))),
+                React.createElement("g", { id: "history", display: this.props.ShowUserChoices }));
+            //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
+        };
+        return ComfortReact;
+    }(React.Component));
+    exports.ComfortReact = ComfortReact;
+});
+define("ComfortStore", ["require", "exports", "react", "redux", "ComfortReactApp", "ComfortReactReducer", "react-dom", "react-redux", "ComfortActions", "Point"], function (require, exports, React, Redux, ComfortReactApp_2, ComfortReactReducer_2, react_dom_1, react_redux_5, ComfortActions_5, Point_5) {
+    "use strict";
+    exports.myStore = Redux.createStore(ComfortReactReducer_2.comfortReactApp);
+    console.log(exports.myStore.getState());
+    var unsubscribe = exports.myStore.subscribe(function () {
+        return console.log(exports.myStore.getState());
+    });
+    react_dom_1.render(React.createElement(react_redux_5.Provider, { store: exports.myStore },
+        React.createElement(ComfortReactApp_2.ReduxComfortApp, null)), document.getElementById("stage"));
+    function resizeImage() {
+        //calculations here...
+        var size = getWidthHeight();
+        if (size.width > size.height) {
+            exports.myStore.dispatch(ComfortActions_5.setStageSize(size.height, size.height));
+        }
+        else {
+            exports.myStore.dispatch(ComfortActions_5.setStageSize(size.width, size.width));
+        }
+    }
+    function getWidthHeight() {
+        var w = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0], x = w.innerWidth || e.clientWidth || g.clientWidth, y = w.innerHeight || e.clientHeight || g.clientHeight;
+        return new Point_5.Size(x, y);
+    }
+    ;
+    window.addEventListener("resize", resizeImage, false);
+});
+// Stop listening to state updates
+// unsubscribe(); ; 
+define("ComfortStoreOriginal", ["require", "exports", "redux", "ComfortActions", "ComfortReactReducer", "Point"], function (require, exports, Redux, ComfortActions_6, ComfortReactReducer_3, Point_6) {
+    "use strict";
+    var store = Redux.createStore(ComfortReactReducer_3.comfortReactApp);
+    console.log(store.getState());
+    var unsubscribe = store.subscribe(function () {
+        return console.log(store.getState());
+    });
+    // Dispatch some actions
+    store.dispatch(ComfortActions_6.setUserFocus("Adam Hall", "in-focus"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Chaos", "in-focus"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Comfort", "in-focus"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Stretch", "in-focus"));
+    store.dispatch(ComfortActions_6.selectUser("Adam Hall"));
+    store.dispatch(ComfortActions_6.setZoneFocus("Stretch", "active"));
+    store.dispatch(ComfortActions_6.chooseZone("Adam Hall", "Chaos", 150, new Point_6.Point(400, 400)));
+    store.dispatch(ComfortActions_6.toggleChoiceVisibility(true));
+    // Stop listening to state updates
+    unsubscribe();
+});
+/// <reference path="../typings/d3/d3.d.ts" />
+/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
+/// <reference path="../typings/requirejs/require.d.ts"/>
+/// <reference path="../typings/main/definitions/immutable/index.d.ts" />
+/// <reference path="../typings/redux/redux.d.ts" />
+requirejs.config({
+    baseUrl: "/",
+    paths: {
+        "react": "../3rdParty/react.min",
+        "react-dom": "../3rdParty/react-dom.min",
+        "immutable": "../3rdParty/immutable.min",
+        "immutability-helper": "../3rdParty/index",
+        "redux": "../3rdParty/redux.min",
+        "react-redux": "../3rdParty/react-redux.min",
+    }
+});
+require(["ComfortStore"], function (u) {
+    u.gogogo();
+});
 define("userComponents", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     var Delete = (function (_super) {
@@ -472,7 +1065,7 @@ define("userComponents", ["require", "exports", "react"], function (require, exp
         }
         User.prototype.render = function () {
             return React.createElement("li", null,
-                React.createElement("span", { className: "user" }, this.props.username),
+                React.createElement("span", { className: "user" }, this.props.Username),
                 React.createElement(Delete, null));
         };
         return User;
@@ -496,21 +1089,15 @@ define("userComponents", ["require", "exports", "react"], function (require, exp
         }
         UserList.prototype.render = function () {
             var users = [];
-            this.props.users.forEach(function (user) {
-                users.push(React.createElement(User, { username: user.name, key: user.name }));
+            var className = this.props.ShowUsers ? "appear" : "disappear";
+            this.props.Users.forEach(function (user) {
+                users.push(React.createElement(User, __assign({}, user)));
             });
-            return React.createElement("ul", { id: "users" }, users);
+            return React.createElement("ul", { className: className, id: "users" }, users);
         };
         return UserList;
     }(React.Component));
     exports.UserList = UserList;
-    var UserObject = (function () {
-        function UserObject(name) {
-            this.name = name;
-        }
-        return UserObject;
-    }());
-    exports.UserObject = UserObject;
 });
 /*
 <ul id="users"><li><span class="user">Adam Hall</span><a href="void(0);">X</a></li><li><span class="user">Billie Davey</span><a href="void(0);">X</a></li><li><span class="user">Laura Rowe</span><a href="void(0);">X</a></li><li><span class="user">Simon Dawson</span><a href="void(0);">X</a></li><li><span class="user">Fred</span><a href="void(0);">X</a></li></ul>
@@ -518,26 +1105,12 @@ define("userComponents", ["require", "exports", "react"], function (require, exp
 define("users", ["require", "exports", "react", "react-dom", "userComponents", "ComfortReact", "TuckmanReact"], function (require, exports, React, ReactDOM, userComponents_1, ComfortReact_2, TuckmanReact_2) {
     "use strict";
     exports.USERS = [
-        new userComponents_1.UserObject("Bob"),
-        new userComponents_1.UserObject("Donald")
+        { Username: "Bob" },
+        { Username: "Donald" }
     ];
-    ReactDOM.render(React.createElement(userComponents_1.UserList, { users: exports.USERS }), document.getElementById("container"));
+    ReactDOM.render(React.createElement(userComponents_1.UserList, { Users: exports.USERS, ShowUsers: true }), document.getElementById("container"));
     ReactDOM.render(React.createElement(ComfortReact_2.ComfortReact, null), document.getElementById("comfort"));
     ReactDOM.render(React.createElement(TuckmanReact_2.TuckmanComponent, null), document.getElementById("tuckman"));
-});
-/// <reference path="../typings/d3/d3.d.ts" />
-/// <reference path="../typings/es6-promise/es6-promise.d.ts"/>
-/// <reference path="../typings/requirejs/require.d.ts"/>
-/// <reference path="users.tsx"/>
-requirejs.config({
-    baseUrl: "/",
-    paths: {
-        "react": "../3rdParty/react.min",
-        "react-dom": "../3rdParty/react-dom.min"
-    }
-});
-require(["users"], function (u) {
-    console.log("Loaded");
 });
 
 //# sourceMappingURL=compiled.js.map

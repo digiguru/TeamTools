@@ -1,13 +1,14 @@
 import * as React from "react";
+import {IUser, IUserUI, IUserList} from "UserListConnector";
 
 export class Delete extends React.Component<undefined, undefined> {
     render() {
         return <a href="void(0);">X</a>;
     }
 }
-export class User extends React.Component<IUsername, undefined> {
+export class User extends React.Component<IUser, undefined> {
   render() {
-    return <li><span className="user">{this.props.username}</span><Delete /></li>;
+    return <li><span className="user">{this.props.Username}</span><Delete /></li>;
   }
 }
 export class NewTeam extends React.Component<undefined, undefined> {
@@ -20,18 +21,12 @@ export class UserList extends React.Component<IUserList, undefined> {
     render() {
         const users = [];
 
-        this.props.users.forEach(function(user: UserObject) {
-            users.push(<User username={user.name} key={user.name} />);
-        });
-        return <ul id="users">{users}</ul>;
-    }
-}
-export class UserObject {
-    name: string;
-    constructor(name: string) {
-        this.name = name;
-    }
-}
+        const className = this.props.ShowUsers ? "appear" : "disappear";
 
-export interface IUsername { username: string; }
-export interface IUserList { users: Array<UserObject> }
+        this.props.Users.forEach(function(user: IUserUI) {
+            users.push(<User {... user} />);
+        });
+
+        return <ul className={className} id="users">{users}</ul>;
+    }
+}

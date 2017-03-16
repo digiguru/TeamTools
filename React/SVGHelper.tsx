@@ -1,10 +1,10 @@
 
 import * as React from "react";
-import {Point} from "Point";
+import {Point} from "./Point";
 /*require(["../Coords/Polar"], (u) => {
     console.log(new u.Polar(1,20));
 });*/
-//const r = new Polar(1,20);
+// const r = new Polar(1,20);
 
 export class SVGEvents {
 
@@ -16,7 +16,7 @@ export class SVGEvents {
         return new Point(
             rect.left + (rect.width / 2),
             rect.top + (rect.height / 2)
-        )
+        );
         /*
         return {
             x:rect.left + (rect.width / 2),
@@ -27,6 +27,16 @@ export class SVGEvents {
 }
 
 export class Events {
+
+    public static calculateDistance(distance) {
+        if (distance < 100) {
+            return "comfort";
+        } else if (distance < 300) {
+            return "stretch";
+        } else {
+            return "chaos";
+        }
+    }
 
     public static mouseEnter() {
         this.setState({focus: "in-focus"});

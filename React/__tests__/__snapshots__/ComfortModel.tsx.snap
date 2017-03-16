@@ -8,12 +8,14 @@ exports[`test Should show the chaos area 1`] = `
       className="not-in-focus area js-area-standard"
       height="100%"
       id="chaos"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
+      onMouseDown={undefined}
+      onMouseEnter={undefined}
+      onMouseLeave={undefined}
+      onMouseUp={undefined}
       width="100%" />
     <text
       className="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -38,7 +40,7 @@ exports[`test Should show the chaos area 1`] = `
     </rect>
     <text
       class="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -65,7 +67,7 @@ exports[`test Should show the chaos area 2`] = `
       width="100%" />
     <text
       className="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -90,7 +92,7 @@ exports[`test Should show the chaos area 2`] = `
     </rect>
     <text
       class="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -117,7 +119,7 @@ exports[`test Should show the chaos area 3`] = `
       width="100%" />
     <text
       className="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -142,7 +144,7 @@ exports[`test Should show the chaos area 3`] = `
     </rect>
     <text
       class="area-label"
-      id="label-choas"
+      id="label-chaos"
       text-anchor="middle"
       textAnchor="middle"
       x="50%"
@@ -165,8 +167,10 @@ exports[`test Should show the comfort area - animated 1`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
+      onMouseDown={undefined}
+      onMouseEnter={undefined}
+      onMouseLeave={undefined}
+      onMouseUp={undefined}
       r="0%">
       <animate
         attributeName="r"
@@ -242,8 +246,10 @@ exports[`test Should show the comfort area - standard 1`] = `
       cx="50%"
       cy="50%"
       id="comfort"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
+      onMouseDown={undefined}
+      onMouseEnter={undefined}
+      onMouseLeave={undefined}
+      onMouseUp={undefined}
       r="0%" />
     <text
       className="area-label"
@@ -404,8 +410,10 @@ exports[`test Should show the stretch area 1`] = `
       cx="50%"
       cy="50%"
       id="stretch"
-      onMouseEnter={[Function]}
-      onMouseLeave={[Function]}
+      onMouseDown={undefined}
+      onMouseEnter={undefined}
+      onMouseLeave={undefined}
+      onMouseUp={undefined}
       r="0%" />
     <text
       className="area-label"
@@ -569,12 +577,14 @@ exports[`test The complete comfort model 1`] = `
         className="not-in-focus area js-area-standard"
         height="100%"
         id="chaos"
-        onMouseEnter={[Function]}
-        onMouseLeave={[Function]}
+        onMouseDown={undefined}
+        onMouseEnter={undefined}
+        onMouseLeave={undefined}
+        onMouseUp={undefined}
         width="100%" />
       <text
         className="area-label"
-        id="label-choas"
+        id="label-chaos"
         text-anchor="middle"
         textAnchor="middle"
         x="50%"
@@ -590,8 +600,10 @@ exports[`test The complete comfort model 1`] = `
           cx="50%"
           cy="50%"
           id="stretch"
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
+          onMouseDown={undefined}
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+          onMouseUp={undefined}
           r="0%">
           <animate
             attributeName="r"
@@ -620,8 +632,10 @@ exports[`test The complete comfort model 1`] = `
           cx="50%"
           cy="50%"
           id="comfort"
-          onMouseEnter={[Function]}
-          onMouseLeave={[Function]}
+          onMouseDown={undefined}
+          onMouseEnter={undefined}
+          onMouseLeave={undefined}
+          onMouseUp={undefined}
           r="0%">
           <animate
             attributeName="r"
@@ -646,6 +660,7 @@ exports[`test The complete comfort model 1`] = `
       </g>
     </g>
     <g
+      display={undefined}
       id="history" />
   </svg>
 </svg>
@@ -670,7 +685,7 @@ exports[`test The complete comfort model 1`] = `
       </rect>
       <text
         class="area-label"
-        id="label-choas"
+        id="label-chaos"
         text-anchor="middle"
         textAnchor="middle"
         x="50%"

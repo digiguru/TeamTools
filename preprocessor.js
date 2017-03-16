@@ -6,7 +6,7 @@ const tsConfig = require('./ts-test-config.json');
 module.exports = {
   process(src, path) {
     if (path.endsWith('.ts') || path.endsWith('.tsx')) {
-      debugger;
+      
       return tsc.transpile(
         src,
         tsConfig.compilerOptions,
