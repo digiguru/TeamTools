@@ -1,6 +1,6 @@
 import { connect } from "react-redux";
 import { selectUser, setUserFocus } from "../Comfort/Actions";
-import {ChaosPickerState, ChaosPickerZoneState} from "../Comfort/Model";
+import {ComfortAppState} from "../Comfort/Model";
 import {ReduxUserList} from "./Component";
 import { fromJS } from "immutable";
 export interface IUser {
@@ -25,7 +25,7 @@ export interface IUserList {
   Users: Array<IUser|IUserUI>;
 }
 
-const mapStateToProps = (state: ChaosPickerState, ownProps: IUserList): IUserList => {
+const mapStateToProps = (state: ComfortAppState, ownProps: IUserList): IUserList => {
     return {
       ShowUsers: state.UserList.ShowUsers,
       Users: state.UserList.Users.map((u, i) => {

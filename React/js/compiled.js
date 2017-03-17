@@ -242,43 +242,8 @@ define("User/Connector", ["require", "exports", "react-redux", "Comfort/Actions"
     exports.ReduxUserConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Component_1.ReduxUserList);
 });
 // UserListConnector 
-define("Models/Size", ["require", "exports"], function (require, exports) {
+define("Models/IDomMeasurement", ["require", "exports"], function (require, exports) {
     "use strict";
-    var Size = (function () {
-        function Size(width, height) {
-            this.width = width;
-            this.height = height;
-        }
-        return Size;
-    }());
-    exports.Size = Size;
-});
-define("Comfort/Model", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var ChaosPickerUserChoiceState = (function () {
-        function ChaosPickerUserChoiceState() {
-        }
-        return ChaosPickerUserChoiceState;
-    }());
-    exports.ChaosPickerUserChoiceState = ChaosPickerUserChoiceState;
-    var ChaosPickerZoneRangeState = (function () {
-        function ChaosPickerZoneRangeState() {
-        }
-        return ChaosPickerZoneRangeState;
-    }());
-    exports.ChaosPickerZoneRangeState = ChaosPickerZoneRangeState;
-    var ChaosPickerZoneState = (function () {
-        function ChaosPickerZoneState() {
-        }
-        return ChaosPickerZoneState;
-    }());
-    exports.ChaosPickerZoneState = ChaosPickerZoneState;
-    var ChaosZoneList = (function () {
-        function ChaosZoneList() {
-        }
-        return ChaosZoneList;
-    }());
-    exports.ChaosZoneList = ChaosZoneList;
     var DOMMeasurement = (function () {
         function DOMMeasurement(input) {
             if (input.indexOf("%") !== -1) {
@@ -301,12 +266,53 @@ define("Comfort/Model", ["require", "exports"], function (require, exports) {
         return DOMMeasurement;
     }());
     exports.DOMMeasurement = DOMMeasurement;
-    var ChaosPickerState = (function () {
-        function ChaosPickerState() {
+});
+define("Models/Size", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var Size = (function () {
+        function Size(width, height) {
+            this.width = width;
+            this.height = height;
         }
-        return ChaosPickerState;
+        return Size;
     }());
-    exports.ChaosPickerState = ChaosPickerState;
+    exports.Size = Size;
+});
+define("ComfortZone/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var ComfortZoneRangeState = (function () {
+        function ComfortZoneRangeState() {
+        }
+        return ComfortZoneRangeState;
+    }());
+    exports.ComfortZoneRangeState = ComfortZoneRangeState;
+    var ComfortZoneState = (function () {
+        function ComfortZoneState() {
+        }
+        return ComfortZoneState;
+    }());
+    exports.ComfortZoneState = ComfortZoneState;
+});
+define("Comfort/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var ChaosPickerUserChoiceState = (function () {
+        function ChaosPickerUserChoiceState() {
+        }
+        return ChaosPickerUserChoiceState;
+    }());
+    exports.ChaosPickerUserChoiceState = ChaosPickerUserChoiceState;
+    var ComfortZoneList = (function () {
+        function ComfortZoneList() {
+        }
+        return ComfortZoneList;
+    }());
+    exports.ComfortZoneList = ComfortZoneList;
+    var ComfortAppState = (function () {
+        function ComfortAppState() {
+        }
+        return ComfortAppState;
+    }());
+    exports.ComfortAppState = ComfortAppState;
 });
 define("ComfortZone/Component", ["require", "exports", "react", "react-redux"], function (require, exports, React, react_redux_2) {
     "use strict";
@@ -379,7 +385,7 @@ define("ComfortZone/Connector", ["require", "exports", "react-redux", "Comfort/A
     exports.ReduxStretchConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(Component_2.ReduxStretchArea);
     exports.ReduxComfortConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(Component_2.ReduxComfortArea);
 });
-define("UserHistory/Component", ["require", "exports", "react", "Models/Point", "Models/Polar"], function (require, exports, React, Point_3, Polar_2) {
+define("ComfortUserChoice/Component", ["require", "exports", "react", "Models/Point", "Models/Polar"], function (require, exports, React, Point_3, Polar_2) {
     "use strict";
     exports.ReduxUserHistoryArea = function (state) {
         if (state && state.Choices.length) {
@@ -413,7 +419,7 @@ define("UserHistory/Component", ["require", "exports", "react", "Models/Point", 
         return React.createElement("circle", { cx: point.x, cy: point.y, r: "10", className: "point" });
     };
 });
-define("UserHistory/Connector", ["require", "exports", "react-redux", "UserHistory/Component"], function (require, exports, react_redux_4, Component_3) {
+define("ComfortUserChoice/Connector", ["require", "exports", "react-redux", "ComfortUserChoice/Component"], function (require, exports, react_redux_4, Component_3) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
         return {
@@ -427,7 +433,7 @@ define("UserHistory/Connector", ["require", "exports", "react-redux", "UserHisto
     exports.ReduxUserHistoryConnector = react_redux_4.connect(mapStateToProps, mapDispatchToProps)(Component_3.ReduxUserHistoryArea);
 });
 // UserListConnector
-define("Comfort/ComponentApp", ["require", "exports", "react", "ComfortZone/Connector", "User/Connector", "UserHistory/Connector", "ComfortZone/Component"], function (require, exports, React, Connector_1, Connector_2, Connector_3, Component_4) {
+define("Comfort/ComponentApp", ["require", "exports", "react", "ComfortZone/Connector", "User/Connector", "ComfortUserChoice/Connector", "ComfortZone/Component"], function (require, exports, React, Connector_1, Connector_2, Connector_3, Component_4) {
     "use strict";
     exports.ComfortApp = function () { return (React.createElement(Component_4.StageConnector, null,
         React.createElement(Connector_1.ReduxChaosConnector, { Name: "Chaos" }),
@@ -436,7 +442,7 @@ define("Comfort/ComponentApp", ["require", "exports", "react", "ComfortZone/Conn
         React.createElement(Connector_2.ReduxUserConnector, null),
         React.createElement(Connector_3.ReduxUserHistoryConnector, null))); };
 });
-define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "Comfort/Model", "immutable", "Models/Point", "Models/Size"], function (require, exports, Actions_3, Model_1, immutable_2, Point_4, Size_1) {
+define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable", "Models/Point", "Models/Size", "Models/IDomMeasurement"], function (require, exports, Actions_3, immutable_2, Point_4, Size_1, IDomMeasurement_1) {
     "use strict";
     var initialSize = new Size_1.Size(800, 800);
     var initialState = {
@@ -450,9 +456,9 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "Comfort/Mod
             ]
         },
         Zones: {
-            Comfort: { Name: "Comfort", Focus: "not-in-focus", Range: { Start: 0, End: 100 }, Size: { Width: new Model_1.DOMMeasurement("50%"), Height: new Model_1.DOMMeasurement("50%") } },
-            Stretch: { Name: "Stretch", Focus: "not-in-focus", Range: { Start: 100, End: 200 }, Size: { Width: new Model_1.DOMMeasurement("50%"), Height: new Model_1.DOMMeasurement("50%") } },
-            Chaos: { Name: "Chaos", Focus: "not-in-focus", Range: { Start: 200, End: 300 }, Size: { Width: new Model_1.DOMMeasurement("100%"), Height: new Model_1.DOMMeasurement("100%") } }
+            Comfort: { Name: "Comfort", Focus: "not-in-focus", Range: { Start: 0, End: 100 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("50%"), Height: new IDomMeasurement_1.DOMMeasurement("50%") } },
+            Stretch: { Name: "Stretch", Focus: "not-in-focus", Range: { Start: 100, End: 200 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("50%"), Height: new IDomMeasurement_1.DOMMeasurement("50%") } },
+            Chaos: { Name: "Chaos", Focus: "not-in-focus", Range: { Start: 200, End: 300 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("100%"), Height: new IDomMeasurement_1.DOMMeasurement("100%") } }
         },
         ShowUserChoices: false,
         UserChoices: []
@@ -691,6 +697,9 @@ requirejs.config({
 });
 require(["Comfort/Store"], function (u) {
     u.gogogo();
+});
+define("User/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
 });
 
 //# sourceMappingURL=compiled.js.map

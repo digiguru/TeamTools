@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
 import { setZoneFocus, chooseZone } from "../Comfort/Actions";
-import {ChaosPickerState, ChaosPickerZoneState, IChaosPickerZoneConnector, IChaosPickerZoneEventObject} from "../Comfort/Model";
+import {ComfortAppState} from "../Comfort/Model";
 import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "./Component";
-import {Point} from "../Models/Point";
+import { Point } from "../Models/Point";
+import { ComfortZoneState, IComfortZoneConnector, IComfortZoneEventList } from "./Model";
 /*import {SVG} from "../Shared/SVG";*/
 
-const mapStateToProps = (state: ChaosPickerState, ownProps: ChaosPickerZoneState) : IChaosPickerZoneConnector => {
+const mapStateToProps = (state: ComfortAppState, ownProps: ComfortZoneState) : IComfortZoneConnector => {
     if (ownProps.Name === "Comfort") {
       return {Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint};
     } else if (ownProps.Name === "Chaos") {
@@ -23,7 +24,7 @@ const getCenterPointFromElement = (el) => {
 };
 
 
-const mapDispatchToProps = (dispatch) : IChaosPickerZoneEventObject => {
+const mapDispatchToProps = (dispatch) : IComfortZoneEventList => {
   return {
     Events: {
       onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch"): void => {

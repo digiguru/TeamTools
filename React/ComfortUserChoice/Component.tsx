@@ -1,5 +1,5 @@
 import * as React from "react";
-import {ChaosPickerUserChoiceState, ChaosPickerState} from "../Comfort/Model";
+import {ChaosPickerUserChoiceState, ComfortAppState} from "../Comfort/Model";
 import {Point} from "../Models/Point";
 import {Polar} from "../Models/Polar";
 import { IUserChoiceState } from "./Connector";

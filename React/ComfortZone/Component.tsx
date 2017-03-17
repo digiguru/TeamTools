@@ -1,10 +1,11 @@
 import * as React from "react";
 import { connect } from "react-redux";
-import { IChaosPickerZoneConnectorWithEvents, ChaosPickerState } from "../Comfort/Model";
+import {  ComfortAppState } from "../Comfort/Model";
 import { Point } from "../Models/Point";
+import { IComfortZoneConnectorWithEvents } from "./Model";
 
 
-export const Stage = (state: ChaosPickerState) => {
+export const Stage = (state: ComfortAppState) => {
     const children = (state as any).children;
     return <svg id="stage" width={state.Size.width} height={state.Size.height}>
         {children}
@@ -18,7 +19,7 @@ export const StageConnector = connect(
 )(Stage);
 
 
-export const ReduxChaosArea = (state: IChaosPickerZoneConnectorWithEvents) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
+export const ReduxChaosArea = (state: IComfortZoneConnectorWithEvents) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     return <g>
         <rect id="chaos" className={state.Zone.Focus}
             onMouseEnter={() => state.Events.onZoneOverFocus(state.Zone.Name)}
@@ -30,7 +31,7 @@ export const ReduxChaosArea = (state: IChaosPickerZoneConnectorWithEvents) => { 
     </g>;
 };
 
-export const ReduxStretchArea = (state: IChaosPickerZoneConnectorWithEvents) => {
+export const ReduxStretchArea = (state: IComfortZoneConnectorWithEvents) => {
     return <g>
             <circle
                 className={state.Zone.Focus} id="stretch" r="33%" cx="50%" cy="50%"
@@ -43,7 +44,7 @@ export const ReduxStretchArea = (state: IChaosPickerZoneConnectorWithEvents) => 
         </g>;
 };
 
-export const ReduxComfortArea = (state: IChaosPickerZoneConnectorWithEvents) => {
+export const ReduxComfortArea = (state: IComfortZoneConnectorWithEvents) => {
     return <g>
             <circle
                 className={state.Zone.Focus} id="stretch" r="15%" cx="50%" cy="50%"

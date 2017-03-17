@@ -1,13 +1,14 @@
 
 import {ComfortActions} from "./Actions";
-import {ChaosPickerZoneState, ChaosPickerState, DOMMeasurement} from "./Model";
+import {ComfortAppState} from "./Model";
 import { fromJS, List, Map } from "immutable";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
+import { DOMMeasurement } from "../Models/IDomMeasurement";
 
 
 const initialSize: Size = new Size(800, 800);
-const initialState: ChaosPickerState = {
+const initialState: ComfortAppState = {
     Size: initialSize,
     CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
     UserList : {
@@ -25,7 +26,7 @@ const initialState: ChaosPickerState = {
     ShowUserChoices: false,
     UserChoices: []
 };
-export function comfortReactApp(state: ChaosPickerState = initialState, action): ChaosPickerState {
+export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
     console.log(action.type, action);
     switch (action.type) {
         case ComfortActions.SET_STAGESIZE:
@@ -45,20 +46,20 @@ export function comfortReactApp(state: ChaosPickerState = initialState, action):
     }
 }
 class ComfortZoneAction {
-    static setStageSize(state: ChaosPickerState, width: number, height: number) {
+    static setStageSize(state: ComfortAppState, width: number, height: number) {
         const newCenter = new Point(width / 2, height / 2);
         return fromJS(state)
             .set("Size", new Size(width, height))
             .set("CenterPoint", newCenter)
             .toJS();
     }
-    static setZoneFocus(state: ChaosPickerState, area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus"): ChaosPickerState {
+    static setZoneFocus(state: ComfortAppState, area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
         return fromJS(state)
             .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
             .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? focus : "not-in-focus")
             .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? focus : "not-in-focus").toJS();
     }
-    static setUserFocus(state: ChaosPickerState, user: string, focus: "in-focus" | "active" | "not-in-focus"): ChaosPickerState {
+    static setUserFocus(state: ComfortAppState, user: string, focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
         const originalList = List(state.UserList.Users);
         const newUserList = originalList.update(
             originalList.findIndex(item => item.Username === user),
@@ -66,7 +67,7 @@ class ComfortZoneAction {
         return fromJS(state)
             .setIn(["UserList", "Users"], newUserList).toJS();
     }
-    static selectUser(state: ChaosPickerState, user: String): ChaosPickerState {
+    static selectUser(state: ComfortAppState, user: String): ComfortAppState {
         // Sets currentUser, and therefor hides the user choice menu
         const data = fromJS(state)
             .set("CurrentUser", user)
@@ -76,7 +77,7 @@ class ComfortZoneAction {
         return data.toJS();
     }
 
-    static chooseZone(state: ChaosPickerState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, x: number, y:number): ChaosPickerState {
+    static chooseZone(state: ComfortAppState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, x: number, y:number): ComfortAppState {
 
         // Add the user choice
         const newUserChoices = List(state.UserChoices).push({
@@ -97,7 +98,7 @@ class ComfortZoneAction {
             .setIn(["UserList", "Users"], newUserList)
             .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
     }
-    static toggleChoiceVisibility(state: ChaosPickerState, visible: boolean): ChaosPickerState {
+    static toggleChoiceVisibility(state: ComfortAppState, visible: boolean): ComfortAppState {
         // Set "showUserChoices" to true
         return Map(state)
             .set("ShowUserChoices", visible).toJS();

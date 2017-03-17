@@ -1,7 +1,7 @@
 import * as React from "react";
 import { connect } from "react-redux";
 import {BouncyAnimation, Events} from "../SVGHelper";
-import {ChaosPickerState, ChaosPickerZoneState} from "./Model";
+import {ComfortAppState} from "./Model";
 import { selectUser, chooseZone, toggleChoiceVisibility } from "./Actions";
 import {ReduxChaosConnector, ReduxStretchConnector, ReduxComfortConnector} from "../ComfortZone/Connector";
 import {ReduxUserConnector} from "../User/Connector";

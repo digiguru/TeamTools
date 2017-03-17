@@ -1,3 +1,7 @@
+
+
+import { IDOMMeasurement } from "./IDomMeasurement";
+
 export class Size {
     width: number;
     height: number;
@@ -5,4 +9,9 @@ export class Size {
         this.width = width;
         this.height = height;
     }
+}
+
+export interface ISizable {
+    Width: IDOMMeasurement;
+    Height: IDOMMeasurement;
 }
