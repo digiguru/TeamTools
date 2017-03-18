@@ -1,23 +1,5 @@
 import * as React from "react";
-import { connect } from "react-redux";
-import {  ComfortAppState } from "../Comfort/Model";
-import { Point } from "../Models/Point";
 import { IComfortZoneConnectorWithEvents } from "./Model";
-
-
-export const Stage = (state: ComfortAppState) => {
-    const children = (state as any).children;
-    return <svg id="stage" width={state.Size.width} height={state.Size.height}>
-        {children}
-    </svg>;
-};
-
-export const StageConnector = connect(
-  (state) => {
-    return state;
-  }
-)(Stage);
-
 
 export const ReduxChaosArea = (state: IComfortZoneConnectorWithEvents) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     return <g>

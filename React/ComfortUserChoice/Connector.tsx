@@ -1,13 +1,7 @@
 import { connect } from "react-redux";
-import {ReduxUserHistory, ReduxUserHistoryArea} from "./Component";
-import {ComfortAppState, ChaosPickerUserChoiceState} from "../Comfort/Model";
-import { fromJS } from "immutable";
-import { Point } from "../Models/Point";
-
-export interface IUserChoiceState {
-  Choices: Array<ChaosPickerUserChoiceState>;
-  CenterPoint: Point;
-}
+import { ReduxUserHistoryArea} from "./Component";
+import { ComfortAppState } from "../Comfort/Model";
+import { IUserChoiceState } from "./Model";
 
 const mapStateToProps = (state: ComfortAppState, ownProps: IUserChoiceState): IUserChoiceState => {
     return {

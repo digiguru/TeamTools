@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { setStageSize, setUserFocus } from "./Actions";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
+import { getWidthHeight } from "../Shared/WindowHelper";
 
 export const myStore = Redux.createStore(comfortReactApp);
 
@@ -23,7 +24,7 @@ render(
   document.getElementById("stage")
 );
 
-function resizeImage() {
+export function resizeImage() {
     //calculations here...
     const size: Size = getWidthHeight();
     if (size.width > size.height) {
@@ -32,18 +33,8 @@ function resizeImage() {
       myStore.dispatch(setStageSize(size.width, size.width));
     }
 }
-function getWidthHeight(): Size {
-  const w = window,
-        d = document,
-        e = d.documentElement,
-        g = d.getElementsByTagName("body")[0],
-        x = w.innerWidth || e.clientWidth || g.clientWidth,
-        y = w.innerHeight || e.clientHeight || g.clientHeight;
-  return new Size(x, y);
-};
 
 window.addEventListener("resize", resizeImage, false);
-
 
 // Stop listening to state updates
 // unsubscribe(); ;

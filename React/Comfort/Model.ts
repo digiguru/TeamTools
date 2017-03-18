@@ -1,7 +1,7 @@
-import { IUser, IUserList } from "../User/Connector";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
 import { ComfortZoneState } from "../ComfortZone/Model";
+import { IUserList } from "../User/Model";
 
 export class ChaosPickerUserChoiceState {
     User: string;
@@ -23,4 +23,7 @@ export class ComfortAppState {
     ShowUserChoices: boolean;
     CurrentUser?: string;
     UserChoices: Array<ChaosPickerUserChoiceState>;
+}
+export class ComfortAppStateWithChildren extends ComfortAppState {
+    children: any;
 }

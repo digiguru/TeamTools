@@ -6,6 +6,7 @@ export class ComfortZoneRangeState {
     Start: number;
     End: number;
 }
+
 export interface IComfortZoneEvents {
   onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch") => void;
   onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", centerPoint: Point, event: any) => void;

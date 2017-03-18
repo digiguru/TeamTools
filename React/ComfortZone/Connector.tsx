@@ -4,7 +4,6 @@ import {ComfortAppState} from "../Comfort/Model";
 import {ReduxChaosArea, ReduxStretchArea, ReduxComfortArea} from "./Component";
 import { Point } from "../Models/Point";
 import { ComfortZoneState, IComfortZoneConnector, IComfortZoneEventList } from "./Model";
-/*import {SVG} from "../Shared/SVG";*/
 
 const mapStateToProps = (state: ComfortAppState, ownProps: ComfortZoneState) : IComfortZoneConnector => {
     if (ownProps.Name === "Comfort") {

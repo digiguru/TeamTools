@@ -1,62 +1,49 @@
 import * as React from "react";
-import {Events, Stage, BouncyAnimation} from "../SVGHelper";
-//import {IResizableMouseEvents} from "../Comfort/React";
+import { Stage } from "../Stage/Component";
+import { BouncyAnimation } from "../Animation/Component";
 
-
-export class ChartArea extends React.Component<any, any> {
-    constructor(props: any) {
-        super(props);
-
-        this.state = {
-            focus: "not-in-focus",
+/*state = focus: "not-in-focus",
             width: props.width || "100%",
             height: props.height || "100%",
             onMouseEnter: Events.mouseEnter.bind(this),
             onMouseLeave: Events.mouseLeave.bind(this),
             onMouseUp: Events.mouseUp.bind(this),
-            onMouseDown: Events.mouseDown.bind(this)
-        };
-    }
-    render() {
-        const index = parseInt(this.props.index || 0, 10);
-        const label = this.props.label || 0;
+            onMouseDown: Events.mouseDown.bind(this) */
+
+export const TuckmanApp = (state) => {
+    return <Stage {...state}>
+            <g id="zones">
+                <TuckmanZone label="performing" index="3" />
+                <TuckmanZone label="norming"    index="2" />
+                <TuckmanZone label="storming"   index="1" />
+                <TuckmanZone label="forming"    index="0" />
+            </g>
+        </Stage>;
+};
+
+export const TuckmanZone = (state) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
+    const index = parseInt(state.index || 0, 10);
+        const label = state.label || 0;
         const textID = label + "-label";
-        const width: number = parseInt(this.props.width, 10);
-        const offset: string = (25 * index) + "%";
-        const textOffset: string = 12 + (25 * index) + "%";
-        const delay: string = (0.2 * index) + "s";
-        const className: string = this.state.focus + " area okay js-area-standard";
+        const width: number = parseInt(state.width, 10);
+        const offset: string = (25 * state.index) + "%";
+        const textOffset: string = 12 + (25 * state.index) + "%";
+        const delay: string = (0.2 * state.index) + "s";
+        const className: string = state.focus + " area okay js-area-standard";
 
         return <g>
             <rect className={className} id={label}
-                onMouseUp={this.props.onMouseUp}
-                onMouseDown={this.props.onMouseDown}
-                onMouseEnter={this.props.onMouseEnter}
-                onMouseLeave={this.props.onMouseLeave}
+                onMouseUp={state.events.onMouseUp}
+                onMouseDown={state.events.onMouseDown}
+                onMouseEnter={state.events.onMouseEnter}
+                onMouseLeave={state.events.onMouseLeave}
                 x="0" y="0" width="25%" height="100%">
                 <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
             </rect>
             <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{label}</text>;
         </g>;
-    }
+};
 
-}
-
-export class TuckmanComponent extends React.Component<any, any> {
-
-    render() {
-        return <Stage>
-                    <g id="zones">
-                        <ChartArea label="performing" index="3" />
-                        <ChartArea label="norming"    index="2" />
-                        <ChartArea label="storming"   index="1" />
-                        <ChartArea label="forming"    index="0" />
-                    </g>
-                </Stage>;
-                //         <rect id="clickable" width="100%" height="100%" fill-opacity="0.0"></rect>
-    }
-
-}
 /*
 <svg id="stage" width="800" height="800">
             <g id="assets" fill-opacity="0.0">

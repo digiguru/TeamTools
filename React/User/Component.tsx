@@ -1,17 +1,17 @@
 import * as React from "react";
-import { IUserUI, IUserList } from "./Connector";
+import { IUserListWithEvents, IUserUIWithEvents } from "./Model";
 
-export const ReduxUserList = (state) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
+export const ReduxUserList = (state: IUserListWithEvents) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     const className = state.ShowUsers ? "appear" : "disappear";
 
     return <g id="users" className={className}>
-        {state.Users.map((user: IUserUI, i) =>
+        {state.Users.map((user: IUserUIWithEvents, i) =>
             <ReduxUser key={user.Username} {...user} events={state.events} />
         )}
     </g >;
 };
 
-export const ReduxUser = (state) => {
+export const ReduxUser = (state: IUserUIWithEvents) => {
     // 60 , 150, 240
     const textY = state.Y + 60;
     return <g className="user-group">

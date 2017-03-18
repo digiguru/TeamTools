@@ -17,5 +17,5 @@ requirejs.config( {
     }
 });
 require(["Comfort/Store"], (u) => {
-    u.gogogo();
+    u.resizeImage();
 });
