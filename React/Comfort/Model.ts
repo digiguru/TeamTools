@@ -3,7 +3,7 @@ import { Size } from "../Models/Size";
 import { ComfortZoneState } from "../ComfortZone/Model";
 import { IUserList, IUser } from "../User/Model";
 
-export class ChaosPickerUserChoiceState {
+export class ComfortUserChoiceState {
     User: IUser;
     Zone: "Chaos" | "Stretch" | "Comfort";
     Distance: number;
@@ -21,8 +21,8 @@ export class ComfortAppState {
     UserList: IUserList;
     Zones: ComfortZoneList;
     ShowUserChoices: boolean;
-    CurrentUser?: string;
-    UserChoices: Array<ChaosPickerUserChoiceState>;
+    CurrentUser?: IUser;
+    UserChoices: Array<ComfortUserChoiceState>;
 }
 export class ComfortAppStateWithChildren extends ComfortAppState {
     children: any;

@@ -1,5 +1,5 @@
 import { Point } from "../Models/Point";
-import { ChaosPickerUserChoiceState } from "../Comfort/Model";
+import { ComfortUserChoiceState } from "../Comfort/Model";
 
 export interface IComfortUserChoice {
     PolarDivision: number;
@@ -9,6 +9,6 @@ export interface IComfortUserChoice {
 }
 
 export interface IUserChoiceState {
-  Choices: Array<ChaosPickerUserChoiceState>;
+  Choices: Array<ComfortUserChoiceState>;
   CenterPoint: Point;
 }

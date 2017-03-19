@@ -1,6 +1,7 @@
 
 import { Point } from "../Models/Point";
 import { ISizable } from "../Models/Size";
+import { IUser } from "../User/Model";
 
 export class ComfortZoneRangeState {
     Start: number;
@@ -16,7 +17,7 @@ export interface IComfortZoneEvents {
 
 export interface IComfortZoneConnector {
     Zone: ComfortZoneState;
-    User: string;
+    User: IUser;
     CenterPoint: Point;
 }
 

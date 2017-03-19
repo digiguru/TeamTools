@@ -139,6 +139,9 @@ define("Models/Size", ["require", "exports"], function (require, exports) {
     }());
     exports.Size = Size;
 });
+define("User/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
 define("ComfortZone/Model", ["require", "exports"], function (require, exports) {
     "use strict";
     var ComfortZoneRangeState = (function () {
@@ -154,17 +157,14 @@ define("ComfortZone/Model", ["require", "exports"], function (require, exports) 
     }());
     exports.ComfortZoneState = ComfortZoneState;
 });
-define("User/Model", ["require", "exports"], function (require, exports) {
-    "use strict";
-});
 define("Comfort/Model", ["require", "exports"], function (require, exports) {
     "use strict";
-    var ChaosPickerUserChoiceState = (function () {
-        function ChaosPickerUserChoiceState() {
+    var ComfortUserChoiceState = (function () {
+        function ComfortUserChoiceState() {
         }
-        return ChaosPickerUserChoiceState;
+        return ComfortUserChoiceState;
     }());
-    exports.ChaosPickerUserChoiceState = ChaosPickerUserChoiceState;
+    exports.ComfortUserChoiceState = ComfortUserChoiceState;
     var ComfortZoneList = (function () {
         function ComfortZoneList() {
         }
@@ -308,7 +308,7 @@ define("ComfortUserChoice/Component", ["require", "exports", "react", "Models/Po
             var radian = 6.2831853072; // 360 * Math.PI / 180;
             var polarDivision_1 = radian / totalPoints;
             return React.createElement("g", { id: "history" }, state.Choices.map(function (userChoice, i) {
-                return React.createElement(exports.ReduxUserHistory, __assign({ CenterPoint: state.CenterPoint, key: userChoice.User }, userChoice, { Index: i, PolarDivision: polarDivision_1 }));
+                return React.createElement(exports.ReduxUserHistory, __assign({ CenterPoint: state.CenterPoint, key: userChoice.User.Username }, userChoice, { Index: i, PolarDivision: polarDivision_1 }));
             }));
         }
         else {
@@ -434,7 +434,7 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable",
         ComfortZoneAction.chooseZone = function (state, user, area, distance, x, y) {
             // Add the user choice
             var newUserChoices = immutable_2.List(state.UserChoices).push({
-                User: user,
+                User: { Username: user },
                 Zone: area,
                 Distance: distance
             }).toJS();
@@ -543,7 +543,6 @@ define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/Compon
     react_dom_1.render(React.createElement(react_redux_5.Provider, { store: exports.myStore },
         React.createElement(ComponentApp_2.ComfortApp, null)), document.getElementById("stage"));
     function resizeImage() {
-        //calculations here...
         var size = WindowHelper_1.getWidthHeight();
         if (size.width > size.height) {
             exports.myStore.dispatch(Actions_5.setStageSize(size.height, size.height));
@@ -693,8 +692,24 @@ define("Tuckman/Reducer", ["require", "exports", "Models/Size"], function (requi
     "use strict";
     var initialSize = new Size_3.Size(800, 800);
     var initialState = {
+        UserList: {
+            ShowUsers: true,
+            Users: [
+                { Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
+                { Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
+            ]
+        },
         Size: initialSize,
-        focus: "not-in-focus"
+        focus: "not-in-focus",
+        events: undefined,
+        children: undefined,
+        zones: [
+            { index: 0, label: "forming", focus: "not-in-focus", events: undefined },
+            { index: 1, label: "storming", focus: "not-in-focus", events: undefined },
+            { index: 2, label: "norming", focus: "not-in-focus", events: undefined },
+            { index: 3, label: "performing", focus: "not-in-focus", events: undefined }
+        ],
+        UserChoices: []
     };
 });
 /*

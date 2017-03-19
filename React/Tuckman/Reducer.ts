@@ -8,11 +8,6 @@ import { Size } from "../Models/Size";
 
 const initialSize: Size = new Size(800, 800);
 const initialState: ITuckmanModel = {
-    Size: initialSize,
-    focus: "not-in-focus",
-    events: undefined,
-    children: undefined
-    /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
     UserList : {
         ShowUsers: true,
         Users: [
@@ -20,13 +15,26 @@ const initialState: ITuckmanModel = {
             {Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
         ]
     },
+    Size: initialSize,
+    focus: "not-in-focus",
+    events: undefined,
+    children: undefined,
+    zones: [
+        {index: 0, label: "forming",    focus: "not-in-focus", events: undefined},
+        {index: 1, label: "storming",   focus: "not-in-focus", events: undefined},
+        {index: 2, label: "norming",    focus: "not-in-focus", events: undefined},
+        {index: 3, label: "performing", focus: "not-in-focus", events: undefined}
+    ],
+    UserChoices: []
+    /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
+    
     Zones : {
         Comfort: {Name: "Comfort", Focus: "not-in-focus", Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
         Stretch: {Name: "Stretch", Focus: "not-in-focus", Range: {Start: 100, End: 200}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
         Chaos: {Name: "Chaos", Focus: "not-in-focus", Range: {Start: 200, End: 300}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
     },
     ShowUserChoices: false,
-    UserChoices: []*/
+    */
 
 };
 /*
