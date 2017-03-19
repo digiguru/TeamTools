@@ -1,6 +1,8 @@
 import * as React from "react";
 import { Stage } from "../Stage/Component";
 import { BouncyAnimation } from "../Animation/Component";
+import { ITuckmanModel, ITuckmanZone } from "./Model";
+import {IStage} from "../Stage/Model";
 
 /*state = focus: "not-in-focus",
             width: props.width || "100%",
@@ -10,38 +12,38 @@ import { BouncyAnimation } from "../Animation/Component";
             onMouseUp: Events.mouseUp.bind(this),
             onMouseDown: Events.mouseDown.bind(this) */
 
-export const TuckmanApp = (state) => {
-    return <Stage {...state}>
+export const TuckmanApp = (state: ITuckmanModel) => {
+    const stageState: IStage = state;
+    const mod: ITuckmanModel = state;
+    return <Stage {...stageState}>
             <g id="zones">
-                <TuckmanZone label="performing" index="3" />
-                <TuckmanZone label="norming"    index="2" />
-                <TuckmanZone label="storming"   index="1" />
-                <TuckmanZone label="forming"    index="0" />
+                <TuckmanZone label="performing" index={3} {...mod} />
+                <TuckmanZone label="norming"    index={2} {...mod} />
+                <TuckmanZone label="storming"   index={1} {...mod} />
+                <TuckmanZone label="forming"    index={0} {...mod} />
             </g>
         </Stage>;
 };
 
-export const TuckmanZone = (state) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
-    const index = parseInt(state.index || 0, 10);
-        const label = state.label || 0;
-        const textID = label + "-label";
-        const width: number = parseInt(state.width, 10);
-        const offset: string = (25 * state.index) + "%";
-        const textOffset: string = 12 + (25 * state.index) + "%";
-        const delay: string = (0.2 * state.index) + "s";
-        const className: string = state.focus + " area okay js-area-standard";
+export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
+    const index = state.index || 0;
+    const textID = state.label + "-label";
+    const offset: string = (25 * state.index) + "%";
+    const textOffset: string = 12 + (25 * state.index) + "%";
+    const delay: string = (0.2 * state.index) + "s";
+    const className: string = state.focus + " area okay js-area-standard";
 
-        return <g>
-            <rect className={className} id={label}
-                onMouseUp={state.events.onMouseUp}
-                onMouseDown={state.events.onMouseDown}
-                onMouseEnter={state.events.onMouseEnter}
-                onMouseLeave={state.events.onMouseLeave}
-                x="0" y="0" width="25%" height="100%">
-                <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
-            </rect>
-            <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{label}</text>;
-        </g>;
+    return <g>
+        <rect className={className} id={state.label}
+            onMouseUp={state.events.onMouseUp}
+            onMouseDown={state.events.onMouseDown}
+            onMouseEnter={state.events.onMouseEnter}
+            onMouseLeave={state.events.onMouseLeave}
+            x="0" y="0" width="25%" height="100%">
+            <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
+        </rect>
+        <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{label}</text>;
+    </g>;
 };
 
 /*

@@ -335,6 +335,9 @@ define("ComfortUserChoice/Connector", ["require", "exports", "react-redux", "Com
     exports.ReduxUserHistoryConnector = react_redux_3.connect(mapStateToProps, mapDispatchToProps)(Component_3.ReduxUserHistoryArea);
 });
 // UserListConnector
+define("Stage/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
 define("Stage/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.Stage = function (state) {
@@ -624,6 +627,10 @@ requirejs.config({
 require(["Comfort/Store"], function (u) {
     u.resizeImage();
 });
+define("Tuckman/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+    ;
+});
 define("Tuckman/Component", ["require", "exports", "react", "Stage/Component", "Animation/Component"], function (require, exports, React, Component_5, Component_6) {
     "use strict";
     /*state = focus: "not-in-focus",
@@ -634,24 +641,24 @@ define("Tuckman/Component", ["require", "exports", "react", "Stage/Component", "
                 onMouseUp: Events.mouseUp.bind(this),
                 onMouseDown: Events.mouseDown.bind(this) */
     exports.TuckmanApp = function (state) {
-        return React.createElement(Component_5.Stage, __assign({}, state),
+        var stageState = state;
+        var mod = state;
+        return React.createElement(Component_5.Stage, __assign({}, stageState),
             React.createElement("g", { id: "zones" },
-                React.createElement(exports.TuckmanZone, { label: "performing", index: "3" }),
-                React.createElement(exports.TuckmanZone, { label: "norming", index: "2" }),
-                React.createElement(exports.TuckmanZone, { label: "storming", index: "1" }),
-                React.createElement(exports.TuckmanZone, { label: "forming", index: "0" })));
+                React.createElement(exports.TuckmanZone, __assign({ label: "performing", index: 3 }, mod)),
+                React.createElement(exports.TuckmanZone, __assign({ label: "norming", index: 2 }, mod)),
+                React.createElement(exports.TuckmanZone, __assign({ label: "storming", index: 1 }, mod)),
+                React.createElement(exports.TuckmanZone, __assign({ label: "forming", index: 0 }, mod))));
     };
     exports.TuckmanZone = function (state) {
-        var index = parseInt(state.index || 0, 10);
-        var label = state.label || 0;
-        var textID = label + "-label";
-        var width = parseInt(state.width, 10);
+        var index = state.index || 0;
+        var textID = state.label + "-label";
         var offset = (25 * state.index) + "%";
         var textOffset = 12 + (25 * state.index) + "%";
         var delay = (0.2 * state.index) + "s";
         var className = state.focus + " area okay js-area-standard";
         return React.createElement("g", null,
-            React.createElement("rect", { className: className, id: label, onMouseUp: state.events.onMouseUp, onMouseDown: state.events.onMouseDown, onMouseEnter: state.events.onMouseEnter, onMouseLeave: state.events.onMouseLeave, x: "0", y: "0", width: "25%", height: "100%" },
+            React.createElement("rect", { className: className, id: state.label, onMouseUp: state.events.onMouseUp, onMouseDown: state.events.onMouseDown, onMouseEnter: state.events.onMouseEnter, onMouseLeave: state.events.onMouseLeave, x: "0", y: "0", width: "25%", height: "100%" },
                 React.createElement(Component_6.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
             React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, label),
             ";");

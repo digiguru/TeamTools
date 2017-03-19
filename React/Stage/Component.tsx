@@ -1,7 +1,7 @@
 import * as React from "react";
-import {  ComfortAppStateWithChildren } from "../Comfort/Model";
+import {  IStage } from "./Model";
 
-export const Stage = (state: ComfortAppStateWithChildren) => {
+export const Stage = (state: IStage) => {
     return <svg id="stage" width={state.Size.width} height={state.Size.height}>
         {state.children}
     </svg>;
