@@ -1,10 +1,10 @@
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
 import { ComfortZoneState } from "../ComfortZone/Model";
-import { IUserList } from "../User/Model";
+import { IUserList, IUser } from "../User/Model";
 
 export class ChaosPickerUserChoiceState {
-    User: string;
+    User: IUser;
     Zone: "Chaos" | "Stretch" | "Comfort";
     Distance: number;
 }

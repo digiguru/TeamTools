@@ -11,7 +11,7 @@ export const ReduxUserHistoryArea = (state: IUserChoiceState) => {
         const polarDivision = radian / totalPoints;
         return <g id="history">
             {state.Choices.map((userChoice: ChaosPickerUserChoiceState, i) =>
-                <ReduxUserHistory CenterPoint={state.CenterPoint} key={userChoice.User} {...userChoice} Index={i} PolarDivision={polarDivision}  />
+                <ReduxUserHistory CenterPoint={state.CenterPoint} key={userChoice.User.Username} {...userChoice} Index={i} PolarDivision={polarDivision}  />
             )}
         </g>;
 
@@ -19,8 +19,9 @@ export const ReduxUserHistoryArea = (state: IUserChoiceState) => {
         return <g id="history"></g>;
     }
 };
+
 export const ReduxUserHistory = (state: IComfortUserChoice) => {
     const angle = state.PolarDivision * state.Index;
     const point = Point.toCartesian(new Polar(state.Distance, angle), state.CenterPoint);
     return <circle cx={point.x} cy={point.y} r="10" className="point"></circle>;
-}
+};

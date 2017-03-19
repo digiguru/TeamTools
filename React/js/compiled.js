@@ -473,11 +473,11 @@ define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
-/*import * as React from "react";
-import { TuckmanComponent, ChartArea } from "../Tuckman/Component";
-
-const renderizer = require("react-test-renderer");
-
+define("__tests__/TuckmanModel", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var renderizer = require("react-test-renderer");
+});
+/*
 it("Should show the component", () => {
     // Arrange
     const component = renderizer.create(
@@ -660,7 +660,7 @@ define("Tuckman/Component", ["require", "exports", "react", "Stage/Component", "
         return React.createElement("g", null,
             React.createElement("rect", { className: className, id: state.label, onMouseUp: state.events.onMouseUp, onMouseDown: state.events.onMouseDown, onMouseEnter: state.events.onMouseEnter, onMouseLeave: state.events.onMouseLeave, x: "0", y: "0", width: "25%", height: "100%" },
                 React.createElement(Component_6.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
-            React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, label),
+            React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, state.label),
             ";");
     };
 });
@@ -689,5 +689,93 @@ define("Tuckman/Component", ["require", "exports", "react", "Stage/Component", "
             <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
         </svg>
         */
+define("Tuckman/Reducer", ["require", "exports", "Models/Size"], function (require, exports, Size_3) {
+    "use strict";
+    var initialSize = new Size_3.Size(800, 800);
+    var initialState = {
+        Size: initialSize,
+        focus: "not-in-focus"
+    };
+});
+/*
+export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
+    console.log(action.type, action);
+    switch (action.type) {
+        case ComfortActions.SET_STAGESIZE:
+            return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
+        case ComfortActions.SET_USERFOCUS:
+            return ComfortZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
+        case ComfortActions.SET_ZONEFOCUS:
+            return ComfortZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
+        case ComfortActions.SELECT_USER:
+            return ComfortZoneAction.selectUser(state, (<any>action).user);
+        case ComfortActions.CHOOSE_ZONE:
+            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance, (<any>action).x, (<any>action).y);
+        case ComfortActions.TOGGLE_CHOICES:
+            return ComfortZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
+        default:
+            return state;
+    }
+}
+class ComfortZoneAction {
+    static setStageSize(state: ComfortAppState, width: number, height: number) {
+        const newCenter = new Point(width / 2, height / 2);
+        return fromJS(state)
+            .set("Size", new Size(width, height))
+            .set("CenterPoint", newCenter)
+            .toJS();
+    }
+    static setZoneFocus(state: ComfortAppState, area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
+        return fromJS(state)
+            .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
+            .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? focus : "not-in-focus")
+            .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? focus : "not-in-focus").toJS();
+    }
+    static setUserFocus(state: ComfortAppState, user: string, focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
+        const originalList = List(state.UserList.Users);
+        const newUserList = originalList.update(
+            originalList.findIndex(item => item.Username === user),
+            (item) => fromJS(item).set("Focus", focus)).toJS();
+        return fromJS(state)
+            .setIn(["UserList", "Users"], newUserList).toJS();
+    }
+    static selectUser(state: ComfortAppState, user: String): ComfortAppState {
+        // Sets currentUser, and therefor hides the user choice menu
+        const data = fromJS(state)
+            .set("CurrentUser", user)
+            .set("ShowUserChoices", false)
+            .setIn(["UserList", "ShowUsers"], false);
+
+        return data.toJS();
+    }
+
+    static chooseZone(state: ComfortAppState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, x: number, y:number): ComfortAppState {
+
+        // Add the user choice
+        const newUserChoices = List(state.UserChoices).push({
+            User: user,
+            Zone: area,
+            Distance: distance
+        }).toJS();
+        // Remove the user from the choice list
+        const newUserList = List(state.UserList.Users).filter((item) => item.Username !== user).toArray();
+        // Show the user list
+        const showUserChoice = !!(newUserList.length);
+        // Return
+        return fromJS(state)
+            .delete("CurrentUser")
+            .set("CenterPoint", new Point(x,y))
+            .set("ShowUserChoices", showUserChoice)
+            .set("UserChoices", newUserChoices)
+            .setIn(["UserList", "Users"], newUserList)
+            .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
+    }
+    static toggleChoiceVisibility(state: ComfortAppState, visible: boolean): ComfortAppState {
+        // Set "showUserChoices" to true
+        return Map(state)
+            .set("ShowUserChoices", visible).toJS();
+    };
+}
+*/ 
 
 //# sourceMappingURL=compiled.js.map

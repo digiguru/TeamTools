@@ -42,7 +42,7 @@ export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZone
             x="0" y="0" width="25%" height="100%">
             <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
         </rect>
-        <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{label}</text>;
+        <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;
     </g>;
 };
 

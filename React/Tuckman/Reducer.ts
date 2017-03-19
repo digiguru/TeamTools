@@ -1,16 +1,18 @@
 
-import {ComfortActions} from "./Actions";
-import {ComfortAppState} from "./Model";
+// import {ComfortActions} from "./Actions";
+import {ITuckmanModel} from "./Model";
 import { fromJS, List, Map } from "immutable";
-import { Point } from "../Models/Point";
-import { Size } from "../Models/Size";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
+import { Size } from "../Models/Size";
 
 
 const initialSize: Size = new Size(800, 800);
-const initialState: ComfortAppState = {
+const initialState: ITuckmanModel = {
     Size: initialSize,
-    CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
+    focus: "not-in-focus",
+    events: undefined,
+    children: undefined
+    /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
     UserList : {
         ShowUsers: true,
         Users: [
@@ -24,8 +26,10 @@ const initialState: ComfortAppState = {
         Chaos: {Name: "Chaos", Focus: "not-in-focus", Range: {Start: 200, End: 300}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
     },
     ShowUserChoices: false,
-    UserChoices: []
+    UserChoices: []*/
+
 };
+/*
 export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
     console.log(action.type, action);
     switch (action.type) {
@@ -77,13 +81,11 @@ class ComfortZoneAction {
         return data.toJS();
     }
 
-    static chooseZone(
-        state: ComfortAppState, user: string, area: "Chaos" | "Stretch" | "Comfort",
-        distance: number, x: number, y: number): ComfortAppState {
+    static chooseZone(state: ComfortAppState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, x: number, y:number): ComfortAppState {
 
         // Add the user choice
         const newUserChoices = List(state.UserChoices).push({
-            User: {Username: user},
+            User: user,
             Zone: area,
             Distance: distance
         }).toJS();
@@ -94,7 +96,7 @@ class ComfortZoneAction {
         // Return
         return fromJS(state)
             .delete("CurrentUser")
-            .set("CenterPoint", new Point(x, y))
+            .set("CenterPoint", new Point(x,y))
             .set("ShowUserChoices", showUserChoice)
             .set("UserChoices", newUserChoices)
             .setIn(["UserList", "Users"], newUserList)
@@ -106,3 +108,4 @@ class ComfortZoneAction {
             .set("ShowUserChoices", visible).toJS();
     };
 }
+*/
