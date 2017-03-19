@@ -4,7 +4,7 @@ import { ComfortApp } from "./ComponentApp";
 import {comfortReactApp} from "./Reducer";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { setStageSize, setUserFocus } from "./Actions";
+import { setStageSize } from "./Actions";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
