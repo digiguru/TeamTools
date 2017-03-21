@@ -25,6 +25,9 @@ export class Point {
         const offset = Point.fromOffset(point, origin);
         return Point.distanceFromOffset(offset);
     }
+    public static distanceAsPercentage(thisDistance: number, maxDistance: number): number {
+        return (thisDistance / maxDistance) * 100;
+    }
     public static distanceFromOffset(offset: Point): number {
         return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
     }

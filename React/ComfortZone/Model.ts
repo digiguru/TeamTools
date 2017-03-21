@@ -10,7 +10,7 @@ export class ComfortZoneRangeState {
 
 export interface IComfortZoneEvents {
   onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch") => void;
-  onZoneMouseUp  : (user: string, zone: "Comfort" | "Chaos" | "Stretch", centerPoint: Point, event: any) => void;
+  onZoneMouseUp  : (username: string, zone: "Comfort" | "Chaos" | "Stretch", centerPoint: Point, maxDistance: number, event: any) => void;
   onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch") => void;
   onZoneOffFocus : (zone: "Comfort" | "Chaos" | "Stretch") => void;
 }
@@ -19,16 +19,14 @@ export interface IComfortZoneConnector {
     Zone       : ComfortZoneState;
     User       : IUser;
     CenterPoint: Point;
+    TotalDistance: number;
 }
 
 export interface IComfortZoneEventList {
     Events: IComfortZoneEvents;
 }
-export interface IComfortZoneConnectorWithEvents {
-    Zone       : ComfortZoneState;
-    User       : string;
-    Events     : IComfortZoneEvents;
-    CenterPoint: Point;
+export interface IComfortZoneConnectorWithEvents extends IComfortZoneConnector {
+    Events       : IComfortZoneEvents;
 }
 export class ComfortZoneState {
     Name : "Chaos" | "Stretch" | "Comfort";

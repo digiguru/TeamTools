@@ -6,7 +6,8 @@ import { IUserChoiceState } from "./Model";
 const mapStateToProps = (state: ComfortAppState, ownProps: IUserChoiceState): IUserChoiceState => {
     return {
       Choices    : state.UserChoices,
-      CenterPoint: state.CenterPoint
+      CenterPoint: state.CenterPoint,
+      MaxDistance: state.Zones.Chaos.Range.End / 2 // Needs to be half (as the zone is circular)
     };
 };
 

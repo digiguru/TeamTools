@@ -9,10 +9,10 @@ export const ReduxUserHistoryArea = (state: IUserChoiceState) => {
         const totalPoints   = state.Choices.length;
         const radian        = 6.2831853072;          // 360 * Math.PI / 180;
         const polarDivision = radian / totalPoints;
-
+        const maxDistance   = state.MaxDistance;
         return <g id="history">
             {state.Choices.map((userChoice: ComfortUserChoiceState, i) =>
-                <ReduxUserHistory CenterPoint={state.CenterPoint} key={userChoice.User.Username} {...userChoice} Index={i} PolarDivision={polarDivision}  />
+                <ReduxUserHistory CenterPoint={state.CenterPoint} key={userChoice.User.Username} {...userChoice} Index={i} PolarDivision={polarDivision} MaxDistance={maxDistance}  />
             )}
         </g>;
 
@@ -22,8 +22,9 @@ export const ReduxUserHistoryArea = (state: IUserChoiceState) => {
 };
 
 export const ReduxUserHistory = (state: IComfortUserChoice) => {
-    const angle = state.PolarDivision * state.Index;
-    const point = Point.toCartesian(new Polar(state.Distance, angle), state.CenterPoint);
+    const angle            = state.PolarDivision * state.Index;
+    const distanceAsPixels = ((state.Distance / 100) * state.MaxDistance) * 2;
+    const point            = Point.toCartesian(new Polar(distanceAsPixels, angle), state.CenterPoint);
 
     return <circle cx={point.x} cy={point.y} r="10" className="point"></circle>;
 };

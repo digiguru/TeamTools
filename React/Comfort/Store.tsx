@@ -10,7 +10,7 @@ import { getWidthHeight } from "../Shared/WindowHelper";
 
 export const myStore = Redux.createStore(comfortReactApp);
 
-console.log(myStore.getState());
+// console.log(myStore.getState());
 
 const unsubscribe = myStore.subscribe(() =>
   console.log(myStore.getState())

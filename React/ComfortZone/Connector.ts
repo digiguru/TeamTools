@@ -6,12 +6,14 @@ import { Point } from "../Models/Point";
 import { ComfortZoneState, IComfortZoneConnector, IComfortZoneEventList } from "./Model";
 
 const mapStateToProps = (state: ComfortAppState, ownProps: ComfortZoneState) : IComfortZoneConnector => {
+
+    const maxDistance = state.Zones.Chaos.Range.End / 2;
     if (ownProps.Name === "Comfort") {
-      return {Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint};
+      return {Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance};
     } else if (ownProps.Name === "Chaos") {
-      return {Zone: state.Zones.Chaos, User: state.CurrentUser, CenterPoint: state.CenterPoint};
+      return {Zone: state.Zones.Chaos,   User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance};
     } else {
-      return {Zone: state.Zones.Stretch, User: state.CurrentUser, CenterPoint: state.CenterPoint};
+      return {Zone: state.Zones.Stretch, User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance};
     }
 };
 
@@ -29,12 +31,15 @@ const mapDispatchToProps = (dispatch) : IComfortZoneEventList => {
       onZoneMouseDown: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "active"));
       },
-      onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", centerPoint: Point, event: any): void => {
+      onZoneMouseUp: (user: string, zone: "Comfort" | "Chaos" | "Stretch", centerPoint: Point, maxDistance: number, event: any): void => {
         dispatch(setZoneFocus(zone, "not-in-focus"));
         const coord = [event.clientX, event.clientY];
         // const centerPoint = getCenterPointFromElement(event.currentTarget);
         const distance = Point.distance(centerPoint, Point.fromCoords(coord));
-        dispatch(chooseZone(user, zone, distance, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+        const distanceAsPercentage = Point.distanceAsPercentage(distance, maxDistance);
+        console.log("Distance in pixels then percentage of total", distance, distanceAsPercentage, maxDistance);
+
+        dispatch(chooseZone(user, zone, distanceAsPercentage, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
       onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "in-focus"));

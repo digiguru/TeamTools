@@ -5,6 +5,7 @@ import { fromJS, List, Map } from "immutable";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
+import { IUser } from "../User/Model";
 
 
 const initialSize: Size = new Size(800, 800);
@@ -27,7 +28,7 @@ const initialState: ComfortAppState = {
     UserChoices: []
 };
 export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
-    console.log(action.type, action);
+    // console.log(action.type, action);
     switch (action.type) {
         case ComfortActions.SET_STAGESIZE:
             return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
@@ -68,9 +69,11 @@ class ComfortZoneAction {
             .setIn(["UserList", "Users"], newUserList).toJS();
     }
     static selectUser(state: ComfortAppState, user: String): ComfortAppState {
+        const originalList = List(state.UserList.Users);
+        const item: IUser = originalList.find(item => item.Username === user);
         // Sets currentUser, and therefor hides the user choice menu
         const data = fromJS(state)
-            .set("CurrentUser", user)
+            .set("CurrentUser", item)
             .set("ShowUserChoices", false)
             .setIn(["UserList", "ShowUsers"], false);
 

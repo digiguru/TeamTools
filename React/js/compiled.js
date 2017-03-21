@@ -81,6 +81,9 @@ define("Models/Point", ["require", "exports", "Models/Polar"], function (require
             var offset = Point.fromOffset(point, origin);
             return Point.distanceFromOffset(offset);
         };
+        Point.distanceAsPercentage = function (thisDistance, maxDistance) {
+            return (thisDistance / maxDistance) * 100;
+        };
         Point.distanceFromOffset = function (offset) {
             return Math.sqrt(offset.x * offset.x + offset.y * offset.y);
         };
@@ -189,32 +192,36 @@ define("Comfort/Model", ["require", "exports"], function (require, exports) {
 define("ComfortZone/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.ReduxChaosArea = function (state) {
+        var username = state.User && state.User.Username ? state.User.Username : "Adam Hall";
         return React.createElement("g", null,
-            React.createElement("rect", { id: "chaos", className: state.Zone.Focus, onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.User, state.Zone.Name, state.CenterPoint, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
+            React.createElement("rect", { id: "chaos", className: state.Zone.Focus, onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(username, state.Zone.Name, state.CenterPoint, state.TotalDistance, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
             React.createElement("text", { className: "area-label", id: "label-chaos", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20" }, "chaos"));
     };
     exports.ReduxStretchArea = function (state) {
+        var username = state.User && state.User.Username ? state.User.Username : "Adam Hall";
         return React.createElement("g", null,
-            React.createElement("circle", { className: state.Zone.Focus, id: "stretch", r: "33%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.User, state.Zone.Name, state.CenterPoint, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
+            React.createElement("circle", { className: state.Zone.Focus, id: "stretch", r: "33%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(username, state.Zone.Name, state.CenterPoint, state.TotalDistance, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
             React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "20%" }, "stretch"));
     };
     exports.ReduxComfortArea = function (state) {
+        var username = state.User && state.User.Username ? state.User.Username : "Adam Hall";
         return React.createElement("g", null,
-            React.createElement("circle", { className: state.Zone.Focus, id: "stretch", r: "15%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.User, state.Zone.Name, state.CenterPoint, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
+            React.createElement("circle", { className: state.Zone.Focus, id: "stretch", r: "15%", cx: "50%", cy: "50%", onMouseEnter: function () { return state.Events.onZoneOverFocus(state.Zone.Name); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.Zone.Name); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.Zone.Name); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(username, state.Zone.Name, state.CenterPoint, state.TotalDistance, event); }, width: state.Zone.Size.Width.toString(), height: state.Zone.Size.Height.toString() }),
             React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
     };
 });
 define("ComfortZone/Connector", ["require", "exports", "react-redux", "Comfort/Actions", "ComfortZone/Component", "Models/Point"], function (require, exports, react_redux_1, Actions_1, Component_1, Point_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
+        var maxDistance = state.Zones.Chaos.Range.End / 2;
         if (ownProps.Name === "Comfort") {
-            return { Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint };
+            return { Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance };
         }
         else if (ownProps.Name === "Chaos") {
-            return { Zone: state.Zones.Chaos, User: state.CurrentUser, CenterPoint: state.CenterPoint };
+            return { Zone: state.Zones.Chaos, User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance };
         }
         else {
-            return { Zone: state.Zones.Stretch, User: state.CurrentUser, CenterPoint: state.CenterPoint };
+            return { Zone: state.Zones.Stretch, User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance };
         }
     };
     var getCenterPointFromElement = function (el) {
@@ -229,12 +236,14 @@ define("ComfortZone/Connector", ["require", "exports", "react-redux", "Comfort/A
                 onZoneMouseDown: function (zone) {
                     dispatch(Actions_1.setZoneFocus(zone, "active"));
                 },
-                onZoneMouseUp: function (user, zone, centerPoint, event) {
+                onZoneMouseUp: function (user, zone, centerPoint, maxDistance, event) {
                     dispatch(Actions_1.setZoneFocus(zone, "not-in-focus"));
                     var coord = [event.clientX, event.clientY];
                     // const centerPoint = getCenterPointFromElement(event.currentTarget);
                     var distance = Point_1.Point.distance(centerPoint, Point_1.Point.fromCoords(coord));
-                    dispatch(Actions_1.chooseZone(user, zone, distance, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+                    var distanceAsPercentage = Point_1.Point.distanceAsPercentage(distance, maxDistance);
+                    console.log("Distance in pixels then percentage of total", distance, distanceAsPercentage, maxDistance);
+                    dispatch(Actions_1.chooseZone(user, zone, distanceAsPercentage, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
                 },
                 onZoneOverFocus: function (zone) {
                     dispatch(Actions_1.setZoneFocus(zone, "in-focus"));
@@ -307,8 +316,9 @@ define("ComfortUserChoice/Component", ["require", "exports", "react", "Models/Po
             var totalPoints = state.Choices.length;
             var radian = 6.2831853072; // 360 * Math.PI / 180;
             var polarDivision_1 = radian / totalPoints;
+            var maxDistance_1 = state.MaxDistance;
             return React.createElement("g", { id: "history" }, state.Choices.map(function (userChoice, i) {
-                return React.createElement(exports.ReduxUserHistory, __assign({ CenterPoint: state.CenterPoint, key: userChoice.User.Username }, userChoice, { Index: i, PolarDivision: polarDivision_1 }));
+                return React.createElement(exports.ReduxUserHistory, __assign({ CenterPoint: state.CenterPoint, key: userChoice.User.Username }, userChoice, { Index: i, PolarDivision: polarDivision_1, MaxDistance: maxDistance_1 }));
             }));
         }
         else {
@@ -317,7 +327,8 @@ define("ComfortUserChoice/Component", ["require", "exports", "react", "Models/Po
     };
     exports.ReduxUserHistory = function (state) {
         var angle = state.PolarDivision * state.Index;
-        var point = Point_2.Point.toCartesian(new Polar_2.Polar(state.Distance, angle), state.CenterPoint);
+        var distanceAsPixels = ((state.Distance / 100) * state.MaxDistance) * 2;
+        var point = Point_2.Point.toCartesian(new Polar_2.Polar(distanceAsPixels, angle), state.CenterPoint);
         return React.createElement("circle", { cx: point.x, cy: point.y, r: "10", className: "point" });
     };
 });
@@ -326,7 +337,8 @@ define("ComfortUserChoice/Connector", ["require", "exports", "react-redux", "Com
     var mapStateToProps = function (state, ownProps) {
         return {
             Choices: state.UserChoices,
-            CenterPoint: state.CenterPoint
+            CenterPoint: state.CenterPoint,
+            MaxDistance: state.Zones.Chaos.Range.End / 2 // Needs to be half (as the zone is circular)
         };
     };
     var mapDispatchToProps = function (dispatch) {
@@ -382,7 +394,7 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable",
     };
     function comfortReactApp(state, action) {
         if (state === void 0) { state = initialState; }
-        console.log(action.type, action);
+        // console.log(action.type, action);
         switch (action.type) {
             case Actions_3.ComfortActions.SET_STAGESIZE:
                 return ComfortZoneAction.setStageSize(state, action.width, action.height);
@@ -424,9 +436,11 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable",
                 .setIn(["UserList", "Users"], newUserList).toJS();
         };
         ComfortZoneAction.selectUser = function (state, user) {
+            var originalList = immutable_2.List(state.UserList.Users);
+            var item = originalList.find(function (item) { return item.Username === user; });
             // Sets currentUser, and therefor hides the user choice menu
             var data = immutable_2.fromJS(state)
-                .set("CurrentUser", user)
+                .set("CurrentUser", item)
                 .set("ShowUserChoices", false)
                 .setIn(["UserList", "ShowUsers"], false);
             return data.toJS();
@@ -536,7 +550,7 @@ define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (r
 define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, ComponentApp_2, Reducer_2, react_dom_1, react_redux_5, Actions_5, WindowHelper_1) {
     "use strict";
     exports.myStore = Redux.createStore(Reducer_2.comfortReactApp);
-    console.log(exports.myStore.getState());
+    // console.log(myStore.getState());
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
     });
@@ -714,7 +728,6 @@ define("Tuckman/Reducer", ["require", "exports", "Models/Size"], function (requi
 });
 /*
 export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
-    console.log(action.type, action);
     switch (action.type) {
         case ComfortActions.SET_STAGESIZE:
             return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);

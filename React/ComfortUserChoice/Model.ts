@@ -6,9 +6,11 @@ export interface IComfortUserChoice {
     Index        : number;
     CenterPoint  : Point;
     Distance     : number;
+    MaxDistance  : number;
 }
 
 export interface IUserChoiceState {
   Choices    : Array<ComfortUserChoiceState>;
   CenterPoint: Point;
+  MaxDistance: number;
 }
