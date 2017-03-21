@@ -3,15 +3,15 @@
 import { IDOMMeasurement } from "./IDomMeasurement";
 
 export class Size {
-    width: number;
+    width : number;
     height: number;
     constructor(width: number, height: number) {
-        this.width = width;
+        this.width  = width;
         this.height = height;
     }
 }
 
 export interface ISizable {
-    Width: IDOMMeasurement;
+    Width : IDOMMeasurement;
     Height: IDOMMeasurement;
 }

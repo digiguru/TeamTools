@@ -12,17 +12,17 @@ export class ComfortUserChoiceState {
 export class ComfortZoneList {
     Comfort: ComfortZoneState;
     Stretch: ComfortZoneState;
-    Chaos: ComfortZoneState;
+    Chaos  : ComfortZoneState;
 }
 
 export class ComfortAppState {
-    Size: Size;
-    CenterPoint: Point;
-    UserList: IUserList;
-    Zones: ComfortZoneList;
+    Size           : Size;
+    CenterPoint    : Point;
+    UserList       : IUserList;
+    Zones          : ComfortZoneList;
     ShowUserChoices: boolean;
-    CurrentUser?: IUser;
-    UserChoices: Array<ComfortUserChoiceState>;
+    CurrentUser?   : IUser;
+    UserChoices    : Array<ComfortUserChoiceState>;
 }
 export class ComfortAppStateWithChildren extends ComfortAppState {
     children: any;

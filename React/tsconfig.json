@@ -1,17 +1,17 @@
 {
     "compileOnSave": true,
     "compilerOptions": {
-        "target": "es5",
-        "module": "amd",
-        "moduleResolution": "classic",
-        "sourceMap": true,
-        "diagnostics": true,
+        "target"                    : "es5",
+        "module"                    : "amd",
+        "moduleResolution"          : "classic",
+        "sourceMap"                 : true,
+        "diagnostics"               : true,
         "noFallthroughCasesInSwitch": true,
-        "noImplicitReturns": true,
-        "traceResolution": true,
-        "declaration": false,
-        "outFile": "js/compiled.js",
-        "jsx": "react"
+        "noImplicitReturns"         : true,
+        "traceResolution"           : true,
+        "declaration"               : false,
+        "outFile"                   : "js/compiled.js",
+        "jsx"                       : "react"
     }
-    
+
 }

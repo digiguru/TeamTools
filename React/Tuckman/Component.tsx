@@ -26,12 +26,13 @@ export const TuckmanApp = (state: ITuckmanModel) => {
 };
 
 export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
-    const index = state.index || 0;
+    const index  = state.index || 0;
     const textID = state.label + "-label";
-    const offset: string = (25 * state.index) + "%";
+
+    const offset    : string = (25 * state.index) + "%";
     const textOffset: string = 12 + (25 * state.index) + "%";
-    const delay: string = (0.2 * state.index) + "s";
-    const className: string = state.focus + " area okay js-area-standard";
+    const delay     : string = (0.2 * state.index) + "s";
+    const className : string = state.focus + " area okay js-area-standard";
 
     return <g>
         <rect className={className} id={state.label}

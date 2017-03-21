@@ -5,7 +5,7 @@ import { IUserChoiceState } from "./Model";
 
 const mapStateToProps = (state: ComfortAppState, ownProps: IUserChoiceState): IUserChoiceState => {
     return {
-      Choices: state.UserChoices,
+      Choices    : state.UserChoices,
       CenterPoint: state.CenterPoint
     };
 };

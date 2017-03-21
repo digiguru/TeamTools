@@ -40,7 +40,7 @@ export class Point {
     public static toPolar(point: Point, origin: Point): Polar {
         const offset = Point.fromOffset(point, origin);
         const radius = Point.distanceFromOffset(offset);
-        const angle = Math.atan2(offset.y, offset.x);
+        const angle  = Math.atan2(offset.y, offset.x);
         return new Polar(radius, angle);
     }
 }

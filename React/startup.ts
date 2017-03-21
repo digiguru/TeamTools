@@ -8,12 +8,12 @@
 requirejs.config( {
     baseUrl : "/",
     paths: {
-        "react": "../3rdParty/react.min",
-        "react-dom": "../3rdParty/react-dom.min",
-        "immutable": "../3rdParty/immutable.min",
+        "react"              : "../3rdParty/react.min",
+        "react-dom"          : "../3rdParty/react-dom.min",
+        "immutable"          : "../3rdParty/immutable.min",
         "immutability-helper": "../3rdParty/index",
-        "redux": "../3rdParty/redux.min",
-        "react-redux": "../3rdParty/react-redux.min",
+        "redux"              : "../3rdParty/redux.min",
+        "react-redux"        : "../3rdParty/react-redux.min",
     }
 });
 require(["Comfort/Store"], (u) => {

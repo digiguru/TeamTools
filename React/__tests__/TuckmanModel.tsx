@@ -1,6 +1,10 @@
 import * as React from "react";
 
 const renderizer = require("react-test-renderer");
+
+
+
+
 /*
 it("Should show the component", () => {
     // Arrange

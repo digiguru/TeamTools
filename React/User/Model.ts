@@ -3,7 +3,7 @@ export interface IUser {
 }
 
 export interface IUserUI extends IUser {
-  Y: number;
+  Y    : number;
   Focus: string;
 }
 export interface IUserUIEvents {
@@ -19,7 +19,7 @@ export interface IUserUIWithEvents extends IUserUI {
 
 export interface IUserList {
   ShowUsers: boolean;
-  Users: Array<IUser|IUserUI>;
+  Users    : Array<IUser|IUserUI>;
 }
 export interface IUserListWithEvents extends IUserList {
   events: IUserUIEvents;

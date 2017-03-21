@@ -14,6 +14,7 @@ export const ReduxUserList = (state: IUserListWithEvents) => { // , onZoneUnfocu
 export const ReduxUser = (state: IUserUIWithEvents) => {
     // 60 , 150, 240
     const textY = state.Y + 60;
+
     return <g className="user-group">
         <rect
             className={state.Focus}
