@@ -37,8 +37,8 @@ define("Comfort/Actions", ["require", "exports"], function (require, exports) {
         return { type: exports.ComfortActions.SELECT_USER, user: user };
     }
     exports.selectUser = selectUser;
-    function chooseZone(user, area, distance, x, y) {
-        return { type: exports.ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance, x: x, y: y };
+    function chooseZone(user, area, distance) {
+        return { type: exports.ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance };
     }
     exports.chooseZone = chooseZone;
     function toggleChoiceVisibility(visible) {
@@ -138,6 +138,22 @@ define("Models/Size", ["require", "exports"], function (require, exports) {
             this.width = width;
             this.height = height;
         }
+        Size.prototype.shortest = function () {
+            if (this.width < this.height) {
+                return this.width;
+            }
+            else {
+                return this.height;
+            }
+        };
+        Size.prototype.longest = function () {
+            if (this.width > this.height) {
+                return this.width;
+            }
+            else {
+                return this.height;
+            }
+        };
         return Size;
     }());
     exports.Size = Size;
@@ -213,7 +229,7 @@ define("ComfortZone/Component", ["require", "exports", "react"], function (requi
 define("ComfortZone/Connector", ["require", "exports", "react-redux", "Comfort/Actions", "ComfortZone/Component", "Models/Point"], function (require, exports, react_redux_1, Actions_1, Component_1, Point_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
-        var maxDistance = state.Zones.Chaos.Range.End / 2;
+        var maxDistance = state.Size.shortest();
         if (ownProps.Name === "Comfort") {
             return { Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance };
         }
@@ -243,7 +259,7 @@ define("ComfortZone/Connector", ["require", "exports", "react-redux", "Comfort/A
                     var distance = Point_1.Point.distance(centerPoint, Point_1.Point.fromCoords(coord));
                     var distanceAsPercentage = Point_1.Point.distanceAsPercentage(distance, maxDistance);
                     console.log("Distance in pixels then percentage of total", distance, distanceAsPercentage, maxDistance);
-                    dispatch(Actions_1.chooseZone(user, zone, distanceAsPercentage, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+                    dispatch(Actions_1.chooseZone(user, zone, distanceAsPercentage)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
                 },
                 onZoneOverFocus: function (zone) {
                     dispatch(Actions_1.setZoneFocus(zone, "in-focus"));
@@ -274,13 +290,13 @@ define("User/Component", ["require", "exports", "react"], function (require, exp
             React.createElement("text", { className: "username", y: textY, x: "60" }, state.Username));
     };
 });
-define("User/Connector", ["require", "exports", "react-redux", "Comfort/Actions", "User/Component", "immutable"], function (require, exports, react_redux_2, Actions_2, Component_2, immutable_1) {
+define("User/Connector", ["require", "exports", "react-redux", "Comfort/Actions", "User/Component", "../3rdParty/immutable.min"], function (require, exports, react_redux_2, Actions_2, Component_2, immutable_min_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
         return {
             ShowUsers: state.UserList.ShowUsers,
             Users: state.UserList.Users.map(function (u, i) {
-                return immutable_1.fromJS(u).set("Y", (i * 90) + 60).toJS();
+                return immutable_min_1.fromJS(u).set("Y", (i * 90) + 60).toJS();
             })
         };
     };
@@ -327,7 +343,7 @@ define("ComfortUserChoice/Component", ["require", "exports", "react", "Models/Po
     };
     exports.ReduxUserHistory = function (state) {
         var angle = state.PolarDivision * state.Index;
-        var distanceAsPixels = ((state.Distance / 100) * state.MaxDistance) * 2;
+        var distanceAsPixels = ((state.Distance / 100) * state.MaxDistance);
         var point = Point_2.Point.toCartesian(new Polar_2.Polar(distanceAsPixels, angle), state.CenterPoint);
         return React.createElement("circle", { cx: point.x, cy: point.y, r: "10", className: "point" });
     };
@@ -338,7 +354,7 @@ define("ComfortUserChoice/Connector", ["require", "exports", "react-redux", "Com
         return {
             Choices: state.UserChoices,
             CenterPoint: state.CenterPoint,
-            MaxDistance: state.Zones.Chaos.Range.End / 2 // Needs to be half (as the zone is circular)
+            MaxDistance: state.Size.shortest()
         };
     };
     var mapDispatchToProps = function (dispatch) {
@@ -371,7 +387,7 @@ define("Comfort/ComponentApp", ["require", "exports", "react", "ComfortZone/Conn
         React.createElement(Connector_2.ReduxUserConnector, null),
         React.createElement(Connector_3.ReduxUserHistoryConnector, null))); };
 });
-define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable", "Models/Point", "Models/Size", "Models/IDomMeasurement"], function (require, exports, Actions_3, immutable_2, Point_3, Size_1, IDomMeasurement_1) {
+define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "../3rdParty/immutable.min", "Models/Point", "Models/Size", "Models/IDomMeasurement"], function (require, exports, Actions_3, immutable_min_2, Point_3, Size_1, IDomMeasurement_1) {
     "use strict";
     var initialSize = new Size_1.Size(800, 800);
     var initialState = {
@@ -385,9 +401,9 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable",
             ]
         },
         Zones: {
-            Comfort: { Name: "Comfort", Focus: "not-in-focus", Range: { Start: 0, End: 100 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("50%"), Height: new IDomMeasurement_1.DOMMeasurement("50%") } },
-            Stretch: { Name: "Stretch", Focus: "not-in-focus", Range: { Start: 100, End: 200 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("50%"), Height: new IDomMeasurement_1.DOMMeasurement("50%") } },
-            Chaos: { Name: "Chaos", Focus: "not-in-focus", Range: { Start: 200, End: 300 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("100%"), Height: new IDomMeasurement_1.DOMMeasurement("100%") } }
+            Comfort: { Name: "Comfort", Focus: "not-in-focus", Range: { Start: 0, End: 33 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("50%"), Height: new IDomMeasurement_1.DOMMeasurement("50%") } },
+            Stretch: { Name: "Stretch", Focus: "not-in-focus", Range: { Start: 34, End: 66 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("50%"), Height: new IDomMeasurement_1.DOMMeasurement("50%") } },
+            Chaos: { Name: "Chaos", Focus: "not-in-focus", Range: { Start: 67, End: 100 }, Size: { Width: new IDomMeasurement_1.DOMMeasurement("100%"), Height: new IDomMeasurement_1.DOMMeasurement("100%") } }
         },
         ShowUserChoices: false,
         UserChoices: []
@@ -405,7 +421,7 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable",
             case Actions_3.ComfortActions.SELECT_USER:
                 return ComfortZoneAction.selectUser(state, action.user);
             case Actions_3.ComfortActions.CHOOSE_ZONE:
-                return ComfortZoneAction.chooseZone(state, action.user, action.area, action.distance, action.x, action.y);
+                return ComfortZoneAction.chooseZone(state, action.user, action.area, action.distance);
             case Actions_3.ComfortActions.TOGGLE_CHOICES:
                 return ComfortZoneAction.toggleChoiceVisibility(state, action.visible);
             default:
@@ -418,48 +434,47 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable",
         }
         ComfortZoneAction.setStageSize = function (state, width, height) {
             var newCenter = new Point_3.Point(width / 2, height / 2);
-            return immutable_2.fromJS(state)
+            return immutable_min_2.fromJS(state)
                 .set("Size", new Size_1.Size(width, height))
                 .set("CenterPoint", newCenter)
                 .toJS();
         };
         ComfortZoneAction.setZoneFocus = function (state, area, focus) {
-            return immutable_2.fromJS(state)
+            return immutable_min_2.fromJS(state)
                 .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
                 .setIn(["Zones", "Stretch", "Focus"], area === "Stretch" ? focus : "not-in-focus")
                 .setIn(["Zones", "Chaos", "Focus"], area === "Chaos" ? focus : "not-in-focus").toJS();
         };
         ComfortZoneAction.setUserFocus = function (state, user, focus) {
-            var originalList = immutable_2.List(state.UserList.Users);
-            var newUserList = originalList.update(originalList.findIndex(function (item) { return item.Username === user; }), function (item) { return immutable_2.fromJS(item).set("Focus", focus); }).toJS();
-            return immutable_2.fromJS(state)
+            var originalList = immutable_min_2.List(state.UserList.Users);
+            var newUserList = originalList.update(originalList.findIndex(function (item) { return item.Username === user; }), function (item) { return immutable_min_2.fromJS(item).set("Focus", focus); }).toJS();
+            return immutable_min_2.fromJS(state)
                 .setIn(["UserList", "Users"], newUserList).toJS();
         };
         ComfortZoneAction.selectUser = function (state, user) {
-            var originalList = immutable_2.List(state.UserList.Users);
+            var originalList = immutable_min_2.List(state.UserList.Users);
             var item = originalList.find(function (item) { return item.Username === user; });
             // Sets currentUser, and therefor hides the user choice menu
-            var data = immutable_2.fromJS(state)
+            var data = immutable_min_2.fromJS(state)
                 .set("CurrentUser", item)
                 .set("ShowUserChoices", false)
                 .setIn(["UserList", "ShowUsers"], false);
             return data.toJS();
         };
-        ComfortZoneAction.chooseZone = function (state, user, area, distance, x, y) {
+        ComfortZoneAction.chooseZone = function (state, user, area, distance) {
             // Add the user choice
-            var newUserChoices = immutable_2.List(state.UserChoices).push({
+            var newUserChoices = immutable_min_2.List(state.UserChoices).push({
                 User: { Username: user },
                 Zone: area,
                 Distance: distance
             }).toJS();
             // Remove the user from the choice list
-            var newUserList = immutable_2.List(state.UserList.Users).filter(function (item) { return item.Username !== user; }).toArray();
+            var newUserList = immutable_min_2.List(state.UserList.Users).filter(function (item) { return item.Username !== user; }).toArray();
             // Show the user list
             var showUserChoice = !!(newUserList.length);
             // Return
-            return immutable_2.fromJS(state)
+            return immutable_min_2.fromJS(state)
                 .delete("CurrentUser")
-                .set("CenterPoint", new Point_3.Point(x, y))
                 .set("ShowUserChoices", showUserChoice)
                 .set("UserChoices", newUserChoices)
                 .setIn(["UserList", "Users"], newUserList)
@@ -467,7 +482,7 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "immutable",
         };
         ComfortZoneAction.toggleChoiceVisibility = function (state, visible) {
             // Set "showUserChoices" to true
-            return immutable_2.Map(state)
+            return immutable_min_2.Map(state)
                 .set("ShowUserChoices", visible).toJS();
         };
         ;
@@ -486,22 +501,29 @@ define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty
         myStore.dispatch(Actions_4.setUserFocus("Adam Hall", "in-focus"));
         expect(component.toJSON()).toMatchSnapshot();
     });
+    it("Should allow shrinking", function () {
+        // Arrange
+        var myStore = Redux.createStore(Reducer_1.comfortReactApp);
+        var component = renderizer.create(React.createElement(react_redux_min_1.Provider, { store: myStore },
+            React.createElement(ComponentApp_1.ComfortApp, null)));
+        myStore.dispatch(Actions_4.chooseZone("Adam Hall", "Stretch", 50));
+        expect(component.toJSON()).toMatchSnapshot();
+        myStore.dispatch(Actions_4.chooseZone("Caroline Hall", "Chaos", 100));
+        expect(component.toJSON()).toMatchSnapshot();
+    });
 });
 define("__tests__/TuckmanModel", ["require", "exports"], function (require, exports) {
     "use strict";
     var renderizer = require("react-test-renderer");
+    it("Should show the component", function () {
+        // Arrange
+        /*const component = renderizer.create(
+            <Stage><TuckmanComponent></TuckmanComponent></Stage>
+        );*/
+        expect("Hello").toMatchSnapshot();
+    });
 });
 /*
-it("Should show the component", () => {
-    // Arrange
-    const component = renderizer.create(
-        <Stage><TuckmanComponent></TuckmanComponent></Stage>
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-
-
-});
-
 it("Should show the stretch area", () => {
     // Arrange
     const component = renderizer.create(
@@ -592,10 +614,10 @@ define("Shared/Events", ["require", "exports", "Shared/SVGEvents"], function (re
         function Events() {
         }
         Events.calculateDistance = function (distance) {
-            if (distance < 100) {
+            if (distance < 34) {
                 return "comfort";
             }
-            else if (distance < 300) {
+            else if (distance < 67) {
                 return "stretch";
             }
             else {

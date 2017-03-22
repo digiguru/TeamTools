@@ -24,7 +24,7 @@
             "sourceMaps": false,
             "outDir": null
         },
-        
+
         {
             "type": "node",
             "request": "launch",
@@ -35,6 +35,31 @@
             },
             "port": 5858,
             "args": ["test"],
+            "cwd": "${workspaceRoot}"
+        },
+
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run Jest Update",
+            "runtimeExecutable": "npm",
+            "windows": {
+                "runtimeExecutable": "npm.cmd"
+            },
+            "port": 5858,
+            "args": ["run","jest-update"],
+            "cwd": "${workspaceRoot}"
+        },
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Run Jest HTML",
+            "runtimeExecutable": "npm",
+            "windows": {
+                "runtimeExecutable": "npm.cmd"
+            },
+            "port": 5858,
+            "args": ["run","jest-html"],
             "cwd": "${workspaceRoot}"
         },
         {

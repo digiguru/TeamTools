@@ -4,9 +4,9 @@ import { SVGEvents } from "./SVGEvents";
 export class Events {
 
     public static calculateDistance(distance) {
-        if (distance < 100) {
+        if (distance < 34) {
             return "comfort";
-        } else if (distance < 300) {
+        } else if (distance < 67) {
             return "stretch";
         } else {
             return "chaos";

@@ -19,8 +19,8 @@ export function setZoneFocus(area: "Chaos" | "Stretch" | "Comfort", focus: "in-f
 export function selectUser(user: string) {
     return {type: ComfortActions.SELECT_USER, user: user};
 }
-export function chooseZone(user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, x: number, y: number) {
-    return {type: ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance, x: x, y: y};
+export function chooseZone(user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number) {
+    return {type: ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance};
 }
 export function toggleChoiceVisibility(visible: boolean) {
     return {type: ComfortActions.TOGGLE_CHOICES, visible: visible};

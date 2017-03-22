@@ -10,7 +10,7 @@ export interface IComfortUserChoice {
 }
 
 export interface IUserChoiceState {
-  Choices    : Array<ComfortUserChoiceState>;
-  CenterPoint: Point;
-  MaxDistance: number;
+  Choices?    : Array<ComfortUserChoiceState>;
+  CenterPoint?: Point;
+  MaxDistance?: number;
 }

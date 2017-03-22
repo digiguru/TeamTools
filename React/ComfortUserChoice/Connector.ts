@@ -7,7 +7,7 @@ const mapStateToProps = (state: ComfortAppState, ownProps: IUserChoiceState): IU
     return {
       Choices    : state.UserChoices,
       CenterPoint: state.CenterPoint,
-      MaxDistance: state.Zones.Chaos.Range.End / 2 // Needs to be half (as the zone is circular)
+      MaxDistance: state.Size.shortest()
     };
 };
 

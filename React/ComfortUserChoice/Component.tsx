@@ -23,7 +23,7 @@ export const ReduxUserHistoryArea = (state: IUserChoiceState) => {
 
 export const ReduxUserHistory = (state: IComfortUserChoice) => {
     const angle            = state.PolarDivision * state.Index;
-    const distanceAsPixels = ((state.Distance / 100) * state.MaxDistance) * 2;
+    const distanceAsPixels = ((state.Distance / 100) * state.MaxDistance);
     const point            = Point.toCartesian(new Polar(distanceAsPixels, angle), state.CenterPoint);
 
     return <circle cx={point.x} cy={point.y} r="10" className="point"></circle>;

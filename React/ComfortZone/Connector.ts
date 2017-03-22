@@ -7,7 +7,7 @@ import { ComfortZoneState, IComfortZoneConnector, IComfortZoneEventList } from "
 
 const mapStateToProps = (state: ComfortAppState, ownProps: ComfortZoneState) : IComfortZoneConnector => {
 
-    const maxDistance = state.Zones.Chaos.Range.End / 2;
+    const maxDistance = state.Size.shortest();
     if (ownProps.Name === "Comfort") {
       return {Zone: state.Zones.Comfort, User: state.CurrentUser, CenterPoint: state.CenterPoint, TotalDistance: maxDistance};
     } else if (ownProps.Name === "Chaos") {
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch) : IComfortZoneEventList => {
         const distanceAsPercentage = Point.distanceAsPercentage(distance, maxDistance);
         console.log("Distance in pixels then percentage of total", distance, distanceAsPercentage, maxDistance);
 
-        dispatch(chooseZone(user, zone, distanceAsPercentage, centerPoint.x, centerPoint.y)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+        dispatch(chooseZone(user, zone, distanceAsPercentage)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },
       onZoneOverFocus: (zone: "Comfort" | "Chaos" | "Stretch"): void => {
         dispatch(setZoneFocus(zone, "in-focus"));

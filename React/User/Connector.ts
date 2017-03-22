@@ -3,7 +3,7 @@ import { selectUser, setUserFocus } from "../Comfort/Actions";
 import {ComfortAppState} from "../Comfort/Model";
 import {ReduxUserList} from "./Component";
 import { IUserList } from "./Model";
-import { fromJS } from "immutable";
+import { fromJS } from "../3rdParty/immutable.min";
 
 
 const mapStateToProps = (state: ComfortAppState, ownProps: IUserList): IUserList => {

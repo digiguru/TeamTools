@@ -1,7 +1,7 @@
 
 // import {ComfortActions} from "./Actions";
 import {ITuckmanModel} from "./Model";
-import { fromJS, List, Map } from "immutable";
+import { fromJS, List, Map } from "../3rdParty/immutable.min";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
 import { Size } from "../Models/Size";
 

@@ -6,7 +6,7 @@ import { StageConnector } from "../Stage/Connector";
 
 export const ComfortApp = () => (
     <StageConnector>
-        <ReduxChaosConnector Name="Chaos" />
+        <ReduxChaosConnector   Name="Chaos" />
         <ReduxStretchConnector Name="Stretch" />
         <ReduxComfortConnector Name="Comfort" />
         <ReduxUserConnector />

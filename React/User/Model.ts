@@ -18,8 +18,8 @@ export interface IUserUIWithEvents extends IUserUI {
 }
 
 export interface IUserList {
-  ShowUsers: boolean;
-  Users    : Array<IUser|IUserUI>;
+  ShowUsers?: boolean;
+  Users?    : Array<IUser|IUserUI>;
 }
 export interface IUserListWithEvents extends IUserList {
   events: IUserUIEvents;

@@ -1,7 +1,7 @@
 
 import {ComfortActions} from "./Actions";
 import {ComfortAppState} from "./Model";
-import { fromJS, List, Map } from "immutable";
+import { fromJS, List, Map } from "../3rdParty/immutable.min";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
@@ -20,9 +20,9 @@ const initialState: ComfortAppState = {
         ]
     },
     Zones : {
-        Comfort: {Name: "Comfort", Focus: "not-in-focus", Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
-        Stretch: {Name: "Stretch", Focus: "not-in-focus", Range: {Start: 100, End: 200}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
-        Chaos: {Name: "Chaos", Focus: "not-in-focus", Range: {Start: 200, End: 300}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
+        Comfort: {Name: "Comfort", Focus: "not-in-focus", Range: {Start: 0, End: 33}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
+        Stretch: {Name: "Stretch", Focus: "not-in-focus", Range: {Start: 34, End: 66}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
+        Chaos: {Name: "Chaos", Focus: "not-in-focus", Range: {Start: 67, End: 100}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
     },
     ShowUserChoices: false,
     UserChoices: []
@@ -39,7 +39,7 @@ export function comfortReactApp(state: ComfortAppState = initialState, action): 
         case ComfortActions.SELECT_USER:
             return ComfortZoneAction.selectUser(state, (<any>action).user);
         case ComfortActions.CHOOSE_ZONE:
-            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance, (<any>action).x, (<any>action).y);
+            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance);
         case ComfortActions.TOGGLE_CHOICES:
             return ComfortZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
         default:
@@ -82,7 +82,7 @@ class ComfortZoneAction {
 
     static chooseZone(
         state: ComfortAppState, user: string, area: "Chaos" | "Stretch" | "Comfort",
-        distance: number, x: number, y: number): ComfortAppState {
+        distance: number): ComfortAppState {
 
         // Add the user choice
         const newUserChoices = List(state.UserChoices).push({
@@ -97,7 +97,6 @@ class ComfortZoneAction {
         // Return
         return fromJS(state)
             .delete("CurrentUser")
-            .set("CenterPoint", new Point(x, y))
             .set("ShowUserChoices", showUserChoice)
             .set("UserChoices", newUserChoices)
             .setIn(["UserList", "Users"], newUserList)
