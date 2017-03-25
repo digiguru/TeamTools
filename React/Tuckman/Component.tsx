@@ -13,16 +13,13 @@ import {IStage} from "../Stage/Model";
             onMouseDown: Events.mouseDown.bind(this) */
 
 export const TuckmanApp = (state: ITuckmanModel) => {
-    const stageState: IStage = state;
     const mod: ITuckmanModel = state;
-    return <Stage {...stageState}>
-            <g id="zones">
+    return <g id="zones">
                 <TuckmanZone label="performing" index={3} {...mod} />
                 <TuckmanZone label="norming"    index={2} {...mod} />
                 <TuckmanZone label="storming"   index={1} {...mod} />
                 <TuckmanZone label="forming"    index={0} {...mod} />
-            </g>
-        </Stage>;
+            </g>;
 };
 
 export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
@@ -34,12 +31,20 @@ export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZone
     const delay     : string = (0.2 * state.index) + "s";
     const className : string = state.focus + " area okay js-area-standard";
 
-    return <g>
+    /*return <g>
         <rect className={className} id={state.label}
             onMouseUp={state.events.onMouseUp}
             onMouseDown={state.events.onMouseDown}
             onMouseEnter={state.events.onMouseEnter}
             onMouseLeave={state.events.onMouseLeave}
+            x="0" y="0" width="25%" height="100%">
+            <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
+        </rect>
+        <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;
+    </g>;*/
+
+    return <g>
+        <rect className={className} id={state.label}
             x="0" y="0" width="25%" height="100%">
             <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
         </rect>

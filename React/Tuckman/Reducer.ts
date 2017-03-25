@@ -4,6 +4,9 @@ import {ITuckmanModel} from "./Model";
 import { fromJS, List, Map } from "../3rdParty/immutable.min";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
 import { Size } from "../Models/Size";
+import { Point } from "../Models/Point";
+import { TuckmanActions } from "./Actions";
+import { IUser } from "../User/Model";
 
 
 const initialSize: Size = new Size(800, 800);
@@ -27,7 +30,7 @@ const initialState: ITuckmanModel = {
     ],
     UserChoices: []
     /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
-    
+
     Zones : {
         Comfort: {Name: "Comfort", Focus: "not-in-focus", Range: {Start: 0, End: 100}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
         Stretch: {Name: "Stretch", Focus: "not-in-focus", Range: {Start: 100, End: 200}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
@@ -37,40 +40,42 @@ const initialState: ITuckmanModel = {
     */
 
 };
-/*
-export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
+
+export function tuckmanReactApp(state: ITuckmanModel = initialState, action): ITuckmanModel {
     switch (action.type) {
-        case ComfortActions.SET_STAGESIZE:
-            return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
-        case ComfortActions.SET_USERFOCUS:
-            return ComfortZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
-        case ComfortActions.SET_ZONEFOCUS:
-            return ComfortZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
-        case ComfortActions.SELECT_USER:
-            return ComfortZoneAction.selectUser(state, (<any>action).user);
-        case ComfortActions.CHOOSE_ZONE:
-            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance, (<any>action).x, (<any>action).y);
-        case ComfortActions.TOGGLE_CHOICES:
-            return ComfortZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
+       case TuckmanActions.SET_STAGESIZE:
+            return TuckmanZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
+        case TuckmanActions.SET_USERFOCUS:
+            return TuckmanZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
+        case TuckmanActions.SET_ZONEFOCUS:
+            return TuckmanZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
+         case TuckmanActions.SELECT_USER:
+            return TuckmanZoneAction.selectUser(state, (<any>action).user);
+        case TuckmanActions.CHOOSE_ZONE:
+            return TuckmanZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance);
+        case TuckmanActions.TOGGLE_CHOICES:
+            return TuckmanZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
         default:
             return state;
     }
 }
-class ComfortZoneAction {
-    static setStageSize(state: ComfortAppState, width: number, height: number) {
+class TuckmanZoneAction {
+
+    static setStageSize(state: ITuckmanModel, width: number, height: number): ITuckmanModel {
         const newCenter = new Point(width / 2, height / 2);
         return fromJS(state)
             .set("Size", new Size(width, height))
             .set("CenterPoint", newCenter)
             .toJS();
     }
-    static setZoneFocus(state: ComfortAppState, area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
+    static setZoneFocus(state: ITuckmanModel, area: "Forming" | "Storming" | "Norming" | "Performing", focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
         return fromJS(state)
-            .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
-            .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? focus : "not-in-focus")
-            .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? focus : "not-in-focus").toJS();
+            .setIn(["Zones", "Forming", "Focus"], area === "Forming" ? focus : "not-in-focus")
+            .setIn(["Zones", "Storming", "Focus"], area === "Storming"  ? focus : "not-in-focus")
+            .setIn(["Zones", "Norming", "Focus"], area === "Norming"  ? focus : "not-in-focus")
+            .setIn(["Zones", "Performing", "Focus"], area === "Performing"  ? focus : "not-in-focus").toJS();
     }
-    static setUserFocus(state: ComfortAppState, user: string, focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
+    static setUserFocus(state: ITuckmanModel, user: string, focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
         const originalList = List(state.UserList.Users);
         const newUserList = originalList.update(
             originalList.findIndex(item => item.Username === user),
@@ -78,21 +83,25 @@ class ComfortZoneAction {
         return fromJS(state)
             .setIn(["UserList", "Users"], newUserList).toJS();
     }
-    static selectUser(state: ComfortAppState, user: String): ComfortAppState {
+    static selectUser(state: ITuckmanModel, user: String): ITuckmanModel {
+        const originalList = List(state.UserList.Users);
+        const item: IUser = originalList.find(item => item.Username === user);
         // Sets currentUser, and therefor hides the user choice menu
         const data = fromJS(state)
-            .set("CurrentUser", user)
+            .set("CurrentUser", item)
             .set("ShowUserChoices", false)
             .setIn(["UserList", "ShowUsers"], false);
 
         return data.toJS();
     }
 
-    static chooseZone(state: ComfortAppState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, x: number, y:number): ComfortAppState {
+    static chooseZone(
+        state: ITuckmanModel, user: string, area: "Forming" | "Storming" | "Norming" | "Performing",
+        distance: number): ITuckmanModel {
 
         // Add the user choice
         const newUserChoices = List(state.UserChoices).push({
-            User: user,
+            User: {Username: user},
             Zone: area,
             Distance: distance
         }).toJS();
@@ -103,16 +112,14 @@ class ComfortZoneAction {
         // Return
         return fromJS(state)
             .delete("CurrentUser")
-            .set("CenterPoint", new Point(x,y))
             .set("ShowUserChoices", showUserChoice)
             .set("UserChoices", newUserChoices)
             .setIn(["UserList", "Users"], newUserList)
             .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
     }
-    static toggleChoiceVisibility(state: ComfortAppState, visible: boolean): ComfortAppState {
+    static toggleChoiceVisibility(state: ITuckmanModel, visible: boolean): ITuckmanModel {
         // Set "showUserChoices" to true
         return Map(state)
             .set("ShowUserChoices", visible).toJS();
     };
 }
-*/

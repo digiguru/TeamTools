@@ -512,29 +512,6 @@ define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
-define("__tests__/TuckmanModel", ["require", "exports"], function (require, exports) {
-    "use strict";
-    var renderizer = require("react-test-renderer");
-    it("Should show the component", function () {
-        // Arrange
-        /*const component = renderizer.create(
-            <Stage><TuckmanComponent></TuckmanComponent></Stage>
-        );*/
-        expect("Hello").toMatchSnapshot();
-    });
-});
-/*
-it("Should show the stretch area", () => {
-    // Arrange
-    const component = renderizer.create(
-        <Stage><ChartArea width="200" offset="100" label="example"></ChartArea></Stage>
-    );
-    expect(component.toJSON()).toMatchSnapshot();
-
-});
-
-
-*/
 define("Animation/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     var BouncyAnimation = (function (_super) {
@@ -561,17 +538,143 @@ define("Animation/Component", ["require", "exports", "react"], function (require
     }(React.Component));
     exports.BouncyAnimation = BouncyAnimation;
 });
-define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (require, exports, Size_2) {
+define("Tuckman/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+    ;
+});
+define("Tuckman/Component", ["require", "exports", "react", "Animation/Component"], function (require, exports, React, Component_5) {
+    "use strict";
+    /*state = focus: "not-in-focus",
+                width: props.width || "100%",
+                height: props.height || "100%",
+                onMouseEnter: Events.mouseEnter.bind(this),
+                onMouseLeave: Events.mouseLeave.bind(this),
+                onMouseUp: Events.mouseUp.bind(this),
+                onMouseDown: Events.mouseDown.bind(this) */
+    exports.TuckmanApp = function (state) {
+        var mod = state;
+        return React.createElement("g", { id: "zones" },
+            React.createElement(exports.TuckmanZone, __assign({ label: "performing", index: 3 }, mod)),
+            React.createElement(exports.TuckmanZone, __assign({ label: "norming", index: 2 }, mod)),
+            React.createElement(exports.TuckmanZone, __assign({ label: "storming", index: 1 }, mod)),
+            React.createElement(exports.TuckmanZone, __assign({ label: "forming", index: 0 }, mod)));
+    };
+    exports.TuckmanZone = function (state) {
+        var index = state.index || 0;
+        var textID = state.label + "-label";
+        var offset = (25 * state.index) + "%";
+        var textOffset = 12 + (25 * state.index) + "%";
+        var delay = (0.2 * state.index) + "s";
+        var className = state.focus + " area okay js-area-standard";
+        /*return <g>
+            <rect className={className} id={state.label}
+                onMouseUp={state.events.onMouseUp}
+                onMouseDown={state.events.onMouseDown}
+                onMouseEnter={state.events.onMouseEnter}
+                onMouseLeave={state.events.onMouseLeave}
+                x="0" y="0" width="25%" height="100%">
+                <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
+            </rect>
+            <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;
+        </g>;*/
+        return React.createElement("g", null,
+            React.createElement("rect", { className: className, id: state.label, x: "0", y: "0", width: "25%", height: "100%" },
+                React.createElement(Component_5.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
+            React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, state.label),
+            ";");
+    };
+});
+/*
+<svg id="stage" width="800" height="800">
+            <g id="assets" fill-opacity="0.0">
+                <path id="asset-tick" stroke-miterlimit="4" stroke-width="0" stroke="#007f00" fill="#007f00" d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z"></path>
+            </g>
+
+
+
+            <g id="zones">
+                <rect class="area js-area-standard" id="storming" x="200" y="0" width="200" height="800"></rect>
+                <rect class="area js-area-standard" id="norming" x="400" y="0" width="200" height="800"></rect>
+                <rect class="area js-area-standard" id="performing" x="600" y="0" width="200" height="800"></rect>
+            </g>
+            <g id="history">
+            </g>
+            <text class="area-label" id="label-storming" text-anchor="middle" x="300" y="400">storming</text>
+            <text class="area-label" id="label-norming" text-anchor="middle" x="500" y="400">norming</text>
+            <text class="area-label" id="label-performing" text-anchor="middle" x="700" y="400">performing</text>
+
+            <rect id="clickable" width="800" height="800" fill-opacity="0.0"></rect>
+            <g id="users" transform="">
+
+            <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
+        </svg>
+        */
+define("Tuckman/Reducer", ["require", "exports", "Models/Size"], function (require, exports, Size_2) {
+    "use strict";
+    var initialSize = new Size_2.Size(800, 800);
+    var initialState = {
+        UserList: {
+            ShowUsers: true,
+            Users: [
+                { Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
+                { Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
+            ]
+        },
+        Size: initialSize,
+        focus: "not-in-focus",
+        events: undefined,
+        children: undefined,
+        zones: [
+            { index: 0, label: "forming", focus: "not-in-focus", events: undefined },
+            { index: 1, label: "storming", focus: "not-in-focus", events: undefined },
+            { index: 2, label: "norming", focus: "not-in-focus", events: undefined },
+            { index: 3, label: "performing", focus: "not-in-focus", events: undefined }
+        ],
+        UserChoices: []
+    };
+    function tuckmanReactApp(state, action) {
+        if (state === void 0) { state = initialState; }
+        switch (action.type) {
+            default:
+                return state;
+        }
+    }
+    exports.tuckmanReactApp = tuckmanReactApp;
+});
+define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Component", "Tuckman/Reducer"], function (require, exports, React, redux_min_1, react_redux_min_2, Component_6, Reducer_2) {
+    "use strict";
+    var renderizer = require("react-test-renderer");
+    it("Should show the component", function () {
+        // Arrange
+        var myStore = redux_min_1.createStore(Reducer_2.tuckmanReactApp);
+        var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
+            React.createElement(Component_6.TuckmanApp, null)));
+        expect(component.toJSON()).toMatchSnapshot();
+    });
+});
+/*
+it("Should show the stretch area", () => {
+    // Arrange
+    const component = renderizer.create(
+        <Stage><ChartArea width="200" offset="100" label="example"></ChartArea></Stage>
+    );
+    expect(component.toJSON()).toMatchSnapshot();
+
+});
+
+
+*/
+define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (require, exports, Size_3) {
     "use strict";
     function getWidthHeight() {
         var w = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0], x = w.innerWidth || e.clientWidth || g.clientWidth, y = w.innerHeight || e.clientHeight || g.clientHeight;
-        return new Size_2.Size(x, y);
+        return new Size_3.Size(x, y);
     }
     exports.getWidthHeight = getWidthHeight;
 });
-define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, ComponentApp_2, Reducer_2, react_dom_1, react_redux_5, Actions_5, WindowHelper_1) {
+define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, ComponentApp_2, Reducer_3, react_dom_1, react_redux_5, Actions_5, WindowHelper_1) {
     "use strict";
-    exports.myStore = Redux.createStore(Reducer_2.comfortReactApp);
+    exports.myStore = Redux.createStore(Reducer_3.comfortReactApp);
     // console.log(myStore.getState());
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
@@ -662,170 +765,60 @@ requirejs.config({
 require(["Comfort/Store"], function (u) {
     u.resizeImage();
 });
-define("Tuckman/Model", ["require", "exports"], function (require, exports) {
+define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
     "use strict";
-    ;
-});
-define("Tuckman/Component", ["require", "exports", "react", "Stage/Component", "Animation/Component"], function (require, exports, React, Component_5, Component_6) {
-    "use strict";
-    /*state = focus: "not-in-focus",
-                width: props.width || "100%",
-                height: props.height || "100%",
-                onMouseEnter: Events.mouseEnter.bind(this),
-                onMouseLeave: Events.mouseLeave.bind(this),
-                onMouseUp: Events.mouseUp.bind(this),
-                onMouseDown: Events.mouseDown.bind(this) */
-    exports.TuckmanApp = function (state) {
-        var stageState = state;
-        var mod = state;
-        return React.createElement(Component_5.Stage, __assign({}, stageState),
-            React.createElement("g", { id: "zones" },
-                React.createElement(exports.TuckmanZone, __assign({ label: "performing", index: 3 }, mod)),
-                React.createElement(exports.TuckmanZone, __assign({ label: "norming", index: 2 }, mod)),
-                React.createElement(exports.TuckmanZone, __assign({ label: "storming", index: 1 }, mod)),
-                React.createElement(exports.TuckmanZone, __assign({ label: "forming", index: 0 }, mod))));
+    exports.ComfortActions = {
+        SET_STAGESIZE: "SET_STAGESIZE" /*,
+        SET_ZONEFOCUS : "SET_ZONEFOCUS",
+        SET_USERFOCUS : "SET_USERFOCUS",
+        SELECT_USER   : "SELECT_USER",
+        CHOOSE_ZONE   : "CHOOSE_ZONE",
+        TOGGLE_CHOICES: "TOGGLE_CHOICES"*/
     };
-    exports.TuckmanZone = function (state) {
-        var index = state.index || 0;
-        var textID = state.label + "-label";
-        var offset = (25 * state.index) + "%";
-        var textOffset = 12 + (25 * state.index) + "%";
-        var delay = (0.2 * state.index) + "s";
-        var className = state.focus + " area okay js-area-standard";
-        return React.createElement("g", null,
-            React.createElement("rect", { className: className, id: state.label, onMouseUp: state.events.onMouseUp, onMouseDown: state.events.onMouseDown, onMouseEnter: state.events.onMouseEnter, onMouseLeave: state.events.onMouseLeave, x: "0", y: "0", width: "25%", height: "100%" },
-                React.createElement(Component_6.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
-            React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, state.label),
-            ";");
-    };
+    function setStageSize(width, height) {
+        return { type: exports.ComfortActions.SET_STAGESIZE, width: width, height: height };
+    }
+    exports.setStageSize = setStageSize;
 });
 /*
-<svg id="stage" width="800" height="800">
-            <g id="assets" fill-opacity="0.0">
-                <path id="asset-tick" stroke-miterlimit="4" stroke-width="0" stroke="#007f00" fill="#007f00" d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z"></path>
-            </g>
-
-
-
-            <g id="zones">
-                <rect class="area js-area-standard" id="storming" x="200" y="0" width="200" height="800"></rect>
-                <rect class="area js-area-standard" id="norming" x="400" y="0" width="200" height="800"></rect>
-                <rect class="area js-area-standard" id="performing" x="600" y="0" width="200" height="800"></rect>
-            </g>
-            <g id="history">
-            </g>
-            <text class="area-label" id="label-storming" text-anchor="middle" x="300" y="400">storming</text>
-            <text class="area-label" id="label-norming" text-anchor="middle" x="500" y="400">norming</text>
-            <text class="area-label" id="label-performing" text-anchor="middle" x="700" y="400">performing</text>
-
-            <rect id="clickable" width="800" height="800" fill-opacity="0.0"></rect>
-            <g id="users" transform="">
-
-            <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
-        </svg>
-        */
-define("Tuckman/Reducer", ["require", "exports", "Models/Size"], function (require, exports, Size_3) {
+export function setUserFocus(user: string, focus: "in-focus" | "active" | "not-in-focus") {
+    return {type: ComfortActions.SET_USERFOCUS, user: user, focus: focus};
+}
+export function setZoneFocus(area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus") {
+    return {type: ComfortActions.SET_ZONEFOCUS, area: area, focus: focus};
+}
+export function selectUser(user: string) {
+    return {type: ComfortActions.SELECT_USER, user: user};
+}
+export function chooseZone(user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number) {
+    return {type: ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance};
+}
+export function toggleChoiceVisibility(visible: boolean) {
+    return {type: ComfortActions.TOGGLE_CHOICES, visible: visible};
+}
+*/
+define("Tuckman/Store", ["require", "exports", "react", "redux", "Tuckman/Component", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, Component_7, react_dom_2, react_redux_6, Actions_6, WindowHelper_2) {
     "use strict";
-    var initialSize = new Size_3.Size(800, 800);
-    var initialState = {
-        UserList: {
-            ShowUsers: true,
-            Users: [
-                { Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
-                { Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
-            ]
-        },
-        Size: initialSize,
-        focus: "not-in-focus",
-        events: undefined,
-        children: undefined,
-        zones: [
-            { index: 0, label: "forming", focus: "not-in-focus", events: undefined },
-            { index: 1, label: "storming", focus: "not-in-focus", events: undefined },
-            { index: 2, label: "norming", focus: "not-in-focus", events: undefined },
-            { index: 3, label: "performing", focus: "not-in-focus", events: undefined }
-        ],
-        UserChoices: []
-    };
+    exports.myStore = Redux.createStore(Component_7.TuckmanApp);
+    // console.log(myStore.getState());
+    var unsubscribe = exports.myStore.subscribe(function () {
+        return console.log(exports.myStore.getState());
+    });
+    react_dom_2.render(React.createElement(react_redux_6.Provider, { store: exports.myStore },
+        React.createElement(Component_7.TuckmanApp, null)), document.getElementById("tuckman"));
+    function resizeImage() {
+        var size = WindowHelper_2.getWidthHeight();
+        if (size.width > size.height) {
+            exports.myStore.dispatch(Actions_6.setStageSize(size.height, size.height));
+        }
+        else {
+            exports.myStore.dispatch(Actions_6.setStageSize(size.width, size.width));
+        }
+    }
+    exports.resizeImage = resizeImage;
+    window.addEventListener("resize", resizeImage, false);
 });
-/*
-export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
-    switch (action.type) {
-        case ComfortActions.SET_STAGESIZE:
-            return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
-        case ComfortActions.SET_USERFOCUS:
-            return ComfortZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
-        case ComfortActions.SET_ZONEFOCUS:
-            return ComfortZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
-        case ComfortActions.SELECT_USER:
-            return ComfortZoneAction.selectUser(state, (<any>action).user);
-        case ComfortActions.CHOOSE_ZONE:
-            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance, (<any>action).x, (<any>action).y);
-        case ComfortActions.TOGGLE_CHOICES:
-            return ComfortZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
-        default:
-            return state;
-    }
-}
-class ComfortZoneAction {
-    static setStageSize(state: ComfortAppState, width: number, height: number) {
-        const newCenter = new Point(width / 2, height / 2);
-        return fromJS(state)
-            .set("Size", new Size(width, height))
-            .set("CenterPoint", newCenter)
-            .toJS();
-    }
-    static setZoneFocus(state: ComfortAppState, area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
-        return fromJS(state)
-            .setIn(["Zones", "Comfort", "Focus"], area === "Comfort" ? focus : "not-in-focus")
-            .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? focus : "not-in-focus")
-            .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? focus : "not-in-focus").toJS();
-    }
-    static setUserFocus(state: ComfortAppState, user: string, focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
-        const originalList = List(state.UserList.Users);
-        const newUserList = originalList.update(
-            originalList.findIndex(item => item.Username === user),
-            (item) => fromJS(item).set("Focus", focus)).toJS();
-        return fromJS(state)
-            .setIn(["UserList", "Users"], newUserList).toJS();
-    }
-    static selectUser(state: ComfortAppState, user: String): ComfortAppState {
-        // Sets currentUser, and therefor hides the user choice menu
-        const data = fromJS(state)
-            .set("CurrentUser", user)
-            .set("ShowUserChoices", false)
-            .setIn(["UserList", "ShowUsers"], false);
-
-        return data.toJS();
-    }
-
-    static chooseZone(state: ComfortAppState, user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number, x: number, y:number): ComfortAppState {
-
-        // Add the user choice
-        const newUserChoices = List(state.UserChoices).push({
-            User: user,
-            Zone: area,
-            Distance: distance
-        }).toJS();
-        // Remove the user from the choice list
-        const newUserList = List(state.UserList.Users).filter((item) => item.Username !== user).toArray();
-        // Show the user list
-        const showUserChoice = !!(newUserList.length);
-        // Return
-        return fromJS(state)
-            .delete("CurrentUser")
-            .set("CenterPoint", new Point(x,y))
-            .set("ShowUserChoices", showUserChoice)
-            .set("UserChoices", newUserChoices)
-            .setIn(["UserList", "Users"], newUserList)
-            .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
-    }
-    static toggleChoiceVisibility(state: ComfortAppState, visible: boolean): ComfortAppState {
-        // Set "showUserChoices" to true
-        return Map(state)
-            .set("ShowUserChoices", visible).toJS();
-    };
-}
-*/ 
+// Stop listening to state updates
+// unsubscribe(); ;
 
 //# sourceMappingURL=compiled.js.map
