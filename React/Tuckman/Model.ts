@@ -5,11 +5,17 @@ import { IUserList, IUser } from "../User/Model";
 export interface ITuckmanModel extends IStage {
     focus?       : string;
     events?      : any;
-    zones?       : Array<ITuckmanZone>;
+    zones?       : ITuckmanZoneList;
     CurrentUser? : IUser;
     UserList?    : IUserList;
     UserChoices? : Array<ITuckmanUserChoiceState>;
 };
+export interface ITuckmanZoneList {
+    forming   : ITuckmanZone;
+    storming  : ITuckmanZone;
+    norming   : ITuckmanZone;
+    performing: ITuckmanZone;
+}
 export interface ITuckmanZone {
     focus : string;
     index : number;

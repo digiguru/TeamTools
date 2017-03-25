@@ -22,12 +22,12 @@ const initialState: ITuckmanModel = {
     focus: "not-in-focus",
     events: undefined,
     children: undefined,
-    zones: [
-        {index: 0, label: "forming",    focus: "not-in-focus", events: undefined},
-        {index: 1, label: "storming",   focus: "not-in-focus", events: undefined},
-        {index: 2, label: "norming",    focus: "not-in-focus", events: undefined},
-        {index: 3, label: "performing", focus: "not-in-focus", events: undefined}
-    ],
+    zones: {
+        forming: {index: 0, label: "Forming",    focus: "not-in-focus", events: undefined},
+        storming: {index: 1, label: "Storming",   focus: "not-in-focus", events: undefined},
+        norming: {index: 2, label: "Norming",    focus: "not-in-focus", events: undefined},
+        performing: {index: 3, label: "Performing", focus: "not-in-focus", events: undefined}
+    },
     UserChoices: []
     /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
 
@@ -68,12 +68,12 @@ class TuckmanZoneAction {
             .set("CenterPoint", newCenter)
             .toJS();
     }
-    static setZoneFocus(state: ITuckmanModel, area: "Forming" | "Storming" | "Norming" | "Performing", focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
+    static setZoneFocus(state: ITuckmanModel, area: "forming" | "storming" | "norming" | "performing", focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
         return fromJS(state)
-            .setIn(["Zones", "Forming", "Focus"], area === "Forming" ? focus : "not-in-focus")
-            .setIn(["Zones", "Storming", "Focus"], area === "Storming"  ? focus : "not-in-focus")
-            .setIn(["Zones", "Norming", "Focus"], area === "Norming"  ? focus : "not-in-focus")
-            .setIn(["Zones", "Performing", "Focus"], area === "Performing"  ? focus : "not-in-focus").toJS();
+            .setIn(["zones", "forming", "focus"], area === "forming" ? focus : "not-in-focus")
+            .setIn(["zones", "storming", "focus"], area === "storming"  ? focus : "not-in-focus")
+            .setIn(["zones", "norming", "focus"], area === "norming"  ? focus : "not-in-focus")
+            .setIn(["zones", "performing", "focus"], area === "performing"  ? focus : "not-in-focus").toJS();
     }
     static setUserFocus(state: ITuckmanModel, user: string, focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
         const originalList = List(state.UserList.Users);
@@ -96,7 +96,7 @@ class TuckmanZoneAction {
     }
 
     static chooseZone(
-        state: ITuckmanModel, user: string, area: "Forming" | "Storming" | "Norming" | "Performing",
+        state: ITuckmanModel, user: string, area: "forming" | "storming" | "norming" | "performing",
         distance: number): ITuckmanModel {
 
         // Add the user choice

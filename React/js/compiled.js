@@ -489,26 +489,44 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "../3rdParty
         return ComfortZoneAction;
     }());
 });
-define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "Comfort/ComponentApp", "Comfort/Reducer", "../../3rdParty/react-redux.min", "Comfort/Actions"], function (require, exports, React, Redux, ComponentApp_1, Reducer_1, react_redux_min_1, Actions_4) {
+define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "Comfort/ComponentApp", "Comfort/Reducer", "../../3rdParty/react-redux.min", "Comfort/Actions"], function (require, exports, React, redux_min_1, ComponentApp_1, Reducer_1, react_redux_min_1, Action) {
     "use strict";
     var renderizer = require("react-test-renderer");
+    it("Should not mutate in any way", function () {
+        var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
+        var originalState = myStore.getState();
+        var inputState = JSON.stringify(originalState);
+        var checkAfterAction = function (action) {
+            myStore.dispatch(action);
+            expect(inputState).toEqual(JSON.stringify(originalState));
+        };
+        checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
+        checkAfterAction(Action.selectUser("Adam Hall"));
+        checkAfterAction(Action.setStageSize(800, 600));
+        checkAfterAction(Action.setZoneFocus("Chaos", "in-focus"));
+        checkAfterAction(Action.setZoneFocus("Stretch", "active"));
+        checkAfterAction(Action.setZoneFocus("Comfort", "in-focus"));
+        checkAfterAction(Action.toggleChoiceVisibility(true));
+        checkAfterAction(Action.toggleChoiceVisibility(false));
+        checkAfterAction(Action.chooseZone("Adam Hall", "Stretch", 85));
+    });
     it("Should show the component", function () {
         // Arrange
-        var myStore = Redux.createStore(Reducer_1.comfortReactApp);
+        var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
         var component = renderizer.create(React.createElement(react_redux_min_1.Provider, { store: myStore },
             React.createElement(ComponentApp_1.ComfortApp, null)));
         expect(component.toJSON()).toMatchSnapshot();
-        myStore.dispatch(Actions_4.setUserFocus("Adam Hall", "in-focus"));
+        myStore.dispatch(Action.setUserFocus("Adam Hall", "in-focus"));
         expect(component.toJSON()).toMatchSnapshot();
     });
     it("Should allow shrinking", function () {
         // Arrange
-        var myStore = Redux.createStore(Reducer_1.comfortReactApp);
+        var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
         var component = renderizer.create(React.createElement(react_redux_min_1.Provider, { store: myStore },
             React.createElement(ComponentApp_1.ComfortApp, null)));
-        myStore.dispatch(Actions_4.chooseZone("Adam Hall", "Stretch", 50));
+        myStore.dispatch(Action.chooseZone("Adam Hall", "Stretch", 50));
         expect(component.toJSON()).toMatchSnapshot();
-        myStore.dispatch(Actions_4.chooseZone("Caroline Hall", "Chaos", 100));
+        myStore.dispatch(Action.chooseZone("Caroline Hall", "Chaos", 100));
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
@@ -609,7 +627,42 @@ define("Tuckman/Component", ["require", "exports", "react", "Animation/Component
             <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
         </svg>
         */
-define("Tuckman/Reducer", ["require", "exports", "Models/Size"], function (require, exports, Size_2) {
+define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
+    "use strict";
+    exports.TuckmanActions = {
+        SET_STAGESIZE: "SET_STAGESIZE",
+        SET_ZONEFOCUS: "SET_ZONEFOCUS",
+        SET_USERFOCUS: "SET_USERFOCUS",
+        SELECT_USER: "SELECT_USER",
+        CHOOSE_ZONE: "CHOOSE_ZONE",
+        TOGGLE_CHOICES: "TOGGLE_CHOICES"
+    };
+    function setStageSize(width, height) {
+        return { type: exports.TuckmanActions.SET_STAGESIZE, width: width, height: height };
+    }
+    exports.setStageSize = setStageSize;
+    function setZoneFocus(area, focus) {
+        return { type: exports.TuckmanActions.SET_ZONEFOCUS, area: area, focus: focus };
+    }
+    exports.setZoneFocus = setZoneFocus;
+    function setUserFocus(user, focus) {
+        return { type: exports.TuckmanActions.SET_USERFOCUS, user: user, focus: focus };
+    }
+    exports.setUserFocus = setUserFocus;
+    function selectUser(user) {
+        return { type: exports.TuckmanActions.SELECT_USER, user: user };
+    }
+    exports.selectUser = selectUser;
+    function chooseZone(user, area, distance) {
+        return { type: exports.TuckmanActions.CHOOSE_ZONE, user: user, area: area, distance: distance };
+    }
+    exports.chooseZone = chooseZone;
+    function toggleChoiceVisibility(visible) {
+        return { type: exports.TuckmanActions.TOGGLE_CHOICES, visible: visible };
+    }
+    exports.toggleChoiceVisibility = toggleChoiceVisibility;
+});
+define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "Models/Size", "Models/Point", "Tuckman/Actions"], function (require, exports, immutable_min_3, Size_2, Point_4, Actions_4) {
     "use strict";
     var initialSize = new Size_2.Size(800, 800);
     var initialState = {
@@ -624,31 +677,137 @@ define("Tuckman/Reducer", ["require", "exports", "Models/Size"], function (requi
         focus: "not-in-focus",
         events: undefined,
         children: undefined,
-        zones: [
-            { index: 0, label: "forming", focus: "not-in-focus", events: undefined },
-            { index: 1, label: "storming", focus: "not-in-focus", events: undefined },
-            { index: 2, label: "norming", focus: "not-in-focus", events: undefined },
-            { index: 3, label: "performing", focus: "not-in-focus", events: undefined }
-        ],
+        zones: {
+            forming: { index: 0, label: "Forming", focus: "not-in-focus", events: undefined },
+            storming: { index: 1, label: "Storming", focus: "not-in-focus", events: undefined },
+            norming: { index: 2, label: "Norming", focus: "not-in-focus", events: undefined },
+            performing: { index: 3, label: "Performing", focus: "not-in-focus", events: undefined }
+        },
         UserChoices: []
     };
     function tuckmanReactApp(state, action) {
         if (state === void 0) { state = initialState; }
         switch (action.type) {
+            case Actions_4.TuckmanActions.SET_STAGESIZE:
+                return TuckmanZoneAction.setStageSize(state, action.width, action.height);
+            case Actions_4.TuckmanActions.SET_USERFOCUS:
+                return TuckmanZoneAction.setUserFocus(state, action.user, action.focus);
+            case Actions_4.TuckmanActions.SET_ZONEFOCUS:
+                return TuckmanZoneAction.setZoneFocus(state, action.area, action.focus);
+            case Actions_4.TuckmanActions.SELECT_USER:
+                return TuckmanZoneAction.selectUser(state, action.user);
+            case Actions_4.TuckmanActions.CHOOSE_ZONE:
+                return TuckmanZoneAction.chooseZone(state, action.user, action.area, action.distance);
+            case Actions_4.TuckmanActions.TOGGLE_CHOICES:
+                return TuckmanZoneAction.toggleChoiceVisibility(state, action.visible);
             default:
                 return state;
         }
     }
     exports.tuckmanReactApp = tuckmanReactApp;
+    var TuckmanZoneAction = (function () {
+        function TuckmanZoneAction() {
+        }
+        TuckmanZoneAction.setStageSize = function (state, width, height) {
+            var newCenter = new Point_4.Point(width / 2, height / 2);
+            return immutable_min_3.fromJS(state)
+                .set("Size", new Size_2.Size(width, height))
+                .set("CenterPoint", newCenter)
+                .toJS();
+        };
+        TuckmanZoneAction.setZoneFocus = function (state, area, focus) {
+            return immutable_min_3.fromJS(state)
+                .setIn(["zones", "forming", "focus"], area === "forming" ? focus : "not-in-focus")
+                .setIn(["zones", "storming", "focus"], area === "storming" ? focus : "not-in-focus")
+                .setIn(["zones", "norming", "focus"], area === "norming" ? focus : "not-in-focus")
+                .setIn(["zones", "performing", "focus"], area === "performing" ? focus : "not-in-focus").toJS();
+        };
+        TuckmanZoneAction.setUserFocus = function (state, user, focus) {
+            var originalList = immutable_min_3.List(state.UserList.Users);
+            var newUserList = originalList.update(originalList.findIndex(function (item) { return item.Username === user; }), function (item) { return immutable_min_3.fromJS(item).set("Focus", focus); }).toJS();
+            return immutable_min_3.fromJS(state)
+                .setIn(["UserList", "Users"], newUserList).toJS();
+        };
+        TuckmanZoneAction.selectUser = function (state, user) {
+            var originalList = immutable_min_3.List(state.UserList.Users);
+            var item = originalList.find(function (item) { return item.Username === user; });
+            // Sets currentUser, and therefor hides the user choice menu
+            var data = immutable_min_3.fromJS(state)
+                .set("CurrentUser", item)
+                .set("ShowUserChoices", false)
+                .setIn(["UserList", "ShowUsers"], false);
+            return data.toJS();
+        };
+        TuckmanZoneAction.chooseZone = function (state, user, area, distance) {
+            // Add the user choice
+            var newUserChoices = immutable_min_3.List(state.UserChoices).push({
+                User: { Username: user },
+                Zone: area,
+                Distance: distance
+            }).toJS();
+            // Remove the user from the choice list
+            var newUserList = immutable_min_3.List(state.UserList.Users).filter(function (item) { return item.Username !== user; }).toArray();
+            // Show the user list
+            var showUserChoice = !!(newUserList.length);
+            // Return
+            return immutable_min_3.fromJS(state)
+                .delete("CurrentUser")
+                .set("ShowUserChoices", showUserChoice)
+                .set("UserChoices", newUserChoices)
+                .setIn(["UserList", "Users"], newUserList)
+                .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
+        };
+        TuckmanZoneAction.toggleChoiceVisibility = function (state, visible) {
+            // Set "showUserChoices" to true
+            return immutable_min_3.Map(state)
+                .set("ShowUserChoices", visible).toJS();
+        };
+        ;
+        return TuckmanZoneAction;
+    }());
 });
-define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Component", "Tuckman/Reducer"], function (require, exports, React, redux_min_1, react_redux_min_2, Component_6, Reducer_2) {
+define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Component", "Tuckman/Reducer", "Stage/Component", "Models/Size", "Tuckman/Actions"], function (require, exports, React, redux_min_2, react_redux_min_2, Component_6, Reducer_2, Component_7, Size_3, Action) {
     "use strict";
     var renderizer = require("react-test-renderer");
+    it("Should not mutate in any way", function () {
+        var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
+        var originalState = myStore.getState();
+        var inputState = JSON.stringify(originalState);
+        var checkAfterAction = function (action) {
+            myStore.dispatch(action);
+            expect(inputState).toEqual(JSON.stringify(originalState));
+        };
+        checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
+        checkAfterAction(Action.selectUser("Adam Hall"));
+        checkAfterAction(Action.setStageSize(800, 600));
+        checkAfterAction(Action.setZoneFocus("forming", "in-focus"));
+        checkAfterAction(Action.setZoneFocus("storming", "active"));
+        checkAfterAction(Action.setZoneFocus("norming", "in-focus"));
+        checkAfterAction(Action.setZoneFocus("performing", "in-focus"));
+        checkAfterAction(Action.toggleChoiceVisibility(true));
+        checkAfterAction(Action.toggleChoiceVisibility(false));
+        checkAfterAction(Action.chooseZone("Adam Hall", "performing", 85));
+    });
+    it("Focusable zones", function () {
+        var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
+        var originalState = myStore.getState();
+        var stageSize = new Size_3.Size(800, 600);
+        var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
+            React.createElement(Component_7.Stage, { Size: stageSize },
+                React.createElement(Component_6.TuckmanApp, null))));
+        myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
+        expect(component.toJSON()).toMatchSnapshot();
+        expect(JSON.stringify(myStore.getState())).toMatchSnapshot();
+    });
     it("Should show the component", function () {
         // Arrange
-        var myStore = redux_min_1.createStore(Reducer_2.tuckmanReactApp);
+        var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
+        var stageSize = new Size_3.Size(800, 600);
         var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
-            React.createElement(Component_6.TuckmanApp, null)));
+            React.createElement(Component_7.Stage, { Size: stageSize },
+                React.createElement(Component_6.TuckmanApp, null))));
+        expect(component.toJSON()).toMatchSnapshot();
+        myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
@@ -664,11 +823,11 @@ it("Should show the stretch area", () => {
 
 
 */
-define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (require, exports, Size_3) {
+define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (require, exports, Size_4) {
     "use strict";
     function getWidthHeight() {
         var w = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0], x = w.innerWidth || e.clientWidth || g.clientWidth, y = w.innerHeight || e.clientHeight || g.clientHeight;
-        return new Size_3.Size(x, y);
+        return new Size_4.Size(x, y);
     }
     exports.getWidthHeight = getWidthHeight;
 });
@@ -695,17 +854,17 @@ define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/Compon
 });
 // Stop listening to state updates
 // unsubscribe(); ; 
-define("Shared/SVGEvents", ["require", "exports", "Models/Point"], function (require, exports, Point_4) {
+define("Shared/SVGEvents", ["require", "exports", "Models/Point"], function (require, exports, Point_5) {
     "use strict";
     var SVGEvents = (function () {
         function SVGEvents() {
         }
         SVGEvents.getDistance = function (x, y, target) {
-            return Point_4.Point.distance(new Point_4.Point(x, y), SVGEvents.getCenter(target));
+            return Point_5.Point.distance(new Point_5.Point(x, y), SVGEvents.getCenter(target));
         };
         SVGEvents.getCenter = function (target) {
             var rect = target.getBoundingClientRect();
-            return new Point_4.Point(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
+            return new Point_5.Point(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
         };
         return SVGEvents;
     }());
@@ -765,47 +924,15 @@ requirejs.config({
 require(["Comfort/Store"], function (u) {
     u.resizeImage();
 });
-define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
+define("Tuckman/Store", ["require", "exports", "react", "redux", "Tuckman/Component", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, Component_8, react_dom_2, react_redux_6, Actions_6, WindowHelper_2) {
     "use strict";
-    exports.ComfortActions = {
-        SET_STAGESIZE: "SET_STAGESIZE" /*,
-        SET_ZONEFOCUS : "SET_ZONEFOCUS",
-        SET_USERFOCUS : "SET_USERFOCUS",
-        SELECT_USER   : "SELECT_USER",
-        CHOOSE_ZONE   : "CHOOSE_ZONE",
-        TOGGLE_CHOICES: "TOGGLE_CHOICES"*/
-    };
-    function setStageSize(width, height) {
-        return { type: exports.ComfortActions.SET_STAGESIZE, width: width, height: height };
-    }
-    exports.setStageSize = setStageSize;
-});
-/*
-export function setUserFocus(user: string, focus: "in-focus" | "active" | "not-in-focus") {
-    return {type: ComfortActions.SET_USERFOCUS, user: user, focus: focus};
-}
-export function setZoneFocus(area: "Chaos" | "Stretch" | "Comfort", focus: "in-focus" | "active" | "not-in-focus") {
-    return {type: ComfortActions.SET_ZONEFOCUS, area: area, focus: focus};
-}
-export function selectUser(user: string) {
-    return {type: ComfortActions.SELECT_USER, user: user};
-}
-export function chooseZone(user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number) {
-    return {type: ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance};
-}
-export function toggleChoiceVisibility(visible: boolean) {
-    return {type: ComfortActions.TOGGLE_CHOICES, visible: visible};
-}
-*/
-define("Tuckman/Store", ["require", "exports", "react", "redux", "Tuckman/Component", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, Component_7, react_dom_2, react_redux_6, Actions_6, WindowHelper_2) {
-    "use strict";
-    exports.myStore = Redux.createStore(Component_7.TuckmanApp);
+    exports.myStore = Redux.createStore(Component_8.TuckmanApp);
     // console.log(myStore.getState());
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
     });
     react_dom_2.render(React.createElement(react_redux_6.Provider, { store: exports.myStore },
-        React.createElement(Component_7.TuckmanApp, null)), document.getElementById("tuckman"));
+        React.createElement(Component_8.TuckmanApp, null)), document.getElementById("tuckman"));
     function resizeImage() {
         var size = WindowHelper_2.getWidthHeight();
         if (size.width > size.height) {
