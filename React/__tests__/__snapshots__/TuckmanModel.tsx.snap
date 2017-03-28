@@ -7,7 +7,7 @@ exports[`test Focusable zones 1`] = `
     id="zones">
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="performing"
         width="25%"
@@ -37,7 +37,7 @@ exports[`test Focusable zones 1`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="norming"
         width="25%"
@@ -67,7 +67,7 @@ exports[`test Focusable zones 1`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="in-focus area okay js-area-standard"
         height="100%"
         id="storming"
         width="25%"
@@ -97,7 +97,7 @@ exports[`test Focusable zones 1`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="forming"
         width="25%"
@@ -132,7 +132,7 @@ exports[`test Focusable zones 1`] = `
   <g id="zones">
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="performing"
         width="25%"
@@ -166,7 +166,7 @@ exports[`test Focusable zones 1`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="norming"
         width="25%"
@@ -200,7 +200,7 @@ exports[`test Focusable zones 1`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="in-focus area okay js-area-standard"
         height="100%"
         id="storming"
         width="25%"
@@ -234,7 +234,7 @@ exports[`test Focusable zones 1`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="forming"
         width="25%"
@@ -272,8 +272,12 @@ exports[`test Focusable zones 1`] = `
 
 exports[`test Focusable zones 2`] = `
 Object {
+  "CenterPoint": Point {
+    "x": 400,
+    "y": 300,
+  },
   "Size": Size {
-    "height": 800,
+    "height": 600,
     "width": 800,
   },
   "UserChoices": Array [],
@@ -293,32 +297,30 @@ Object {
     ],
   },
   "children": undefined,
-  "events": undefined,
-  "focus": "not-in-focus",
   "zones": Object {
     "forming": Object {
       "events": undefined,
       "focus": "not-in-focus",
       "index": 0,
-      "label": "Forming",
+      "label": "forming",
     },
     "norming": Object {
       "events": undefined,
       "focus": "not-in-focus",
       "index": 2,
-      "label": "Norming",
+      "label": "norming",
     },
     "performing": Object {
       "events": undefined,
       "focus": "not-in-focus",
       "index": 3,
-      "label": "Performing",
+      "label": "performing",
     },
     "storming": Object {
       "events": undefined,
       "focus": "in-focus",
       "index": 1,
-      "label": "Storming",
+      "label": "storming",
     },
   },
 }
@@ -333,7 +335,7 @@ exports[`test Should show the component 1`] = `
     id="zones">
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="performing"
         width="25%"
@@ -363,7 +365,7 @@ exports[`test Should show the component 1`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="norming"
         width="25%"
@@ -393,7 +395,7 @@ exports[`test Should show the component 1`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="storming"
         width="25%"
@@ -423,7 +425,7 @@ exports[`test Should show the component 1`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="forming"
         width="25%"
@@ -458,7 +460,7 @@ exports[`test Should show the component 1`] = `
   <g id="zones">
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="performing"
         width="25%"
@@ -492,7 +494,7 @@ exports[`test Should show the component 1`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="norming"
         width="25%"
@@ -526,7 +528,7 @@ exports[`test Should show the component 1`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="storming"
         width="25%"
@@ -560,7 +562,7 @@ exports[`test Should show the component 1`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="forming"
         width="25%"
@@ -605,7 +607,7 @@ exports[`test Should show the component 2`] = `
     id="zones">
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="performing"
         width="25%"
@@ -635,7 +637,7 @@ exports[`test Should show the component 2`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="norming"
         width="25%"
@@ -665,7 +667,7 @@ exports[`test Should show the component 2`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="not-in-focus area okay js-area-standard"
         height="100%"
         id="storming"
         width="25%"
@@ -695,7 +697,7 @@ exports[`test Should show the component 2`] = `
     </g>
     <g>
       <rect
-        className="undefined area okay js-area-standard"
+        className="in-focus area okay js-area-standard"
         height="100%"
         id="forming"
         width="25%"
@@ -730,7 +732,7 @@ exports[`test Should show the component 2`] = `
   <g id="zones">
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="performing"
         width="25%"
@@ -764,7 +766,7 @@ exports[`test Should show the component 2`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="norming"
         width="25%"
@@ -798,7 +800,7 @@ exports[`test Should show the component 2`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="not-in-focus area okay js-area-standard"
         height="100%"
         id="storming"
         width="25%"
@@ -832,7 +834,7 @@ exports[`test Should show the component 2`] = `
     </g>
     <g>
       <rect
-        class="undefined area okay js-area-standard"
+        class="in-focus area okay js-area-standard"
         height="100%"
         id="forming"
         width="25%"

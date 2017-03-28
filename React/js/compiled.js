@@ -375,6 +375,8 @@ define("Stage/Component", ["require", "exports", "react"], function (require, ex
 define("Stage/Connector", ["require", "exports", "react-redux", "Stage/Component"], function (require, exports, react_redux_4, Component_4) {
     "use strict";
     exports.StageConnector = react_redux_4.connect(function (state) {
+        debugger;
+        console.log("MYSATE", state);
         return state;
     })(Component_4.Stage);
 });
@@ -512,6 +514,7 @@ define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty
     });
     it("Should show the component", function () {
         // Arrange
+        debugger;
         var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
         var component = renderizer.create(React.createElement(react_redux_min_1.Provider, { store: myStore },
             React.createElement(ComponentApp_1.ComfortApp, null)));
@@ -560,7 +563,7 @@ define("Tuckman/Model", ["require", "exports"], function (require, exports) {
     "use strict";
     ;
 });
-define("Tuckman/Component", ["require", "exports", "react", "Animation/Component"], function (require, exports, React, Component_5) {
+define("Tuckman/Component", ["require", "exports", "react", "Animation/Component", "Stage/Connector"], function (require, exports, React, Component_5, Connector_5) {
     "use strict";
     /*state = focus: "not-in-focus",
                 width: props.width || "100%",
@@ -569,15 +572,24 @@ define("Tuckman/Component", ["require", "exports", "react", "Animation/Component
                 onMouseLeave: Events.mouseLeave.bind(this),
                 onMouseUp: Events.mouseUp.bind(this),
                 onMouseDown: Events.mouseDown.bind(this) */
-    exports.TuckmanApp = function (state) {
+    exports.TuckmanApp = function () {
+        debugger;
+        return React.createElement(Connector_5.StageConnector, null,
+            React.createElement(exports.TuckmanStage, null));
+    };
+    exports.TuckmanStage = function (state) {
+        debugger;
+        console.log("GO", state);
         var mod = state;
+        var perf = mod.zones.performing;
         return React.createElement("g", { id: "zones" },
-            React.createElement(exports.TuckmanZone, __assign({ label: "performing", index: 3 }, mod)),
-            React.createElement(exports.TuckmanZone, __assign({ label: "norming", index: 2 }, mod)),
-            React.createElement(exports.TuckmanZone, __assign({ label: "storming", index: 1 }, mod)),
-            React.createElement(exports.TuckmanZone, __assign({ label: "forming", index: 0 }, mod)));
+            React.createElement(exports.TuckmanZone, __assign({ label: "performing", index: 3 }, mod.zones.performing)),
+            React.createElement(exports.TuckmanZone, __assign({ label: "norming", index: 2 }, mod.zones.norming)),
+            React.createElement(exports.TuckmanZone, __assign({ label: "storming", index: 1 }, mod.zones.storming)),
+            React.createElement(exports.TuckmanZone, __assign({ label: "forming", index: 0 }, mod.zones.forming)));
     };
     exports.TuckmanZone = function (state) {
+        debugger;
         var index = state.index || 0;
         var textID = state.label + "-label";
         var offset = (25 * state.index) + "%";
@@ -674,14 +686,12 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
             ]
         },
         Size: initialSize,
-        focus: "not-in-focus",
-        events: undefined,
         children: undefined,
         zones: {
-            forming: { index: 0, label: "Forming", focus: "not-in-focus", events: undefined },
-            storming: { index: 1, label: "Storming", focus: "not-in-focus", events: undefined },
-            norming: { index: 2, label: "Norming", focus: "not-in-focus", events: undefined },
-            performing: { index: 3, label: "Performing", focus: "not-in-focus", events: undefined }
+            forming: { index: 0, label: "forming", focus: "not-in-focus", events: undefined },
+            storming: { index: 1, label: "storming", focus: "not-in-focus", events: undefined },
+            norming: { index: 2, label: "norming", focus: "not-in-focus", events: undefined },
+            performing: { index: 3, label: "performing", focus: "not-in-focus", events: undefined }
         },
         UserChoices: []
     };
@@ -766,7 +776,16 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
         return TuckmanZoneAction;
     }());
 });
-define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Component", "Tuckman/Reducer", "Stage/Component", "Models/Size", "Tuckman/Actions"], function (require, exports, React, redux_min_2, react_redux_min_2, Component_6, Reducer_2, Component_7, Size_3, Action) {
+define("Tuckman/Connector", ["require", "exports", "react-redux", "Tuckman/Component"], function (require, exports, react_redux_5, Component_6) {
+    "use strict";
+    var mapStateToProps = function (state) {
+        debugger;
+        return state;
+    };
+    exports.TuckmanConnector = react_redux_5.connect(mapStateToProps)(Component_6.TuckmanStage);
+});
+// UserListConnector
+define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Reducer", "Models/Size", "Tuckman/Actions", "Tuckman/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_2, Size_3, Action, Connector_6) {
     "use strict";
     var renderizer = require("react-test-renderer");
     it("Should not mutate in any way", function () {
@@ -789,23 +808,24 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty
         checkAfterAction(Action.chooseZone("Adam Hall", "performing", 85));
     });
     it("Focusable zones", function () {
+        debugger;
         var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
-        var originalState = myStore.getState();
-        var stageSize = new Size_3.Size(800, 600);
+        myStore.dispatch(Action.setStageSize(800, 600));
         var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
-            React.createElement(Component_7.Stage, { Size: stageSize },
-                React.createElement(Component_6.TuckmanApp, null))));
-        myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
+            React.createElement(Connector_6.TuckmanConnector, null)));
+        console.log(myStore.getState());
+        myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
+        console.log(myStore.getState());
         expect(component.toJSON()).toMatchSnapshot();
-        expect(JSON.stringify(myStore.getState())).toMatchSnapshot();
+        expect(myStore.getState()).toMatchSnapshot();
     });
     it("Should show the component", function () {
         // Arrange
         var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
         var stageSize = new Size_3.Size(800, 600);
+        myStore.dispatch(Action.setStageSize(800, 600));
         var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
-            React.createElement(Component_7.Stage, { Size: stageSize },
-                React.createElement(Component_6.TuckmanApp, null))));
+            React.createElement(Connector_6.TuckmanConnector, null)));
         expect(component.toJSON()).toMatchSnapshot();
         myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
         expect(component.toJSON()).toMatchSnapshot();
@@ -831,14 +851,14 @@ define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (r
     }
     exports.getWidthHeight = getWidthHeight;
 });
-define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, ComponentApp_2, Reducer_3, react_dom_1, react_redux_5, Actions_5, WindowHelper_1) {
+define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, ComponentApp_2, Reducer_3, react_dom_1, react_redux_6, Actions_5, WindowHelper_1) {
     "use strict";
     exports.myStore = Redux.createStore(Reducer_3.comfortReactApp);
     // console.log(myStore.getState());
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
     });
-    react_dom_1.render(React.createElement(react_redux_5.Provider, { store: exports.myStore },
+    react_dom_1.render(React.createElement(react_redux_6.Provider, { store: exports.myStore },
         React.createElement(ComponentApp_2.ComfortApp, null)), document.getElementById("stage"));
     function resizeImage() {
         var size = WindowHelper_1.getWidthHeight();
@@ -924,15 +944,18 @@ requirejs.config({
 require(["Comfort/Store"], function (u) {
     u.resizeImage();
 });
-define("Tuckman/Store", ["require", "exports", "react", "redux", "Tuckman/Component", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper"], function (require, exports, React, Redux, Component_8, react_dom_2, react_redux_6, Actions_6, WindowHelper_2) {
+require(["Tuckman/Store"], function (u) {
+    u.resizeImage();
+});
+define("Tuckman/Store", ["require", "exports", "react", "redux", "Tuckman/Component", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper", "Tuckman/Connector"], function (require, exports, React, Redux, Component_7, react_dom_2, react_redux_7, Actions_6, WindowHelper_2, Connector_7) {
     "use strict";
-    exports.myStore = Redux.createStore(Component_8.TuckmanApp);
+    exports.myStore = Redux.createStore(Component_7.TuckmanApp);
     // console.log(myStore.getState());
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
     });
-    react_dom_2.render(React.createElement(react_redux_6.Provider, { store: exports.myStore },
-        React.createElement(Component_8.TuckmanApp, null)), document.getElementById("tuckman"));
+    react_dom_2.render(React.createElement(react_redux_7.Provider, { store: exports.myStore },
+        React.createElement(Connector_7.TuckmanConnector, null)), document.getElementById("tuckman"));
     function resizeImage() {
         var size = WindowHelper_2.getWidthHeight();
         if (size.width > size.height) {

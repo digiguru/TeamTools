@@ -3,8 +3,6 @@ import { IStage } from "../Stage/Model";
 import { IUserList, IUser } from "../User/Model";
 
 export interface ITuckmanModel extends IStage {
-    focus?       : string;
-    events?      : any;
     zones?       : ITuckmanZoneList;
     CurrentUser? : IUser;
     UserList?    : IUserList;

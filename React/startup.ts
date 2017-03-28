@@ -19,3 +19,6 @@ requirejs.config( {
 require(["Comfort/Store"], (u) => {
     u.resizeImage();
 });
+require(["Tuckman/Store"], (u) => {
+    u.resizeImage();
+});

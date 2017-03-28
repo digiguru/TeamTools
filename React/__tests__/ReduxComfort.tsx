@@ -31,7 +31,7 @@ it("Should not mutate in any way", () => {
 
 it("Should show the component", () => {
     // Arrange
-
+    debugger;
     const myStore = createStore(comfortReactApp);
     const component = renderizer.create(
         <Provider store={myStore}>

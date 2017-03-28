@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { setStageSize } from "./Actions";
 import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
+import { TuckmanConnector } from "./Connector";
 
 export const myStore = Redux.createStore(TuckmanApp);
 
@@ -17,8 +18,8 @@ const unsubscribe = myStore.subscribe(() =>
 
 render(
   <Provider store={myStore}>
-    <TuckmanApp>
-    </TuckmanApp>
+    <TuckmanConnector>
+    </TuckmanConnector>
   </Provider>,
   document.getElementById("tuckman")
 );

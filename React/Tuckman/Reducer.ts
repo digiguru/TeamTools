@@ -1,6 +1,6 @@
 
 // import {ComfortActions} from "./Actions";
-import {ITuckmanModel} from "./Model";
+import { ITuckmanModel, ITuckmanZoneList } from "./Model";
 import { fromJS, List, Map } from "../3rdParty/immutable.min";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
 import { Size } from "../Models/Size";
@@ -19,14 +19,12 @@ const initialState: ITuckmanModel = {
         ]
     },
     Size: initialSize,
-    focus: "not-in-focus",
-    events: undefined,
     children: undefined,
     zones: {
-        forming: {index: 0, label: "Forming",    focus: "not-in-focus", events: undefined},
-        storming: {index: 1, label: "Storming",   focus: "not-in-focus", events: undefined},
-        norming: {index: 2, label: "Norming",    focus: "not-in-focus", events: undefined},
-        performing: {index: 3, label: "Performing", focus: "not-in-focus", events: undefined}
+        forming   : {index: 0, label: "forming",    focus: "not-in-focus", events: undefined},
+        storming  : {index: 1, label: "storming",   focus: "not-in-focus", events: undefined},
+        norming   : {index: 2, label: "norming",    focus: "not-in-focus", events: undefined},
+        performing: {index: 3, label: "performing", focus: "not-in-focus", events: undefined}
     },
     UserChoices: []
     /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),

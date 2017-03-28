@@ -3,12 +3,12 @@ import { createStore } from "../../3rdParty/redux.min";
 import { Provider } from "../../3rdParty/react-redux.min";
 import { TuckmanApp } from "../Tuckman/Component";
 import { tuckmanReactApp } from "../Tuckman/Reducer";
-import { Stage } from "../Stage/Component";
 import { Size } from "../Models/Size";
 import * as Action from "../Tuckman/Actions";
+import { TuckmanConnector } from "../Tuckman/Connector";
+import { StageConnector } from "../Stage/Connector";
+import { Stage } from "../Stage/Component";
 const renderizer = require("react-test-renderer");
-
-
 
 it("Should not mutate in any way", () => {
     const myStore = createStore(tuckmanReactApp);
@@ -31,17 +31,22 @@ it("Should not mutate in any way", () => {
 });
 
 it("Focusable zones", () => {
+    debugger;
     const myStore = createStore(tuckmanReactApp);
-    const originalState = myStore.getState();
-    const stageSize = new Size(800, 600);
+    myStore.dispatch(Action.setStageSize(800, 600));
+    const size = new Size(800, 600);
     const component = renderizer.create(
-        <Provider store={myStore}>
-            <Stage Size={stageSize}>
-                <TuckmanApp></TuckmanApp>
-            </Stage>
+        <Stage Size={size}>
+            <Provider store={myStore}>
+            <TuckmanConnector />
         </Provider>
+        </Stage>
     );
+    console.log(myStore.getState());
+
     myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
+    console.log(myStore.getState());
+
     expect(component.toJSON()).toMatchSnapshot();
     expect(myStore.getState()).toMatchSnapshot();
 });
@@ -51,12 +56,13 @@ it("Should show the component", () => {
 
     const myStore = createStore(tuckmanReactApp);
     const stageSize = new Size(800, 600);
+    myStore.dispatch(Action.setStageSize(800, 600));
     const component = renderizer.create(
-        <Provider store={myStore}>
-            <Stage Size={stageSize}>
-                <TuckmanApp></TuckmanApp>
-            </Stage>
+         <Stage Size={stageSize}>
+             <Provider store={myStore}>
+            <TuckmanConnector />
         </Provider>
+        </Stage>
     );
     expect(component.toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
