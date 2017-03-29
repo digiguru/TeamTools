@@ -10,12 +10,12 @@
             "name": "Run jest tests",
             "program": "${workspaceRoot}/node_modules/jest/bin/jest.js",
             "stopOnEntry": false,
-            "args": ["--runInBand","-u"],
+            "args": ["--runInBand","--no-cache","-u"],
             "cwd": "${workspaceRoot}",
             "preLaunchTask": null,
             "runtimeExecutable": null,
             "runtimeArgs": [
-                "--nolazy"
+                "--nolazy", "--debug-brk"
             ],
             "env": {
                 "NODE_ENV": "development"

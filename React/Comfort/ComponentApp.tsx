@@ -5,11 +5,11 @@ import {ReduxUserHistoryConnector} from "../ComfortUserChoice/Connector";
 import { StageConnector } from "../Stage/Connector";
 
 export const ComfortApp = () => (
-    <StageConnector>
+    <g>
         <ReduxChaosConnector   Name="Chaos" />
         <ReduxStretchConnector Name="Stretch" />
         <ReduxComfortConnector Name="Comfort" />
         <ReduxUserConnector />
         <ReduxUserHistoryConnector />
-    </StageConnector>
+    </g>
 );

@@ -1,17 +1,16 @@
 import { connect } from "react-redux";
 import { TuckmanStage } from "./Component";
 import { ITuckmanModel } from "./Model";
-import { fromJS } from "../3rdParty/immutable.min";
-
 
 const mapStateToProps = (state: ITuckmanModel): ITuckmanModel => {
     debugger;
+    console.log("HELLO ITcukman", state);
     return state;
-};
+};/*
+const mapDispatchToProps = (dispatch) => {
+  return {};
+};*/
 
-
-export const TuckmanConnector = connect(
-  mapStateToProps
-)(TuckmanStage);
+export const TuckmanConnector = connect(mapStateToProps)(TuckmanStage);
 
 // UserListConnector

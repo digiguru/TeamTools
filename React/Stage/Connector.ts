@@ -3,9 +3,14 @@ import { Stage } from "./Component";
 import { IStage } from "./Model";
 
 export const StageConnector = connect(
-  (state: IStage) : IStage => {
-    debugger;
-    console.log("MYSATE", state);
-    return state;
+  (state: IStage, b) : IStage => {
+    console.log(state, b);
+      debugger;
+    return { Size: state.Size, children: state.children};
+  },
+  (a,b,c,d) : IStage => {
+      console.log(a,b,c,d);
+      debugger;
+    return { Size: state.Size, children: state.children};
   }
 )(Stage);

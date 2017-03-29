@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import { setStageSize } from "./Actions";
 import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
+import { StageConnector } from "../Stage/Connector";
 
 export const myStore = Redux.createStore(comfortReactApp);
 
@@ -18,7 +19,9 @@ const unsubscribe = myStore.subscribe(() =>
 
 render(
   <Provider store={myStore}>
-    <ComfortApp />
+    <StageConnector>
+        <ComfortApp />
+    </StageConnector>
   </Provider>,
   document.getElementById("stage")
 );
