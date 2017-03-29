@@ -296,7 +296,6 @@ Object {
       },
     ],
   },
-  "children": undefined,
   "zones": Object {
     "forming": Object {
       "events": undefined,

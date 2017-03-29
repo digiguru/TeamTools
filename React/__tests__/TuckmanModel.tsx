@@ -10,7 +10,7 @@ import { StageConnector } from "../Stage/Connector";
 import { Stage } from "../Stage/Component";
 const renderizer = require("react-test-renderer");
 
-test.skip("Should not mutate in any way", () => {
+test("Should not mutate in any way", () => {
     const myStore = createStore(tuckmanReactApp);
     const originalState = myStore.getState();
     const inputState = JSON.stringify(originalState);
@@ -30,7 +30,7 @@ test.skip("Should not mutate in any way", () => {
     checkAfterAction(Action.chooseZone("Adam Hall", "performing", 85));
 });
 
-test.skip("Focusable zones", () => {
+test("Focusable zones", () => {
     debugger;
     const myStore = createStore(tuckmanReactApp);
     myStore.dispatch(Action.setStageSize(800, 600));

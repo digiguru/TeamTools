@@ -9,7 +9,7 @@ import { StageConnector } from "../Stage/Connector";
 
 const renderizer = require("react-test-renderer");
 
-test.skip("Should not mutate in any way", () => {
+test("Should not mutate in any way", () => {
     const myStore = createStore(comfortReactApp);
     const originalState = myStore.getState();
     const inputState = JSON.stringify(originalState);
@@ -30,7 +30,7 @@ test.skip("Should not mutate in any way", () => {
 
 
 
-test.skip("Should show the component", () => {
+test("Should show the component", () => {
     // Arrange
     debugger;
     const myStore = createStore(comfortReactApp);
@@ -47,7 +47,7 @@ test.skip("Should show the component", () => {
 
 });
 
-test.skip("Should allow shrinking", () => {
+test("Should allow shrinking", () => {
     // Arrange
 
     const myStore = createStore(comfortReactApp);
