@@ -1,6 +1,8 @@
 import { Size } from "../Models/Size";
 
-export interface IStage {
-    Size?    : Size;
-    children?: any;
+export interface IStageState {
+    Size?     : Size;
+}
+export interface IStageProps {
+    children? : any ;
 }

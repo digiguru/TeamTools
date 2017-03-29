@@ -19,7 +19,6 @@ const initialState: ITuckmanModel = {
         ]
     },
     Size: initialSize,
-    children: undefined,
     zones: {
         forming   : {index: 0, label: "forming",    focus: "not-in-focus", events: undefined},
         storming  : {index: 1, label: "storming",   focus: "not-in-focus", events: undefined},

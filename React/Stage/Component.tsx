@@ -1,10 +1,10 @@
 import * as React from "react";
-import {  IStage } from "./Model";
+import {  IStageState } from "./Model";
 
-export const Stage = (state: IStage) => {
+export const Stage = (state: any) => {
     debugger;
-    const innerStuff = state.children;
+    console.log("STAGY",state);
     return <svg id="stage" width={state.Size.width} height={state.Size.height}>
-        <g id="Children">{state.children}</g>
+        {state.InnerBits}
     </svg>;
 };

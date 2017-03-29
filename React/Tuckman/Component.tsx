@@ -2,7 +2,6 @@ import * as React from "react";
 import { Stage } from "../Stage/Component";
 import { BouncyAnimation } from "../Animation/Component";
 import { ITuckmanModel, ITuckmanZone } from "./Model";
-import {IStage} from "../Stage/Model";
 import { StageConnector } from "../Stage/Connector";
 /*state = focus: "not-in-focus",
             width: props.width || "100%",
@@ -12,7 +11,6 @@ import { StageConnector } from "../Stage/Connector";
             onMouseUp: Events.mouseUp.bind(this),
             onMouseDown: Events.mouseDown.bind(this) */
 export const TuckmanApp = () => {
-    debugger;
     return <StageConnector>
         <TuckmanStage />
     </StageConnector>;
@@ -32,7 +30,6 @@ export const TuckmanStage = (state: ITuckmanModel) => {
 };
 
 export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
-    debugger;
     const index  = state.index || 0;
     const textID = state.label + "-label";
 

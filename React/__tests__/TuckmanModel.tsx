@@ -30,7 +30,7 @@ test.skip("Should not mutate in any way", () => {
     checkAfterAction(Action.chooseZone("Adam Hall", "performing", 85));
 });
 
-test("Focusable zones", () => {
+test.skip("Focusable zones", () => {
     debugger;
     const myStore = createStore(tuckmanReactApp);
     myStore.dispatch(Action.setStageSize(800, 600));
@@ -38,9 +38,9 @@ test("Focusable zones", () => {
     const component = renderizer.create(
 
             <Provider store={myStore}>
-                <Stage Size={size}>
+                <StageConnector>
                     <TuckmanConnector />
-                </Stage>
+                </StageConnector>
             </Provider>
 
     );
@@ -55,7 +55,7 @@ test("Focusable zones", () => {
 
 test("Should show the component", () => {
     // Arrange
-
+    debugger;
     const myStore = createStore(tuckmanReactApp);
     const stageSize = new Size(800, 600);
     myStore.dispatch(Action.setStageSize(800, 600));

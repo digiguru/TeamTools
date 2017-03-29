@@ -369,13 +369,17 @@ define("Stage/Model", ["require", "exports"], function (require, exports) {
 define("Stage/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.Stage = function (state) {
-        return React.createElement("svg", { id: "stage", width: state.Size.width, height: state.Size.height }, state.children);
+        debugger;
+        console.log("STAGY", state);
+        return React.createElement("svg", { id: "stage", width: state.Size.width, height: state.Size.height }, state.InnerBits);
     };
 });
 define("Stage/Connector", ["require", "exports", "react-redux", "Stage/Component"], function (require, exports, react_redux_4, Component_4) {
     "use strict";
-    exports.StageConnector = react_redux_4.connect(function (state) {
-        return { Size: state.Size, children: state.children };
+    exports.StageConnector = react_redux_4.connect(function (state, props) {
+        debugger;
+        console.log(state, props);
+        return { Size: state.Size, InnerBits: props.children };
     })(Component_4.Stage);
 });
 define("Comfort/ComponentApp", ["require", "exports", "react", "ComfortZone/Connector", "User/Connector", "ComfortUserChoice/Connector"], function (require, exports, React, Connector_1, Connector_2, Connector_3) {
@@ -492,7 +496,7 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "../3rdParty
 define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "Comfort/ComponentApp", "Comfort/Reducer", "../../3rdParty/react-redux.min", "Comfort/Actions", "Stage/Connector"], function (require, exports, React, redux_min_1, ComponentApp_1, Reducer_1, react_redux_min_1, Action, Connector_4) {
     "use strict";
     var renderizer = require("react-test-renderer");
-    test("Should not mutate in any way", function () {
+    test.skip("Should not mutate in any way", function () {
         var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
         var originalState = myStore.getState();
         var inputState = JSON.stringify(originalState);
@@ -510,7 +514,7 @@ define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty
         checkAfterAction(Action.toggleChoiceVisibility(false));
         checkAfterAction(Action.chooseZone("Adam Hall", "Stretch", 85));
     });
-    test("Should show the component", function () {
+    test.skip("Should show the component", function () {
         // Arrange
         debugger;
         var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
@@ -521,7 +525,7 @@ define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty
         myStore.dispatch(Action.setUserFocus("Adam Hall", "in-focus"));
         expect(component.toJSON()).toMatchSnapshot();
     });
-    test("Should allow shrinking", function () {
+    test.skip("Should allow shrinking", function () {
         // Arrange
         var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
         var component = renderizer.create(React.createElement(react_redux_min_1.Provider, { store: myStore },
@@ -573,7 +577,6 @@ define("Tuckman/Component", ["require", "exports", "react", "Animation/Component
                 onMouseUp: Events.mouseUp.bind(this),
                 onMouseDown: Events.mouseDown.bind(this) */
     exports.TuckmanApp = function () {
-        debugger;
         return React.createElement(Connector_5.StageConnector, null,
             React.createElement(exports.TuckmanStage, null));
     };
@@ -589,7 +592,6 @@ define("Tuckman/Component", ["require", "exports", "react", "Animation/Component
             React.createElement(exports.TuckmanZone, __assign({ label: "forming", index: 0 }, mod.zones.forming)));
     };
     exports.TuckmanZone = function (state) {
-        debugger;
         var index = state.index || 0;
         var textID = state.label + "-label";
         var offset = (25 * state.index) + "%";
@@ -686,7 +688,6 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
             ]
         },
         Size: initialSize,
-        children: undefined,
         zones: {
             forming: { index: 0, label: "forming", focus: "not-in-focus", events: undefined },
             storming: { index: 1, label: "storming", focus: "not-in-focus", events: undefined },
@@ -780,7 +781,7 @@ define("Tuckman/Connector", ["require", "exports", "react-redux", "Tuckman/Compo
     "use strict";
     var mapStateToProps = function (state) {
         debugger;
-        console.log("From ITcukman", state);
+        console.log("HELLO ITcukman", state);
         return state;
     }; /*
     const mapDispatchToProps = (dispatch) => {
@@ -792,7 +793,7 @@ define("Tuckman/Connector", ["require", "exports", "react-redux", "Tuckman/Compo
 define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Reducer", "Models/Size", "Tuckman/Actions", "Tuckman/Connector", "Stage/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_2, Size_3, Action, Connector_6, Connector_7) {
     "use strict";
     var renderizer = require("react-test-renderer");
-    test("Should not mutate in any way", function () {
+    test.skip("Should not mutate in any way", function () {
         var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
         var originalState = myStore.getState();
         var inputState = JSON.stringify(originalState);
@@ -811,7 +812,7 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty
         checkAfterAction(Action.toggleChoiceVisibility(false));
         checkAfterAction(Action.chooseZone("Adam Hall", "performing", 85));
     });
-    test("Focusable zones", function () {
+    test.skip("Focusable zones", function () {
         debugger;
         var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
         myStore.dispatch(Action.setStageSize(800, 600));
@@ -827,6 +828,7 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty
     });
     test("Should show the component", function () {
         // Arrange
+        debugger;
         var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
         var stageSize = new Size_3.Size(800, 600);
         myStore.dispatch(Action.setStageSize(800, 600));

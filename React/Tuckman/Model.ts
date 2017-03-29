@@ -1,8 +1,8 @@
 import { IDOMMeasurement } from "../Models/IDomMeasurement";
-import { IStage } from "../Stage/Model";
+import { IStageState } from "../Stage/Model";
 import { IUserList, IUser } from "../User/Model";
 
-export interface ITuckmanModel extends IStage {
+export interface ITuckmanModel extends IStageState {
     zones?       : ITuckmanZoneList;
     CurrentUser? : IUser;
     UserList?    : IUserList;
