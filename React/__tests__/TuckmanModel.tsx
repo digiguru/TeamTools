@@ -31,7 +31,6 @@ test("Should not mutate in any way", () => {
 });
 
 test("Focusable zones", () => {
-    debugger;
     const myStore = createStore(tuckmanReactApp);
     myStore.dispatch(Action.setStageSize(800, 600));
     const size = new Size(800, 600);
@@ -44,10 +43,8 @@ test("Focusable zones", () => {
             </Provider>
 
     );
-    console.log(myStore.getState());
 
     myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
-    console.log(myStore.getState());
 
     expect(component.toJSON()).toMatchSnapshot();
     expect(myStore.getState()).toMatchSnapshot();
@@ -55,7 +52,6 @@ test("Focusable zones", () => {
 
 test("Should show the component", () => {
     // Arrange
-    debugger;
     const myStore = createStore(tuckmanReactApp);
     const stageSize = new Size(800, 600);
     myStore.dispatch(Action.setStageSize(800, 600));

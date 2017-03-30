@@ -37,7 +37,6 @@ const mapDispatchToProps = (dispatch) : IComfortZoneEventList => {
         // const centerPoint = getCenterPointFromElement(event.currentTarget);
         const distance = Point.distance(centerPoint, Point.fromCoords(coord));
         const distanceAsPercentage = Point.distanceAsPercentage(distance, maxDistance);
-        console.log("Distance in pixels then percentage of total", distance, distanceAsPercentage, maxDistance);
 
         dispatch(chooseZone(user, zone, distanceAsPercentage)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
       },

@@ -41,7 +41,6 @@ export class GraphComfortBase {
 
     }
     public hide(): Thenable<number> {
-        console.log("HIDE comfortGRAPH");
 
         const d3zones = d3.select("g#zones")
             .selectAll("circle")
@@ -59,7 +58,6 @@ export class GraphComfortBase {
 
     }
     public showBase(): Thenable<number> {
-        console.log("SHOW graph");
         const d3zones = d3.select("g#zones")
             .selectAll("circle")
                 .attr("r", 0)

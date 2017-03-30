@@ -11,7 +11,6 @@ import { StageConnector } from "../Stage/Connector";
 
 export const myStore = Redux.createStore(comfortReactApp);
 
-// console.log(myStore.getState());
 
 const unsubscribe = myStore.subscribe(() =>
   console.log(myStore.getState())

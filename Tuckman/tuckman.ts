@@ -12,10 +12,8 @@ requirejs.config( {
     baseUrl : "/"
 });
 require(["Tuckman/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], (m, u, b) => {
-    console.log("Starting");
     mediator = new m.Mediator(23, 23);
     userLoader = new b.InMemoryBrowserUsers(window);
-    console.log(mediator);
     userLoader.getUsers().then((users) => {
         if (users) {
             mediator.setUsers(users);
@@ -37,5 +35,5 @@ require(["Tuckman/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], (m, 
         mediator.saveGraph(o.area, o.distance, o.currentUser);
     });
 
-    console.log(mediator);
+
 });

@@ -10,7 +10,6 @@ import { TuckmanConnector } from "./Connector";
 
 export const myStore = Redux.createStore(TuckmanApp);
 
-// console.log(myStore.getState());
 
 const unsubscribe = myStore.subscribe(() =>
   console.log(myStore.getState())

@@ -32,7 +32,6 @@ test("Should not mutate in any way", () => {
 
 test("Should show the component", () => {
     // Arrange
-    debugger;
     const myStore = createStore(comfortReactApp);
     const component = renderizer.create(
         <Provider store={myStore}>

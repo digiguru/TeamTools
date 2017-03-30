@@ -28,7 +28,6 @@ const initialState: ComfortAppState = {
     UserChoices: []
 };
 export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
-    // console.log(action.type, action);
     switch (action.type) {
         case ComfortActions.SET_STAGESIZE:
             return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);

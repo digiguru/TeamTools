@@ -17,8 +17,6 @@ export const TuckmanApp = () => {
 };
 
 export const TuckmanStage = (state: ITuckmanModel) => {
-    debugger;
-    console.log("GO", state);
     const mod: ITuckmanModel = state;
     const perf: ITuckmanZone = mod.zones.performing;
     return <g id="zones">

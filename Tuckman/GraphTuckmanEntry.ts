@@ -20,7 +20,6 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     private setupClickActivity () {
-        console.log("SETUP graph click");
         d3.select("#stage").on("mouseup", this.graphUp());
         d3.select("#stage").on("mousedown", this.graphDown());
     }
@@ -114,7 +113,6 @@ export class GraphTuckmanEntry extends GraphTuckmanBase {
     }
 
     public saveTheInteraction (area: string, distance: number) {
-        console.log("saveTheInteraction");
         this.removeInteractions();
 
         // TODO: Put in the line below

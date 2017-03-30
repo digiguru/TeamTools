@@ -31,7 +31,6 @@ export class FormUserChoice {
     }
 
     private afterShow() {
-        console.log("ENDSHOW UserChocieForm");
         this.d3Users
             .selectAll("rect")
             .on("mouseup", this.clickUser());
@@ -50,7 +49,6 @@ export class FormUserChoice {
 
     }
     public show(): Thenable<number> {
-        console.log("SHOW UserChocieForm");
         d3.select(this.userZone)
             .transition()
             .duration(() => 800)
@@ -68,7 +66,6 @@ export class FormUserChoice {
         return Timed.for(800).then(this.afterShow.bind(this));
     }
     public hide(): Thenable<number> {
-        console.log("HIDE userEntry");
         d3.select(this.userZone)
             .transition()
             .duration(() => 800)
@@ -92,12 +89,11 @@ export class FormUserChoice {
         const that = this;
         return function(d: User, i: number) {
             // "this" is the DOM element
-            console.log("CLICK - User - up  UserChocieForm");
             const id = this.getAttribute("data-id");
 
             const event = new CustomEvent("selectUser", { "detail": {"id": id} });
             document.dispatchEvent(event);
-            console.log("This was clicked", that);
+
         };
     }
     private overUser () {

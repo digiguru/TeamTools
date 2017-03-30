@@ -15,7 +15,6 @@ export class Mediator {
     breadcrumbControl: BreadcrumbControl;
 
     constructor() {
-        console.log("START everything");
         this.userChoiceHistory = new Array<ComfortUserChoice>();
         this.formUserChoice = new FormUserChoice();
         this.breadcrumbControl = new BreadcrumbControl();
@@ -97,7 +96,6 @@ export class Mediator {
     }
 
     public selectUser(id) {
-        console.log("ACTION selectUser", id);
         this.formUserChoice.getUser(id).then((user) => {
             this.formUserChoice.hide();
             this.showGraphComfortEntry(user);
@@ -123,7 +121,6 @@ export class Mediator {
     }
 
     private next() {
-        console.log("ACTION nextUser", this);
         const afterHide = function() {
             this.formUserChoice.hasMoreUsers().then((result) => {
                 if (result) {

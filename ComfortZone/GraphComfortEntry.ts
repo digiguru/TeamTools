@@ -20,7 +20,6 @@ export class GraphComfortEntry extends GraphComfortBase {
     }
 
     private setupClickActivity () {
-        console.log("SETUP graph click");
         d3.select("#stage").on("mouseup", this.graphUp());
         d3.select("#stage").on("mousedown", this.graphDown());
     }

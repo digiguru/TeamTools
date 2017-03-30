@@ -14,9 +14,7 @@ requirejs.config( {
 
 
 require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], (m, u, b) => {
-    console.log("Starting");
     mediator = new m.Mediator(23, 23);
-    console.log(mediator);
     userLoader = new b.InMemoryBrowserUsers(window);
     userLoader.getUsers().then((users) => {
         if (users) {
@@ -39,5 +37,5 @@ require(["ComfortZone/Mediator", "Shared/User", "Shared/InMemoryBrowserUsers"], 
         const o = e.detail;
         mediator.saveGraph(o.area, o.distance, o.currentUser);
     });
-    console.log(mediator);
+
 });

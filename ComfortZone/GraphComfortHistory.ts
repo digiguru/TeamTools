@@ -43,7 +43,7 @@ export class GraphComfortHistory extends GraphComfortBase {
 
 
         Thenable.then(() => {
-            console.log("SHOWED base graph - now what?");
+            // console.log("SHOWED base graph - now what?");
         });
         return Thenable;
     }

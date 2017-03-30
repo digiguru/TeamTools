@@ -15,7 +15,6 @@ export class Mediator {
     breadcrumbControl: BreadcrumbControl;
 
     constructor() {
-        console.log("START everything");
         this.userChoiceHistory = new Array<TuckmanUserChoice>();
         this.formUserChoice = new FormUserChoice();
         this.breadcrumbControl = new BreadcrumbControl();
@@ -97,7 +96,6 @@ export class Mediator {
     }
 
     public selectUser(id) {
-        console.log("ACTION selectUser", id);
         const user = this.formUserChoice.getUser(id).then((user) => {
             this.formUserChoice.hide();
             this.showGraphTuckmanEntry(user);
@@ -125,14 +123,11 @@ export class Mediator {
     }
 
     private next() {
-        console.log("ACTION nextUser", this);
         const afterHide = function() {
             this.formUserChoice.hasMoreUsers().then((result) => {
                 if (result) {
-                    console.log("Users left...", this);
                     this.showUserChoice();
                 } else {
-                    console.log("NO users left", this);
                     this.showGraphTuckmanHistory();
                 }
             });
