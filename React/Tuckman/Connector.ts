@@ -7,5 +7,3 @@ const mapStateToProps = (state: ITuckmanModel): ITuckmanModel => {
 };
 
 export const TuckmanConnector = connect(mapStateToProps)(TuckmanStage);
-
-// UserListConnector

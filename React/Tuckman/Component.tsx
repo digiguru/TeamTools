@@ -3,6 +3,7 @@ import { Stage } from "../Stage/Component";
 import { BouncyAnimation } from "../Animation/Component";
 import { ITuckmanModel, ITuckmanZone } from "./Model";
 import { StageConnector } from "../Stage/Connector";
+import { ReduxUserConnector } from "../User/Connector";
 /*state = focus: "not-in-focus",
             width: props.width || "100%",
             height: props.height || "100%",
@@ -10,21 +11,20 @@ import { StageConnector } from "../Stage/Connector";
             onMouseLeave: Events.mouseLeave.bind(this),
             onMouseUp: Events.mouseUp.bind(this),
             onMouseDown: Events.mouseDown.bind(this) */
-export const TuckmanApp = () => {
-    return <StageConnector>
-        <TuckmanStage />
-    </StageConnector>;
-};
+
 
 export const TuckmanStage = (state: ITuckmanModel) => {
     const mod : ITuckmanModel = state;
     const perf: ITuckmanZone  = mod.zones.performing;
-    return <g id="zones">
-                <TuckmanZone label="performing" index={3} {...mod.zones.performing} />
-                <TuckmanZone label="norming"    index={2} {...mod.zones.norming} />
-                <TuckmanZone label="storming"   index={1} {...mod.zones.storming} />
-                <TuckmanZone label="forming"    index={0} {...mod.zones.forming} />
-            </g>;
+    return <g>
+                <g id="zones">
+                    <TuckmanZone label="performing" index={3} {...mod.zones.performing} />
+                    <TuckmanZone label="norming"    index={2} {...mod.zones.norming} />
+                    <TuckmanZone label="storming"   index={1} {...mod.zones.storming} />
+                    <TuckmanZone label="forming"    index={0} {...mod.zones.forming} />
+                </g>
+                <ReduxUserConnector />
+        </g>;
 };
 
 export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (

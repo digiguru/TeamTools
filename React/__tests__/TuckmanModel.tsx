@@ -1,7 +1,7 @@
 import * as React from "react";
 import { createStore } from "../../3rdParty/redux.min";
 import { Provider } from "../../3rdParty/react-redux.min";
-import { TuckmanApp, TuckmanStage } from "../Tuckman/Component";
+import { TuckmanStage } from "../Tuckman/Component";
 import { tuckmanReactApp } from "../Tuckman/Reducer";
 import { Size } from "../Models/Size";
 import * as Action from "../Tuckman/Actions";
@@ -33,28 +33,34 @@ test("Should not mutate in any way", () => {
 test("Focusable zones", () => {
     const myStore = createStore(tuckmanReactApp);
     myStore.dispatch(Action.setStageSize(800, 600));
-    const size = new Size(800, 600);
-    const component = renderizer.create(
 
+    const component = renderizer.create(
             <Provider store={myStore}>
                 <StageConnector>
                     <TuckmanConnector />
                 </StageConnector>
             </Provider>
-
     );
 
-    myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
-
+    myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
     expect(component.toJSON()).toMatchSnapshot();
-    expect(myStore.getState()).toMatchSnapshot();
+    myStore.dispatch(Action.setZoneFocus("forming", "not-in-focus"));
+    myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
+    expect(component.toJSON()).toMatchSnapshot();
+    myStore.dispatch(Action.setZoneFocus("storming", "not-in-focus"));
+    myStore.dispatch(Action.setZoneFocus("norming", "in-focus"));
+    expect(component.toJSON()).toMatchSnapshot();
+    myStore.dispatch(Action.setZoneFocus("norming", "not-in-focus"));
+    myStore.dispatch(Action.setZoneFocus("performing", "in-focus"));
+    expect(component.toJSON()).toMatchSnapshot();
+
 });
 
 test("Should show the component", () => {
     // Arrange
     const myStore = createStore(tuckmanReactApp);
-    const stageSize = new Size(800, 600);
     myStore.dispatch(Action.setStageSize(800, 600));
+
     const component = renderizer.create(
             <Provider store={myStore}>
                 <StageConnector>
@@ -62,6 +68,7 @@ test("Should show the component", () => {
                 </StageConnector>
             </Provider>
     );
+
     expect(component.toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
     expect(component.toJSON()).toMatchSnapshot();

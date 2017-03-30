@@ -1,14 +1,15 @@
 import * as React from "react";
 import * as Redux from "redux";
-import { TuckmanApp } from "./Component";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { setStageSize } from "./Actions";
 import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
 import { TuckmanConnector } from "./Connector";
+import { StageConnector } from "../Stage/Connector";
+import { tuckmanReactApp } from "./Reducer";
 
-export const myStore = Redux.createStore(TuckmanApp);
+export const myStore = Redux.createStore(tuckmanReactApp);
 
 
 const unsubscribe = myStore.subscribe(() =>
@@ -17,8 +18,9 @@ const unsubscribe = myStore.subscribe(() =>
 
 render(
   <Provider store={myStore}>
-    <TuckmanConnector>
-    </TuckmanConnector>
+    <StageConnector>
+        <TuckmanConnector />
+    </StageConnector>
   </Provider>,
   document.getElementById("tuckman")
 );

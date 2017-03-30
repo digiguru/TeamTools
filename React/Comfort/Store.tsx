@@ -22,7 +22,7 @@ render(
         <ComfortApp />
     </StageConnector>
   </Provider>,
-  document.getElementById("stage")
+  document.getElementById("comfort")
 );
 
 export function resizeImage() {

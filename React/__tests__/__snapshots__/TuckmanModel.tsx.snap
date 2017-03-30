@@ -67,6 +67,278 @@ exports[`test Focusable zones 1`] = `
     </g>
     <g>
       <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="storming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.2s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;31.25%;22.5%;26.25%;25%" />
+      </rect>
+      <text
+        className="area-label"
+        id="storming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="37%"
+        y="50%">
+        storming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="in-focus area okay js-area-standard"
+        height="100%"
+        id="forming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;0%;0%;0%;0%" />
+      </rect>
+      <text
+        className="area-label"
+        id="forming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="12%"
+        y="50%">
+        forming
+      </text>
+      ;
+    </g>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg id="stage">
+  <g id="zones">
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="performing"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.6000000000000001s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;93.75%;67.5%;78.75%;75%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="performing-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="87%"
+        y="50%"
+      >
+        performing
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="norming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.4s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;62.5%;45%;52.5%;50%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="norming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="62%"
+        y="50%"
+      >
+        norming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="storming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.2s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;31.25%;22.5%;26.25%;25%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="storming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="37%"
+        y="50%"
+      >
+        storming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="in-focus area okay js-area-standard"
+        height="100%"
+        id="forming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;0%;0%;0%;0%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="forming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="12%"
+        y="50%"
+      >
+        forming
+      </text>
+      ;
+    </g>
+  </g>
+</svg>
+`;
+
+exports[`test Focusable zones 2`] = `
+<svg
+  height={600}
+  id="stage"
+  width={800}>
+  <g
+    id="zones">
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="performing"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.6000000000000001s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;93.75%;67.5%;78.75%;75%" />
+      </rect>
+      <text
+        className="area-label"
+        id="performing-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="87%"
+        y="50%">
+        performing
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="norming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.4s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;62.5%;45%;52.5%;50%" />
+      </rect>
+      <text
+        className="area-label"
+        id="norming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="62%"
+        y="50%">
+        norming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
         className="in-focus area okay js-area-standard"
         height="100%"
         id="storming"
@@ -270,59 +542,548 @@ exports[`test Focusable zones 1`] = `
 </svg>
 `;
 
-exports[`test Focusable zones 2`] = `
-Object {
-  "CenterPoint": Point {
-    "x": 400,
-    "y": 300,
-  },
-  "Size": Size {
-    "height": 600,
-    "width": 800,
-  },
-  "UserChoices": Array [],
-  "UserList": Object {
-    "ShowUsers": true,
-    "Users": Array [
-      Object {
-        "Focus": "not-in-focus",
-        "Username": "Adam Hall",
-        "Y": 0,
-      },
-      Object {
-        "Focus": "not-in-focus",
-        "Username": "Caroline Hall",
-        "Y": 0,
-      },
-    ],
-  },
-  "zones": Object {
-    "forming": Object {
-      "events": undefined,
-      "focus": "not-in-focus",
-      "index": 0,
-      "label": "forming",
-    },
-    "norming": Object {
-      "events": undefined,
-      "focus": "not-in-focus",
-      "index": 2,
-      "label": "norming",
-    },
-    "performing": Object {
-      "events": undefined,
-      "focus": "not-in-focus",
-      "index": 3,
-      "label": "performing",
-    },
-    "storming": Object {
-      "events": undefined,
-      "focus": "in-focus",
-      "index": 1,
-      "label": "storming",
-    },
-  },
-}
+exports[`test Focusable zones 3`] = `
+<svg
+  height={600}
+  id="stage"
+  width={800}>
+  <g
+    id="zones">
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="performing"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.6000000000000001s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;93.75%;67.5%;78.75%;75%" />
+      </rect>
+      <text
+        className="area-label"
+        id="performing-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="87%"
+        y="50%">
+        performing
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="in-focus area okay js-area-standard"
+        height="100%"
+        id="norming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.4s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;62.5%;45%;52.5%;50%" />
+      </rect>
+      <text
+        className="area-label"
+        id="norming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="62%"
+        y="50%">
+        norming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="storming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.2s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;31.25%;22.5%;26.25%;25%" />
+      </rect>
+      <text
+        className="area-label"
+        id="storming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="37%"
+        y="50%">
+        storming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="forming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;0%;0%;0%;0%" />
+      </rect>
+      <text
+        className="area-label"
+        id="forming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="12%"
+        y="50%">
+        forming
+      </text>
+      ;
+    </g>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg id="stage">
+  <g id="zones">
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="performing"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.6000000000000001s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;93.75%;67.5%;78.75%;75%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="performing-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="87%"
+        y="50%"
+      >
+        performing
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="in-focus area okay js-area-standard"
+        height="100%"
+        id="norming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.4s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;62.5%;45%;52.5%;50%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="norming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="62%"
+        y="50%"
+      >
+        norming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="storming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.2s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;31.25%;22.5%;26.25%;25%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="storming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="37%"
+        y="50%"
+      >
+        storming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="forming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;0%;0%;0%;0%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="forming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="12%"
+        y="50%"
+      >
+        forming
+      </text>
+      ;
+    </g>
+  </g>
+</svg>
+`;
+
+exports[`test Focusable zones 4`] = `
+<svg
+  height={600}
+  id="stage"
+  width={800}>
+  <g
+    id="zones">
+    <g>
+      <rect
+        className="in-focus area okay js-area-standard"
+        height="100%"
+        id="performing"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.6000000000000001s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;93.75%;67.5%;78.75%;75%" />
+      </rect>
+      <text
+        className="area-label"
+        id="performing-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="87%"
+        y="50%">
+        performing
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="norming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.4s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;62.5%;45%;52.5%;50%" />
+      </rect>
+      <text
+        className="area-label"
+        id="norming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="62%"
+        y="50%">
+        norming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="storming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.2s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;31.25%;22.5%;26.25%;25%" />
+      </rect>
+      <text
+        className="area-label"
+        id="storming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="37%"
+        y="50%">
+        storming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        className="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="forming"
+        width="25%"
+        x="0"
+        y="0">
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;0%;0%;0%;0%" />
+      </rect>
+      <text
+        className="area-label"
+        id="forming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="12%"
+        y="50%">
+        forming
+      </text>
+      ;
+    </g>
+  </g>
+</svg>
+------------HTML PREVIEW---------------
+<svg id="stage">
+  <g id="zones">
+    <g>
+      <rect
+        class="in-focus area okay js-area-standard"
+        height="100%"
+        id="performing"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.6000000000000001s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;93.75%;67.5%;78.75%;75%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="performing-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="87%"
+        y="50%"
+      >
+        performing
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="norming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.4s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;62.5%;45%;52.5%;50%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="norming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="62%"
+        y="50%"
+      >
+        norming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="storming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0.2s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;31.25%;22.5%;26.25%;25%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="storming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="37%"
+        y="50%"
+      >
+        storming
+      </text>
+      ;
+    </g>
+    <g>
+      <rect
+        class="not-in-focus area okay js-area-standard"
+        height="100%"
+        id="forming"
+        width="25%"
+        x="0"
+        y="0"
+      >
+        <animate
+          attributeName="x"
+          attributeType="XML"
+          begin="0s"
+          dur="0.8s"
+          fill="freeze"
+          from="0%"
+          keyTimes="0; 0.3; 0.6; 0.8; 1"
+          to="20%"
+          values="0%;0%;0%;0%;0%"
+        >
+        </animate>
+      </rect>
+      <text
+        class="area-label"
+        id="forming-label"
+        text-anchor="middle"
+        textAnchor="middle"
+        x="12%"
+        y="50%"
+      >
+        forming
+      </text>
+      ;
+    </g>
+  </g>
+</svg>
 `;
 
 exports[`test Should show the component 1`] = `

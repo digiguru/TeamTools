@@ -3,7 +3,7 @@ import { ReduxUserHistoryArea} from "./Component";
 import { ComfortAppState } from "../Comfort/Model";
 import { IUserChoiceState } from "./Model";
 
-const mapStateToProps = (state: ComfortAppState, ownProps: IUserChoiceState): IUserChoiceState => {
+const mapStateToProps = (state: ComfortAppState): IUserChoiceState => {
     return {
       Choices    : state.UserChoices,
       CenterPoint: state.CenterPoint,
@@ -11,14 +11,8 @@ const mapStateToProps = (state: ComfortAppState, ownProps: IUserChoiceState): IU
     };
 };
 
-
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};
-
 export const ReduxUserHistoryConnector = connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(ReduxUserHistoryArea);
 
 // UserListConnector
