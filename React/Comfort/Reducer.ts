@@ -10,22 +10,22 @@ import { IUser } from "../User/Model";
 
 const initialSize: Size = new Size(800, 800);
 const initialState: ComfortAppState = {
-    Size: initialSize,
+    Size       : initialSize,
     CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
-    UserList : {
-        ShowUsers: true,
-        Users: [
+    UserList   : {
+    ShowUsers  : true,
+    Users      : [
             {Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
             {Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
         ]
     },
-    Zones : {
+    Zones      : {
         Comfort: {Name: "Comfort", Focus: "not-in-focus", Range: {Start: 0, End: 33}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
         Stretch: {Name: "Stretch", Focus: "not-in-focus", Range: {Start: 34, End: 66}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
-        Chaos: {Name: "Chaos", Focus: "not-in-focus", Range: {Start: 67, End: 100}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
+        Chaos  : {Name: "Chaos", Focus: "not-in-focus", Range: {Start: 67, End: 100}, Size: {Width: new DOMMeasurement("100%"), Height: new DOMMeasurement("100%")}}
     },
     ShowUserChoices: false,
-    UserChoices: []
+    UserChoices    : []
 };
 export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
     switch (action.type) {

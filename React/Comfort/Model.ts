@@ -4,8 +4,8 @@ import { ComfortZoneState } from "../ComfortZone/Model";
 import { IUserList, IUser } from "../User/Model";
 
 export class ComfortUserChoiceState {
-    User: IUser;
-    Zone: "Chaos" | "Stretch" | "Comfort";
+    User    : IUser;
+    Zone    : "Chaos" | "Stretch" | "Comfort";
     Distance: number;
 }
 
