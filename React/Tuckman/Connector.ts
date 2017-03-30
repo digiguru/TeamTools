@@ -4,10 +4,7 @@ import { ITuckmanModel } from "./Model";
 
 const mapStateToProps = (state: ITuckmanModel): ITuckmanModel => {
     return state;
-};/*
-const mapDispatchToProps = (dispatch) => {
-  return {};
-};*/
+};
 
 export const TuckmanConnector = connect(mapStateToProps)(TuckmanStage);
 

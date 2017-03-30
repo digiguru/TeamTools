@@ -44,7 +44,7 @@ export class GraphTuckmanBase {
 
     }
     public hide(): Thenable<number> {
-        
+
         const d3zones = d3.select("g#zones")
             .selectAll("rect")
                 .transition()
