@@ -10,12 +10,12 @@ import { StageConnector } from "../Stage/Connector";
 const renderizer = require("react-test-renderer");
 
 test("Should not mutate in any way", () => {
-    const myStore = createStore(comfortReactApp);
-    const originalState = myStore.getState();
-    const inputState = JSON.stringify(originalState);
+    debugger;
+    const myState = comfortReactApp(undefined, {type: "Startup"});
+    const initialState = JSON.stringify(myState);
     const checkAfterAction = (action) => {
-        myStore.dispatch(action);
-        expect(inputState).toEqual(JSON.stringify(originalState));
+        const currentState = comfortReactApp(myState, action);
+        expect(initialState).toEqual(JSON.stringify(myState));
     };
     checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
     checkAfterAction(Action.selectUser("Adam Hall"));
