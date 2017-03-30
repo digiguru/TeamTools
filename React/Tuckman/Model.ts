@@ -1,6 +1,7 @@
 import { IDOMMeasurement } from "../Models/IDomMeasurement";
 import { IStageState } from "../Stage/Model";
 import { IUserList, IUser } from "../User/Model";
+import { ITuckmanZone } from "../TuckmanZone/Model";
 
 export interface ITuckmanModel extends IStageState {
     zones?       : ITuckmanZoneList;
@@ -14,14 +15,8 @@ export interface ITuckmanZoneList {
     norming   : ITuckmanZone;
     performing: ITuckmanZone;
 }
-export interface ITuckmanZone {
-    focus : string;
-    index : number;
-    label : "forming" | "storming" | "norming" | "performing";
-    events: any;
-}
 export interface ITuckmanUserChoiceState {
-    user    : IUser;
+    User    : IUser;
     zone    : "forming" | "storming" | "norming" | "performing";
-    distance: number;
+    Distance: number;
 }

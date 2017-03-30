@@ -365,7 +365,6 @@ define("Stage/Model", ["require", "exports"], function (require, exports) {
 define("Stage/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.Stage = function (state) {
-        debugger;
         return React.createElement("svg", { id: "stage", width: state.Size.width, height: state.Size.height }, state.InnerBits);
     };
 });
@@ -485,16 +484,16 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "../3rdParty
         return ComfortZoneAction;
     }());
 });
-define("__tests__/ReduxComfort", ["require", "exports", "react", "../../3rdParty/redux.min", "Comfort/ComponentApp", "Comfort/Reducer", "../../3rdParty/react-redux.min", "Comfort/Actions", "Stage/Connector"], function (require, exports, React, redux_min_1, ComponentApp_1, Reducer_1, react_redux_min_1, Action, Connector_4) {
+define("__tests__/ComfortTests", ["require", "exports", "react", "../../3rdParty/redux.min", "Comfort/ComponentApp", "Comfort/Reducer", "../../3rdParty/react-redux.min", "Comfort/Actions", "Stage/Connector"], function (require, exports, React, redux_min_1, ComponentApp_1, Reducer_1, react_redux_min_1, Action, Connector_4) {
     "use strict";
     var renderizer = require("react-test-renderer");
     test("Should not mutate in any way", function () {
-        var myStore = redux_min_1.createStore(Reducer_1.comfortReactApp);
-        var originalState = myStore.getState();
-        var inputState = JSON.stringify(originalState);
+        debugger;
+        var myState = Reducer_1.comfortReactApp(undefined, { type: "Startup" });
+        var initialState = JSON.stringify(myState);
         var checkAfterAction = function (action) {
-            myStore.dispatch(action);
-            expect(inputState).toEqual(JSON.stringify(originalState));
+            var currentState = Reducer_1.comfortReactApp(myState, action);
+            expect(initialState).toEqual(JSON.stringify(myState));
         };
         checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
         checkAfterAction(Action.selectUser("Adam Hall"));
@@ -554,30 +553,15 @@ define("Animation/Component", ["require", "exports", "react"], function (require
     }(React.Component));
     exports.BouncyAnimation = BouncyAnimation;
 });
+define("TuckmanZone/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
 define("Tuckman/Model", ["require", "exports"], function (require, exports) {
     "use strict";
     ;
 });
-define("Tuckman/Component", ["require", "exports", "react", "Animation/Component", "User/Connector"], function (require, exports, React, Component_5, Connector_5) {
+define("TuckmanZone/Component", ["require", "exports", "react", "Animation/Component"], function (require, exports, React, Component_5) {
     "use strict";
-    /*state = focus: "not-in-focus",
-                width: props.width || "100%",
-                height: props.height || "100%",
-                onMouseEnter: Events.mouseEnter.bind(this),
-                onMouseLeave: Events.mouseLeave.bind(this),
-                onMouseUp: Events.mouseUp.bind(this),
-                onMouseDown: Events.mouseDown.bind(this) */
-    exports.TuckmanStage = function (state) {
-        var mod = state;
-        var perf = mod.zones.performing;
-        return React.createElement("g", null,
-            React.createElement("g", { id: "zones" },
-                React.createElement(exports.TuckmanZone, __assign({ label: "performing", index: 3 }, mod.zones.performing)),
-                React.createElement(exports.TuckmanZone, __assign({ label: "norming", index: 2 }, mod.zones.norming)),
-                React.createElement(exports.TuckmanZone, __assign({ label: "storming", index: 1 }, mod.zones.storming)),
-                React.createElement(exports.TuckmanZone, __assign({ label: "forming", index: 0 }, mod.zones.forming))),
-            React.createElement(Connector_5.ReduxUserConnector, null));
-    };
     exports.TuckmanZone = function (state) {
         var index = state.index || 0;
         var textID = state.label + "-label";
@@ -597,37 +581,12 @@ define("Tuckman/Component", ["require", "exports", "react", "Animation/Component
             <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;
         </g>;*/
         return React.createElement("g", null,
-            React.createElement("rect", { className: className, id: state.label, x: "0", y: "0", width: "25%", height: "100%" },
+            React.createElement("rect", { className: className, id: state.label, onMouseEnter: function () { return state.Events.onZoneOverFocus(state.label); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.label); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.label); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.username, state.label, state.maxWidth, event); }, x: "0", y: "0", width: "25%", height: "100%" },
                 React.createElement(Component_5.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
             React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, state.label),
             ";");
     };
 });
-/*
-<svg id="stage" width="800" height="800">
-            <g id="assets" fill-opacity="0.0">
-                <path id="asset-tick" stroke-miterlimit="4" stroke-width="0" stroke="#007f00" fill="#007f00" d="m216.77742,285.47641l89.687332,115.132935c45.697845,-103.041046 101.639099,-197.834396 191.554749,-287.832077c-67.294983,42.004333 -141.475403,121.768204 -204.841431,220.466995l-76.40065,-47.767853z"></path>
-            </g>
-
-
-
-            <g id="zones">
-                <rect class="area js-area-standard" id="storming" x="200" y="0" width="200" height="800"></rect>
-                <rect class="area js-area-standard" id="norming" x="400" y="0" width="200" height="800"></rect>
-                <rect class="area js-area-standard" id="performing" x="600" y="0" width="200" height="800"></rect>
-            </g>
-            <g id="history">
-            </g>
-            <text class="area-label" id="label-storming" text-anchor="middle" x="300" y="400">storming</text>
-            <text class="area-label" id="label-norming" text-anchor="middle" x="500" y="400">norming</text>
-            <text class="area-label" id="label-performing" text-anchor="middle" x="700" y="400">performing</text>
-
-            <rect id="clickable" width="800" height="800" fill-opacity="0.0"></rect>
-            <g id="users" transform="">
-
-            <g id="user0" class="user-group"><rect y="60" x="0" width="800" height="90" data-name="asdsa" data-id="user0"></rect><text class="username" y="120" x="60" data-name="asdsa" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asdsa</text></g><g id="user1" class="user-group"><rect y="150" x="0" width="800" height="90" data-name="asd" data-id="user1"></rect><text class="username" y="210" x="60" data-name="asd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">asd</text></g><g id="user2" class="user-group"><rect y="240" x="0" width="800" height="90" data-name="sadasd" data-id="user2"></rect><text class="username" y="300" x="60" data-name="sadasd" style="font-size: 60px; font-family: &quot;Share Tech Mono&quot;; fill: rgb(128, 128, 128);">sadasd</text></g></g>
-        </svg>
-        */
 define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.TuckmanActions = {
@@ -663,7 +622,88 @@ define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
     }
     exports.toggleChoiceVisibility = toggleChoiceVisibility;
 });
-define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "Models/Size", "Models/Point", "Tuckman/Actions"], function (require, exports, immutable_min_3, Size_2, Point_4, Actions_4) {
+define("TuckmanZone/Connector", ["require", "exports", "react-redux", "TuckmanZone/Component", "Tuckman/Actions", "Models/Point"], function (require, exports, react_redux_5, Component_6, Actions_4, Point_4) {
+    "use strict";
+    var mapStateToProps = function (state, props) {
+        var myState = state.zones[props.label];
+        myState.maxWidth = state.Size.width;
+        myState.username = state.CurrentUser ? state.CurrentUser.Username : "";
+        return myState;
+    };
+    var mapDispatchToProps = function (dispatch) {
+        return {
+            Events: {
+                onZoneMouseDown: function (zone) {
+                    dispatch(Actions_4.setZoneFocus(zone, "active"));
+                },
+                onZoneMouseUp: function (user, zone, maxDistance, event) {
+                    dispatch(Actions_4.setZoneFocus(zone, "not-in-focus"));
+                    var distance = event.clientX;
+                    var distanceAsPercentage = Point_4.Point.distanceAsPercentage(distance, maxDistance);
+                    dispatch(Actions_4.chooseZone(user, zone, distanceAsPercentage)); // user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number
+                },
+                onZoneOverFocus: function (zone) {
+                    dispatch(Actions_4.setZoneFocus(zone, "in-focus"));
+                },
+                onZoneOffFocus: function (zone) {
+                    dispatch(Actions_4.setZoneFocus(zone, "not-in-focus"));
+                }
+            }
+        };
+    };
+    exports.TuckmanZoneConnector = react_redux_5.connect(mapStateToProps, mapDispatchToProps)(Component_6.TuckmanZone);
+});
+define("TuckmanUserChoice/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
+define("TuckmanUserChoice/Component", ["require", "exports", "react"], function (require, exports, React) {
+    "use strict";
+    exports.TuckmanUserHistoryArea = function (state) {
+        if (state && state.Choices.length) {
+            var totalPoints_1 = state.Choices.length;
+            var maxWidth_1 = state.MaxWidth;
+            return React.createElement("g", { id: "history" }, state.Choices.map(function (userChoice, i) {
+                return React.createElement(exports.TuckmanUserHistory, { key: userChoice.User.Username, Index: i, MaxWidth: maxWidth_1, MaxHeight: state.MaxHeight, Distance: userChoice.Distance, TotalCount: totalPoints_1 });
+            }));
+        }
+        else {
+            return React.createElement("g", { id: "history" });
+        }
+    };
+    exports.TuckmanUserHistory = function (state) {
+        var x = ((state.MaxWidth / 100) * state.Distance);
+        var y = (state.MaxHeight / state.TotalCount) * state.Index;
+        return React.createElement("circle", { cx: x, cy: y, r: "10", className: "point" });
+    };
+});
+define("TuckmanUserChoice/Connector", ["require", "exports", "react-redux", "TuckmanUserChoice/Component"], function (require, exports, react_redux_6, Component_7) {
+    "use strict";
+    var mapStateToProps = function (state) {
+        return {
+            Choices: state.UserChoices,
+            MaxWidth: state.Size.width,
+            MaxHeight: state.Size.height
+        };
+    };
+    exports.TuckmanUserHistoryConnector = react_redux_6.connect(mapStateToProps)(Component_7.TuckmanUserHistoryArea);
+});
+// UserListConnector
+define("Tuckman/Component", ["require", "exports", "react", "User/Connector", "TuckmanZone/Connector", "TuckmanUserChoice/Connector"], function (require, exports, React, Connector_5, Connector_6, Connector_7) {
+    "use strict";
+    exports.TuckmanStage = function (state) {
+        var mod = state;
+        var perf = mod.zones.performing;
+        return React.createElement("g", null,
+            React.createElement("g", { id: "zones" },
+                React.createElement(Connector_6.TuckmanZoneConnector, { label: "performing" }),
+                React.createElement(Connector_6.TuckmanZoneConnector, { label: "norming" }),
+                React.createElement(Connector_6.TuckmanZoneConnector, { label: "storming" }),
+                React.createElement(Connector_6.TuckmanZoneConnector, { label: "forming" })),
+            React.createElement(Connector_5.ReduxUserConnector, null),
+            React.createElement(Connector_7.TuckmanUserHistoryConnector, null));
+    };
+});
+define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "Models/Size", "Models/Point", "Tuckman/Actions"], function (require, exports, immutable_min_3, Size_2, Point_5, Actions_5) {
     "use strict";
     var initialSize = new Size_2.Size(800, 800);
     var initialState = {
@@ -676,27 +716,27 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
         },
         Size: initialSize,
         zones: {
-            forming: { index: 0, label: "forming", focus: "not-in-focus", events: undefined },
-            storming: { index: 1, label: "storming", focus: "not-in-focus", events: undefined },
-            norming: { index: 2, label: "norming", focus: "not-in-focus", events: undefined },
-            performing: { index: 3, label: "performing", focus: "not-in-focus", events: undefined }
+            forming: { index: 0, label: "forming", focus: "not-in-focus", Events: undefined },
+            storming: { index: 1, label: "storming", focus: "not-in-focus", Events: undefined },
+            norming: { index: 2, label: "norming", focus: "not-in-focus", Events: undefined },
+            performing: { index: 3, label: "performing", focus: "not-in-focus", Events: undefined }
         },
         UserChoices: []
     };
     function tuckmanReactApp(state, action) {
         if (state === void 0) { state = initialState; }
         switch (action.type) {
-            case Actions_4.TuckmanActions.SET_STAGESIZE:
+            case Actions_5.TuckmanActions.SET_STAGESIZE:
                 return TuckmanZoneAction.setStageSize(state, action.width, action.height);
-            case Actions_4.TuckmanActions.SET_USERFOCUS:
+            case Actions_5.TuckmanActions.SET_USERFOCUS:
                 return TuckmanZoneAction.setUserFocus(state, action.user, action.focus);
-            case Actions_4.TuckmanActions.SET_ZONEFOCUS:
+            case Actions_5.TuckmanActions.SET_ZONEFOCUS:
                 return TuckmanZoneAction.setZoneFocus(state, action.area, action.focus);
-            case Actions_4.TuckmanActions.SELECT_USER:
+            case Actions_5.TuckmanActions.SELECT_USER:
                 return TuckmanZoneAction.selectUser(state, action.user);
-            case Actions_4.TuckmanActions.CHOOSE_ZONE:
+            case Actions_5.TuckmanActions.CHOOSE_ZONE:
                 return TuckmanZoneAction.chooseZone(state, action.user, action.area, action.distance);
-            case Actions_4.TuckmanActions.TOGGLE_CHOICES:
+            case Actions_5.TuckmanActions.TOGGLE_CHOICES:
                 return TuckmanZoneAction.toggleChoiceVisibility(state, action.visible);
             default:
                 return state;
@@ -707,8 +747,7 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
         function TuckmanZoneAction() {
         }
         TuckmanZoneAction.setStageSize = function (state, width, height) {
-            debugger;
-            var newCenter = new Point_4.Point(width / 2, height / 2);
+            var newCenter = new Point_5.Point(width / 2, height / 2);
             return immutable_min_3.fromJS(state)
                 .set("Size", new Size_2.Size(width, height))
                 .set("CenterPoint", newCenter)
@@ -765,14 +804,14 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
         return TuckmanZoneAction;
     }());
 });
-define("Tuckman/Connector", ["require", "exports", "react-redux", "Tuckman/Component"], function (require, exports, react_redux_5, Component_6) {
+define("Tuckman/Connector", ["require", "exports", "react-redux", "Tuckman/Component"], function (require, exports, react_redux_7, Component_8) {
     "use strict";
     var mapStateToProps = function (state) {
         return state;
     };
-    exports.TuckmanConnector = react_redux_5.connect(mapStateToProps)(Component_6.TuckmanStage);
+    exports.TuckmanConnector = react_redux_7.connect(mapStateToProps)(Component_8.TuckmanStage);
 });
-define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Reducer", "Tuckman/Actions", "Tuckman/Connector", "Stage/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_2, Action, Connector_6, Connector_7) {
+define("__tests__/TuckmanTests", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Reducer", "Tuckman/Actions", "Tuckman/Connector", "Stage/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_2, Action, Connector_8, Connector_9) {
     "use strict";
     var renderizer = require("react-test-renderer");
     test("Should not mutate in any way", function () {
@@ -798,8 +837,8 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty
         var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
         myStore.dispatch(Action.setStageSize(800, 600));
         var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
-            React.createElement(Connector_7.StageConnector, null,
-                React.createElement(Connector_6.TuckmanConnector, null))));
+            React.createElement(Connector_9.StageConnector, null,
+                React.createElement(Connector_8.TuckmanConnector, null))));
         myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
         expect(component.toJSON()).toMatchSnapshot();
         myStore.dispatch(Action.setZoneFocus("forming", "not-in-focus"));
@@ -817,8 +856,8 @@ define("__tests__/TuckmanModel", ["require", "exports", "react", "../../3rdParty
         var myStore = redux_min_2.createStore(Reducer_2.tuckmanReactApp);
         myStore.dispatch(Action.setStageSize(800, 600));
         var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
-            React.createElement(Connector_7.StageConnector, null,
-                React.createElement(Connector_6.TuckmanConnector, null))));
+            React.createElement(Connector_9.StageConnector, null,
+                React.createElement(Connector_8.TuckmanConnector, null))));
         expect(component.toJSON()).toMatchSnapshot();
         myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
         expect(component.toJSON()).toMatchSnapshot();
@@ -844,22 +883,22 @@ define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (r
     }
     exports.getWidthHeight = getWidthHeight;
 });
-define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper", "Stage/Connector"], function (require, exports, React, Redux, ComponentApp_2, Reducer_3, react_dom_1, react_redux_6, Actions_5, WindowHelper_1, Connector_8) {
+define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper", "Stage/Connector"], function (require, exports, React, Redux, ComponentApp_2, Reducer_3, react_dom_1, react_redux_8, Actions_6, WindowHelper_1, Connector_10) {
     "use strict";
     exports.myStore = Redux.createStore(Reducer_3.comfortReactApp);
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
     });
-    react_dom_1.render(React.createElement(react_redux_6.Provider, { store: exports.myStore },
-        React.createElement(Connector_8.StageConnector, null,
+    react_dom_1.render(React.createElement(react_redux_8.Provider, { store: exports.myStore },
+        React.createElement(Connector_10.StageConnector, null,
             React.createElement(ComponentApp_2.ComfortApp, null))), document.getElementById("comfort"));
     function resizeImage() {
         var size = WindowHelper_1.getWidthHeight();
         if (size.width > size.height) {
-            exports.myStore.dispatch(Actions_5.setStageSize(size.height, size.height));
+            exports.myStore.dispatch(Actions_6.setStageSize(size.height, size.height));
         }
         else {
-            exports.myStore.dispatch(Actions_5.setStageSize(size.width, size.width));
+            exports.myStore.dispatch(Actions_6.setStageSize(size.width, size.width));
         }
     }
     exports.resizeImage = resizeImage;
@@ -867,17 +906,17 @@ define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/Compon
 });
 // Stop listening to state updates
 // unsubscribe(); ;
-define("Shared/SVGEvents", ["require", "exports", "Models/Point"], function (require, exports, Point_5) {
+define("Shared/SVGEvents", ["require", "exports", "Models/Point"], function (require, exports, Point_6) {
     "use strict";
     var SVGEvents = (function () {
         function SVGEvents() {
         }
         SVGEvents.getDistance = function (x, y, target) {
-            return Point_5.Point.distance(new Point_5.Point(x, y), SVGEvents.getCenter(target));
+            return Point_6.Point.distance(new Point_6.Point(x, y), SVGEvents.getCenter(target));
         };
         SVGEvents.getCenter = function (target) {
             var rect = target.getBoundingClientRect();
-            return new Point_5.Point(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
+            return new Point_6.Point(rect.left + (rect.width / 2), rect.top + (rect.height / 2));
         };
         return SVGEvents;
     }());
@@ -940,22 +979,22 @@ require(["Comfort/Store"], function (u) {
 require(["Tuckman/Store"], function (u) {
     u.resizeImage();
 });
-define("Tuckman/Store", ["require", "exports", "react", "redux", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper", "Tuckman/Connector", "Stage/Connector", "Tuckman/Reducer"], function (require, exports, React, Redux, react_dom_2, react_redux_7, Actions_6, WindowHelper_2, Connector_9, Connector_10, Reducer_4) {
+define("Tuckman/Store", ["require", "exports", "react", "redux", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper", "Tuckman/Connector", "Stage/Connector", "Tuckman/Reducer"], function (require, exports, React, Redux, react_dom_2, react_redux_9, Actions_7, WindowHelper_2, Connector_11, Connector_12, Reducer_4) {
     "use strict";
     exports.myStore = Redux.createStore(Reducer_4.tuckmanReactApp);
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
     });
-    react_dom_2.render(React.createElement(react_redux_7.Provider, { store: exports.myStore },
-        React.createElement(Connector_10.StageConnector, null,
-            React.createElement(Connector_9.TuckmanConnector, null))), document.getElementById("tuckman"));
+    react_dom_2.render(React.createElement(react_redux_9.Provider, { store: exports.myStore },
+        React.createElement(Connector_12.StageConnector, null,
+            React.createElement(Connector_11.TuckmanConnector, null))), document.getElementById("tuckman"));
     function resizeImage() {
         var size = WindowHelper_2.getWidthHeight();
         if (size.width > size.height) {
-            exports.myStore.dispatch(Actions_6.setStageSize(size.height, size.height));
+            exports.myStore.dispatch(Actions_7.setStageSize(size.height, size.height));
         }
         else {
-            exports.myStore.dispatch(Actions_6.setStageSize(size.width, size.width));
+            exports.myStore.dispatch(Actions_7.setStageSize(size.width, size.width));
         }
     }
     exports.resizeImage = resizeImage;

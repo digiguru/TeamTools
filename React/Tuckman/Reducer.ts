@@ -20,10 +20,10 @@ const initialState: ITuckmanModel = {
     },
     Size: initialSize,
     zones: {
-        forming   : {index: 0, label: "forming",    focus: "not-in-focus", events: undefined},
-        storming  : {index: 1, label: "storming",   focus: "not-in-focus", events: undefined},
-        norming   : {index: 2, label: "norming",    focus: "not-in-focus", events: undefined},
-        performing: {index: 3, label: "performing", focus: "not-in-focus", events: undefined}
+        forming   : {index: 0, label: "forming",    focus: "not-in-focus", Events: undefined},
+        storming  : {index: 1, label: "storming",   focus: "not-in-focus", Events: undefined},
+        norming   : {index: 2, label: "norming",    focus: "not-in-focus", Events: undefined},
+        performing: {index: 3, label: "performing", focus: "not-in-focus", Events: undefined}
     },
     UserChoices: []
     /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),

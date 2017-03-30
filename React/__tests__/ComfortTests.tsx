@@ -33,6 +33,7 @@ test("Should not mutate in any way", () => {
 test("Should show the component", () => {
     // Arrange
     const myStore = createStore(comfortReactApp);
+
     const component = renderizer.create(
         <Provider store={myStore}>
             <StageConnector>
@@ -40,6 +41,7 @@ test("Should show the component", () => {
             </StageConnector>
         </Provider>
     );
+
     expect(component.toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setUserFocus("Adam Hall", "in-focus"));
     expect(component.toJSON()).toMatchSnapshot();
@@ -58,6 +60,7 @@ test("Should allow shrinking", () => {
             </StageConnector>
         </Provider>
     );
+
     myStore.dispatch(Action.chooseZone("Adam Hall", "Stretch", 50));
     expect(component.toJSON()).toMatchSnapshot();
 
