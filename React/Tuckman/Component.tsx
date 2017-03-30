@@ -17,8 +17,8 @@ export const TuckmanApp = () => {
 };
 
 export const TuckmanStage = (state: ITuckmanModel) => {
-    const mod: ITuckmanModel = state;
-    const perf: ITuckmanZone = mod.zones.performing;
+    const mod : ITuckmanModel = state;
+    const perf: ITuckmanZone  = mod.zones.performing;
     return <g id="zones">
                 <TuckmanZone label="performing" index={3} {...mod.zones.performing} />
                 <TuckmanZone label="norming"    index={2} {...mod.zones.norming} />

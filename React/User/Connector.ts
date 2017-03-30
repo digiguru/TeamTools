@@ -9,7 +9,7 @@ import { fromJS } from "../3rdParty/immutable.min";
 const mapStateToProps = (state: ComfortAppState, ownProps: IUserList): IUserList => {
     return {
       ShowUsers: state.UserList.ShowUsers,
-      Users: state.UserList.Users.map((u, i) => {
+      Users    : state.UserList.Users.map((u, i) => {
         return fromJS(u).set("Y", (i * 90) + 60).toJS();
       })
     };
