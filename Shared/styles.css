@@ -2,7 +2,9 @@
 .user-group text {
     font-size: 60px; font-family: "Share Tech Mono"; fill: rgb(128, 128, 128);
 }
-
+.hidden {
+    display: none;
+}
 #stage, textarea, button, input {
     font-family: 'Share Tech Mono', sans-serif;
 }

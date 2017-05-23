@@ -8,8 +8,10 @@ import { getWidthHeight } from "../Shared/WindowHelper";
 import { TuckmanConnector } from "./Connector";
 import { StageConnector } from "../Stage/Connector";
 import { tuckmanReactApp } from "./Reducer";
-
+import { InMemoryBrowserUsers } from "../../Shared/InMemoryBrowserUsers"
 export const myStore = Redux.createStore(tuckmanReactApp);
+const users = new InMemoryBrowserUsers(window);
+myStore.dispatch(setStageSize(size.height, size.height));
 
 
 const unsubscribe = myStore.subscribe(() =>

@@ -5,7 +5,7 @@ import { fromJS, List, Map } from "../3rdParty/immutable.min";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
-import { IUser } from "../User/Model";
+import { IUser, IUserList } from "../User/Model";
 
 
 const initialSize: Size = new Size(800, 800);
@@ -59,6 +59,9 @@ class ComfortZoneAction {
             .setIn(["Zones", "Stretch", "Focus"], area === "Stretch"  ? focus : "not-in-focus")
             .setIn(["Zones", "Chaos", "Focus"], area === "Chaos"  ? focus : "not-in-focus").toJS();
     }
+
+    
+
     static setUserFocus(state: ComfortAppState, user: string, focus: "in-focus" | "active" | "not-in-focus"): ComfortAppState {
         const originalList = List(state.UserList.Users);
         const newUserList = originalList.update(
@@ -77,6 +80,11 @@ class ComfortZoneAction {
             .setIn(["UserList", "ShowUsers"], false);
 
         return data.toJS();
+    }
+
+    static setUsers(state: ComfortAppState, userList: IUserList): ComfortAppState {
+        return fromJS(state)
+            .setIn("UserList", userList).toJS();
     }
 
     static chooseZone(

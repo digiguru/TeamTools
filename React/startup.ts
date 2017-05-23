@@ -16,9 +16,21 @@ requirejs.config( {
         "react-redux"        : "../3rdParty/react-redux.min",
     }
 });
+
 require(["Comfort/Store"], (u) => {
     u.resizeImage();
 });
 require(["Tuckman/Store"], (u) => {
     u.resizeImage();
 });
+
+(function setupFormViewability() {
+    document.getElementById("go-tuckman").onclick = function () {
+        document.getElementById("comfort").className = "hidden";
+        document.getElementById("tuckman").className = "";
+    };
+    document.getElementById("go-comfort").onclick = function () {
+        document.getElementById("comfort").className = "";
+        document.getElementById("tuckman").className = "hidden";
+    };
+})();

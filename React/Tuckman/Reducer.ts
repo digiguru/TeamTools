@@ -6,7 +6,7 @@ import { DOMMeasurement } from "../Models/IDomMeasurement";
 import { Size } from "../Models/Size";
 import { Point } from "../Models/Point";
 import { TuckmanActions } from "./Actions";
-import { IUser } from "../User/Model";
+import { IUser, IUserList } from "../User/Model";
 
 
 const initialSize: Size = new Size(800, 800);
@@ -65,6 +65,7 @@ class TuckmanZoneAction {
             .set("CenterPoint", newCenter)
             .toJS();
     }
+
     static setZoneFocus(state: ITuckmanModel, area: "forming" | "storming" | "norming" | "performing", focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
         return fromJS(state)
             .setIn(["zones", "forming", "focus"], area === "forming" ? focus : "not-in-focus")
@@ -72,6 +73,7 @@ class TuckmanZoneAction {
             .setIn(["zones", "norming", "focus"], area === "norming"  ? focus : "not-in-focus")
             .setIn(["zones", "performing", "focus"], area === "performing"  ? focus : "not-in-focus").toJS();
     }
+
     static setUserFocus(state: ITuckmanModel, user: string, focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
         const originalList = List(state.UserList.Users);
         const newUserList = originalList.update(
@@ -80,6 +82,12 @@ class TuckmanZoneAction {
         return fromJS(state)
             .setIn(["UserList", "Users"], newUserList).toJS();
     }
+
+    static setUsers(state: ITuckmanModel, userList: IUserList): ITuckmanModel {
+        return fromJS(state)
+            .setIn("UserList", userList).toJS();
+    }
+
     static selectUser(state: ITuckmanModel, user: String): ITuckmanModel {
         const originalList = List(state.UserList.Users);
         const item: IUser = originalList.find(item => item.Username === user);
@@ -114,9 +122,10 @@ class TuckmanZoneAction {
             .setIn(["UserList", "Users"], newUserList)
             .setIn(["UserList", "ShowUsers"], showUserChoice).toJS();
     }
+
     static toggleChoiceVisibility(state: ITuckmanModel, visible: boolean): ITuckmanModel {
         // Set "showUserChoices" to true
         return Map(state)
             .set("ShowUserChoices", visible).toJS();
-    };
+    }
 }

@@ -979,6 +979,14 @@ require(["Comfort/Store"], function (u) {
 require(["Tuckman/Store"], function (u) {
     u.resizeImage();
 });
+document.getElementById("go-tuckman").onclick = function () {
+    document.getElementById("comfort").className = "hidden";
+    document.getElementById("tuckman").className = "";
+};
+document.getElementById("go-comfort").onclick = function () {
+    document.getElementById("comfort").className = "";
+    document.getElementById("tuckman").className = "hidden";
+};
 define("Tuckman/Store", ["require", "exports", "react", "redux", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper", "Tuckman/Connector", "Stage/Connector", "Tuckman/Reducer"], function (require, exports, React, Redux, react_dom_2, react_redux_9, Actions_7, WindowHelper_2, Connector_11, Connector_12, Reducer_4) {
     "use strict";
     exports.myStore = Redux.createStore(Reducer_4.tuckmanReactApp);

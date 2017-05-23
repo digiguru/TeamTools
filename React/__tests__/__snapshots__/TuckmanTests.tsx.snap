@@ -11,6 +11,10 @@ exports[`test Focusable zones 1`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="performing"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -41,6 +45,10 @@ exports[`test Focusable zones 1`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="norming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -71,6 +79,10 @@ exports[`test Focusable zones 1`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="storming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -101,6 +113,10 @@ exports[`test Focusable zones 1`] = `
           className="in-focus area okay js-area-standard"
           height="100%"
           id="forming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -169,6 +185,8 @@ exports[`test Focusable zones 1`] = `
         </text>
       </g>
     </g>
+    <g
+      id="history" />
   </g>
 </svg>
 ------------HTML PREVIEW---------------
@@ -347,6 +365,7 @@ exports[`test Focusable zones 1`] = `
         </text>
       </g>
     </g>
+    <g id="history"></g>
   </g>
 </svg>
 `;
@@ -364,6 +383,10 @@ exports[`test Focusable zones 2`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="performing"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -394,6 +417,10 @@ exports[`test Focusable zones 2`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="norming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -424,6 +451,10 @@ exports[`test Focusable zones 2`] = `
           className="in-focus area okay js-area-standard"
           height="100%"
           id="storming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -454,6 +485,10 @@ exports[`test Focusable zones 2`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="forming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -522,6 +557,8 @@ exports[`test Focusable zones 2`] = `
         </text>
       </g>
     </g>
+    <g
+      id="history" />
   </g>
 </svg>
 ------------HTML PREVIEW---------------
@@ -700,6 +737,7 @@ exports[`test Focusable zones 2`] = `
         </text>
       </g>
     </g>
+    <g id="history"></g>
   </g>
 </svg>
 `;
@@ -717,6 +755,10 @@ exports[`test Focusable zones 3`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="performing"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -747,6 +789,10 @@ exports[`test Focusable zones 3`] = `
           className="in-focus area okay js-area-standard"
           height="100%"
           id="norming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -777,6 +823,10 @@ exports[`test Focusable zones 3`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="storming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -807,6 +857,10 @@ exports[`test Focusable zones 3`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="forming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -875,6 +929,8 @@ exports[`test Focusable zones 3`] = `
         </text>
       </g>
     </g>
+    <g
+      id="history" />
   </g>
 </svg>
 ------------HTML PREVIEW---------------
@@ -1053,6 +1109,7 @@ exports[`test Focusable zones 3`] = `
         </text>
       </g>
     </g>
+    <g id="history"></g>
   </g>
 </svg>
 `;
@@ -1070,6 +1127,10 @@ exports[`test Focusable zones 4`] = `
           className="in-focus area okay js-area-standard"
           height="100%"
           id="performing"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1100,6 +1161,10 @@ exports[`test Focusable zones 4`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="norming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1130,6 +1195,10 @@ exports[`test Focusable zones 4`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="storming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1160,6 +1229,10 @@ exports[`test Focusable zones 4`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="forming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1228,6 +1301,8 @@ exports[`test Focusable zones 4`] = `
         </text>
       </g>
     </g>
+    <g
+      id="history" />
   </g>
 </svg>
 ------------HTML PREVIEW---------------
@@ -1406,6 +1481,7 @@ exports[`test Focusable zones 4`] = `
         </text>
       </g>
     </g>
+    <g id="history"></g>
   </g>
 </svg>
 `;
@@ -1423,6 +1499,10 @@ exports[`test Should show the component 1`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="performing"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1453,6 +1533,10 @@ exports[`test Should show the component 1`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="norming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1483,6 +1567,10 @@ exports[`test Should show the component 1`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="storming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1513,6 +1601,10 @@ exports[`test Should show the component 1`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="forming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1581,6 +1673,8 @@ exports[`test Should show the component 1`] = `
         </text>
       </g>
     </g>
+    <g
+      id="history" />
   </g>
 </svg>
 ------------HTML PREVIEW---------------
@@ -1759,6 +1853,7 @@ exports[`test Should show the component 1`] = `
         </text>
       </g>
     </g>
+    <g id="history"></g>
   </g>
 </svg>
 `;
@@ -1776,6 +1871,10 @@ exports[`test Should show the component 2`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="performing"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1806,6 +1905,10 @@ exports[`test Should show the component 2`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="norming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1836,6 +1939,10 @@ exports[`test Should show the component 2`] = `
           className="not-in-focus area okay js-area-standard"
           height="100%"
           id="storming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1866,6 +1973,10 @@ exports[`test Should show the component 2`] = `
           className="in-focus area okay js-area-standard"
           height="100%"
           id="forming"
+          onMouseDown={[Function]}
+          onMouseEnter={[Function]}
+          onMouseLeave={[Function]}
+          onMouseUp={[Function]}
           width="25%"
           x="0"
           y="0">
@@ -1934,6 +2045,8 @@ exports[`test Should show the component 2`] = `
         </text>
       </g>
     </g>
+    <g
+      id="history" />
   </g>
 </svg>
 ------------HTML PREVIEW---------------
@@ -2112,6 +2225,7 @@ exports[`test Should show the component 2`] = `
         </text>
       </g>
     </g>
+    <g id="history"></g>
   </g>
 </svg>
 `;
