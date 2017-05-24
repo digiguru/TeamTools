@@ -11,7 +11,8 @@
         "traceResolution"           : true,
         "declaration"               : false,
         "outFile"                   : "js/compiled.js",
-        "jsx"                       : "react"
+        "jsx"                       : "react"/*,
+        "allowJs"                   : true*/
     }
 
 }

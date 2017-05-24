@@ -11,12 +11,16 @@ var __assign = (this && this.__assign) || Object.assign || function(t) {
     }
     return t;
 };
-define("Comfort/Actions", ["require", "exports"], function (require, exports) {
+define("React/User/Model", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
+define("React/Comfort/Actions", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.ComfortActions = {
         SET_STAGESIZE: "SET_STAGESIZE",
         SET_ZONEFOCUS: "SET_ZONEFOCUS",
         SET_USERFOCUS: "SET_USERFOCUS",
+        SET_USERLIST: "SET_USERLIST",
         SELECT_USER: "SELECT_USER",
         CHOOSE_ZONE: "CHOOSE_ZONE",
         TOGGLE_CHOICES: "TOGGLE_CHOICES"
@@ -37,6 +41,10 @@ define("Comfort/Actions", ["require", "exports"], function (require, exports) {
         return { type: exports.ComfortActions.SELECT_USER, user: user };
     }
     exports.selectUser = selectUser;
+    function setUserList(userList) {
+        return { type: exports.ComfortActions.SET_USERLIST, userList: userList };
+    }
+    exports.setUserList = setUserList;
     function chooseZone(user, area, distance) {
         return { type: exports.ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance };
     }
@@ -46,7 +54,7 @@ define("Comfort/Actions", ["require", "exports"], function (require, exports) {
     }
     exports.toggleChoiceVisibility = toggleChoiceVisibility;
 });
-define("Models/Polar", ["require", "exports"], function (require, exports) {
+define("React/Models/Polar", ["require", "exports"], function (require, exports) {
     "use strict";
     var Polar = (function () {
         function Polar(radius, angle) {
@@ -57,7 +65,7 @@ define("Models/Polar", ["require", "exports"], function (require, exports) {
     }());
     exports.Polar = Polar;
 });
-define("Models/Point", ["require", "exports", "Models/Polar"], function (require, exports, Polar_1) {
+define("React/Models/Point", ["require", "exports", "React/Models/Polar"], function (require, exports, Polar_1) {
     "use strict";
     var Point = (function () {
         function Point(x, y) {
@@ -106,7 +114,7 @@ define("Models/Point", ["require", "exports", "Models/Polar"], function (require
     }());
     exports.Point = Point;
 });
-define("Models/IDomMeasurement", ["require", "exports"], function (require, exports) {
+define("React/Models/IDomMeasurement", ["require", "exports"], function (require, exports) {
     "use strict";
     var DOMMeasurement = (function () {
         function DOMMeasurement(input) {
@@ -131,7 +139,7 @@ define("Models/IDomMeasurement", ["require", "exports"], function (require, expo
     }());
     exports.DOMMeasurement = DOMMeasurement;
 });
-define("Models/Size", ["require", "exports"], function (require, exports) {
+define("React/Models/Size", ["require", "exports"], function (require, exports) {
     "use strict";
     var Size = (function () {
         function Size(width, height) {
@@ -158,10 +166,7 @@ define("Models/Size", ["require", "exports"], function (require, exports) {
     }());
     exports.Size = Size;
 });
-define("User/Model", ["require", "exports"], function (require, exports) {
-    "use strict";
-});
-define("ComfortZone/Model", ["require", "exports"], function (require, exports) {
+define("React/ComfortZone/Model", ["require", "exports"], function (require, exports) {
     "use strict";
     var ComfortZoneRangeState = (function () {
         function ComfortZoneRangeState() {
@@ -176,7 +181,7 @@ define("ComfortZone/Model", ["require", "exports"], function (require, exports) 
     }());
     exports.ComfortZoneState = ComfortZoneState;
 });
-define("Comfort/Model", ["require", "exports"], function (require, exports) {
+define("React/Comfort/Model", ["require", "exports"], function (require, exports) {
     "use strict";
     var ComfortUserChoiceState = (function () {
         function ComfortUserChoiceState() {
@@ -205,7 +210,7 @@ define("Comfort/Model", ["require", "exports"], function (require, exports) {
     }(ComfortAppState));
     exports.ComfortAppStateWithChildren = ComfortAppStateWithChildren;
 });
-define("ComfortZone/Component", ["require", "exports", "react"], function (require, exports, React) {
+define("React/ComfortZone/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.ReduxChaosArea = function (state) {
         var username = state.User && state.User.Username ? state.User.Username : "Adam Hall";
@@ -226,7 +231,7 @@ define("ComfortZone/Component", ["require", "exports", "react"], function (requi
             React.createElement("text", { className: "area-label", id: "label-stretch", "text-anchor": "middle", textAnchor: "middle", x: "50%", y: "50%" }, "comfort"));
     };
 });
-define("ComfortZone/Connector", ["require", "exports", "react-redux", "Comfort/Actions", "ComfortZone/Component", "Models/Point"], function (require, exports, react_redux_1, Actions_1, Component_1, Point_1) {
+define("React/ComfortZone/Connector", ["require", "exports", "react-redux", "React/Comfort/Actions", "React/ComfortZone/Component", "React/Models/Point"], function (require, exports, react_redux_1, Actions_1, Component_1, Point_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
         var maxDistance = state.Size.shortest();
@@ -273,7 +278,7 @@ define("ComfortZone/Connector", ["require", "exports", "react-redux", "Comfort/A
     exports.ReduxStretchConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Component_1.ReduxStretchArea);
     exports.ReduxComfortConnector = react_redux_1.connect(mapStateToProps, mapDispatchToProps)(Component_1.ReduxComfortArea);
 });
-define("User/Component", ["require", "exports", "react"], function (require, exports, React) {
+define("React/User/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.ReduxUserList = function (state) {
         var className = state.ShowUsers ? "appear" : "disappear";
@@ -289,7 +294,7 @@ define("User/Component", ["require", "exports", "react"], function (require, exp
             React.createElement("text", { className: "username", y: textY, x: "60" }, state.Username));
     };
 });
-define("User/Connector", ["require", "exports", "react-redux", "Comfort/Actions", "User/Component", "../3rdParty/immutable.min"], function (require, exports, react_redux_2, Actions_2, Component_2, immutable_min_1) {
+define("React/User/Connector", ["require", "exports", "react-redux", "React/Comfort/Actions", "React/User/Component", "../3rdParty/immutable.min"], function (require, exports, react_redux_2, Actions_2, Component_2, immutable_min_1) {
     "use strict";
     var mapStateToProps = function (state, ownProps) {
         return {
@@ -321,10 +326,10 @@ define("User/Connector", ["require", "exports", "react-redux", "Comfort/Actions"
     exports.ReduxUserConnector = react_redux_2.connect(mapStateToProps, mapDispatchToProps)(Component_2.ReduxUserList);
 });
 // UserListConnector 
-define("ComfortUserChoice/Model", ["require", "exports"], function (require, exports) {
+define("React/ComfortUserChoice/Model", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("ComfortUserChoice/Component", ["require", "exports", "react", "Models/Point", "Models/Polar"], function (require, exports, React, Point_2, Polar_2) {
+define("React/ComfortUserChoice/Component", ["require", "exports", "react", "React/Models/Point", "React/Models/Polar"], function (require, exports, React, Point_2, Polar_2) {
     "use strict";
     exports.ReduxUserHistoryArea = function (state) {
         if (state && state.Choices.length) {
@@ -347,7 +352,7 @@ define("ComfortUserChoice/Component", ["require", "exports", "react", "Models/Po
         return React.createElement("circle", { cx: point.x, cy: point.y, r: "10", className: "point" });
     };
 });
-define("ComfortUserChoice/Connector", ["require", "exports", "react-redux", "ComfortUserChoice/Component"], function (require, exports, react_redux_3, Component_3) {
+define("React/ComfortUserChoice/Connector", ["require", "exports", "react-redux", "React/ComfortUserChoice/Component"], function (require, exports, react_redux_3, Component_3) {
     "use strict";
     var mapStateToProps = function (state) {
         return {
@@ -359,22 +364,22 @@ define("ComfortUserChoice/Connector", ["require", "exports", "react-redux", "Com
     exports.ReduxUserHistoryConnector = react_redux_3.connect(mapStateToProps)(Component_3.ReduxUserHistoryArea);
 });
 // UserListConnector
-define("Stage/Model", ["require", "exports"], function (require, exports) {
+define("React/Stage/Model", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("Stage/Component", ["require", "exports", "react"], function (require, exports, React) {
+define("React/Stage/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.Stage = function (state) {
         return React.createElement("svg", { id: "stage", width: state.Size.width, height: state.Size.height }, state.InnerBits);
     };
 });
-define("Stage/Connector", ["require", "exports", "react-redux", "Stage/Component"], function (require, exports, react_redux_4, Component_4) {
+define("React/Stage/Connector", ["require", "exports", "react-redux", "React/Stage/Component"], function (require, exports, react_redux_4, Component_4) {
     "use strict";
     exports.StageConnector = react_redux_4.connect(function (state, props) {
         return { Size: state.Size, InnerBits: props.children };
     })(Component_4.Stage);
 });
-define("Comfort/ComponentApp", ["require", "exports", "react", "ComfortZone/Connector", "User/Connector", "ComfortUserChoice/Connector"], function (require, exports, React, Connector_1, Connector_2, Connector_3) {
+define("React/Comfort/ComponentApp", ["require", "exports", "react", "React/ComfortZone/Connector", "React/User/Connector", "React/ComfortUserChoice/Connector"], function (require, exports, React, Connector_1, Connector_2, Connector_3) {
     "use strict";
     exports.ComfortApp = function () { return (React.createElement("g", null,
         React.createElement(Connector_1.ReduxChaosConnector, { Name: "Chaos" }),
@@ -383,7 +388,7 @@ define("Comfort/ComponentApp", ["require", "exports", "react", "ComfortZone/Conn
         React.createElement(Connector_2.ReduxUserConnector, null),
         React.createElement(Connector_3.ReduxUserHistoryConnector, null))); };
 });
-define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "../3rdParty/immutable.min", "Models/Point", "Models/Size", "Models/IDomMeasurement"], function (require, exports, Actions_3, immutable_min_2, Point_3, Size_1, IDomMeasurement_1) {
+define("React/Comfort/Reducer", ["require", "exports", "React/Comfort/Actions", "../3rdParty/immutable.min", "React/Models/Point", "React/Models/Size", "React/Models/IDomMeasurement"], function (require, exports, Actions_3, immutable_min_2, Point_3, Size_1, IDomMeasurement_1) {
     "use strict";
     var initialSize = new Size_1.Size(800, 800);
     var initialState = {
@@ -456,6 +461,10 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "../3rdParty
                 .setIn(["UserList", "ShowUsers"], false);
             return data.toJS();
         };
+        ComfortZoneAction.setUsers = function (state, userList) {
+            return immutable_min_2.fromJS(state)
+                .setIn("UserList", userList).toJS();
+        };
         ComfortZoneAction.chooseZone = function (state, user, area, distance) {
             // Add the user choice
             var newUserChoices = immutable_min_2.List(state.UserChoices).push({
@@ -484,7 +493,7 @@ define("Comfort/Reducer", ["require", "exports", "Comfort/Actions", "../3rdParty
         return ComfortZoneAction;
     }());
 });
-define("__tests__/ComfortTests", ["require", "exports", "react", "../../3rdParty/redux.min", "Comfort/ComponentApp", "Comfort/Reducer", "../../3rdParty/react-redux.min", "Comfort/Actions", "Stage/Connector"], function (require, exports, React, redux_min_1, ComponentApp_1, Reducer_1, react_redux_min_1, Action, Connector_4) {
+define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3rdParty/redux.min", "React/Comfort/ComponentApp", "React/Comfort/Reducer", "../../3rdParty/react-redux.min", "React/Comfort/Actions", "React/Stage/Connector"], function (require, exports, React, redux_min_1, ComponentApp_1, Reducer_1, react_redux_min_1, Action, Connector_4) {
     "use strict";
     var renderizer = require("react-test-renderer");
     test("Should not mutate in any way", function () {
@@ -527,7 +536,7 @@ define("__tests__/ComfortTests", ["require", "exports", "react", "../../3rdParty
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
-define("Animation/Component", ["require", "exports", "react"], function (require, exports, React) {
+define("React/Animation/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     var BouncyAnimation = (function (_super) {
         __extends(BouncyAnimation, _super);
@@ -553,14 +562,14 @@ define("Animation/Component", ["require", "exports", "react"], function (require
     }(React.Component));
     exports.BouncyAnimation = BouncyAnimation;
 });
-define("TuckmanZone/Model", ["require", "exports"], function (require, exports) {
+define("React/TuckmanZone/Model", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("Tuckman/Model", ["require", "exports"], function (require, exports) {
+define("React/Tuckman/Model", ["require", "exports"], function (require, exports) {
     "use strict";
     ;
 });
-define("TuckmanZone/Component", ["require", "exports", "react", "Animation/Component"], function (require, exports, React, Component_5) {
+define("React/TuckmanZone/Component", ["require", "exports", "react", "React/Animation/Component"], function (require, exports, React, Component_5) {
     "use strict";
     exports.TuckmanZone = function (state) {
         var index = state.index || 0;
@@ -587,12 +596,13 @@ define("TuckmanZone/Component", ["require", "exports", "react", "Animation/Compo
             ";");
     };
 });
-define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
+define("React/Tuckman/Actions", ["require", "exports"], function (require, exports) {
     "use strict";
     exports.TuckmanActions = {
         SET_STAGESIZE: "SET_STAGESIZE",
         SET_ZONEFOCUS: "SET_ZONEFOCUS",
         SET_USERFOCUS: "SET_USERFOCUS",
+        SET_USERLIST: "SET_USERLIST",
         SELECT_USER: "SELECT_USER",
         CHOOSE_ZONE: "CHOOSE_ZONE",
         TOGGLE_CHOICES: "TOGGLE_CHOICES"
@@ -609,6 +619,10 @@ define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
         return { type: exports.TuckmanActions.SET_USERFOCUS, user: user, focus: focus };
     }
     exports.setUserFocus = setUserFocus;
+    function setUserList(userList) {
+        return { type: exports.TuckmanActions.SET_USERLIST, userList: userList };
+    }
+    exports.setUserList = setUserList;
     function selectUser(user) {
         return { type: exports.TuckmanActions.SELECT_USER, user: user };
     }
@@ -622,7 +636,7 @@ define("Tuckman/Actions", ["require", "exports"], function (require, exports) {
     }
     exports.toggleChoiceVisibility = toggleChoiceVisibility;
 });
-define("TuckmanZone/Connector", ["require", "exports", "react-redux", "TuckmanZone/Component", "Tuckman/Actions", "Models/Point"], function (require, exports, react_redux_5, Component_6, Actions_4, Point_4) {
+define("React/TuckmanZone/Connector", ["require", "exports", "react-redux", "React/TuckmanZone/Component", "React/Tuckman/Actions", "React/Models/Point"], function (require, exports, react_redux_5, Component_6, Actions_4, Point_4) {
     "use strict";
     var mapStateToProps = function (state, props) {
         var myState = state.zones[props.label];
@@ -653,10 +667,10 @@ define("TuckmanZone/Connector", ["require", "exports", "react-redux", "TuckmanZo
     };
     exports.TuckmanZoneConnector = react_redux_5.connect(mapStateToProps, mapDispatchToProps)(Component_6.TuckmanZone);
 });
-define("TuckmanUserChoice/Model", ["require", "exports"], function (require, exports) {
+define("React/TuckmanUserChoice/Model", ["require", "exports"], function (require, exports) {
     "use strict";
 });
-define("TuckmanUserChoice/Component", ["require", "exports", "react"], function (require, exports, React) {
+define("React/TuckmanUserChoice/Component", ["require", "exports", "react"], function (require, exports, React) {
     "use strict";
     exports.TuckmanUserHistoryArea = function (state) {
         if (state && state.Choices.length) {
@@ -676,7 +690,7 @@ define("TuckmanUserChoice/Component", ["require", "exports", "react"], function 
         return React.createElement("circle", { cx: x, cy: y, r: "10", className: "point" });
     };
 });
-define("TuckmanUserChoice/Connector", ["require", "exports", "react-redux", "TuckmanUserChoice/Component"], function (require, exports, react_redux_6, Component_7) {
+define("React/TuckmanUserChoice/Connector", ["require", "exports", "react-redux", "React/TuckmanUserChoice/Component"], function (require, exports, react_redux_6, Component_7) {
     "use strict";
     var mapStateToProps = function (state) {
         return {
@@ -688,7 +702,7 @@ define("TuckmanUserChoice/Connector", ["require", "exports", "react-redux", "Tuc
     exports.TuckmanUserHistoryConnector = react_redux_6.connect(mapStateToProps)(Component_7.TuckmanUserHistoryArea);
 });
 // UserListConnector
-define("Tuckman/Component", ["require", "exports", "react", "User/Connector", "TuckmanZone/Connector", "TuckmanUserChoice/Connector"], function (require, exports, React, Connector_5, Connector_6, Connector_7) {
+define("React/Tuckman/Component", ["require", "exports", "react", "React/User/Connector", "React/TuckmanZone/Connector", "React/TuckmanUserChoice/Connector"], function (require, exports, React, Connector_5, Connector_6, Connector_7) {
     "use strict";
     exports.TuckmanStage = function (state) {
         var mod = state;
@@ -703,7 +717,7 @@ define("Tuckman/Component", ["require", "exports", "react", "User/Connector", "T
             React.createElement(Connector_7.TuckmanUserHistoryConnector, null));
     };
 });
-define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "Models/Size", "Models/Point", "Tuckman/Actions"], function (require, exports, immutable_min_3, Size_2, Point_5, Actions_5) {
+define("React/Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "React/Models/Size", "React/Models/Point", "React/Tuckman/Actions"], function (require, exports, immutable_min_3, Size_2, Point_5, Actions_5) {
     "use strict";
     var initialSize = new Size_2.Size(800, 800);
     var initialState = {
@@ -766,6 +780,10 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
             return immutable_min_3.fromJS(state)
                 .setIn(["UserList", "Users"], newUserList).toJS();
         };
+        TuckmanZoneAction.setUsers = function (state, userList) {
+            return immutable_min_3.fromJS(state)
+                .setIn("UserList", userList).toJS();
+        };
         TuckmanZoneAction.selectUser = function (state, user) {
             var originalList = immutable_min_3.List(state.UserList.Users);
             var item = originalList.find(function (item) { return item.Username === user; });
@@ -800,18 +818,17 @@ define("Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.min", "M
             return immutable_min_3.Map(state)
                 .set("ShowUserChoices", visible).toJS();
         };
-        ;
         return TuckmanZoneAction;
     }());
 });
-define("Tuckman/Connector", ["require", "exports", "react-redux", "Tuckman/Component"], function (require, exports, react_redux_7, Component_8) {
+define("React/Tuckman/Connector", ["require", "exports", "react-redux", "React/Tuckman/Component"], function (require, exports, react_redux_7, Component_8) {
     "use strict";
     var mapStateToProps = function (state) {
         return state;
     };
     exports.TuckmanConnector = react_redux_7.connect(mapStateToProps)(Component_8.TuckmanStage);
 });
-define("__tests__/TuckmanTests", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "Tuckman/Reducer", "Tuckman/Actions", "Tuckman/Connector", "Stage/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_2, Action, Connector_8, Connector_9) {
+define("React/__tests__/TuckmanTests", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "React/Tuckman/Reducer", "React/Tuckman/Actions", "React/Tuckman/Connector", "React/Stage/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_2, Action, Connector_8, Connector_9) {
     "use strict";
     var renderizer = require("react-test-renderer");
     test("Should not mutate in any way", function () {
@@ -875,7 +892,7 @@ it("Should show the stretch area", () => {
 
 
 */
-define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (require, exports, Size_3) {
+define("React/Shared/WindowHelper", ["require", "exports", "React/Models/Size"], function (require, exports, Size_3) {
     "use strict";
     function getWidthHeight() {
         var w = window, d = document, e = d.documentElement, g = d.getElementsByTagName("body")[0], x = w.innerWidth || e.clientWidth || g.clientWidth, y = w.innerHeight || e.clientHeight || g.clientHeight;
@@ -883,7 +900,7 @@ define("Shared/WindowHelper", ["require", "exports", "Models/Size"], function (r
     }
     exports.getWidthHeight = getWidthHeight;
 });
-define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/ComponentApp", "Comfort/Reducer", "react-dom", "react-redux", "Comfort/Actions", "Shared/WindowHelper", "Stage/Connector"], function (require, exports, React, Redux, ComponentApp_2, Reducer_3, react_dom_1, react_redux_8, Actions_6, WindowHelper_1, Connector_10) {
+define("React/Comfort/Store", ["require", "exports", "react", "redux", "React/Comfort/ComponentApp", "React/Comfort/Reducer", "react-dom", "react-redux", "React/Comfort/Actions", "React/Shared/WindowHelper", "React/Stage/Connector"], function (require, exports, React, Redux, ComponentApp_2, Reducer_3, react_dom_1, react_redux_8, Actions_6, WindowHelper_1, Connector_10) {
     "use strict";
     exports.myStore = Redux.createStore(Reducer_3.comfortReactApp);
     var unsubscribe = exports.myStore.subscribe(function () {
@@ -906,7 +923,7 @@ define("Comfort/Store", ["require", "exports", "react", "redux", "Comfort/Compon
 });
 // Stop listening to state updates
 // unsubscribe(); ;
-define("Shared/SVGEvents", ["require", "exports", "Models/Point"], function (require, exports, Point_6) {
+define("React/Shared/SVGEvents", ["require", "exports", "React/Models/Point"], function (require, exports, Point_6) {
     "use strict";
     var SVGEvents = (function () {
         function SVGEvents() {
@@ -922,7 +939,7 @@ define("Shared/SVGEvents", ["require", "exports", "Models/Point"], function (req
     }());
     exports.SVGEvents = SVGEvents;
 });
-define("Shared/Events", ["require", "exports", "Shared/SVGEvents"], function (require, exports, SVGEvents_1) {
+define("React/Shared/Events", ["require", "exports", "React/Shared/SVGEvents"], function (require, exports, SVGEvents_1) {
     "use strict";
     var Events = (function () {
         function Events() {
@@ -973,23 +990,248 @@ requirejs.config({
         "react-redux": "../3rdParty/react-redux.min",
     }
 });
-require(["Comfort/Store"], function (u) {
+require(["React/Comfort/Store"], function (u) {
     u.resizeImage();
 });
-require(["Tuckman/Store"], function (u) {
+require(["React/Tuckman/Store"], function (u) {
     u.resizeImage();
 });
-document.getElementById("go-tuckman").onclick = function () {
-    document.getElementById("comfort").className = "hidden";
-    document.getElementById("tuckman").className = "";
-};
-document.getElementById("go-comfort").onclick = function () {
-    document.getElementById("comfort").className = "";
-    document.getElementById("tuckman").className = "hidden";
-};
-define("Tuckman/Store", ["require", "exports", "react", "redux", "react-dom", "react-redux", "Tuckman/Actions", "Shared/WindowHelper", "Tuckman/Connector", "Stage/Connector", "Tuckman/Reducer"], function (require, exports, React, Redux, react_dom_2, react_redux_9, Actions_7, WindowHelper_2, Connector_11, Connector_12, Reducer_4) {
+(function setupFormViewability() {
+    var showForm = function (urlParam) {
+        window.history.pushState({}, urlParam, "/react/react.html?model=" + urlParam);
+        switch (urlParam) {
+            case ModelEnum.All:
+                document.getElementById("tuckman").className = "hidden";
+                document.getElementById("comfort").className = "hidden";
+                break;
+            case ModelEnum.ComfortZone:
+                document.getElementById("tuckman").className = "";
+                document.getElementById("comfort").className = "hidden";
+                break;
+            case ModelEnum.Tuckman:
+                document.getElementById("tuckman").className = "hidden";
+                document.getElementById("comfort").className = "";
+                break;
+        }
+    };
+    var ModelEnum = {
+        All: "",
+        Tuckman: "Tuckman",
+        ComfortZone: "ComfortZone"
+    };
+    var getModelFromQuerystring = function () {
+        var urlParams = document.URL.split("?model=");
+        if (urlParams && urlParams.length === 1) {
+            return urlParams[1];
+        }
+        return ModelEnum.All;
+    };
+    var urlParam = getModelFromQuerystring();
+    showForm(urlParam);
+    document.getElementById("go-tuckman").onclick = function () {
+        showForm(ModelEnum.Tuckman);
+    };
+    document.getElementById("go-comfort").onclick = function () {
+        showForm(ModelEnum.ComfortZone);
+    };
+})();
+define("Shared/Cache", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var GenericCache = (function () {
+        function GenericCache() {
+            this.store = [];
+        }
+        GenericCache.prototype.update = function (item) {
+            for (var i = 0; i < this.store.length; i++) {
+                if (item.id === this.store[i].id) {
+                    this.store[i] = item;
+                }
+            }
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.add = function (item) {
+            this.store.push(item);
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.get = function () {
+            return Promise.resolve(this.store);
+        };
+        GenericCache.prototype.getById = function (id) {
+            var store = this.store.filter(function (x) { return x.id === id; });
+            if (store.length) {
+                return Promise.resolve(store[0]);
+            }
+            throw Error("Cannot find item by ID: " + id);
+        };
+        GenericCache.prototype.set = function (items) {
+            this.store = items;
+            return Promise.resolve(this.store);
+        };
+        return GenericCache;
+    }());
+    exports.GenericCache = GenericCache;
+});
+define("Shared/User", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var User = (function () {
+        function User(name, id) {
+            this.name = name;
+            this.id = id;
+            this.voted = false;
+        }
+        return User;
+    }());
+    exports.User = User;
+});
+define("Shared/IUsers", ["require", "exports"], function (require, exports) {
+    "use strict";
+});
+define("Shared/UserConstructor", ["require", "exports", "Shared/User"], function (require, exports, User_1) {
+    "use strict";
+    var UserConstructor = (function () {
+        function UserConstructor() {
+        }
+        UserConstructor.notEmpty = function (input) {
+            return (input !== "");
+        };
+        UserConstructor.createUsersByNames = function (names) {
+            var _this = this;
+            var filtered = names.filter(UserConstructor.notEmpty);
+            var users = filtered.map(function (v, i) {
+                return _this.createUser(v, i);
+            });
+            return users;
+        };
+        UserConstructor.createUser = function (name, index) {
+            return new User_1.User(name, "user" + index);
+        };
+        return UserConstructor;
+    }());
+    exports.UserConstructor = UserConstructor;
+});
+define("Shared/Users", ["require", "exports", "Shared/Cache", "Shared/UserConstructor"], function (require, exports, Cache_1, UserConstructor_1) {
+    "use strict";
+    var InMemoryUsers = (function () {
+        function InMemoryUsers() {
+            this.cache = new Cache_1.GenericCache();
+            var users = UserConstructor_1.UserConstructor.createUsersByNames([
+                "Adam Hall",
+                "Billie Davey",
+                "Laura Rowe",
+                "Simon Dawson"
+            ]);
+            this.setUsers(users);
+        }
+        InMemoryUsers.prototype.addUser = function (user) {
+            return this.cache.add(user);
+        };
+        InMemoryUsers.prototype.addUserByName = function (name) {
+            return this.cache.add(UserConstructor_1.UserConstructor.createUser(name, 9));
+        };
+        InMemoryUsers.prototype.updateUser = function (user) {
+            return this.cache.update(user);
+        };
+        InMemoryUsers.prototype.getUsers = function () {
+            return this.cache.get();
+        };
+        InMemoryUsers.prototype.getUser = function (id) {
+            return this.cache.getById(id);
+        };
+        InMemoryUsers.prototype.saveUser = function (user) {
+            return this.cache.update(user);
+        };
+        InMemoryUsers.prototype.setUsers = function (users) {
+            return this.cache.set(users);
+        };
+        return InMemoryUsers;
+    }());
+    exports.InMemoryUsers = InMemoryUsers;
+});
+define("Shared/BrowserRepo", ["require", "exports"], function (require, exports) {
+    "use strict";
+    var BrowserRepo = (function () {
+        function BrowserRepo(key, window) {
+            this.br = window;
+            this.key = key;
+        }
+        BrowserRepo.prototype.get = function () {
+            var text = this.br.localStorage.getItem(this.key);
+            var json = JSON.parse(text);
+            return Promise.resolve(json);
+        };
+        BrowserRepo.prototype.save = function (thing) {
+            var text = JSON.stringify(thing);
+            this.br.localStorage.setItem(this.key, text);
+            return Promise.resolve(thing);
+        };
+        return BrowserRepo;
+    }());
+    exports.BrowserRepo = BrowserRepo;
+});
+define("Shared/BrowserUsers", ["require", "exports", "Shared/BrowserRepo"], function (require, exports, BrowserRepo_1) {
+    "use strict";
+    var BrowserUsers = (function () {
+        function BrowserUsers(window) {
+            this.repo = new BrowserRepo_1.BrowserRepo("users", window);
+        }
+        BrowserUsers.prototype.getUsers = function () {
+            return this.repo.get();
+        };
+        BrowserUsers.prototype.saveUsers = function (users) {
+            return this.repo.save(users);
+        };
+        return BrowserUsers;
+    }());
+    exports.BrowserUsers = BrowserUsers;
+});
+define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Shared/BrowserUsers"], function (require, exports, Users_1, BrowserUsers_1) {
+    "use strict";
+    var InMemoryBrowserUsers = (function () {
+        function InMemoryBrowserUsers(window) {
+            this.cache = new Users_1.InMemoryUsers();
+            this.repo = new BrowserUsers_1.BrowserUsers(window);
+        }
+        InMemoryBrowserUsers.prototype.updateUser = function (user) {
+            var _this = this;
+            var prom = this.cache.updateUser(user);
+            prom.then(function (users) {
+                _this.repo.saveUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.addUser = function (user) {
+            var _this = this;
+            var prom = this.cache.addUser(user);
+            prom.then(function (users) {
+                _this.repo.saveUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.getUsers = function () {
+            var _this = this;
+            var prom = this.repo.getUsers();
+            prom.then(function (users) {
+                _this.cache.setUsers(users);
+            });
+            return prom;
+        };
+        InMemoryBrowserUsers.prototype.getUser = function (id) {
+            var result = this.cache.getUser(id);
+            return Promise.resolve(result);
+        };
+        InMemoryBrowserUsers.prototype.setUsers = function (users) {
+            var promCache = this.cache.setUsers(users);
+            var promRepo = this.repo.saveUsers(users);
+            return promCache;
+        };
+        return InMemoryBrowserUsers;
+    }());
+    exports.InMemoryBrowserUsers = InMemoryBrowserUsers;
+});
+define("React/Tuckman/Store", ["require", "exports", "react", "redux", "react-dom", "react-redux", "React/Tuckman/Actions", "React/Shared/WindowHelper", "React/Tuckman/Connector", "React/Stage/Connector", "React/Tuckman/Reducer", "Shared/InMemoryBrowserUsers"], function (require, exports, React, Redux, react_dom_2, react_redux_9, Actions_7, WindowHelper_2, Connector_11, Connector_12, Reducer_4, InMemoryBrowserUsers_1) {
     "use strict";
     exports.myStore = Redux.createStore(Reducer_4.tuckmanReactApp);
+    var users = new InMemoryBrowserUsers_1.InMemoryBrowserUsers(window);
     var unsubscribe = exports.myStore.subscribe(function () {
         return console.log(exports.myStore.getState());
     });
