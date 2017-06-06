@@ -18,4 +18,4 @@ gulp.task("BuildEntry", function () {
         .js.pipe(sourcemaps.write("."))
         .pipe(gulp.dest("Entry"));
 });
-gulp.task('Build', ['BuildReact'/*'BuildEntry','BuildRedux', 'BuildTuckman', 'BuildComfortZone'*/]);
+gulp.task('Build', ['BuildReact', 'BuildEntry'/*,'BuildRedux', 'BuildTuckman', 'BuildComfortZone'*/]);

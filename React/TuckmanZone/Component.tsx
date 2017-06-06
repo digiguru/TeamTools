@@ -7,10 +7,15 @@ export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZone
     const index  = state.index || 0;
     const textID = state.label + "-label";
 
-    const offset    : string = (25 * state.index) + "%";
-    const textOffset: string = 12 + (25 * state.index) + "%";
-    const delay     : string = (0.2 * state.index) + "s";
-    const className : string = state.focus + " area okay js-area-standard";
+    const textOffset : string = 12 + (25 * state.index) + "%";
+    const delay      : string = (0.2 * state.index) + "s";
+    const className  : string = state.focus + " area okay js-area-standard";
+    let   offset     : string = (25 * state.index) + "%";
+    let   initialX   : string = "0%";
+    if (state.visibility === "hiding") {
+        offset   = "100%";
+        initialX = (25 * state.index) + "%";
+    }
 
     /*return <g>
         <rect className={className} id={state.label}
@@ -29,7 +34,7 @@ export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZone
             onMouseLeave={() => state.Events.onZoneOffFocus(state.label)}
             onMouseDown={() => state.Events.onZoneMouseDown(state.label)}
             onMouseUp={(event) => state.Events.onZoneMouseUp(state.username, state.label, state.maxWidth, event)}
-            x="0" y="0" width="25%" height="100%">
+            x="{initialX}" y="0" width="25%" height="100%">
             <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
         </rect>
         <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;

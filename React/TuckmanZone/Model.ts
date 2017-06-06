@@ -1,11 +1,12 @@
 
 export interface ITuckmanZone {
-    focus    : string;
-    index    : number;
-    label    : "forming" | "storming" | "norming" | "performing";
-    maxWidth?: number;
-    username?: string;
-    Events?  : ITuckmanZoneEvents;
+    focus      : string;
+    visibility : "appearing" | "hiding";
+    index      : number;
+    label      : "forming" | "storming" | "norming" | "performing";
+    maxWidth?  : number;
+    username?  : string;
+    Events?    : ITuckmanZoneEvents;
 }
 export interface ITuckmanZoneEvents {
   onZoneMouseDown: (zone: "forming" | "storming" | "norming" | "performing") => void;

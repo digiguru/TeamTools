@@ -17,53 +17,59 @@ requirejs.config( {
     }
 });
 
-require(["React/Comfort/Store"], (u) => {
-    u.resizeImage();
+require(["React/Comfort/Store", "React/Tuckman/Store"], (comfort, tuckman) => {
+    comfort.resizeImage();
+    tuckman.resizeImage();
+
+    (function setupFormViewability() {
+
+        const showForm = (formName) => {
+            window.history.pushState({}, urlParam, "/react/react.html?model=" + formName);
+            switch (formName) {
+                case ModelEnum.All:
+                    // document.getElementById("tuckman").className = "hidden";
+                    // document.getElementById("comfort").className = "hidden";
+                    comfort.hideModel();
+                    tuckman.hideModel();
+                    break;
+                case ModelEnum.ComfortZone:
+                    comfort.resizeImage();
+                    tuckman.hideModel();
+                    break;
+                case ModelEnum.Tuckman:
+                    // document.getElementById("tuckman").className = "";
+                    // document.getElementById("comfort").className = "hidden";
+                    tuckman.resizeImage();
+                    comfort.hideModel();
+                    break;
+            }
+        };
+
+        const ModelEnum = {
+            All: "",
+            Tuckman: "Tuckman",
+            ComfortZone: "ComfortZone"
+        };
+
+        const getModelFromQuerystring = () => {
+            const urlParams = document.URL.split("?model=");
+            if (urlParams && urlParams.length >= 1) {
+                return urlParams[1];
+            }
+            return ModelEnum.All;
+        };
+
+        const urlParam = getModelFromQuerystring();
+        showForm(urlParam);
+        document.getElementById("go-tuckman").onclick = function () {
+            showForm(ModelEnum.Tuckman);
+        };
+        document.getElementById("go-comfort").onclick = function () {
+            showForm(ModelEnum.ComfortZone);
+        };
+    })();
+
+
 });
-require(["React/Tuckman/Store"], (u) => {
-    u.resizeImage();
-});
 
-(function setupFormViewability() {
 
-    const showForm = (urlParam) => {
-        window.history.pushState({}, urlParam, "/react/react.html?model=" + urlParam);
-        switch (urlParam) {
-            case ModelEnum.All:
-                document.getElementById("tuckman").className = "hidden";
-                document.getElementById("comfort").className = "hidden";
-                break;
-            case ModelEnum.ComfortZone:
-                document.getElementById("tuckman").className = "";
-                document.getElementById("comfort").className = "hidden";
-                break;
-            case ModelEnum.Tuckman:
-                document.getElementById("tuckman").className = "hidden";
-                document.getElementById("comfort").className = "";
-                break;
-        }
-    };
-
-    const ModelEnum = {
-        All: "",
-        Tuckman: "Tuckman",
-        ComfortZone: "ComfortZone"
-    };
-
-    const getModelFromQuerystring = () => {
-        const urlParams = document.URL.split("?model=");
-        if (urlParams && urlParams.length === 1) {
-            return urlParams[1];
-        }
-        return ModelEnum.All;
-    };
-
-    const urlParam = getModelFromQuerystring();
-    showForm(urlParam);
-    document.getElementById("go-tuckman").onclick = function () {
-        showForm(ModelEnum.Tuckman);
-    };
-    document.getElementById("go-comfort").onclick = function () {
-        showForm(ModelEnum.ComfortZone);
-    };
-})();

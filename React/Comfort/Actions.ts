@@ -1,17 +1,21 @@
 import { IUserList } from "../User/Model";
 
 export const ComfortActions = {
-    SET_STAGESIZE : "SET_STAGESIZE",
-    SET_ZONEFOCUS : "SET_ZONEFOCUS",
-    SET_USERFOCUS : "SET_USERFOCUS",
-    SET_USERLIST  : "SET_USERLIST",
-    SELECT_USER   : "SELECT_USER",
-    CHOOSE_ZONE   : "CHOOSE_ZONE",
-    TOGGLE_CHOICES: "TOGGLE_CHOICES"
+    SET_STAGESIZE       : "SET_STAGESIZE",
+    SET_STAGEVISIBILITY : "SET_STAGEVISIBILITY",
+    SET_ZONEFOCUS       : "SET_ZONEFOCUS",
+    SET_USERFOCUS       : "SET_USERFOCUS",
+    SET_USERLIST        : "SET_USERLIST",
+    SELECT_USER         : "SELECT_USER",
+    CHOOSE_ZONE         : "CHOOSE_ZONE",
+    TOGGLE_CHOICES      : "TOGGLE_CHOICES"
 };
 
 export function setStageSize(width: number, height: number) {
     return {type: ComfortActions.SET_STAGESIZE, width: width, height: height};
+}
+export function setStageVisibility(visibility: "hiding" | "appearing") {
+    return {type: ComfortActions.SET_STAGEVISIBILITY, visibility: visibility};
 }
 export function setUserFocus(user: string, focus: "in-focus" | "active" | "not-in-focus") {
     return {type: ComfortActions.SET_USERFOCUS, user: user, focus: focus};

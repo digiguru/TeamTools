@@ -20,10 +20,10 @@ const initialState: ITuckmanModel = {
     },
     Size: initialSize,
     zones: {
-        forming   : {index: 0, label: "forming",    focus: "not-in-focus", Events: undefined},
-        storming  : {index: 1, label: "storming",   focus: "not-in-focus", Events: undefined},
-        norming   : {index: 2, label: "norming",    focus: "not-in-focus", Events: undefined},
-        performing: {index: 3, label: "performing", focus: "not-in-focus", Events: undefined}
+        forming   : {index: 0, label: "forming",    focus: "not-in-focus", Events: undefined, visibility: "appearing"},
+        storming  : {index: 1, label: "storming",   focus: "not-in-focus", Events: undefined, visibility: "appearing"},
+        norming   : {index: 2, label: "norming",    focus: "not-in-focus", Events: undefined, visibility: "appearing"},
+        performing: {index: 3, label: "performing", focus: "not-in-focus", Events: undefined, visibility: "appearing"}
     },
     UserChoices: []
     /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
@@ -40,13 +40,15 @@ const initialState: ITuckmanModel = {
 
 export function tuckmanReactApp(state: ITuckmanModel = initialState, action): ITuckmanModel {
     switch (action.type) {
-       case TuckmanActions.SET_STAGESIZE:
+        case TuckmanActions.SET_STAGESIZE:
             return TuckmanZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
+        case TuckmanActions.SET_STAGEVISIBLE:
+            return TuckmanZoneAction.setStageVisibilty(state, (<any>action).visibility);
         case TuckmanActions.SET_USERFOCUS:
             return TuckmanZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
         case TuckmanActions.SET_ZONEFOCUS:
             return TuckmanZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
-         case TuckmanActions.SELECT_USER:
+        case TuckmanActions.SELECT_USER:
             return TuckmanZoneAction.selectUser(state, (<any>action).user);
         case TuckmanActions.CHOOSE_ZONE:
             return TuckmanZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance);
@@ -64,6 +66,14 @@ class TuckmanZoneAction {
             .set("Size", new Size(width, height))
             .set("CenterPoint", newCenter)
             .toJS();
+    }
+
+    static setStageVisibilty(state: ITuckmanModel, visibility: "hiding" | "appearing"): ITuckmanModel {
+        return fromJS(state)
+            .setIn(["zones", "forming", "focus"], visibility)
+            .setIn(["zones", "storming", "focus"], visibility)
+            .setIn(["zones", "norming", "focus"], visibility)
+            .setIn(["zones", "performing", "focus"], visibility).toJS();
     }
 
     static setZoneFocus(state: ITuckmanModel, area: "forming" | "storming" | "norming" | "performing", focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {

@@ -18,6 +18,7 @@ define("React/Comfort/Actions", ["require", "exports"], function (require, expor
     "use strict";
     exports.ComfortActions = {
         SET_STAGESIZE: "SET_STAGESIZE",
+        SET_STAGEVISIBILITY: "SET_STAGEVISIBILITY",
         SET_ZONEFOCUS: "SET_ZONEFOCUS",
         SET_USERFOCUS: "SET_USERFOCUS",
         SET_USERLIST: "SET_USERLIST",
@@ -29,6 +30,10 @@ define("React/Comfort/Actions", ["require", "exports"], function (require, expor
         return { type: exports.ComfortActions.SET_STAGESIZE, width: width, height: height };
     }
     exports.setStageSize = setStageSize;
+    function setStageVisibility(visibility) {
+        return { type: exports.ComfortActions.SET_STAGEVISIBILITY, visibility: visibility };
+    }
+    exports.setStageVisibility = setStageVisibility;
     function setUserFocus(user, focus) {
         return { type: exports.ComfortActions.SET_USERFOCUS, user: user, focus: focus };
     }
@@ -414,6 +419,8 @@ define("React/Comfort/Reducer", ["require", "exports", "React/Comfort/Actions", 
         switch (action.type) {
             case Actions_3.ComfortActions.SET_STAGESIZE:
                 return ComfortZoneAction.setStageSize(state, action.width, action.height);
+            case Actions_3.ComfortActions.SET_STAGEVISIBILITY:
+                return ComfortZoneAction.setVisibility(state, action.visibility);
             case Actions_3.ComfortActions.SET_USERFOCUS:
                 return ComfortZoneAction.setUserFocus(state, action.user, action.focus);
             case Actions_3.ComfortActions.SET_ZONEFOCUS:
@@ -438,6 +445,13 @@ define("React/Comfort/Reducer", ["require", "exports", "React/Comfort/Actions", 
                 .set("Size", new Size_1.Size(width, height))
                 .set("CenterPoint", newCenter)
                 .toJS();
+        };
+        ComfortZoneAction.setVisibility = function (state, visibility) {
+            return immutable_min_2.fromJS(state)
+                .setIn(["Zones", "Comfort", "visibility"], visibility)
+                .setIn(["Zones", "Stretch", "visibility"], visibility)
+                .setIn(["Zones", "Chaos", "visibility"], visibility).toJS();
+            //  state.Zones.Chaos.visibility
         };
         ComfortZoneAction.setZoneFocus = function (state, area, focus) {
             return immutable_min_2.fromJS(state)
@@ -574,10 +588,15 @@ define("React/TuckmanZone/Component", ["require", "exports", "react", "React/Ani
     exports.TuckmanZone = function (state) {
         var index = state.index || 0;
         var textID = state.label + "-label";
-        var offset = (25 * state.index) + "%";
         var textOffset = 12 + (25 * state.index) + "%";
         var delay = (0.2 * state.index) + "s";
         var className = state.focus + " area okay js-area-standard";
+        var offset = (25 * state.index) + "%";
+        var initialX = "0%";
+        if (state.visibility === "hiding") {
+            offset = "100%";
+            initialX = (25 * state.index) + "%";
+        }
         /*return <g>
             <rect className={className} id={state.label}
                 onMouseUp={state.events.onMouseUp}
@@ -590,7 +609,7 @@ define("React/TuckmanZone/Component", ["require", "exports", "react", "React/Ani
             <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;
         </g>;*/
         return React.createElement("g", null,
-            React.createElement("rect", { className: className, id: state.label, onMouseEnter: function () { return state.Events.onZoneOverFocus(state.label); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.label); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.label); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.username, state.label, state.maxWidth, event); }, x: "0", y: "0", width: "25%", height: "100%" },
+            React.createElement("rect", { className: className, id: state.label, onMouseEnter: function () { return state.Events.onZoneOverFocus(state.label); }, onMouseLeave: function () { return state.Events.onZoneOffFocus(state.label); }, onMouseDown: function () { return state.Events.onZoneMouseDown(state.label); }, onMouseUp: function (event) { return state.Events.onZoneMouseUp(state.username, state.label, state.maxWidth, event); }, x: "{initialX}", y: "0", width: "25%", height: "100%" },
                 React.createElement(Component_5.BouncyAnimation, { attributeName: "x", value: offset, delay: delay })),
             React.createElement("text", { className: "area-label", id: textID, textAnchor: "middle", "text-anchor": "middle", x: textOffset, y: "50%" }, state.label),
             ";");
@@ -600,6 +619,7 @@ define("React/Tuckman/Actions", ["require", "exports"], function (require, expor
     "use strict";
     exports.TuckmanActions = {
         SET_STAGESIZE: "SET_STAGESIZE",
+        SET_STAGEVISIBLE: "SET_STAGEVISIBLE",
         SET_ZONEFOCUS: "SET_ZONEFOCUS",
         SET_USERFOCUS: "SET_USERFOCUS",
         SET_USERLIST: "SET_USERLIST",
@@ -607,6 +627,10 @@ define("React/Tuckman/Actions", ["require", "exports"], function (require, expor
         CHOOSE_ZONE: "CHOOSE_ZONE",
         TOGGLE_CHOICES: "TOGGLE_CHOICES"
     };
+    function setStageVisibility(visibility) {
+        return { type: exports.TuckmanActions.SET_STAGEVISIBLE, visibility: visibility };
+    }
+    exports.setStageVisibility = setStageVisibility;
     function setStageSize(width, height) {
         return { type: exports.TuckmanActions.SET_STAGESIZE, width: width, height: height };
     }
@@ -730,10 +754,10 @@ define("React/Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.mi
         },
         Size: initialSize,
         zones: {
-            forming: { index: 0, label: "forming", focus: "not-in-focus", Events: undefined },
-            storming: { index: 1, label: "storming", focus: "not-in-focus", Events: undefined },
-            norming: { index: 2, label: "norming", focus: "not-in-focus", Events: undefined },
-            performing: { index: 3, label: "performing", focus: "not-in-focus", Events: undefined }
+            forming: { index: 0, label: "forming", focus: "not-in-focus", Events: undefined, visibility: "appearing" },
+            storming: { index: 1, label: "storming", focus: "not-in-focus", Events: undefined, visibility: "appearing" },
+            norming: { index: 2, label: "norming", focus: "not-in-focus", Events: undefined, visibility: "appearing" },
+            performing: { index: 3, label: "performing", focus: "not-in-focus", Events: undefined, visibility: "appearing" }
         },
         UserChoices: []
     };
@@ -742,6 +766,8 @@ define("React/Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.mi
         switch (action.type) {
             case Actions_5.TuckmanActions.SET_STAGESIZE:
                 return TuckmanZoneAction.setStageSize(state, action.width, action.height);
+            case Actions_5.TuckmanActions.SET_STAGEVISIBLE:
+                return TuckmanZoneAction.setStageVisibilty(state, action.visibility);
             case Actions_5.TuckmanActions.SET_USERFOCUS:
                 return TuckmanZoneAction.setUserFocus(state, action.user, action.focus);
             case Actions_5.TuckmanActions.SET_ZONEFOCUS:
@@ -766,6 +792,13 @@ define("React/Tuckman/Reducer", ["require", "exports", "../3rdParty/immutable.mi
                 .set("Size", new Size_2.Size(width, height))
                 .set("CenterPoint", newCenter)
                 .toJS();
+        };
+        TuckmanZoneAction.setStageVisibilty = function (state, visibility) {
+            return immutable_min_3.fromJS(state)
+                .setIn(["zones", "forming", "focus"], visibility)
+                .setIn(["zones", "storming", "focus"], visibility)
+                .setIn(["zones", "norming", "focus"], visibility)
+                .setIn(["zones", "performing", "focus"], visibility).toJS();
         };
         TuckmanZoneAction.setZoneFocus = function (state, area, focus) {
             return immutable_min_3.fromJS(state)
@@ -917,8 +950,17 @@ define("React/Comfort/Store", ["require", "exports", "react", "redux", "React/Co
         else {
             exports.myStore.dispatch(Actions_6.setStageSize(size.width, size.width));
         }
+        exports.myStore.dispatch(Actions_6.setStageSize(size.height, size.height));
     }
     exports.resizeImage = resizeImage;
+    function hideModel() {
+        exports.myStore.dispath(Actions_6.setStageVisibility("hiding"));
+    }
+    exports.hideModel = hideModel;
+    function showModel() {
+        exports.myStore.dispath(Actions_6.setStageVisibility("appearing"));
+    }
+    exports.showModel = showModel;
     window.addEventListener("resize", resizeImage, false);
 });
 // Stop listening to state updates
@@ -990,51 +1032,53 @@ requirejs.config({
         "react-redux": "../3rdParty/react-redux.min",
     }
 });
-require(["React/Comfort/Store"], function (u) {
-    u.resizeImage();
+require(["React/Comfort/Store", "React/Tuckman/Store"], function (comfort, tuckman) {
+    comfort.resizeImage();
+    tuckman.resizeImage();
+    (function setupFormViewability() {
+        var showForm = function (formName) {
+            window.history.pushState({}, urlParam, "/react/react.html?model=" + formName);
+            switch (formName) {
+                case ModelEnum.All:
+                    // document.getElementById("tuckman").className = "hidden";
+                    // document.getElementById("comfort").className = "hidden";
+                    comfort.hideModel();
+                    tuckman.hideModel();
+                    break;
+                case ModelEnum.ComfortZone:
+                    comfort.resizeImage();
+                    tuckman.hideModel();
+                    break;
+                case ModelEnum.Tuckman:
+                    // document.getElementById("tuckman").className = "";
+                    // document.getElementById("comfort").className = "hidden";
+                    tuckman.resizeImage();
+                    comfort.hideModel();
+                    break;
+            }
+        };
+        var ModelEnum = {
+            All: "",
+            Tuckman: "Tuckman",
+            ComfortZone: "ComfortZone"
+        };
+        var getModelFromQuerystring = function () {
+            var urlParams = document.URL.split("?model=");
+            if (urlParams && urlParams.length >= 1) {
+                return urlParams[1];
+            }
+            return ModelEnum.All;
+        };
+        var urlParam = getModelFromQuerystring();
+        showForm(urlParam);
+        document.getElementById("go-tuckman").onclick = function () {
+            showForm(ModelEnum.Tuckman);
+        };
+        document.getElementById("go-comfort").onclick = function () {
+            showForm(ModelEnum.ComfortZone);
+        };
+    })();
 });
-require(["React/Tuckman/Store"], function (u) {
-    u.resizeImage();
-});
-(function setupFormViewability() {
-    var showForm = function (urlParam) {
-        window.history.pushState({}, urlParam, "/react/react.html?model=" + urlParam);
-        switch (urlParam) {
-            case ModelEnum.All:
-                document.getElementById("tuckman").className = "hidden";
-                document.getElementById("comfort").className = "hidden";
-                break;
-            case ModelEnum.ComfortZone:
-                document.getElementById("tuckman").className = "";
-                document.getElementById("comfort").className = "hidden";
-                break;
-            case ModelEnum.Tuckman:
-                document.getElementById("tuckman").className = "hidden";
-                document.getElementById("comfort").className = "";
-                break;
-        }
-    };
-    var ModelEnum = {
-        All: "",
-        Tuckman: "Tuckman",
-        ComfortZone: "ComfortZone"
-    };
-    var getModelFromQuerystring = function () {
-        var urlParams = document.URL.split("?model=");
-        if (urlParams && urlParams.length === 1) {
-            return urlParams[1];
-        }
-        return ModelEnum.All;
-    };
-    var urlParam = getModelFromQuerystring();
-    showForm(urlParam);
-    document.getElementById("go-tuckman").onclick = function () {
-        showForm(ModelEnum.Tuckman);
-    };
-    document.getElementById("go-comfort").onclick = function () {
-        showForm(ModelEnum.ComfortZone);
-    };
-})();
 define("Shared/Cache", ["require", "exports"], function (require, exports) {
     "use strict";
     var GenericCache = (function () {
@@ -1248,6 +1292,14 @@ define("React/Tuckman/Store", ["require", "exports", "react", "redux", "react-do
         }
     }
     exports.resizeImage = resizeImage;
+    function hideModel() {
+        exports.myStore.dispath(Actions_7.setStageVisibility("hiding"));
+    }
+    exports.hideModel = hideModel;
+    function showModel() {
+        exports.myStore.dispath(Actions_7.setStageVisibility("appearing"));
+    }
+    exports.showModel = showModel;
     window.addEventListener("resize", resizeImage, false);
 });
 // Stop listening to state updates

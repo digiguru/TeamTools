@@ -4,7 +4,7 @@ import { ComfortApp } from "./ComponentApp";
 import {comfortReactApp} from "./Reducer";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { setStageSize } from "./Actions";
+import { setStageSize, setStageVisibility } from "./Actions";
 import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
 import { StageConnector } from "../Stage/Connector";
@@ -32,8 +32,14 @@ export function resizeImage() {
     } else {
       myStore.dispatch(setStageSize(size.width, size.width));
     }
+    myStore.dispatch(setStageSize(size.height, size.height));
 }
-
+export function hideModel() {
+  myStore.dispath(setStageVisibility("hiding"));
+}
+export function showModel() {
+  myStore.dispath(setStageVisibility("appearing"));
+}
 window.addEventListener("resize", resizeImage, false);
 
 // Stop listening to state updates

@@ -1,15 +1,18 @@
 import { IUserList } from "../User/Model";
 
 export const TuckmanActions = {
-    SET_STAGESIZE : "SET_STAGESIZE",
-    SET_ZONEFOCUS : "SET_ZONEFOCUS",
-    SET_USERFOCUS : "SET_USERFOCUS",
-    SET_USERLIST  : "SET_USERLIST",
-    SELECT_USER   : "SELECT_USER",
-    CHOOSE_ZONE   : "CHOOSE_ZONE",
-    TOGGLE_CHOICES: "TOGGLE_CHOICES"
+    SET_STAGESIZE    : "SET_STAGESIZE",
+    SET_STAGEVISIBLE : "SET_STAGEVISIBLE",
+    SET_ZONEFOCUS    : "SET_ZONEFOCUS",
+    SET_USERFOCUS    : "SET_USERFOCUS",
+    SET_USERLIST     : "SET_USERLIST",
+    SELECT_USER      : "SELECT_USER",
+    CHOOSE_ZONE      : "CHOOSE_ZONE",
+    TOGGLE_CHOICES   : "TOGGLE_CHOICES"
 };
-
+export function setStageVisibility(visibility: "hiding" | "appearing") {
+    return {type: TuckmanActions.SET_STAGEVISIBLE, visibility: visibility};
+}
 export function setStageSize(width: number, height: number) {
     return {type: TuckmanActions.SET_STAGESIZE, width: width, height: height};
 }
