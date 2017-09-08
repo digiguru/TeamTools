@@ -9,16 +9,16 @@ import { TuckmanConnector } from "./Connector";
 import { StageConnector } from "../Stage/Connector";
 import { tuckmanReactApp } from "./Reducer";
 import { InMemoryBrowserUsers } from "../../Shared/InMemoryBrowserUsers";
-export const myStore = Redux.createStore(tuckmanReactApp);
+export const myTuckmanStore = Redux.createStore(tuckmanReactApp);
 const users = new InMemoryBrowserUsers(window);
 
 
-const unsubscribe = myStore.subscribe(() =>
-  console.log(myStore.getState())
+const unsubscribe = myTuckmanStore.subscribe(() =>
+  console.log(myTuckmanStore.getState())
 );
 
 render(
-  <Provider store={myStore}>
+  <Provider store={myTuckmanStore}>
     <StageConnector>
         <TuckmanConnector />
     </StageConnector>
@@ -29,16 +29,16 @@ render(
 export function resizeImage() {
     const size: Size = getWidthHeight();
     if (size.width > size.height) {
-      myStore.dispatch(setStageSize(size.height, size.height));
+      myTuckmanStore.dispatch(setStageSize(size.height, size.height));
     } else {
-      myStore.dispatch(setStageSize(size.width, size.width));
+      myTuckmanStore.dispatch(setStageSize(size.width, size.width));
     }
 }
 export function hideModel() {
-  myStore.dispath(setStageVisibility("hiding"));
+  myTuckmanStore.dispath(setStageVisibility("hiding"));
 }
 export function showModel() {
-  myStore.dispath(setStageVisibility("appearing"));
+  myTuckmanStore.dispath(setStageVisibility("appearing"));
 }
 
 window.addEventListener("resize", resizeImage, false);

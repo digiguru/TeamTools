@@ -6,6 +6,7 @@ import { render } from "react-dom";
 import { Provider } from "../../3rdParty/react-redux.min";
 import * as Action from "../Comfort/Actions";
 import { StageConnector } from "../Stage/Connector";
+import { IUserList } from "../User/Model";
 
 const renderizer = require("react-test-renderer");
 
@@ -67,6 +68,53 @@ test("Should allow shrinking", () => {
     myStore.dispatch(Action.chooseZone("Caroline Hall", "Chaos", 100));
     expect(component.toJSON()).toMatchSnapshot();
 
+});
+
+
+test("Should allow hiding", () => {
+    // Arrange
+
+    const myStore = createStore(comfortReactApp);
+
+    const component = renderizer.create(
+        <Provider store={myStore}>
+            <StageConnector>
+                <ComfortApp />
+            </StageConnector>
+        </Provider>
+    );
+
+    myStore.dispatch(Action.setStageVisibility("hiding"));
+    expect(component.toJSON()).toMatchSnapshot();
+
+    myStore.dispatch(Action.setStageVisibility("appearing"));
+    expect(component.toJSON()).toMatchSnapshot();
+
+});
+
+
+
+test("Should allow users to be set okay", () => {
+    // Arrange
+
+    const myStore = createStore(comfortReactApp);
+
+    const component = renderizer.create(
+        <Provider store={myStore}>
+            <StageConnector>
+                <ComfortApp />
+            </StageConnector>
+        </Provider>
+    );
+    const users: IUserList = {
+        Users: [
+            {Username: "Test person 1"},
+            {Username: "Test person 2"},
+            {Username: "Test person 3"}
+        ]
+    };
+    myStore.dispatch(Action.setUserList(users));
+    expect(component.toJSON()).toMatchSnapshot();
 });
 
 

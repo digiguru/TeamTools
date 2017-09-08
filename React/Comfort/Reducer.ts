@@ -28,7 +28,12 @@ const initialState: ComfortAppState = {
     UserChoices    : []
 };
 export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
+    debugger;
     switch (action.type) {
+        case ComfortActions.SET_USERLIST:
+            return ComfortZoneAction.setUsers(state, (<any>action).userList);
+        case ComfortActions.SET_STAGEVISIBILITY:
+            return ComfortZoneAction.setVisibility(state, (<any> action).visibility);
         case ComfortActions.SET_STAGESIZE:
             return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
         case ComfortActions.SET_STAGEVISIBILITY:
@@ -91,8 +96,14 @@ class ComfortZoneAction {
     }
 
     static setUsers(state: ComfortAppState, userList: IUserList): ComfortAppState {
-        return fromJS(state)
-            .setIn("UserList", userList).toJS();
+        debugger;
+        console.log("Input", state.UserList);
+        console.log("Update", userList);
+
+        const data = fromJS(state)
+            .set("UserList", userList).toJS();
+        console.log("Output", data.UserList);
+        return data;
     }
 
     static chooseZone(

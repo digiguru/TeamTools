@@ -4,20 +4,26 @@ import { ComfortApp } from "./ComponentApp";
 import {comfortReactApp} from "./Reducer";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
-import { setStageSize, setStageVisibility } from "./Actions";
+import { setStageSize, setStageVisibility, setUserList } from "./Actions";
 import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
 import { StageConnector } from "../Stage/Connector";
+import { InMemoryBrowserUsers } from "../../Shared/InMemoryBrowserUsers";
 
-export const myStore = Redux.createStore(comfortReactApp);
+export const myComfortStore = Redux.createStore(comfortReactApp);
+const users = new InMemoryBrowserUsers(window);
+export function setUsers(data) {
+  myComfortStore.dispath(setUserList(data));
+}
+users.getUsers().then(setUsers);
 
 
-const unsubscribe = myStore.subscribe(() =>
-  console.log(myStore.getState())
+const unsubscribe = myComfortStore.subscribe(() =>
+  console.log(myComfortStore.getState())
 );
 
 render(
-  <Provider store={myStore}>
+  <Provider store={myComfortStore}>
     <StageConnector>
         <ComfortApp />
     </StageConnector>
@@ -28,17 +34,17 @@ render(
 export function resizeImage() {
     const size: Size = getWidthHeight();
     if (size.width > size.height) {
-      myStore.dispatch(setStageSize(size.height, size.height));
+      myComfortStore.dispatch(setStageSize(size.height, size.height));
     } else {
-      myStore.dispatch(setStageSize(size.width, size.width));
+      myComfortStore.dispatch(setStageSize(size.width, size.width));
     }
-    myStore.dispatch(setStageSize(size.height, size.height));
+    myComfortStore.dispatch(setStageSize(size.height, size.height));
 }
 export function hideModel() {
-  myStore.dispath(setStageVisibility("hiding"));
+  myComfortStore.dispath(setStageVisibility("hiding"));
 }
 export function showModel() {
-  myStore.dispath(setStageVisibility("appearing"));
+  myComfortStore.dispath(setStageVisibility("appearing"));
 }
 window.addEventListener("resize", resizeImage, false);
 
