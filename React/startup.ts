@@ -17,9 +17,12 @@ requirejs.config( {
     }
 });
 
-require(["React/Comfort/Store", "React/Tuckman/Store"], (comfort, tuckman) => {
-    comfort.resizeImage();
-    tuckman.resizeImage();
+//require(["React/Store"], (store) => {
+require(["React/Comfort/Store", "React/Tuckman/Store"], (comfortStore, tuckmanStore) => {
+//require(["React/Comfort/Store"], (comfortStore) => {
+
+    // comfort.resizeImage();
+    // tuckman.resizeImage();
 
     (function setupFormViewability() {
 
@@ -29,18 +32,18 @@ require(["React/Comfort/Store", "React/Tuckman/Store"], (comfort, tuckman) => {
                 case ModelEnum.All:
                     // document.getElementById("tuckman").className = "hidden";
                     // document.getElementById("comfort").className = "hidden";
-                    comfort.hideModel();
-                    tuckman.hideModel();
+                    comfortStore.hideModel();
+                    tuckmanStore.hideModel();
                     break;
                 case ModelEnum.ComfortZone:
-                    comfort.resizeImage();
-                    tuckman.hideModel();
+                    comfortStore.resizeImage();
+                    tuckmanStore.hideModel();
                     break;
                 case ModelEnum.Tuckman:
                     // document.getElementById("tuckman").className = "";
                     // document.getElementById("comfort").className = "hidden";
-                    tuckman.resizeImage();
-                    comfort.hideModel();
+                    tuckmanStore.resizeImage();
+                    comfortStore.hideModel();
                     break;
             }
         };

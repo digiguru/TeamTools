@@ -7,9 +7,9 @@ import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
 import { TuckmanConnector } from "./Connector";
 import { StageConnector } from "../Stage/Connector";
-import { tuckmanReactApp } from "./Reducer";
+import { tuckmanReducer } from "./Reducer";
 import { InMemoryBrowserUsers } from "../../Shared/InMemoryBrowserUsers";
-export const myTuckmanStore = Redux.createStore(tuckmanReactApp);
+export const myTuckmanStore = Redux.createStore(tuckmanReducer);
 const users = new InMemoryBrowserUsers(window);
 
 
@@ -35,10 +35,10 @@ export function resizeImage() {
     }
 }
 export function hideModel() {
-  myTuckmanStore.dispath(setStageVisibility("hiding"));
+  myTuckmanStore.dispatch(setStageVisibility("hiding"));
 }
 export function showModel() {
-  myTuckmanStore.dispath(setStageVisibility("appearing"));
+  myTuckmanStore.dispatch(setStageVisibility("appearing"));
 }
 
 window.addEventListener("resize", resizeImage, false);

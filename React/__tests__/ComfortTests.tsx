@@ -11,7 +11,6 @@ import { IUserList } from "../User/Model";
 const renderizer = require("react-test-renderer");
 
 test("Should not mutate in any way", () => {
-    debugger;
     const myState = comfortReactApp(undefined, {type: "Startup"});
     const initialState = JSON.stringify(myState);
     const checkAfterAction = (action) => {

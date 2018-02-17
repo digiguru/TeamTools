@@ -1,4 +1,6 @@
-import { IUserList } from "../User/Model";
+import { IUserList, IUser } from "../User/Model";
+import { InMemoryBrowserUsers } from "../../Shared/InMemoryBrowserUsers";
+
 
 export const ComfortActions = {
     SET_STAGESIZE       : "SET_STAGESIZE",
@@ -26,12 +28,31 @@ export function setZoneFocus(area: "Chaos" | "Stretch" | "Comfort", focus: "in-f
 export function selectUser(user: string) {
     return {type: ComfortActions.SELECT_USER, user: user};
 }
-export function setUserList(userList: IUserList) {
-    return {type: ComfortActions.SET_USERLIST, userList: userList};
-}
+
+
 export function chooseZone(user: string, area: "Chaos" | "Stretch" | "Comfort", distance: number) {
     return {type: ComfortActions.CHOOSE_ZONE, user: user, area: area, distance: distance};
 }
 export function toggleChoiceVisibility(visible: boolean) {
     return {type: ComfortActions.TOGGLE_CHOICES, visible: visible};
+}
+
+export function recieveUserList(userList: IUserList) {
+    return {type: ComfortActions.SET_USERLIST, userList: userList};
+}
+export function fetchUserList() {
+    return dispatch => {
+        dispatch(recieveUserList({
+            ShowUsers : false,
+            Users : []
+        }));
+        const users = new InMemoryBrowserUsers(window);
+        users.getUsers().then((data) => {
+            const userList: IUser[] = data.map((v): IUser => {
+                return { Username : v.name };
+            });
+            dispatch(recieveUserList({ShowUsers: true, Users: userList}));
+        });
+    };
+    // return {type: ComfortActions.SET_USERLIST, userList: userList};
 }

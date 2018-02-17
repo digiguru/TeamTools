@@ -27,8 +27,7 @@ const initialState: ComfortAppState = {
     ShowUserChoices: false,
     UserChoices    : []
 };
-export function comfortReactApp(state: ComfortAppState = initialState, action): ComfortAppState {
-    debugger;
+export function comfortReducer(state: ComfortAppState = initialState, action): ComfortAppState {
     switch (action.type) {
         case ComfortActions.SET_USERLIST:
             return ComfortZoneAction.setUsers(state, (<any>action).userList);
@@ -96,7 +95,6 @@ class ComfortZoneAction {
     }
 
     static setUsers(state: ComfortAppState, userList: IUserList): ComfortAppState {
-        debugger;
         console.log("Input", state.UserList);
         console.log("Update", userList);
 
@@ -132,5 +130,5 @@ class ComfortZoneAction {
         // Set "showUserChoices" to true
         return Map(state)
             .set("ShowUserChoices", visible).toJS();
-    };
+    }
 }

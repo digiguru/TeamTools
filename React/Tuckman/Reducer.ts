@@ -38,7 +38,7 @@ const initialState: ITuckmanModel = {
 
 };
 
-export function tuckmanReactApp(state: ITuckmanModel = initialState, action): ITuckmanModel {
+export function tuckmanReducer(state: ITuckmanModel = initialState, action): ITuckmanModel {
     switch (action.type) {
         case TuckmanActions.SET_STAGESIZE:
             return TuckmanZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);

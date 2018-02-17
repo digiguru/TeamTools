@@ -1,6 +1,7 @@
 define("Shared/Cache", ["require", "exports"], function (require, exports) {
     "use strict";
-    var GenericCache = (function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var GenericCache = /** @class */ (function () {
         function GenericCache() {
             this.store = [];
         }
@@ -36,7 +37,8 @@ define("Shared/Cache", ["require", "exports"], function (require, exports) {
 });
 define("Shared/User", ["require", "exports"], function (require, exports) {
     "use strict";
-    var User = (function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var User = /** @class */ (function () {
         function User(name, id) {
             this.name = name;
             this.id = id;
@@ -48,10 +50,12 @@ define("Shared/User", ["require", "exports"], function (require, exports) {
 });
 define("Shared/IUsers", ["require", "exports"], function (require, exports) {
     "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
 });
 define("Shared/UserConstructor", ["require", "exports", "Shared/User"], function (require, exports, User_1) {
     "use strict";
-    var UserConstructor = (function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var UserConstructor = /** @class */ (function () {
         function UserConstructor() {
         }
         UserConstructor.notEmpty = function (input) {
@@ -74,7 +78,8 @@ define("Shared/UserConstructor", ["require", "exports", "Shared/User"], function
 });
 define("Shared/Users", ["require", "exports", "Shared/Cache", "Shared/UserConstructor"], function (require, exports, Cache_1, UserConstructor_1) {
     "use strict";
-    var InMemoryUsers = (function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var InMemoryUsers = /** @class */ (function () {
         function InMemoryUsers() {
             this.cache = new Cache_1.GenericCache();
             var users = UserConstructor_1.UserConstructor.createUsersByNames([
@@ -112,7 +117,8 @@ define("Shared/Users", ["require", "exports", "Shared/Cache", "Shared/UserConstr
 });
 define("Shared/BrowserRepo", ["require", "exports"], function (require, exports) {
     "use strict";
-    var BrowserRepo = (function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BrowserRepo = /** @class */ (function () {
         function BrowserRepo(key, window) {
             this.br = window;
             this.key = key;
@@ -133,7 +139,8 @@ define("Shared/BrowserRepo", ["require", "exports"], function (require, exports)
 });
 define("Shared/BrowserUsers", ["require", "exports", "Shared/BrowserRepo"], function (require, exports, BrowserRepo_1) {
     "use strict";
-    var BrowserUsers = (function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var BrowserUsers = /** @class */ (function () {
         function BrowserUsers(window) {
             this.repo = new BrowserRepo_1.BrowserRepo("users", window);
         }
@@ -149,7 +156,8 @@ define("Shared/BrowserUsers", ["require", "exports", "Shared/BrowserRepo"], func
 });
 define("Shared/InMemoryBrowserUsers", ["require", "exports", "Shared/Users", "Shared/BrowserUsers"], function (require, exports, Users_1, BrowserUsers_1) {
     "use strict";
-    var InMemoryBrowserUsers = (function () {
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var InMemoryBrowserUsers = /** @class */ (function () {
         function InMemoryBrowserUsers(window) {
             this.cache = new Users_1.InMemoryUsers();
             this.repo = new BrowserUsers_1.BrowserUsers(window);
@@ -202,7 +210,7 @@ requirejs.config({
 var users;
 require(["Shared/InMemoryBrowserUsers", "Shared/UserConstructor"], function (u, c) {
     users = new u.InMemoryBrowserUsers(window);
-    var UIEntry = (function () {
+    var UIEntry = /** @class */ (function () {
         function UIEntry() {
             document.getElementById("new").addEventListener("mousedown", function () {
                 UI.ClearUsers();
