@@ -6,8 +6,9 @@ import { setStageSize, setStageVisibility } from "./Tuckman/Actions";
 import { Size } from "./Models/Size";
 import reducer from "./CombineReducers";
 import { getWidthHeight } from "./Shared/WindowHelper";
-import { TuckmanConnector } from "./Tuckman/Connector";
-import { ComfortApp } from "./Comfort/ComponentApp";
+// import { TuckmanConnector } from "./Tuckman/Connector";
+import { TuckmanStage } from "./Tuckman/Component";
+import { ComfortStage } from "./Comfort/Component";
 import { StageConnector } from "./Stage/Connector";
 
 import { InMemoryBrowserUsers } from "../Shared/InMemoryBrowserUsers";
@@ -24,12 +25,15 @@ const unsubscribe = myStore.subscribe(() =>
 render(
   <Provider store={myStore}>
     <StageConnector>
-        <div id="tuckman"><TuckmanConnector /></div>
-        <div id="comfort"><ComfortApp /></div>
+        <ComfortStage />
     </StageConnector>
   </Provider>,
   document.getElementById("container")
 );
+// <TuckmanStage />
+// <TuckmanConnector />
+// <div id="comfort"></div>
+// <div id="tuckman"></div>
 
 export function resizeImage() {
     const size: Size = getWidthHeight();
@@ -38,12 +42,6 @@ export function resizeImage() {
     } else {
       myStore.dispatch(setStageSize(size.width, size.width));
     }
-}
-export function hideModel() {
-  myStore.dispath(setStageVisibility("hiding"));
-}
-export function showModel() {
-  myStore.dispath(setStageVisibility("appearing"));
 }
 
 window.addEventListener("resize", resizeImage, false);

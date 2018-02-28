@@ -8,7 +8,9 @@ export interface ITuckmanModel extends IStageState {
     CurrentUser? : IUser;
     UserList?    : IUserList;
     UserChoices? : Array<ITuckmanUserChoiceState>;
-};
+    visibility   : boolean;
+}
+
 export interface ITuckmanZoneList {
     forming   : ITuckmanZone;
     storming  : ITuckmanZone;

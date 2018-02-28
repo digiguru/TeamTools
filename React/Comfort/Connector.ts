@@ -1,14 +1,13 @@
 import { connect } from "react-redux";
-import { TuckmanStage } from "./Component";
-import { ITuckmanModel } from "./Model";
-import { IHidableEvents } from "../Stage/Model";
+import { ComfortStage } from "./Component";
+import { ComfortUserChoiceState } from "./Model";
 import { setStageVisibility } from "./Actions";
 
-const mapStateToProps = (state: ITuckmanModel): ITuckmanModel => {
+const mapStateToProps = (state: ComfortUserChoiceState): ComfortUserChoiceState => {
     return state;
 };
 
-const mapDispatchToProps = (dispatch): IHidableEvents => {
+const mapDispatchToProps = (dispatch): any => {
     return {
         Events: {
             onHide: (): void => {
@@ -20,7 +19,7 @@ const mapDispatchToProps = (dispatch): IHidableEvents => {
         }
     };
 };
-export const TuckmanConnector = connect(
+export const ComfortConnector = connect(
     mapStateToProps,
     mapDispatchToProps
-)(TuckmanStage);
+)(ComfortStage);

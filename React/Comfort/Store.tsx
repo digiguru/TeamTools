@@ -1,6 +1,6 @@
 import * as React from "react";
 import { createStore } from "redux";
-import { ComfortApp } from "./ComponentApp";
+import { ComfortConnector } from "./Connector";
 import { comfortReducer } from "./Reducer";
 import { render } from "react-dom";
 import { Provider } from "react-redux";
@@ -10,18 +10,18 @@ import { getWidthHeight } from "../Shared/WindowHelper";
 import { StageConnector } from "../Stage/Connector";
 
 
-const comfortStore = createStore(comfortReducer);
+export const myComfortStore = createStore(comfortReducer);
 // comfortStore.dispatch(fetchUserList());
-comfortStore.dispatch(setStageSize(800, 800));
+myComfortStore.dispatch(setStageSize(800, 800));
 
-const unsubscribe = comfortStore.subscribe(() =>
-  console.log(comfortStore.getState())
+const unsubscribe = myComfortStore.subscribe(() =>
+  console.log(myComfortStore.getState())
 );
 
 render(
-  <Provider store={comfortStore}>
+  <Provider store={myComfortStore}>
     <StageConnector>
-        <ComfortApp />
+        <ComfortConnector />
     </StageConnector>
   </Provider>,
   document.getElementById("comfort")
@@ -30,17 +30,20 @@ render(
 export function resizeImage() {
     const size: Size = getWidthHeight();
     if (size.width > size.height) {
-      comfortStore.dispatch(setStageSize(size.height, size.height));
+      myComfortStore.dispatch(setStageSize(size.height, size.height));
     } else {
-      comfortStore.dispatch(setStageSize(size.width, size.width));
+      myComfortStore.dispatch(setStageSize(size.width, size.width));
     }
-    comfortStore.dispatch(setStageSize(size.height, size.height));
+    myComfortStore.dispatch(setStageSize(size.height, size.height));
 }
-export function hideModel() {
-  comfortStore.dispatch(setStageVisibility("hiding"));
+export function getStore() {
+  return myComfortStore;
 }
-export function showModel() {
-  comfortStore.dispatch(setStageVisibility("appearing"));
+function hideModel() {
+  myComfortStore.dispatch(setStageVisibility("hiding"));
+}
+function showModel() {
+  myComfortStore.dispatch(setStageVisibility("appearing"));
 }
 window.addEventListener("resize", resizeImage, false);
 

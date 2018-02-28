@@ -1,20 +1,21 @@
 import * as React from "react";
 import {createStore} from "../../3rdParty/redux.min";
-import { ComfortApp } from "../Comfort/ComponentApp";
-import {comfortReactApp} from "../Comfort/Reducer";
+import { ComfortStage } from "../Comfort/Component";
+import {comfortReducer} from "../Comfort/Reducer";
 import { render } from "react-dom";
 import { Provider } from "../../3rdParty/react-redux.min";
 import * as Action from "../Comfort/Actions";
 import { StageConnector } from "../Stage/Connector";
 import { IUserList } from "../User/Model";
 
+
 const renderizer = require("react-test-renderer");
 
 test("Should not mutate in any way", () => {
-    const myState = comfortReactApp(undefined, {type: "Startup"});
+    const myState = comfortReducer(undefined, {type: "Startup"});
     const initialState = JSON.stringify(myState);
     const checkAfterAction = (action) => {
-        const currentState = comfortReactApp(myState, action);
+        const currentState = comfortReducer(myState, action);
         expect(initialState).toEqual(JSON.stringify(myState));
     };
     checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
@@ -32,14 +33,16 @@ test("Should not mutate in any way", () => {
 
 test("Should show the component", () => {
     // Arrange
-    const myStore = createStore(comfortReactApp);
+    const myStore = createStore(comfortReducer);
 
     const component = renderizer.create(
-        <Provider store={myStore}>
-            <StageConnector>
-                <ComfortApp />
-            </StageConnector>
-        </Provider>
+        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
+            <Provider store={myStore}>
+                <StageConnector>
+                    <ComfortStage />
+                </StageConnector>
+            </Provider>
+        </svg>
     );
 
     expect(component.toJSON()).toMatchSnapshot();
@@ -51,14 +54,16 @@ test("Should show the component", () => {
 test("Should allow shrinking", () => {
     // Arrange
 
-    const myStore = createStore(comfortReactApp);
+    const myStore = createStore(comfortReducer);
 
     const component = renderizer.create(
-        <Provider store={myStore}>
-            <StageConnector>
-                <ComfortApp />
-            </StageConnector>
-        </Provider>
+        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
+            <Provider store={myStore}>
+                <StageConnector>
+                    <ComfortStage />
+                </StageConnector>
+            </Provider>
+        </svg>
     );
 
     myStore.dispatch(Action.chooseZone("Adam Hall", "Stretch", 50));
@@ -73,14 +78,16 @@ test("Should allow shrinking", () => {
 test("Should allow hiding", () => {
     // Arrange
 
-    const myStore = createStore(comfortReactApp);
+    const myStore = createStore(comfortReducer);
 
     const component = renderizer.create(
-        <Provider store={myStore}>
-            <StageConnector>
-                <ComfortApp />
-            </StageConnector>
-        </Provider>
+        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
+            <Provider store={myStore}>
+                <StageConnector>
+                    <ComfortStage />
+                </StageConnector>
+            </Provider>
+        </svg>
     );
 
     myStore.dispatch(Action.setStageVisibility("hiding"));
@@ -96,14 +103,16 @@ test("Should allow hiding", () => {
 test("Should allow users to be set okay", () => {
     // Arrange
 
-    const myStore = createStore(comfortReactApp);
+    const myStore = createStore(comfortReducer);
 
     const component = renderizer.create(
-        <Provider store={myStore}>
-            <StageConnector>
-                <ComfortApp />
-            </StageConnector>
-        </Provider>
+        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
+            <Provider store={myStore}>
+                <StageConnector>
+                    <ComfortStage />
+                </StageConnector>
+            </Provider>
+        </svg>
     );
     const users: IUserList = {
         Users: [
@@ -112,7 +121,7 @@ test("Should allow users to be set okay", () => {
             {Username: "Test person 3"}
         ]
     };
-    myStore.dispatch(Action.setUserList(users));
+    myStore.dispatch(Action.recieveUserList(users));
     expect(component.toJSON()).toMatchSnapshot();
 });
 

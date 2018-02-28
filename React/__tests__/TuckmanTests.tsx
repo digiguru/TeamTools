@@ -2,7 +2,7 @@ import * as React from "react";
 import { createStore } from "../../3rdParty/redux.min";
 import { Provider } from "../../3rdParty/react-redux.min";
 import { TuckmanStage } from "../Tuckman/Component";
-import { tuckmanReactApp } from "../Tuckman/Reducer";
+import { tuckmanReducer } from "../Tuckman/Reducer";
 import { Size } from "../Models/Size";
 import * as Action from "../Tuckman/Actions";
 import { TuckmanConnector } from "../Tuckman/Connector";
@@ -11,7 +11,7 @@ import { Stage } from "../Stage/Component";
 const renderizer = require("react-test-renderer");
 
 test("Should not mutate in any way", () => {
-    const myStore = createStore(tuckmanReactApp);
+    const myStore = createStore(tuckmanReducer);
     const originalState = myStore.getState();
     const inputState = JSON.stringify(originalState);
     const checkAfterAction = (action) => {
@@ -31,7 +31,7 @@ test("Should not mutate in any way", () => {
 });
 
 test("Focusable zones", () => {
-    const myStore = createStore(tuckmanReactApp);
+    const myStore = createStore(tuckmanReducer);
     myStore.dispatch(Action.setStageSize(800, 600));
 
     const component = renderizer.create(
@@ -58,7 +58,7 @@ test("Focusable zones", () => {
 
 test("Should show the component", () => {
     // Arrange
-    const myStore = createStore(tuckmanReactApp);
+    const myStore = createStore(tuckmanReducer);
     myStore.dispatch(Action.setStageSize(800, 600));
 
     const component = renderizer.create(

@@ -16,15 +16,22 @@ const initialState: ITuckmanModel = {
         Users: [
             {Username: "Adam Hall", Focus: "not-in-focus", Y: 0 },
             {Username: "Caroline Hall", Focus: "not-in-focus", Y: 0 }
-        ]
+        ],
     },
     Size: initialSize,
+    onHide    : () => {
+        return null;
+    },
+    onShow    : () => {
+        return null;
+    },
     zones: {
         forming   : {index: 0, label: "forming",    focus: "not-in-focus", Events: undefined, visibility: "appearing"},
         storming  : {index: 1, label: "storming",   focus: "not-in-focus", Events: undefined, visibility: "appearing"},
         norming   : {index: 2, label: "norming",    focus: "not-in-focus", Events: undefined, visibility: "appearing"},
         performing: {index: 3, label: "performing", focus: "not-in-focus", Events: undefined, visibility: "appearing"}
     },
+    visibility: false,
     UserChoices: []
     /*CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
 
@@ -70,10 +77,10 @@ class TuckmanZoneAction {
 
     static setStageVisibilty(state: ITuckmanModel, visibility: "hiding" | "appearing"): ITuckmanModel {
         return fromJS(state)
-            .setIn(["zones", "forming", "focus"], visibility)
-            .setIn(["zones", "storming", "focus"], visibility)
-            .setIn(["zones", "norming", "focus"], visibility)
-            .setIn(["zones", "performing", "focus"], visibility).toJS();
+            .setIn(["zones", "forming", "visibility"], visibility)
+            .setIn(["zones", "storming", "visibility"], visibility)
+            .setIn(["zones", "norming", "visibility"], visibility)
+            .setIn(["zones", "performing", "visibility"], visibility).toJS();
     }
 
     static setZoneFocus(state: ITuckmanModel, area: "forming" | "storming" | "norming" | "performing", focus: "in-focus" | "active" | "not-in-focus"): ITuckmanModel {
@@ -136,6 +143,7 @@ class TuckmanZoneAction {
     static toggleChoiceVisibility(state: ITuckmanModel, visible: boolean): ITuckmanModel {
         // Set "showUserChoices" to true
         return Map(state)
+            .set("visibility", !visible)
             .set("ShowUserChoices", visible).toJS();
     }
 }

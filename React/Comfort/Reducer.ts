@@ -35,8 +35,6 @@ export function comfortReducer(state: ComfortAppState = initialState, action): C
             return ComfortZoneAction.setVisibility(state, (<any> action).visibility);
         case ComfortActions.SET_STAGESIZE:
             return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
-        case ComfortActions.SET_STAGEVISIBILITY:
-            return ComfortZoneAction.setVisibility(state, (<any>action).visibility);
         case ComfortActions.SET_USERFOCUS:
             return ComfortZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
         case ComfortActions.SET_ZONEFOCUS:

@@ -34,14 +34,20 @@ export function resizeImage() {
       myTuckmanStore.dispatch(setStageSize(size.width, size.width));
     }
 }
-export function hideModel() {
+export function getStore() {
+  return myTuckmanStore;
+}
+function hideModel() {
   myTuckmanStore.dispatch(setStageVisibility("hiding"));
 }
-export function showModel() {
+function showModel() {
   myTuckmanStore.dispatch(setStageVisibility("appearing"));
 }
 
 window.addEventListener("resize", resizeImage, false);
-
+setTimeout(() => {
+  console.log("HIDE IT!");
+  myTuckmanStore.dispatch(setStageVisibility("hiding"));
+}, 5000);
 // Stop listening to state updates
 // unsubscribe(); ;

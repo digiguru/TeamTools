@@ -6,15 +6,16 @@ import { BouncyAnimation } from "../Animation/Component";
 export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZoneClick, onZoneActive) => (
     const index  = state.index || 0;
     const textID = state.label + "-label";
-
     const textOffset : string = 12 + (25 * state.index) + "%";
     const delay      : string = (0.2 * state.index) + "s";
     const className  : string = state.focus + " area okay js-area-standard";
     let   offset     : string = (25 * state.index) + "%";
     let   initialX   : string = "0%";
+
+
     if (state.visibility === "hiding") {
+        initialX = offset;
         offset   = "100%";
-        initialX = (25 * state.index) + "%";
     }
 
     /*return <g>

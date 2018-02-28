@@ -12,7 +12,7 @@ const mapStateToProps = (state: ITuckmanModel, props: {label}): ITuckmanZone => 
     return myState;
 };
 
-const mapDispatchToProps = (dispatch) : ITuckmanZoneEventList => {
+const mapDispatchToProps = (dispatch): ITuckmanZoneEventList => {
   return {
     Events: {
       onZoneMouseDown: (zone: "forming" | "storming" | "norming" | "performing"): void => {

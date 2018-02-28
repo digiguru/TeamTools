@@ -10,8 +10,8 @@ import { TuckmanUserHistoryConnector } from "../TuckmanUserChoice/Connector";
 
 
 export const TuckmanStage = (state: ITuckmanModel) => {
-    const mod : ITuckmanModel = state;
-    const perf: ITuckmanZone  = mod.zones.performing;
+    // const mod : ITuckmanModel = state;
+    const perf: ITuckmanZone  = state.zones.performing;
     return <g>
                 <g id="zones">
                     <TuckmanZoneConnector label="performing"  />
@@ -21,5 +21,7 @@ export const TuckmanStage = (state: ITuckmanModel) => {
                 </g>
                 <ReduxUserConnector />
                 <TuckmanUserHistoryConnector />
-        </g>;
+        <button id="show-tuckman" onMouseUp={state.onShow}>show tuckman</button>
+        <button id="hide-tuckman" onMouseUp={state.onHide}>hide tuckman</button>
+    </g>;
 };

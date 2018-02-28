@@ -17,9 +17,10 @@ requirejs.config( {
     }
 });
 
-//require(["React/Store"], (store) => {
+// require(["React/Store"], (store) => {
 require(["React/Comfort/Store", "React/Tuckman/Store"], (comfortStore, tuckmanStore) => {
-//require(["React/Comfort/Store"], (comfortStore) => {
+// require(["React/Comfort/Store"], (comfortStore) => {
+// require(["React/Tuckman/Store"], (tuckmanStore) => {
 
     // comfort.resizeImage();
     // tuckman.resizeImage();
@@ -32,18 +33,22 @@ require(["React/Comfort/Store", "React/Tuckman/Store"], (comfortStore, tuckmanSt
                 case ModelEnum.All:
                     // document.getElementById("tuckman").className = "hidden";
                     // document.getElementById("comfort").className = "hidden";
-                    comfortStore.hideModel();
-                    tuckmanStore.hideModel();
+                    console.log("GO", tuckmanStore.getStore().getState());
+                    // comfortStore.hideModel();
+                    comfortStore.myComfortStore.dispatch({type: "SET_STAGEVISIBLE", visibility: "appearing"});
+                    tuckmanStore.myTuckmanStore.dispatch({type: "SET_STAGEVISIBLE", visibility: "appearing"});
                     break;
                 case ModelEnum.ComfortZone:
-                    comfortStore.resizeImage();
-                    tuckmanStore.hideModel();
+                    // comfortStore.resizeImage();
+                    tuckmanStore.myTuckmanStore.dispatch({type: "SET_STAGEVISIBLE", visibility: "hiding"});
+                    comfortStore.myComfortStore.dispatch({type: "SET_STAGEVISIBLE", visibility: "appearing"});
                     break;
                 case ModelEnum.Tuckman:
                     // document.getElementById("tuckman").className = "";
                     // document.getElementById("comfort").className = "hidden";
-                    tuckmanStore.resizeImage();
-                    comfortStore.hideModel();
+                    comfortStore.myComfortStore.dispatch({type: "SET_STAGEVISIBLE", visibility: "hiding"});
+                    tuckmanStore.myTuckmanStore.dispatch({type: "SET_STAGEVISIBLE", visibility: "appearing"});
+                    // comfortStore.hideModel();
                     break;
             }
         };
@@ -64,10 +69,10 @@ require(["React/Comfort/Store", "React/Tuckman/Store"], (comfortStore, tuckmanSt
 
         const urlParam = getModelFromQuerystring();
         showForm(urlParam);
-        document.getElementById("go-tuckman").onclick = function () {
+        document.getElementById("tuckman").onclick = function () {
             showForm(ModelEnum.Tuckman);
         };
-        document.getElementById("go-comfort").onclick = function () {
+        document.getElementById("comfort").onclick = function () {
             showForm(ModelEnum.ComfortZone);
         };
     })();

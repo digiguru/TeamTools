@@ -5,6 +5,7 @@ exports[`Focusable zones 1`] = `
   height={600}
   id="stage"
   width={800}
+  xmlns="http://www.w3.org/2000/svg"
 >
   <g>
     <g
@@ -774,6 +775,26 @@ exports[`Focusable zones 1`] = `
     />
 ------------HTML PREVIEW---------------
 <g id="history"></g>
+    <button
+      id="show-tuckman"
+      onMouseUp={undefined}
+    >
+      show tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+      show tuckman
+</button>
+    <button
+      id="hide-tuckman"
+      onMouseUp={undefined}
+    >
+      hide tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+      hide tuckman
+</button>
   </g>
 ------------HTML PREVIEW---------------
 <g>
@@ -951,10 +972,19 @@ exports[`Focusable zones 1`] = `
         </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+        show tuckman
+    </button>
+    <button id="hide-tuckman">
+        hide tuckman
+    </button>
 </g>
 </svg>
 ------------HTML PREVIEW---------------
-<svg id="stage">
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <g>
     <g id="zones">
       <g>
@@ -1130,6 +1160,12 @@ exports[`Focusable zones 1`] = `
       </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+      show tuckman
+    </button>
+    <button id="hide-tuckman">
+      hide tuckman
+    </button>
   </g>
 </svg>
 `;
@@ -1139,6 +1175,7 @@ exports[`Focusable zones 2`] = `
   height={600}
   id="stage"
   width={800}
+  xmlns="http://www.w3.org/2000/svg"
 >
   <g>
     <g
@@ -1908,6 +1945,26 @@ exports[`Focusable zones 2`] = `
     />
 ------------HTML PREVIEW---------------
 <g id="history"></g>
+    <button
+      id="show-tuckman"
+      onMouseUp={undefined}
+    >
+      show tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+      show tuckman
+</button>
+    <button
+      id="hide-tuckman"
+      onMouseUp={undefined}
+    >
+      hide tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+      hide tuckman
+</button>
   </g>
 ------------HTML PREVIEW---------------
 <g>
@@ -2085,10 +2142,19 @@ exports[`Focusable zones 2`] = `
         </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+        show tuckman
+    </button>
+    <button id="hide-tuckman">
+        hide tuckman
+    </button>
 </g>
 </svg>
 ------------HTML PREVIEW---------------
-<svg id="stage">
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <g>
     <g id="zones">
       <g>
@@ -2264,6 +2330,12 @@ exports[`Focusable zones 2`] = `
       </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+      show tuckman
+    </button>
+    <button id="hide-tuckman">
+      hide tuckman
+    </button>
   </g>
 </svg>
 `;
@@ -2273,6 +2345,7 @@ exports[`Focusable zones 3`] = `
   height={600}
   id="stage"
   width={800}
+  xmlns="http://www.w3.org/2000/svg"
 >
   <g>
     <g
@@ -3042,6 +3115,26 @@ exports[`Focusable zones 3`] = `
     />
 ------------HTML PREVIEW---------------
 <g id="history"></g>
+    <button
+      id="show-tuckman"
+      onMouseUp={undefined}
+    >
+      show tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+      show tuckman
+</button>
+    <button
+      id="hide-tuckman"
+      onMouseUp={undefined}
+    >
+      hide tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+      hide tuckman
+</button>
   </g>
 ------------HTML PREVIEW---------------
 <g>
@@ -3219,10 +3312,19 @@ exports[`Focusable zones 3`] = `
         </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+        show tuckman
+    </button>
+    <button id="hide-tuckman">
+        hide tuckman
+    </button>
 </g>
 </svg>
 ------------HTML PREVIEW---------------
-<svg id="stage">
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <g>
     <g id="zones">
       <g>
@@ -3398,6 +3500,12 @@ exports[`Focusable zones 3`] = `
       </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+      show tuckman
+    </button>
+    <button id="hide-tuckman">
+      hide tuckman
+    </button>
   </g>
 </svg>
 `;
@@ -3407,6 +3515,7 @@ exports[`Focusable zones 4`] = `
   height={600}
   id="stage"
   width={800}
+  xmlns="http://www.w3.org/2000/svg"
 >
   <g>
     <g
@@ -4176,6 +4285,26 @@ exports[`Focusable zones 4`] = `
     />
 ------------HTML PREVIEW---------------
 <g id="history"></g>
+    <button
+      id="show-tuckman"
+      onMouseUp={undefined}
+    >
+      show tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+      show tuckman
+</button>
+    <button
+      id="hide-tuckman"
+      onMouseUp={undefined}
+    >
+      hide tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+      hide tuckman
+</button>
   </g>
 ------------HTML PREVIEW---------------
 <g>
@@ -4353,10 +4482,19 @@ exports[`Focusable zones 4`] = `
         </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+        show tuckman
+    </button>
+    <button id="hide-tuckman">
+        hide tuckman
+    </button>
 </g>
 </svg>
 ------------HTML PREVIEW---------------
-<svg id="stage">
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <g>
     <g id="zones">
       <g>
@@ -4532,6 +4670,12 @@ exports[`Focusable zones 4`] = `
       </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+      show tuckman
+    </button>
+    <button id="hide-tuckman">
+      hide tuckman
+    </button>
   </g>
 </svg>
 `;
@@ -4541,6 +4685,7 @@ exports[`Should show the component 1`] = `
   height={600}
   id="stage"
   width={800}
+  xmlns="http://www.w3.org/2000/svg"
 >
   <g>
     <g
@@ -5310,6 +5455,26 @@ exports[`Should show the component 1`] = `
     />
 ------------HTML PREVIEW---------------
 <g id="history"></g>
+    <button
+      id="show-tuckman"
+      onMouseUp={undefined}
+    >
+      show tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+      show tuckman
+</button>
+    <button
+      id="hide-tuckman"
+      onMouseUp={undefined}
+    >
+      hide tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+      hide tuckman
+</button>
   </g>
 ------------HTML PREVIEW---------------
 <g>
@@ -5487,10 +5652,19 @@ exports[`Should show the component 1`] = `
         </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+        show tuckman
+    </button>
+    <button id="hide-tuckman">
+        hide tuckman
+    </button>
 </g>
 </svg>
 ------------HTML PREVIEW---------------
-<svg id="stage">
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <g>
     <g id="zones">
       <g>
@@ -5666,6 +5840,12 @@ exports[`Should show the component 1`] = `
       </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+      show tuckman
+    </button>
+    <button id="hide-tuckman">
+      hide tuckman
+    </button>
   </g>
 </svg>
 `;
@@ -5675,6 +5855,7 @@ exports[`Should show the component 2`] = `
   height={600}
   id="stage"
   width={800}
+  xmlns="http://www.w3.org/2000/svg"
 >
   <g>
     <g
@@ -6444,6 +6625,26 @@ exports[`Should show the component 2`] = `
     />
 ------------HTML PREVIEW---------------
 <g id="history"></g>
+    <button
+      id="show-tuckman"
+      onMouseUp={undefined}
+    >
+      show tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+      show tuckman
+</button>
+    <button
+      id="hide-tuckman"
+      onMouseUp={undefined}
+    >
+      hide tuckman
+    </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+      hide tuckman
+</button>
   </g>
 ------------HTML PREVIEW---------------
 <g>
@@ -6621,10 +6822,19 @@ exports[`Should show the component 2`] = `
         </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+        show tuckman
+    </button>
+    <button id="hide-tuckman">
+        hide tuckman
+    </button>
 </g>
 </svg>
 ------------HTML PREVIEW---------------
-<svg id="stage">
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
   <g>
     <g id="zones">
       <g>
@@ -6800,6 +7010,12 @@ exports[`Should show the component 2`] = `
       </g>
     </g>
     <g id="history"></g>
+    <button id="show-tuckman">
+      show tuckman
+    </button>
+    <button id="hide-tuckman">
+      hide tuckman
+    </button>
   </g>
 </svg>
 `;
