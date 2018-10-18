@@ -18,7 +18,7 @@ requirejs.config( {
 });
 
 // require(["React/Store"], (store) => {
-require(["React/Comfort/Store", "React/Tuckman/Store"], (comfortStore, tuckmanStore) => {
+require(["React/Comfort/Store", "React/Tuckman/Store", "React/User/UserStore"], (comfortStore, tuckmanStore, userInputComponent) => {
 // require(["React/Comfort/Store"], (comfortStore) => {
 // require(["React/Tuckman/Store"], (tuckmanStore) => {
 

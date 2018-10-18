@@ -780,7 +780,7 @@ requirejs.config({
     }
 });
 // require(["React/Store"], (store) => {
-require(["React/Comfort/Store", "React/Tuckman/Store"], function (comfortStore, tuckmanStore) {
+require(["React/Comfort/Store", "React/Tuckman/Store", "React/User/UserStore"], function (comfortStore, tuckmanStore, userInputComponent) {
     // require(["React/Comfort/Store"], (comfortStore) => {
     // require(["React/Tuckman/Store"], (tuckmanStore) => {
     // comfort.resizeImage();
@@ -1380,15 +1380,53 @@ define("React/Tuckman/Store", ["require", "exports", "react", "redux", "react-do
 });
 // Stop listening to state updates
 // unsubscribe(); ;
-define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3rdParty/redux.min", "React/Comfort/Component", "React/Comfort/Reducer", "../../3rdParty/react-redux.min", "React/Comfort/Actions", "React/Stage/Connector"], function (require, exports, React, redux_min_1, Component_11, Reducer_5, react_redux_min_1, Action, Connector_12) {
+define("React/User/Reducer", ["require", "exports"], function (require, exports) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    function userReducer(state, action) {
+        return {};
+    }
+    exports.userReducer = userReducer;
+});
+define("React/User/UserInputComponent", ["require", "exports", "react", "Shared/InMemoryBrowserUsers"], function (require, exports, React, InMemoryBrowserUsers_4) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var UserInputComponent = /** @class */ (function (_super) {
+        __extends(UserInputComponent, _super);
+        function UserInputComponent(props, context) {
+            var _this = _super.call(this, props, context) || this;
+            console.log("UserInputComponent");
+            new InMemoryBrowserUsers_4.InMemoryBrowserUsers(window).getUsers().then(function (u) {
+                console.log("UserInputComponent: Load users", u);
+                _this.setState({ users: u });
+            });
+            return _this;
+        }
+        UserInputComponent.prototype.render = function () {
+            return React.createElement("textarea", { id: "users" }, this.state.users.map(function (user, i) {
+                return user.name;
+            }));
+        };
+        return UserInputComponent;
+    }(React.Component));
+    exports.UserInputComponent = UserInputComponent;
+});
+define("React/User/UserStore", ["require", "exports", "react", "redux", "React/User/Reducer", "react-dom", "react-redux", "React/User/UserInputComponent"], function (require, exports, React, redux_4, Reducer_5, react_dom_4, react_redux_12, UserInputComponent_1) {
+    "use strict";
+    Object.defineProperty(exports, "__esModule", { value: true });
+    var myStore = redux_4.createStore(Reducer_5.userReducer);
+    react_dom_4.render(React.createElement(react_redux_12.Provider, { store: myStore },
+        React.createElement(UserInputComponent_1.UserInputComponent, null)), document.getElementById("user"));
+});
+define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3rdParty/redux.min", "React/Comfort/Component", "React/Comfort/Reducer", "../../3rdParty/react-redux.min", "React/Comfort/Actions", "React/Stage/Connector"], function (require, exports, React, redux_min_1, Component_11, Reducer_6, react_redux_min_1, Action, Connector_12) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var renderizer = require("react-test-renderer");
     test("Should not mutate in any way", function () {
-        var myState = Reducer_5.comfortReducer(undefined, { type: "Startup" });
+        var myState = Reducer_6.comfortReducer(undefined, { type: "Startup" });
         var initialState = JSON.stringify(myState);
         var checkAfterAction = function (action) {
-            var currentState = Reducer_5.comfortReducer(myState, action);
+            var currentState = Reducer_6.comfortReducer(myState, action);
             expect(initialState).toEqual(JSON.stringify(myState));
         };
         checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
@@ -1403,7 +1441,7 @@ define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3r
     });
     test("Should show the component", function () {
         // Arrange
-        var myStore = redux_min_1.createStore(Reducer_5.comfortReducer);
+        var myStore = redux_min_1.createStore(Reducer_6.comfortReducer);
         var component = renderizer.create(React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", id: "stage" },
             React.createElement(react_redux_min_1.Provider, { store: myStore },
                 React.createElement(Connector_12.StageConnector, null,
@@ -1414,7 +1452,7 @@ define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3r
     });
     test("Should allow shrinking", function () {
         // Arrange
-        var myStore = redux_min_1.createStore(Reducer_5.comfortReducer);
+        var myStore = redux_min_1.createStore(Reducer_6.comfortReducer);
         var component = renderizer.create(React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", id: "stage" },
             React.createElement(react_redux_min_1.Provider, { store: myStore },
                 React.createElement(Connector_12.StageConnector, null,
@@ -1426,7 +1464,7 @@ define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3r
     });
     test("Should allow hiding", function () {
         // Arrange
-        var myStore = redux_min_1.createStore(Reducer_5.comfortReducer);
+        var myStore = redux_min_1.createStore(Reducer_6.comfortReducer);
         var component = renderizer.create(React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", id: "stage" },
             React.createElement(react_redux_min_1.Provider, { store: myStore },
                 React.createElement(Connector_12.StageConnector, null,
@@ -1438,7 +1476,7 @@ define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3r
     });
     test("Should allow users to be set okay", function () {
         // Arrange
-        var myStore = redux_min_1.createStore(Reducer_5.comfortReducer);
+        var myStore = redux_min_1.createStore(Reducer_6.comfortReducer);
         var component = renderizer.create(React.createElement("svg", { xmlns: "http://www.w3.org/2000/svg", id: "stage" },
             React.createElement(react_redux_min_1.Provider, { store: myStore },
                 React.createElement(Connector_12.StageConnector, null,
@@ -1454,12 +1492,12 @@ define("React/__tests__/ComfortTests", ["require", "exports", "react", "../../3r
         expect(component.toJSON()).toMatchSnapshot();
     });
 });
-define("React/__tests__/TuckmanTests", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "React/Tuckman/Reducer", "React/Tuckman/Actions", "React/Tuckman/Connector", "React/Stage/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_6, Action, Connector_13, Connector_14) {
+define("React/__tests__/TuckmanTests", ["require", "exports", "react", "../../3rdParty/redux.min", "../../3rdParty/react-redux.min", "React/Tuckman/Reducer", "React/Tuckman/Actions", "React/Tuckman/Connector", "React/Stage/Connector"], function (require, exports, React, redux_min_2, react_redux_min_2, Reducer_7, Action, Connector_13, Connector_14) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
     var renderizer = require("react-test-renderer");
     test("Should not mutate in any way", function () {
-        var myStore = redux_min_2.createStore(Reducer_6.tuckmanReducer);
+        var myStore = redux_min_2.createStore(Reducer_7.tuckmanReducer);
         var originalState = myStore.getState();
         var inputState = JSON.stringify(originalState);
         var checkAfterAction = function (action) {
@@ -1478,7 +1516,7 @@ define("React/__tests__/TuckmanTests", ["require", "exports", "react", "../../3r
         checkAfterAction(Action.chooseZone("Adam Hall", "performing", 85));
     });
     test("Focusable zones", function () {
-        var myStore = redux_min_2.createStore(Reducer_6.tuckmanReducer);
+        var myStore = redux_min_2.createStore(Reducer_7.tuckmanReducer);
         myStore.dispatch(Action.setStageSize(800, 600));
         var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
             React.createElement(Connector_14.StageConnector, null,
@@ -1497,7 +1535,7 @@ define("React/__tests__/TuckmanTests", ["require", "exports", "react", "../../3r
     });
     test("Should show the component", function () {
         // Arrange
-        var myStore = redux_min_2.createStore(Reducer_6.tuckmanReducer);
+        var myStore = redux_min_2.createStore(Reducer_7.tuckmanReducer);
         myStore.dispatch(Action.setStageSize(800, 600));
         var component = renderizer.create(React.createElement(react_redux_min_2.Provider, { store: myStore },
             React.createElement(Connector_14.StageConnector, null,
