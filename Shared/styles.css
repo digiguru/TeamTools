@@ -1,0 +1,149 @@
+@import url(//fonts.googleapis.com/css?family=Share+Tech+Mono);
+.user-group text {
+    font-size: 60px; font-family: "Share Tech Mono"; fill: rgb(128, 128, 128);
+}
+.hidden {
+    height: 0;
+    width: 0;
+
+}
+#stage, textarea, button, input {
+    font-family: 'Share Tech Mono', sans-serif;
+}
+circle.area, rect.area { transition: fill .4s ease; }
+svg #users .in-focus {
+    fill: #FFFFFF;
+}
+svg #users .not-in-focus {
+    fill: #000000;
+}
+svg #users .active {
+    fill: rgb(128, 128, 128);
+}
+svg #users {
+    /*transition: transform 1s ease-in-out, opacity 1s;*/
+}
+svg #users.appear {
+    animation: fadeIn 0.5s ease-out; 
+    animation-fill-mode: forwards;
+}
+svg #users.disappear {
+    animation: fadeOut 0.5s ease-out; 
+    animation-fill-mode: forwards;
+}
+@keyframes fadeOut {
+    0% {
+        visibility: visible;
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+    }
+    99% {
+        visibility: visible;
+        display: block;
+        opacity: 0;
+        transform: scale(2);
+    }
+    100% {
+        visibility: hidden;
+        display: none;
+        opacity: 0;
+        transform: scale(2);
+    }
+}
+@keyframes fadeIn {
+    0% {
+        visibility: hidden;
+        display: none;
+        opacity: 0;
+        transform: scale(2);
+    }
+    1% {
+        visibility: visible;
+        display: block;
+        opacity: 0;
+        transform: scale(2);
+    }
+    100% {
+        display: block;
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+
+svg .in-focus {
+    fill: rgb(0, 180, 219);
+}
+svg .not-in-focus {
+    fill: #00D7FE;
+}
+svg .active {
+    fill: #000000;
+}
+svg text {
+     pointer-events: none;
+}
+#users li {
+    background-color: black;
+    color: white;
+    list-style: none;
+    width: 200px;
+}
+#users a {
+    color: white;
+    cursor: pointer;
+    margin-left: 12px;
+}
+
+#users rect {
+    cursor: hand;
+}
+#users text {
+    pointer-events: none;
+}
+.username {
+    fill: white;
+}
+.user-group-complete rect {
+    fill: grey;
+}
+.user-group:hover text {
+    fill: black;
+}
+.user-group-complete:hover rect, .user-group:hover rect {
+    fill: white;
+}
+.user-click {
+    /*fill-opacity: 50.0;*/
+    fill-opacity: 0.0;
+}
+.area-label {
+        fill: white;
+}
+.coloured-bg {
+    background-color: #00D7FE;
+}
+textarea {
+    min-height: 150px;
+    font-size: large;
+}
+.js-area-highlight {
+    fill: #00D7FE;
+}
+.js-area-standard {
+    fill: #00D7FE;
+}
+.area {
+/*#comfort, #stretch, #chaos {*/
+    stroke: white;
+    stroke-width: 1;
+}
+.dropper {
+    fill: white;
+    pointer-events: none;
+}
+.dropped {
+    fill: slategrey;
+}
