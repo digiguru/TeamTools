@@ -1,7 +1,7 @@
 import React from 'react';
 import ComfortStore from "./React/Comfort/Store"
 import TuckmanStore from "./React/Tuckman/Store"
-
+import './Shared/styles.css'
 function App() {
   return (
     <div className="App">
