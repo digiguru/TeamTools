@@ -2,8 +2,10 @@ Start mini server
 
 {{$ python -mSimpleHTTPServer 8080}}
 
-Get typings
+~Get typings~
 {{tsd install require}}
+(not required anymore as built into NPM)
+
 
 Rebuild in VS Code
 
