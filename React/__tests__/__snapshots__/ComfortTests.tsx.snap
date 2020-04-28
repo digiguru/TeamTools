@@ -1,0 +1,5775 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Should allow hiding 1`] = `
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    height={800}
+    id="stage"
+    width={800}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            className="not-in-focus"
+            height="100%"
+            id="chaos"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            width="100%"
+          />
+------------HTML PREVIEW---------------
+<rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+>
+</rect>
+          <text
+            className="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+>
+            chaos
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+          >
+          </rect>
+          <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+          >
+                    chaos
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="33%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+>
+            stretch
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+          >
+                    stretch
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="15%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+>
+            comfort
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+          >
+                    comfort
+          </text>
+</g>
+        <g
+          className="appear"
+          id="users"
+        >
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={60}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={120}
+            >
+              Adam Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Adam Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Adam Hall
+            </text>
+</g>
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={150}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={210}
+            >
+              Caroline Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Caroline Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Caroline Hall
+            </text>
+</g>
+        </g>
+------------HTML PREVIEW---------------
+<g
+          class="appear"
+          id="users"
+>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Adam Hall
+                    </text>
+          </g>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Caroline Hall
+                    </text>
+          </g>
+</g>
+        <g
+          id="history"
+        />
+------------HTML PREVIEW---------------
+<g id="history"></g>
+      </g>
+------------HTML PREVIEW---------------
+<g>
+        <g>
+                <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                >
+                </rect>
+                <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                >
+                        chaos
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                >
+                        stretch
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                        comfort
+                </text>
+        </g>
+        <g
+                class="appear"
+                id="users"
+        >
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Adam Hall
+                        </text>
+                </g>
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Caroline Hall
+                        </text>
+                </g>
+        </g>
+        <g id="history"></g>
+</g>
+      ,
+      <button
+        id="show-tuckman"
+        onMouseUp={undefined}
+      >
+        show tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+        show tuckman
+</button>
+      ,
+      <button
+        id="hide-tuckman"
+        onMouseUp={undefined}
+      >
+        hide tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+        hide tuckman
+</button>
+    </g>
+------------HTML PREVIEW---------------
+<g>
+      <g>
+            <g>
+                  <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                  >
+                  </rect>
+                  <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                  >
+                        chaos
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                  >
+                        stretch
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                  >
+                        comfort
+                  </text>
+            </g>
+            <g
+                  class="appear"
+                  id="users"
+            >
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Adam Hall
+                        </text>
+                  </g>
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Caroline Hall
+                        </text>
+                  </g>
+            </g>
+            <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+            show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+            hide tuckman
+      </button>
+</g>
+  </svg>
+------------HTML PREVIEW---------------
+<svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g>
+        <g>
+            <g>
+                <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+                >
+                </rect>
+                <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+                >
+                    chaos
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+                >
+                    stretch
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+                >
+                    comfort
+                </text>
+            </g>
+            <g
+                class="appear"
+                id="users"
+            >
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Adam Hall
+                    </text>
+                </g>
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Caroline Hall
+                    </text>
+                </g>
+            </g>
+            <g id="history"></g>
+        </g>
+        ,
+        <button id="show-tuckman">
+            show tuckman
+        </button>
+        ,
+        <button id="hide-tuckman">
+            hide tuckman
+        </button>
+    </g>
+</svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+          >
+          </rect>
+          <text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+        </g>
+        <g
+          class="appear"
+          id="users"
+        >
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Adam Hall
+            </text>
+          </g>
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Caroline Hall
+            </text>
+          </g>
+        </g>
+        <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+        show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+        hide tuckman
+      </button>
+    </g>
+  </svg>
+</svg>
+`;
+
+exports[`Should allow hiding 2`] = `
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    height={800}
+    id="stage"
+    width={800}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            className="not-in-focus"
+            height="100%"
+            id="chaos"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            width="100%"
+          />
+------------HTML PREVIEW---------------
+<rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+>
+</rect>
+          <text
+            className="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+>
+            chaos
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+          >
+          </rect>
+          <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+          >
+                    chaos
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="33%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+>
+            stretch
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+          >
+                    stretch
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="15%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+>
+            comfort
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+          >
+                    comfort
+          </text>
+</g>
+        <g
+          className="appear"
+          id="users"
+        >
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={60}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={120}
+            >
+              Adam Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Adam Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Adam Hall
+            </text>
+</g>
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={150}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={210}
+            >
+              Caroline Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Caroline Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Caroline Hall
+            </text>
+</g>
+        </g>
+------------HTML PREVIEW---------------
+<g
+          class="appear"
+          id="users"
+>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Adam Hall
+                    </text>
+          </g>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Caroline Hall
+                    </text>
+          </g>
+</g>
+        <g
+          id="history"
+        />
+------------HTML PREVIEW---------------
+<g id="history"></g>
+      </g>
+------------HTML PREVIEW---------------
+<g>
+        <g>
+                <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                >
+                </rect>
+                <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                >
+                        chaos
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                >
+                        stretch
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                        comfort
+                </text>
+        </g>
+        <g
+                class="appear"
+                id="users"
+        >
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Adam Hall
+                        </text>
+                </g>
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Caroline Hall
+                        </text>
+                </g>
+        </g>
+        <g id="history"></g>
+</g>
+      ,
+      <button
+        id="show-tuckman"
+        onMouseUp={undefined}
+      >
+        show tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+        show tuckman
+</button>
+      ,
+      <button
+        id="hide-tuckman"
+        onMouseUp={undefined}
+      >
+        hide tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+        hide tuckman
+</button>
+    </g>
+------------HTML PREVIEW---------------
+<g>
+      <g>
+            <g>
+                  <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                  >
+                  </rect>
+                  <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                  >
+                        chaos
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                  >
+                        stretch
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                  >
+                        comfort
+                  </text>
+            </g>
+            <g
+                  class="appear"
+                  id="users"
+            >
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Adam Hall
+                        </text>
+                  </g>
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Caroline Hall
+                        </text>
+                  </g>
+            </g>
+            <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+            show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+            hide tuckman
+      </button>
+</g>
+  </svg>
+------------HTML PREVIEW---------------
+<svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g>
+        <g>
+            <g>
+                <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+                >
+                </rect>
+                <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+                >
+                    chaos
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+                >
+                    stretch
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+                >
+                    comfort
+                </text>
+            </g>
+            <g
+                class="appear"
+                id="users"
+            >
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Adam Hall
+                    </text>
+                </g>
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Caroline Hall
+                    </text>
+                </g>
+            </g>
+            <g id="history"></g>
+        </g>
+        ,
+        <button id="show-tuckman">
+            show tuckman
+        </button>
+        ,
+        <button id="hide-tuckman">
+            hide tuckman
+        </button>
+    </g>
+</svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+          >
+          </rect>
+          <text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+        </g>
+        <g
+          class="appear"
+          id="users"
+        >
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Adam Hall
+            </text>
+          </g>
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Caroline Hall
+            </text>
+          </g>
+        </g>
+        <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+        show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+        hide tuckman
+      </button>
+    </g>
+  </svg>
+</svg>
+`;
+
+exports[`Should allow shrinking 1`] = `
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    height={800}
+    id="stage"
+    width={800}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            className="not-in-focus"
+            height="100%"
+            id="chaos"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            width="100%"
+          />
+------------HTML PREVIEW---------------
+<rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+>
+</rect>
+          <text
+            className="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+>
+            chaos
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+          >
+          </rect>
+          <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+          >
+                    chaos
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="33%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+>
+            stretch
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+          >
+                    stretch
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="15%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+>
+            comfort
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+          >
+                    comfort
+          </text>
+</g>
+        <g
+          className="appear"
+          id="users"
+        >
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={60}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={120}
+            >
+              Caroline Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Caroline Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Caroline Hall
+            </text>
+</g>
+        </g>
+------------HTML PREVIEW---------------
+<g
+          class="appear"
+          id="users"
+>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Caroline Hall
+                    </text>
+          </g>
+</g>
+        <g
+          id="history"
+        >
+          <circle
+            className="point"
+            cx={800}
+            cy={400}
+            r="10"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="point"
+            r="10"
+>
+</circle>
+        </g>
+------------HTML PREVIEW---------------
+<g id="history">
+          <circle
+                    class="point"
+                    r="10"
+          >
+          </circle>
+</g>
+      </g>
+------------HTML PREVIEW---------------
+<g>
+        <g>
+                <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                >
+                </rect>
+                <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                >
+                        chaos
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                >
+                        stretch
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                        comfort
+                </text>
+        </g>
+        <g
+                class="appear"
+                id="users"
+        >
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Caroline Hall
+                        </text>
+                </g>
+        </g>
+        <g id="history">
+                <circle
+                        class="point"
+                        r="10"
+                >
+                </circle>
+        </g>
+</g>
+      ,
+      <button
+        id="show-tuckman"
+        onMouseUp={undefined}
+      >
+        show tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+        show tuckman
+</button>
+      ,
+      <button
+        id="hide-tuckman"
+        onMouseUp={undefined}
+      >
+        hide tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+        hide tuckman
+</button>
+    </g>
+------------HTML PREVIEW---------------
+<g>
+      <g>
+            <g>
+                  <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                  >
+                  </rect>
+                  <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                  >
+                        chaos
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                  >
+                        stretch
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                  >
+                        comfort
+                  </text>
+            </g>
+            <g
+                  class="appear"
+                  id="users"
+            >
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Caroline Hall
+                        </text>
+                  </g>
+            </g>
+            <g id="history">
+                  <circle
+                        class="point"
+                        r="10"
+                  >
+                  </circle>
+            </g>
+      </g>
+      ,
+      <button id="show-tuckman">
+            show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+            hide tuckman
+      </button>
+</g>
+  </svg>
+------------HTML PREVIEW---------------
+<svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g>
+        <g>
+            <g>
+                <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+                >
+                </rect>
+                <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+                >
+                    chaos
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+                >
+                    stretch
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+                >
+                    comfort
+                </text>
+            </g>
+            <g
+                class="appear"
+                id="users"
+            >
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Caroline Hall
+                    </text>
+                </g>
+            </g>
+            <g id="history">
+                <circle
+                    class="point"
+                    r="10"
+                >
+                </circle>
+            </g>
+        </g>
+        ,
+        <button id="show-tuckman">
+            show tuckman
+        </button>
+        ,
+        <button id="hide-tuckman">
+            hide tuckman
+        </button>
+    </g>
+</svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+          >
+          </rect>
+          <text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+        </g>
+        <g
+          class="appear"
+          id="users"
+        >
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Caroline Hall
+            </text>
+          </g>
+        </g>
+        <g id="history">
+          <circle
+            class="point"
+            r="10"
+          >
+          </circle>
+        </g>
+      </g>
+      ,
+      <button id="show-tuckman">
+        show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+        hide tuckman
+      </button>
+    </g>
+  </svg>
+</svg>
+`;
+
+exports[`Should allow shrinking 2`] = `
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    height={800}
+    id="stage"
+    width={800}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            className="not-in-focus"
+            height="100%"
+            id="chaos"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            width="100%"
+          />
+------------HTML PREVIEW---------------
+<rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+>
+</rect>
+          <text
+            className="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+>
+            chaos
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+          >
+          </rect>
+          <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+          >
+                    chaos
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="33%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+>
+            stretch
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+          >
+                    stretch
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="15%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+>
+            comfort
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+          >
+                    comfort
+          </text>
+</g>
+        <g
+          className="disappear"
+          id="users"
+        />
+------------HTML PREVIEW---------------
+<g
+          class="disappear"
+          id="users"
+>
+</g>
+        <g
+          id="history"
+        >
+          <circle
+            className="point"
+            cx={800}
+            cy={400}
+            r="10"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="point"
+            r="10"
+>
+</circle>
+          <circle
+            className="point"
+            cx={-400}
+            cy={399.99999999183456}
+            r="10"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="point"
+            r="10"
+>
+</circle>
+        </g>
+------------HTML PREVIEW---------------
+<g id="history">
+          <circle
+                    class="point"
+                    r="10"
+          >
+          </circle>
+          <circle
+                    class="point"
+                    r="10"
+          >
+          </circle>
+</g>
+      </g>
+------------HTML PREVIEW---------------
+<g>
+        <g>
+                <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                >
+                </rect>
+                <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                >
+                        chaos
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                >
+                        stretch
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                        comfort
+                </text>
+        </g>
+        <g
+                class="disappear"
+                id="users"
+        >
+        </g>
+        <g id="history">
+                <circle
+                        class="point"
+                        r="10"
+                >
+                </circle>
+                <circle
+                        class="point"
+                        r="10"
+                >
+                </circle>
+        </g>
+</g>
+      ,
+      <button
+        id="show-tuckman"
+        onMouseUp={undefined}
+      >
+        show tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+        show tuckman
+</button>
+      ,
+      <button
+        id="hide-tuckman"
+        onMouseUp={undefined}
+      >
+        hide tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+        hide tuckman
+</button>
+    </g>
+------------HTML PREVIEW---------------
+<g>
+      <g>
+            <g>
+                  <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                  >
+                  </rect>
+                  <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                  >
+                        chaos
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                  >
+                        stretch
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                  >
+                        comfort
+                  </text>
+            </g>
+            <g
+                  class="disappear"
+                  id="users"
+            >
+            </g>
+            <g id="history">
+                  <circle
+                        class="point"
+                        r="10"
+                  >
+                  </circle>
+                  <circle
+                        class="point"
+                        r="10"
+                  >
+                  </circle>
+            </g>
+      </g>
+      ,
+      <button id="show-tuckman">
+            show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+            hide tuckman
+      </button>
+</g>
+  </svg>
+------------HTML PREVIEW---------------
+<svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g>
+        <g>
+            <g>
+                <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+                >
+                </rect>
+                <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+                >
+                    chaos
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+                >
+                    stretch
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+                >
+                    comfort
+                </text>
+            </g>
+            <g
+                class="disappear"
+                id="users"
+            >
+            </g>
+            <g id="history">
+                <circle
+                    class="point"
+                    r="10"
+                >
+                </circle>
+                <circle
+                    class="point"
+                    r="10"
+                >
+                </circle>
+            </g>
+        </g>
+        ,
+        <button id="show-tuckman">
+            show tuckman
+        </button>
+        ,
+        <button id="hide-tuckman">
+            hide tuckman
+        </button>
+    </g>
+</svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+          >
+          </rect>
+          <text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+        </g>
+        <g
+          class="disappear"
+          id="users"
+        >
+        </g>
+        <g id="history">
+          <circle
+            class="point"
+            r="10"
+          >
+          </circle>
+          <circle
+            class="point"
+            r="10"
+          >
+          </circle>
+        </g>
+      </g>
+      ,
+      <button id="show-tuckman">
+        show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+        hide tuckman
+      </button>
+    </g>
+  </svg>
+</svg>
+`;
+
+exports[`Should allow users to be set okay 1`] = `
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    height={800}
+    id="stage"
+    width={800}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            className="not-in-focus"
+            height="100%"
+            id="chaos"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            width="100%"
+          />
+------------HTML PREVIEW---------------
+<rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+>
+</rect>
+          <text
+            className="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+>
+            chaos
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+          >
+          </rect>
+          <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+          >
+                    chaos
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="33%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+>
+            stretch
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+          >
+                    stretch
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="15%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+>
+            comfort
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+          >
+                    comfort
+          </text>
+</g>
+        <g
+          className="disappear"
+          id="users"
+        >
+          <g
+            className="user-group"
+          >
+            <rect
+              className={undefined}
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={60}
+            />
+------------HTML PREVIEW---------------
+<rect
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={120}
+            >
+              Test person 1
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Test person 1
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Test person 1
+            </text>
+</g>
+          <g
+            className="user-group"
+          >
+            <rect
+              className={undefined}
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={150}
+            />
+------------HTML PREVIEW---------------
+<rect
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={210}
+            >
+              Test person 2
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Test person 2
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Test person 2
+            </text>
+</g>
+          <g
+            className="user-group"
+          >
+            <rect
+              className={undefined}
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={240}
+            />
+------------HTML PREVIEW---------------
+<rect
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={300}
+            >
+              Test person 3
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Test person 3
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Test person 3
+            </text>
+</g>
+        </g>
+------------HTML PREVIEW---------------
+<g
+          class="disappear"
+          id="users"
+>
+          <g class="user-group">
+                    <rect
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Test person 1
+                    </text>
+          </g>
+          <g class="user-group">
+                    <rect
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Test person 2
+                    </text>
+          </g>
+          <g class="user-group">
+                    <rect
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Test person 3
+                    </text>
+          </g>
+</g>
+        <g
+          id="history"
+        />
+------------HTML PREVIEW---------------
+<g id="history"></g>
+      </g>
+------------HTML PREVIEW---------------
+<g>
+        <g>
+                <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                >
+                </rect>
+                <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                >
+                        chaos
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                >
+                        stretch
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                        comfort
+                </text>
+        </g>
+        <g
+                class="disappear"
+                id="users"
+        >
+                <g class="user-group">
+                        <rect
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Test person 1
+                        </text>
+                </g>
+                <g class="user-group">
+                        <rect
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Test person 2
+                        </text>
+                </g>
+                <g class="user-group">
+                        <rect
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Test person 3
+                        </text>
+                </g>
+        </g>
+        <g id="history"></g>
+</g>
+      ,
+      <button
+        id="show-tuckman"
+        onMouseUp={undefined}
+      >
+        show tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+        show tuckman
+</button>
+      ,
+      <button
+        id="hide-tuckman"
+        onMouseUp={undefined}
+      >
+        hide tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+        hide tuckman
+</button>
+    </g>
+------------HTML PREVIEW---------------
+<g>
+      <g>
+            <g>
+                  <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                  >
+                  </rect>
+                  <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                  >
+                        chaos
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                  >
+                        stretch
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                  >
+                        comfort
+                  </text>
+            </g>
+            <g
+                  class="disappear"
+                  id="users"
+            >
+                  <g class="user-group">
+                        <rect
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Test person 1
+                        </text>
+                  </g>
+                  <g class="user-group">
+                        <rect
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Test person 2
+                        </text>
+                  </g>
+                  <g class="user-group">
+                        <rect
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Test person 3
+                        </text>
+                  </g>
+            </g>
+            <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+            show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+            hide tuckman
+      </button>
+</g>
+  </svg>
+------------HTML PREVIEW---------------
+<svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g>
+        <g>
+            <g>
+                <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+                >
+                </rect>
+                <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+                >
+                    chaos
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+                >
+                    stretch
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+                >
+                    comfort
+                </text>
+            </g>
+            <g
+                class="disappear"
+                id="users"
+            >
+                <g class="user-group">
+                    <rect
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Test person 1
+                    </text>
+                </g>
+                <g class="user-group">
+                    <rect
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Test person 2
+                    </text>
+                </g>
+                <g class="user-group">
+                    <rect
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Test person 3
+                    </text>
+                </g>
+            </g>
+            <g id="history"></g>
+        </g>
+        ,
+        <button id="show-tuckman">
+            show tuckman
+        </button>
+        ,
+        <button id="hide-tuckman">
+            hide tuckman
+        </button>
+    </g>
+</svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+          >
+          </rect>
+          <text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+        </g>
+        <g
+          class="disappear"
+          id="users"
+        >
+          <g class="user-group">
+            <rect
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Test person 1
+            </text>
+          </g>
+          <g class="user-group">
+            <rect
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Test person 2
+            </text>
+          </g>
+          <g class="user-group">
+            <rect
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Test person 3
+            </text>
+          </g>
+        </g>
+        <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+        show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+        hide tuckman
+      </button>
+    </g>
+  </svg>
+</svg>
+`;
+
+exports[`Should show the component 1`] = `
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    height={800}
+    id="stage"
+    width={800}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            className="not-in-focus"
+            height="100%"
+            id="chaos"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            width="100%"
+          />
+------------HTML PREVIEW---------------
+<rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+>
+</rect>
+          <text
+            className="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+>
+            chaos
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+          >
+          </rect>
+          <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+          >
+                    chaos
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="33%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+>
+            stretch
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+          >
+                    stretch
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="15%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+>
+            comfort
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+          >
+                    comfort
+          </text>
+</g>
+        <g
+          className="appear"
+          id="users"
+        >
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={60}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={120}
+            >
+              Adam Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Adam Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Adam Hall
+            </text>
+</g>
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={150}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={210}
+            >
+              Caroline Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Caroline Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Caroline Hall
+            </text>
+</g>
+        </g>
+------------HTML PREVIEW---------------
+<g
+          class="appear"
+          id="users"
+>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Adam Hall
+                    </text>
+          </g>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Caroline Hall
+                    </text>
+          </g>
+</g>
+        <g
+          id="history"
+        />
+------------HTML PREVIEW---------------
+<g id="history"></g>
+      </g>
+------------HTML PREVIEW---------------
+<g>
+        <g>
+                <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                >
+                </rect>
+                <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                >
+                        chaos
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                >
+                        stretch
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                        comfort
+                </text>
+        </g>
+        <g
+                class="appear"
+                id="users"
+        >
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Adam Hall
+                        </text>
+                </g>
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Caroline Hall
+                        </text>
+                </g>
+        </g>
+        <g id="history"></g>
+</g>
+      ,
+      <button
+        id="show-tuckman"
+        onMouseUp={undefined}
+      >
+        show tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+        show tuckman
+</button>
+      ,
+      <button
+        id="hide-tuckman"
+        onMouseUp={undefined}
+      >
+        hide tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+        hide tuckman
+</button>
+    </g>
+------------HTML PREVIEW---------------
+<g>
+      <g>
+            <g>
+                  <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                  >
+                  </rect>
+                  <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                  >
+                        chaos
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                  >
+                        stretch
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                  >
+                        comfort
+                  </text>
+            </g>
+            <g
+                  class="appear"
+                  id="users"
+            >
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Adam Hall
+                        </text>
+                  </g>
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Caroline Hall
+                        </text>
+                  </g>
+            </g>
+            <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+            show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+            hide tuckman
+      </button>
+</g>
+  </svg>
+------------HTML PREVIEW---------------
+<svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g>
+        <g>
+            <g>
+                <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+                >
+                </rect>
+                <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+                >
+                    chaos
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+                >
+                    stretch
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+                >
+                    comfort
+                </text>
+            </g>
+            <g
+                class="appear"
+                id="users"
+            >
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Adam Hall
+                    </text>
+                </g>
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Caroline Hall
+                    </text>
+                </g>
+            </g>
+            <g id="history"></g>
+        </g>
+        ,
+        <button id="show-tuckman">
+            show tuckman
+        </button>
+        ,
+        <button id="hide-tuckman">
+            hide tuckman
+        </button>
+    </g>
+</svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+          >
+          </rect>
+          <text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+        </g>
+        <g
+          class="appear"
+          id="users"
+        >
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Adam Hall
+            </text>
+          </g>
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Caroline Hall
+            </text>
+          </g>
+        </g>
+        <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+        show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+        hide tuckman
+      </button>
+    </g>
+  </svg>
+</svg>
+`;
+
+exports[`Should show the component 2`] = `
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    height={800}
+    id="stage"
+    width={800}
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            className="not-in-focus"
+            height="100%"
+            id="chaos"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            width="100%"
+          />
+------------HTML PREVIEW---------------
+<rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+>
+</rect>
+          <text
+            className="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+>
+            chaos
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+          >
+          </rect>
+          <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+          >
+                    chaos
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="33%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+>
+            stretch
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+          >
+                    stretch
+          </text>
+</g>
+        <g>
+          <circle
+            className="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            onMouseDown={[Function]}
+            onMouseEnter={[Function]}
+            onMouseLeave={[Function]}
+            onMouseUp={[Function]}
+            r="15%"
+            width="50%"
+          />
+------------HTML PREVIEW---------------
+<circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+>
+</circle>
+          <text
+            className="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+------------HTML PREVIEW---------------
+<text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+>
+            comfort
+</text>
+        </g>
+------------HTML PREVIEW---------------
+<g>
+          <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+          >
+          </circle>
+          <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+          >
+                    comfort
+          </text>
+</g>
+        <g
+          className="appear"
+          id="users"
+        >
+          <g
+            className="user-group"
+          >
+            <rect
+              className="in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={60}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={120}
+            >
+              Adam Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Adam Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Adam Hall
+            </text>
+</g>
+          <g
+            className="user-group"
+          >
+            <rect
+              className="not-in-focus"
+              height="90"
+              onMouseDown={[Function]}
+              onMouseEnter={[Function]}
+              onMouseLeave={[Function]}
+              onMouseUp={[Function]}
+              width="800"
+              x="0"
+              y={150}
+            />
+------------HTML PREVIEW---------------
+<rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+>
+</rect>
+            <text
+              className="username"
+              x="60"
+              y={210}
+            >
+              Caroline Hall
+            </text>
+------------HTML PREVIEW---------------
+<text
+              class="username"
+              x="60"
+>
+              Caroline Hall
+</text>
+          </g>
+------------HTML PREVIEW---------------
+<g class="user-group">
+            <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+            >
+            </rect>
+            <text
+                        class="username"
+                        x="60"
+            >
+                        Caroline Hall
+            </text>
+</g>
+        </g>
+------------HTML PREVIEW---------------
+<g
+          class="appear"
+          id="users"
+>
+          <g class="user-group">
+                    <rect
+                              class="in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Adam Hall
+                    </text>
+          </g>
+          <g class="user-group">
+                    <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                    >
+                    </rect>
+                    <text
+                              class="username"
+                              x="60"
+                    >
+                              Caroline Hall
+                    </text>
+          </g>
+</g>
+        <g
+          id="history"
+        />
+------------HTML PREVIEW---------------
+<g id="history"></g>
+      </g>
+------------HTML PREVIEW---------------
+<g>
+        <g>
+                <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                >
+                </rect>
+                <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                >
+                        chaos
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                >
+                        stretch
+                </text>
+        </g>
+        <g>
+                <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                >
+                </circle>
+                <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                >
+                        comfort
+                </text>
+        </g>
+        <g
+                class="appear"
+                id="users"
+        >
+                <g class="user-group">
+                        <rect
+                                class="in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Adam Hall
+                        </text>
+                </g>
+                <g class="user-group">
+                        <rect
+                                class="not-in-focus"
+                                height="90"
+                                width="800"
+                                x="0"
+                        >
+                        </rect>
+                        <text
+                                class="username"
+                                x="60"
+                        >
+                                Caroline Hall
+                        </text>
+                </g>
+        </g>
+        <g id="history"></g>
+</g>
+      ,
+      <button
+        id="show-tuckman"
+        onMouseUp={undefined}
+      >
+        show tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="show-tuckman">
+        show tuckman
+</button>
+      ,
+      <button
+        id="hide-tuckman"
+        onMouseUp={undefined}
+      >
+        hide tuckman
+      </button>
+------------HTML PREVIEW---------------
+<button id="hide-tuckman">
+        hide tuckman
+</button>
+    </g>
+------------HTML PREVIEW---------------
+<g>
+      <g>
+            <g>
+                  <rect
+                        class="not-in-focus"
+                        height="100%"
+                        id="chaos"
+                        width="100%"
+                  >
+                  </rect>
+                  <text
+                        class="area-label"
+                        id="label-chaos"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20"
+                  >
+                        chaos
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="33%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="20%"
+                  >
+                        stretch
+                  </text>
+            </g>
+            <g>
+                  <circle
+                        class="not-in-focus"
+                        cx="50%"
+                        cy="50%"
+                        height="50%"
+                        id="stretch"
+                        r="15%"
+                        width="50%"
+                  >
+                  </circle>
+                  <text
+                        class="area-label"
+                        id="label-stretch"
+                        text-anchor="middle"
+                        textAnchor="middle"
+                        x="50%"
+                        y="50%"
+                  >
+                        comfort
+                  </text>
+            </g>
+            <g
+                  class="appear"
+                  id="users"
+            >
+                  <g class="user-group">
+                        <rect
+                              class="in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Adam Hall
+                        </text>
+                  </g>
+                  <g class="user-group">
+                        <rect
+                              class="not-in-focus"
+                              height="90"
+                              width="800"
+                              x="0"
+                        >
+                        </rect>
+                        <text
+                              class="username"
+                              x="60"
+                        >
+                              Caroline Hall
+                        </text>
+                  </g>
+            </g>
+            <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+            show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+            hide tuckman
+      </button>
+</g>
+  </svg>
+------------HTML PREVIEW---------------
+<svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+>
+    <g>
+        <g>
+            <g>
+                <rect
+                    class="not-in-focus"
+                    height="100%"
+                    id="chaos"
+                    width="100%"
+                >
+                </rect>
+                <text
+                    class="area-label"
+                    id="label-chaos"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20"
+                >
+                    chaos
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="33%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="20%"
+                >
+                    stretch
+                </text>
+            </g>
+            <g>
+                <circle
+                    class="not-in-focus"
+                    cx="50%"
+                    cy="50%"
+                    height="50%"
+                    id="stretch"
+                    r="15%"
+                    width="50%"
+                >
+                </circle>
+                <text
+                    class="area-label"
+                    id="label-stretch"
+                    text-anchor="middle"
+                    textAnchor="middle"
+                    x="50%"
+                    y="50%"
+                >
+                    comfort
+                </text>
+            </g>
+            <g
+                class="appear"
+                id="users"
+            >
+                <g class="user-group">
+                    <rect
+                        class="in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Adam Hall
+                    </text>
+                </g>
+                <g class="user-group">
+                    <rect
+                        class="not-in-focus"
+                        height="90"
+                        width="800"
+                        x="0"
+                    >
+                    </rect>
+                    <text
+                        class="username"
+                        x="60"
+                    >
+                        Caroline Hall
+                    </text>
+                </g>
+            </g>
+            <g id="history"></g>
+        </g>
+        ,
+        <button id="show-tuckman">
+            show tuckman
+        </button>
+        ,
+        <button id="hide-tuckman">
+            hide tuckman
+        </button>
+    </g>
+</svg>
+</svg>
+------------HTML PREVIEW---------------
+<svg
+  id="stage"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <svg
+    id="stage"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <g>
+      <g>
+        <g>
+          <rect
+            class="not-in-focus"
+            height="100%"
+            id="chaos"
+            width="100%"
+          >
+          </rect>
+          <text
+            class="area-label"
+            id="label-chaos"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20"
+          >
+            chaos
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="33%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="20%"
+          >
+            stretch
+          </text>
+        </g>
+        <g>
+          <circle
+            class="not-in-focus"
+            cx="50%"
+            cy="50%"
+            height="50%"
+            id="stretch"
+            r="15%"
+            width="50%"
+          >
+          </circle>
+          <text
+            class="area-label"
+            id="label-stretch"
+            text-anchor="middle"
+            textAnchor="middle"
+            x="50%"
+            y="50%"
+          >
+            comfort
+          </text>
+        </g>
+        <g
+          class="appear"
+          id="users"
+        >
+          <g class="user-group">
+            <rect
+              class="in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Adam Hall
+            </text>
+          </g>
+          <g class="user-group">
+            <rect
+              class="not-in-focus"
+              height="90"
+              width="800"
+              x="0"
+            >
+            </rect>
+            <text
+              class="username"
+              x="60"
+            >
+              Caroline Hall
+            </text>
+          </g>
+        </g>
+        <g id="history"></g>
+      </g>
+      ,
+      <button id="show-tuckman">
+        show tuckman
+      </button>
+      ,
+      <button id="hide-tuckman">
+        hide tuckman
+      </button>
+    </g>
+  </svg>
+</svg>
+`;

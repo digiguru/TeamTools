@@ -1,0 +1,59 @@
+{
+  "name": "teamtools",
+  "devDependencies": {
+    "@types/jest": "^22.1.3",
+    "@types/react": "^16.0.38",
+    "@types/react-dom": "^16.0.4",
+    "@types/react-redux": "^5.0.15",
+    "@types/react-test-renderer": "^16.0.1",
+    "gulp": "^3.9.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-typescript": "^4.0.1",
+    "jest": "^22.4.2",
+    "jest-cli": "^22.4.2",
+    "jest-html": "^1.3.3",
+    "react": "^16.2.0",
+    "react-test-renderer": "^16.2.0",
+    "redux-devtools": "^3.4.1",
+    "tslint": "^5.9.1",
+    "typescript": "^2.7.2"
+  },
+  "description": "Start mini server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test-update": "jest -u",
+    "jest": "jest",
+    "jest-update": "jest -u",
+    "bundle": "gulp Build",
+    "build": "",
+    "jest-html": "jest-html -p 8081 -c **/*.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://digiguru@bitbucket.org/digiguru/teamtools.git"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "<rootDir>/preprocessor.js"
+    },
+    "snapshotSerializers": [
+      "<rootDir>/node_modules/jest-html"
+    ],
+    "testRegex": "/__tests__/.*\\.(ts|tsx|js|jsx)$"
+  },
+  "author": "digiguru",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/digiguru/teamtools#readme",
+  "dependencies": {
+    "jest-snapshots-svg": "0.0.24",
+    "react-redux": "^5.0.7",
+    "redux": "^3.6.0"
+  }
+}
