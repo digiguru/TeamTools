@@ -9,11 +9,11 @@ export class BrowserUsers implements IAllUserRepostiory {
         this.repo = new BrowserRepo<User[]>("users", window);
     }
 
-    getUsers(): Thenable<User[]> {
+    getUsers(): PromiseLike<User[]> {
         return this.repo.get();
     }
 
-    saveUsers(users: User[]):  Thenable<User[]> {
+    saveUsers(users: User[]):  PromiseLike<User[]> {
         return this.repo.save(users);
     }
 }

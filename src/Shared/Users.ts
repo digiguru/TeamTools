@@ -19,32 +19,32 @@ export class InMemoryUsers implements IUserRepo {
 
 
 
-    addUser(user: User): Thenable<User[]> {
+    addUser(user: User): PromiseLike<User[]> {
         return this.cache.add(user);
     }
 
-    addUserByName(name: string): Thenable<User[]> {
+    addUserByName(name: string): PromiseLike<User[]> {
         return this.cache.add(UserConstructor.createUser(name, 9));
     }
 
-    updateUser(user: User): Thenable<User[]> {
+    updateUser(user: User): PromiseLike<User[]> {
         return this.cache.update(user);
     }
 
 
-    getUsers(): Thenable<Array<User>>  {
+    getUsers(): PromiseLike<Array<User>>  {
         return this.cache.get();
     }
 
-    getUser(id: string): Thenable<User> {
+    getUser(id: string): PromiseLike<User> {
         return this.cache.getById(id);
     }
 
-    saveUser(user: User): Thenable<User[]> {
+    saveUser(user: User): PromiseLike<User[]> {
         return this.cache.update(user);
     }
 
-    setUsers(users: User[]): Thenable<User[]> {
+    setUsers(users: User[]): PromiseLike<User[]> {
         return this.cache.set(users);
     }
 }

@@ -10,42 +10,45 @@ import { getWidthHeight } from "../Shared/WindowHelper";
 import { StageConnector } from "../Stage/Connector";
 
 
-export const myComfortStore = createStore(comfortReducer);
+const store = createStore(comfortReducer);
 // comfortStore.dispatch(fetchUserList());
-myComfortStore.dispatch(setStageSize(800, 800));
+store.dispatch(setStageSize(800, 800));
 
-const unsubscribe = myComfortStore.subscribe(() =>
-  console.log(myComfortStore.getState())
+const unsubscribe = store.subscribe(() =>
+  console.log(store.getState())
 );
 
-render(
-  <Provider store={myComfortStore}>
+function ComfortStore() {
+  return (
+  <Provider store={store}>
     <StageConnector>
         <ComfortConnector />
     </StageConnector>
-  </Provider>,
-  document.getElementById("comfort")
-);
+  </Provider>
+  );
+}
 
 export function resizeImage() {
     const size: Size = getWidthHeight();
     if (size.width > size.height) {
-      myComfortStore.dispatch(setStageSize(size.height, size.height));
+      store.dispatch(setStageSize(size.height, size.height));
     } else {
-      myComfortStore.dispatch(setStageSize(size.width, size.width));
+      store.dispatch(setStageSize(size.width, size.width));
     }
-    myComfortStore.dispatch(setStageSize(size.height, size.height));
+    store.dispatch(setStageSize(size.height, size.height));
 }
 export function getStore() {
-  return myComfortStore;
+  return store;
 }
 function hideModel() {
-  myComfortStore.dispatch(setStageVisibility("hiding"));
+  store.dispatch(setStageVisibility("hiding"));
 }
 function showModel() {
-  myComfortStore.dispatch(setStageVisibility("appearing"));
+  store.dispatch(setStageVisibility("appearing"));
 }
 window.addEventListener("resize", resizeImage, false);
 
 // Stop listening to state updates
 // unsubscribe(); ;
+
+export default ComfortStore;

@@ -11,32 +11,32 @@ export class InMemoryBrowserUsers implements IUserRepo  {
         this.cache = new InMemoryUsers();
         this.repo = new BrowserUsers(window);
     }
-    updateUser(user: User): Thenable<User[]> {
+    updateUser(user: User): PromiseLike<User[]> {
         const prom = this.cache.updateUser(user);
         prom.then(users => {
             this.repo.saveUsers(users);
         });
         return prom;
     }
-    addUser(user: User): Thenable<User[]> {
+    addUser(user: User): PromiseLike<User[]> {
         const prom = this.cache.addUser(user);
         prom.then(users => {
             this.repo.saveUsers(users);
         });
         return prom;
     }
-    getUsers(): Thenable<User[]> {
+    getUsers(): PromiseLike<User[]> {
         const prom = this.repo.getUsers();
         prom.then(users => {
             this.cache.setUsers(users);
         });
         return prom;
     }
-    getUser(id: string): Thenable<User> {
+    getUser(id: string): PromiseLike<User> {
         const result = this.cache.getUser(id);
         return Promise.resolve(result);
     }
-    setUsers(users: User[]): Thenable<User[]> {
+    setUsers(users: User[]): PromiseLike<User[]> {
 
         const promCache = this.cache.setUsers(users);
         const promRepo = this.repo.saveUsers(users);

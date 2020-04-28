@@ -2,6 +2,7 @@ import {User} from "./User";
 import {Timed} from "./Timed";
 import {InMemoryUsers} from "./Users";
 import {IUserRepo} from "./IUsers";
+import * as d3 from "d3";
 
 export class FormUserChoice {
     userZone: HTMLElement;
@@ -19,7 +20,7 @@ export class FormUserChoice {
             }
         });
     }
-    public getUser(id): Thenable<User> {
+    public getUser(id): PromiseLike<User> {
         return this.userRepo.getUser(id);
     }
 
@@ -35,7 +36,7 @@ export class FormUserChoice {
             .selectAll("rect")
             .on("mouseup", this.clickUser());
     }
-    public hasMoreUsers(): Thenable<boolean> { // Move to user repo?
+    public hasMoreUsers(): PromiseLike<boolean> { // Move to user repo?
         return new Promise((resolve, reject) => {
             this.userRepo.getUsers().then(users => {
                 const unvotedUsers = users.filter((x) => !x.voted);
@@ -48,7 +49,7 @@ export class FormUserChoice {
         });
 
     }
-    public show(): Thenable<number> {
+    public show(): PromiseLike<number> {
         d3.select(this.userZone)
             .transition()
             .duration(() => 800)
@@ -65,7 +66,7 @@ export class FormUserChoice {
 
         return Timed.for(800).then(this.afterShow.bind(this));
     }
-    public hide(): Thenable<number> {
+    public hide(): PromiseLike<number> {
         d3.select(this.userZone)
             .transition()
             .duration(() => 800)

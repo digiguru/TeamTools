@@ -17,14 +17,15 @@ const unsubscribe = myTuckmanStore.subscribe(() =>
   console.log(myTuckmanStore.getState())
 );
 
-render(
-  <Provider store={myTuckmanStore}>
-    <StageConnector>
-        <TuckmanConnector />
-    </StageConnector>
-  </Provider>,
-  document.getElementById("tuckman")
-);
+function TuckmanStore() {
+  return (
+    <Provider store={myTuckmanStore}>
+      <StageConnector>
+          <TuckmanConnector />
+      </StageConnector>
+    </Provider>
+  );
+}
 
 export function resizeImage() {
     const size: Size = getWidthHeight();
@@ -51,3 +52,4 @@ setTimeout(() => {
 }, 5000);
 // Stop listening to state updates
 // unsubscribe(); ;
+export default TuckmanStore;
