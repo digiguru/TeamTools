@@ -10,7 +10,7 @@ export const ReduxChaosArea = (state: IComfortZoneConnectorWithEvents) => { // ,
             onMouseDown={() => state.Events.onZoneMouseDown(state.Zone.Name)}
             onMouseUp={(event) => state.Events.onZoneMouseUp(username, state.Zone.Name, state.CenterPoint, state.TotalDistance, event)}
             width={state.Zone.Size.Width.toString()} height={state.Zone.Size.Height.toString()}></rect>
-        <text className="area-label" id="label-chaos" text-anchor="middle" textAnchor="middle" x="50%" y="20">chaos</text>
+        <text className="area-label" id="label-chaos" textAnchor="middle" x="50%" y="20">chaos</text>
     </g>;
 };
 
@@ -24,7 +24,7 @@ export const ReduxStretchArea = (state: IComfortZoneConnectorWithEvents) => {
                     onMouseDown={() => state.Events.onZoneMouseDown(state.Zone.Name)}
                     onMouseUp={(event) => state.Events.onZoneMouseUp(username, state.Zone.Name, state.CenterPoint, state.TotalDistance, event)}
                     width={state.Zone.Size.Width.toString()} height={state.Zone.Size.Height.toString()}></circle>
-            <text className="area-label" id="label-stretch" text-anchor="middle" textAnchor="middle" x="50%" y="20%">stretch</text>
+            <text className="area-label" id="label-stretch" textAnchor="middle" x="50%" y="20%">stretch</text>
         </g>;
 };
 
@@ -38,6 +38,6 @@ export const ReduxComfortArea = (state: IComfortZoneConnectorWithEvents) => {
                     onMouseDown={() => state.Events.onZoneMouseDown(state.Zone.Name)}
                     onMouseUp={(event) => state.Events.onZoneMouseUp(username, state.Zone.Name, state.CenterPoint, state.TotalDistance, event)}
                     width={state.Zone.Size.Width.toString()} height={state.Zone.Size.Height.toString()}></circle>
-            <text className="area-label" id="label-stretch" text-anchor="middle" textAnchor="middle" x="50%" y="50%">comfort</text>
+            <text className="area-label" id="label-stretch" textAnchor="middle" x="50%" y="50%">comfort</text>
         </g>;
 };

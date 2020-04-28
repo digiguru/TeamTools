@@ -27,7 +27,7 @@ export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZone
             x="0" y="0" width="25%" height="100%">
             <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
         </rect>
-        <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;
+        <text className="area-label" id={textID} textAnchor="middle" x={textOffset} y="50%">{state.label}</text>;
     </g>;*/
     return <g>
         <rect className={className} id={state.label}
@@ -38,6 +38,6 @@ export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZone
             x={initialX} y="0" width="25%" height="100%">
             <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
         </rect>
-        <text className="area-label" id={textID} textAnchor="middle" text-anchor="middle" x={textOffset} y="50%">{state.label}</text>;
+        <text className="area-label" id={textID} textAnchor="middle" x={textOffset} y="50%">{state.label}</text>;
     </g>;
 };
