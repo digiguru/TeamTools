@@ -1,38 +1,29 @@
-Start mini server
+# Team Tools
 
-{{$ python -mSimpleHTTPServer 8080}}
+TeamTools is a migration of an old project to help teams vote on the tuckman model in an anonymous fashion, but get instant results.
 
-~Get typings~
-{{tsd install require}}
-(not required anymore as built into NPM)
+It was originally created in RaphaelJS, but has gone through a number of iteractions (including D3) to end up as a ReactApp in Typescript using raw SVG.
 
+## Tasks
 
-Rebuild in VS Code
+[ ] Get tests useful & working
+[ ] Force tests to parse before builds get deployed
+[ ] Fix the entry page (was hashed together in vanilla javascript and hasn't yet been migrated)
+[ ] Work out errors when 3 people log their data
+[ ] Add socket integration
+[ ] Purge redundant code
 
-{{cmd+shift+p  task (run task) then choose the part to re-compile}}
+## Development
 
-Alternativly you can use gulp
+1) Install node
+2) Checkout code
+3) `npm i`
+4) `npm start`
 
-{{gulp Build}}
-
-or even better npm
-
-{{npm run build}}
-
-Deploy to live
-
-{{git push heroku master}}
+To deploy to live, just commit changes to `Master` on https://github.com/digiguru/TeamTools
 
 Run the tests localy
 
-{{npm test}}
-
-Or hit debug button in VSCode
-
-If you want to update the snapshots produced by the tests use
-
-{{npm run jest-update}}
-
-And to load the snapshot previewer use...
-
-{{npm run jest-html}}
+```bash
+npm test
+```
