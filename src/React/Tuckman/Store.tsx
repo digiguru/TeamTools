@@ -1,6 +1,5 @@
 import * as React from "react";
-import * as Redux from "redux";
-import { render } from "react-dom";
+import { createStore } from "redux";
 import { Provider } from "react-redux";
 import { setStageSize, setStageVisibility } from "./Actions";
 import { Size } from "../Models/Size";
@@ -9,7 +8,7 @@ import { TuckmanConnector } from "./Connector";
 import { StageConnector } from "../Stage/Connector";
 import { tuckmanReducer } from "./Reducer";
 import { InMemoryBrowserUsers } from "../../Shared/InMemoryBrowserUsers";
-export const myTuckmanStore = Redux.createStore(tuckmanReducer);
+export const myTuckmanStore = createStore(tuckmanReducer);
 const users = new InMemoryBrowserUsers(window);
 
 

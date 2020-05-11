@@ -1,5 +1,4 @@
 import React from 'react';
-import UIEntry from './UIEntry';
 function Entry() {
     return (
         <div>

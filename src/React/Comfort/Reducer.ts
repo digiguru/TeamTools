@@ -30,21 +30,21 @@ const initialState: ComfortAppState = {
 export function comfortReducer(state: ComfortAppState = initialState, action): ComfortAppState {
     switch (action.type) {
         case ComfortActions.SET_USERLIST:
-            return ComfortZoneAction.setUsers(state, (<any>action).userList);
+            return ComfortZoneAction.setUsers(state, (action as any).userList);
         case ComfortActions.SET_STAGEVISIBILITY:
-            return ComfortZoneAction.setVisibility(state, (<any> action).visibility);
+            return ComfortZoneAction.setVisibility(state, (action as any).visibility);
         case ComfortActions.SET_STAGESIZE:
-            return ComfortZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
+            return ComfortZoneAction.setStageSize(state, (action as any).width, (action as any).height);
         case ComfortActions.SET_USERFOCUS:
-            return ComfortZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
+            return ComfortZoneAction.setUserFocus(state, (action as any).user, (action as any).focus);
         case ComfortActions.SET_ZONEFOCUS:
-            return ComfortZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
+            return ComfortZoneAction.setZoneFocus(state, (action as any).area, (action as any).focus);
         case ComfortActions.SELECT_USER:
-            return ComfortZoneAction.selectUser(state, (<any>action).user);
+            return ComfortZoneAction.selectUser(state, (action as any).user);
         case ComfortActions.CHOOSE_ZONE:
-            return ComfortZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance);
+            return ComfortZoneAction.chooseZone(state, (action as any).user, (action as any).area, (action as any).distance);
         case ComfortActions.TOGGLE_CHOICES:
-            return ComfortZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
+            return ComfortZoneAction.toggleChoiceVisibility(state, (action as any).visible);
         default:
             return state;
     }
