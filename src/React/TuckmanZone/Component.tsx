@@ -17,18 +17,6 @@ export const TuckmanZone = (state: ITuckmanZone) => { // , onZoneUnfocus, onZone
         initialX = offset;
         offset   = "100%";
     }
-
-    /*return <g>
-        <rect className={className} id={state.label}
-            onMouseUp={state.events.onMouseUp}
-            onMouseDown={state.events.onMouseDown}
-            onMouseEnter={state.events.onMouseEnter}
-            onMouseLeave={state.events.onMouseLeave}
-            x="0" y="0" width="25%" height="100%">
-            <BouncyAnimation attributeName="x"  value={offset} delay={delay} />
-        </rect>
-        <text className="area-label" id={textID} textAnchor="middle" x={textOffset} y="50%">{state.label}</text>;
-    </g>;*/
     return <g>
         <rect className={className} id={state.label}
             onMouseEnter={() => state.Events.onZoneOverFocus(state.label)}
