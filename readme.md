@@ -4,6 +4,8 @@ TeamTools is a migration of an old project to help teams vote on the tuckman mod
 
 It was originally created in RaphaelJS, but has gone through a number of iteractions (including D3) to end up as a ReactApp in Typescript using raw SVG.
 
+See a [demo of it running](https://teamtools.herokuapp.com/) at Heroku.
+
 ## Tasks
 
 - [x] CI/CD
