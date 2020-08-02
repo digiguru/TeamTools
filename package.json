@@ -26,6 +26,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:ci": "react-scripts test --ci --reporters jest-junit --reporters default",
     "test:update": "react-scripts test -- -u",
     "eject": "react-scripts eject"
   },
@@ -52,7 +53,8 @@
   "license": "MIT",
   "homepage": "https://teamtools.herokuapp.com/",
   "devDependencies": {
-    "react-test-renderer": "^16.13.1",
-    "acorn": "^7.3.1"
+    "acorn": "^7.3.1",
+    "jest-junit": "^11.1.0",
+    "react-test-renderer": "^16.13.1"
   }
 }

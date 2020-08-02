@@ -7,6 +7,7 @@ import { tuckmanReducer } from "../Tuckman/Reducer";
 import * as Action from "../Tuckman/Actions";
 import { TuckmanConnector } from "../Tuckman/Connector";
 import { StageConnector } from "../Stage/Connector";
+import { act } from "react-test-renderer";
 // import { Stage } from "../Stage/Component";
 const renderizer = require("react-test-renderer");
 
@@ -32,6 +33,7 @@ test("Should not mutate in any way", () => {
 
 test("Focusable zones", () => {
     const myStore = createStore(tuckmanReducer);
+    
     myStore.dispatch(Action.setStageSize(800, 600));
 
     const component = renderizer.create(
@@ -53,6 +55,7 @@ test("Focusable zones", () => {
     myStore.dispatch(Action.setZoneFocus("norming", "not-in-focus"));
     myStore.dispatch(Action.setZoneFocus("performing", "in-focus"));
     expect(component.toJSON()).toMatchSnapshot();
+
 
 });
 
