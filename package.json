@@ -37,6 +37,9 @@
   "eslintConfig": {
     "extends": "react-app"
   },
+  "jest-junit": {
+    "outputDirectory": "results"
+  },
   "browserslist": {
     "production": [
       ">0.2%",
