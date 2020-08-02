@@ -6,12 +6,14 @@ It was originally created in RaphaelJS, but has gone through a number of iteract
 
 ## Tasks
 
-[ ] Get tests useful & working
-[ ] Force tests to parse before builds get deployed
-[ ] Fix the entry page (was hashed together in vanilla javascript and hasn't yet been migrated)
-[ ] Work out errors when 3 people log their data
-[ ] Add socket integration
-[ ] Purge redundant code
+- [x] CI/CD
+- [x] Unit Test results in CI/CD
+- [ ] Get tests useful & working
+- [ ] Force tests to parse before builds get deployed
+- [ ] Fix the entry page (was hashed together in vanilla javascript and hasn't yet been migrated)
+- [ ] Work out errors when 3 people log their data
+- [ ] Add socket integration
+- [ ] Purge redundant code
 
 ## Development
 
