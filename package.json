@@ -57,7 +57,7 @@
   "homepage": "https://teamtools.herokuapp.com/",
   "devDependencies": {
     "acorn": "^8.0.4",
-    "jest-junit": "^11.1.0",
+    "jest-junit": "^12.0.0",
     "react-test-renderer": "^16.13.1"
   }
 }
