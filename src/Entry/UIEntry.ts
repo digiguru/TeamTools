@@ -9,6 +9,7 @@ export class UIEntry {
             UI.ClearUsers();
         });
         document.getElementById("user").addEventListener("keyup", (e: KeyboardEvent) => {
+            console.log("Typing", e);
             const code = e.keyCode;
             if (code === 13) {
                 AddUser();
@@ -20,7 +21,7 @@ export class UIEntry {
     }
 
     AddUser(username) {
-
+        console.log("Add User");
         const textNode = document.createElement("span");
         textNode.setAttribute("class", "user");
         textNode.textContent = username;
