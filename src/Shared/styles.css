@@ -7,6 +7,35 @@
     width: 0;
 
 }
+.alert.alert-fade {
+    opacity: 0;
+    
+}
+
+.alert {
+    color:darkred;
+    transition: opacity 3s ease-in-out;
+    opacity: 1;
+}
+
+.successfully-saved {
+    color: #FFFFFF;
+    text-align: center;
+
+    
+}
+.alert-info {
+    background-color:lightskyblue;
+}
+.alert-warn {
+    background-color:darkgoldenrod;
+}
+.alert-error {
+    background-color:lightcoral;
+}
+.alert-success {
+    background-color:aquamarine;
+}
 #stage, textarea, button, input {
     font-family: 'Share Tech Mono', sans-serif;
 }
