@@ -1,6 +1,6 @@
 import React from 'react'
-import { IAlertSubscription, subscribeAlert } from './StreamSubscriber'
-import { filter } from 'rxjs/operators'
+import { IAlertSubscription, subscripeError } from './StreamSubscriber'
+
 interface IProps {
 }
 
@@ -23,8 +23,7 @@ export class ErrorViewer extends React.Component<IProps, IState> {
         super(props)
         this.state = { alerts: [] }
         
-        this.unsub = subscribeAlert()
-                     .pipe(filter(alert => alert.type === alertType.error))
+        this.unsub = subscripeError()
                      .subscribe((data) => {
                          let alert:IAlert = {...data, fading: false}
                          let alerts = this.state.alerts.concat(alert)
