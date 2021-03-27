@@ -10,6 +10,9 @@ See a [demo of it running](https://teamtools.herokuapp.com/) at Heroku.
 
 - [x] CI/CD
 - [x] Unit Test results in CI/CD
+- [x] Add Users
+- [?] Delete Users
+- [ ] Don't allow add of users with the same name
 - [ ] Get tests useful & working
 - [ ] Force tests to parse before builds get deployed
 - [ ] Fix the entry page (was hashed together in vanilla javascript and hasn't yet been migrated)

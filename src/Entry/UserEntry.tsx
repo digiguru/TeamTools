@@ -29,13 +29,24 @@ export class UserEntry extends React.Component<MyProps, MyState> {
             this.handleAddUser(event)
         }
     }
+    handleClickRemove = (event) => {
+        let el = event.currentTarget.parentNode;
+        let name = el.textContent.slice(0, -1);
+        this.handleRemoveName(name);
+
+    }
+    handleRemoveName = (name) => {
+        let users = this.state.users.filter(v=>v!==name);
+        this.setState({users: users});
+        this.props.handleUserListChange(users);
+    }
     render() {
       return (
         <div>
             <p>{this.props.message}</p>
             <ul id="users">
             {this.state.users.map((user) =>
-                <li>{user}</li>
+                <li>{user}<button onClick={this.handleClickRemove}>X</button></li>
             )}
             </ul>
 
