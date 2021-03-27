@@ -32,12 +32,12 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
     cssClasses(alert:IAlertSubscription) {
         if (!alert) return;
 
-        const classes = ['alert', 'alert-dismissable'];
+        const classes = ['alert'];
         const alertTypeClass = {
-            [alertType.success]: 'alert alert-success',
-            [alertType.error]: 'alert alert-error',
-            [alertType.info]: 'alert alert-info',
-            [alertType.warning]: 'alert alert-warning'
+            [alertType.success]: 'alert-success',
+            [alertType.error]: 'alert-error',
+            [alertType.info]: 'alert-info',
+            [alertType.warning]: 'alert-warning'
         }
         classes.push(alertTypeClass[alert.type]);
         return classes.join(' ');
@@ -47,6 +47,7 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
         if (!alerts.length) return null;
         return (
             <div>
+            <div className="console">
                 {alerts.map((alert, index) =>
                     <div key={index} className={this.cssClasses(alert)}>
                         <span dangerouslySetInnerHTML={{__html: alert.message}}></span>

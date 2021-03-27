@@ -49,19 +49,10 @@ export class ErrorViewer extends React.Component<IProps, IState> {
     }
     cssClasses(alert:IAlert) {
         if (!alert) return;
-
-        const classes = ['alert', 'alert-dismissable'];
-        const alertTypeClass = {
-            [alertType.success]: 'alert alert-success',
-            [alertType.error]: 'alert alert-error',
-            [alertType.info]: 'alert alert-info',
-            [alertType.warning]: 'alert alert-warning'
-        }
-        classes.push(alertTypeClass[alert.type]);
+        const classes = ['alert', 'alert-dismissable alert-error'];
         if (alert.fading) {
             classes.push('alert-fade');
         }
-
         return classes.join(' ');
     }
     render() {
