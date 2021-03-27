@@ -4,6 +4,7 @@ import TuckmanStore from "./React/Tuckman/Store"
 import './Shared/styles.css'
 import Entry from "./Entry/Entry"
 import { ErrorViewer } from './Shared/ErrorViewer'
+import { ConsoleViewer } from './Shared/ConsoleViewer';
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
       <ComfortStore />
       <h2>Tuckman Model</h2>
       <TuckmanStore />
-      
+      <ConsoleViewer />
     </div>
   );
 }
