@@ -15,10 +15,10 @@ export class UserEntry extends React.Component<MyProps, MyState> {
       currentUser: ""
     };
     addUser = (user) => {
-        if(this.state.users.includes(user)) {
-            publishAlert(user + " is already in the list", alertType.error);
-            return
-        }
+        if(this.state.users.includes(user))
+            return publishAlert(user + " is already in the list", alertType.error);
+        if(!user)
+            return publishAlert("Cannot add blank users", alertType.error);
         let users = this.state.users.concat([user]);
         this.setState({users: users});
         this.props.handleUserListChange(users);
