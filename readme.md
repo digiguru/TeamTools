@@ -15,11 +15,11 @@ See a [demo of it running](https://teamtools.herokuapp.com/) at Heroku.
 - [x] Don't allow add of users with the same name
 - [ ] Link user entry up with application
 - [ ] Get tests useful & working
-- [ ] Force tests to parse before builds get deployed
-- [ ] Fix the entry page (was hashed together in vanilla javascript and hasn't yet been migrated)
+- [x] Force tests to pass before builds get deployed
+- [x] Fix the entry page (was hashed together in vanilla javascript and hasn't yet been migrated)
 - [ ] Work out errors when 3 people log their data
 - [ ] Add socket integration
-- [ ] Purge redundant code
+- [x] Purge redundant code
 
 ## Development
 
