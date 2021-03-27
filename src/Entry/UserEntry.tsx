@@ -1,5 +1,5 @@
 import React from 'react';
-import { alertType, publishAlert } from '../Shared/ErrorSubscriber';
+import { alertType, publishAlert } from '../Shared/StreamSubscriber';
 
 type MyProps = {
     message: string;

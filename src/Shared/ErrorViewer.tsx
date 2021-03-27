@@ -1,13 +1,8 @@
 import React from 'react'
-import { Subject } from 'rxjs'
-
+import { IAlertSubscription, subscribeAlert } from './StreamSubscriber'
 interface IProps {
-    children(data: Array<{}>): React.ReactElement;
 }
-interface IAlertSubscription {
-    message: string;
-    type: alertType;
-}
+
 interface IAlert extends IAlertSubscription {
     fading: Boolean;
 }
@@ -20,18 +15,14 @@ export enum alertType {
     info = 'info',
     warning = 'warning'
 }
-// The Main Subject/Stream to be listened on.
-const mainSubject = new Subject<IAlertSubscription>()
-// This function is used to publish data to the Subject via next().
-export const publishAlert = (message:string, type: alertType = alertType.info) => mainSubject.next({message, type})
 
-export class ErrorSubscriber extends React.Component<IProps, IState> {
+export class ErrorViewer extends React.Component<IProps, IState> {
     unsub = null
     constructor(props) {
         super(props)
         this.state = { alerts: [] }
         
-        this.unsub = mainSubject
+        this.unsub = subscribeAlert()
                      .subscribe((data) => {
                          let alert:IAlert = {...data, fading: false}
                          let alerts = this.state.alerts.concat(alert)
@@ -75,7 +66,7 @@ export class ErrorSubscriber extends React.Component<IProps, IState> {
         const { alerts } = this.state;
         if (!alerts.length) return null;
         return (
-            <div className="m-3">
+            <div>
                 {alerts.map((alert, index) =>
                     <div key={index} className={this.cssClasses(alert)}>
                         <button className="close" onClick={() => this.removeAlert(alert)}>&times;</button>

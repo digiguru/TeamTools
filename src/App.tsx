@@ -3,8 +3,7 @@ import ComfortStore from "./React/Comfort/Store"
 import TuckmanStore from "./React/Tuckman/Store"
 import './Shared/styles.css'
 import Entry from "./Entry/Entry"
-import { ErrorSubscriber } from './Shared/ErrorSubscriber'
-
+import { ErrorViewer } from './Shared/ErrorViewer'
 
 function App() {
   return (
@@ -12,9 +11,7 @@ function App() {
       <header className="App-header">
         <h1>Team Tools</h1>
       </header>
-      <ErrorSubscriber>
-        {text => (<h1>{text}</h1>)}
-      </ErrorSubscriber>
+      <ErrorViewer />
       <h3>Entry</h3>
       <Entry />
       <h2>Comfort Model</h2>
