@@ -36,6 +36,9 @@
 .alert-success {
     background-color:aquamarine;
 }
+.console {
+    font-family: 'Share Tech Mono', sans-serif;
+}
 #stage, textarea, button, input {
     font-family: 'Share Tech Mono', sans-serif;
 }
