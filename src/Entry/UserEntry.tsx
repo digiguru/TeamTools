@@ -1,5 +1,6 @@
 import React from 'react';
-import { alertMessage, alertError } from '../Shared/StreamSubscriber';
+import { alertMessage, alertError, userChange, userAdd, userRemove } from '../Shared/StreamSubscriber';
+import { User } from '../Shared/User';
 
 type MyProps = {
     message: string;
@@ -23,10 +24,12 @@ export class UserEntry extends React.Component<MyProps, MyState> {
         this.setState({users: users});
         this.props.handleUserListChange(users);
         alertMessage("Added user " + user);
+        userAdd(user);
     }
     handleAddUser = (event) => {
         let user = this.state.currentUser;
         this.addUser(user);
+
     }
     handleNameChange = (event) => {
         this.setState({currentUser: event.currentTarget.value})
@@ -42,9 +45,13 @@ export class UserEntry extends React.Component<MyProps, MyState> {
 
     }
     handleRemoveName = (name) => {
+        let user = this.state.users.find(v=>v===name);
         let users = this.state.users.filter(v=>v!==name);
+        
         this.setState({users: users});
         this.props.handleUserListChange(users);
+        alertMessage("Removed user " + name);
+        userRemove(user);
     }
     render() {
       return (

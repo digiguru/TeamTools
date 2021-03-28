@@ -5,6 +5,7 @@ import { UserEntry } from './UserEntry';
 function Entry() {
     let users = new InMemoryBrowserUsers(window);
     let handleUserListChange = (userList: Array<string>) => {
+        
         console.log("EntryUSERS", userList);
         let newUsers = userList.map((v,i) => new User(v,i.toString()))
         users.setUsers(newUsers).then((result) => {
