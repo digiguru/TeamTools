@@ -1,10 +1,10 @@
 import React from 'react'
-import { IAlertSubscription, subscripeError } from './StreamSubscriber'
+import { ISubscription, subscripeError } from './StreamSubscriber'
 
 interface IProps {
 }
 
-interface IAlert extends IAlertSubscription {
+interface IAlert extends ISubscription {
     fading: Boolean;
 }
 interface IState {
@@ -62,7 +62,7 @@ export class ErrorViewer extends React.Component<IProps, IState> {
                 {alerts.map((alert, index) =>
                     <div key={index} className={this.cssClasses(alert)}>
                         <button className="close" onClick={() => this.removeAlert(alert)}>&times;</button>
-                        <span dangerouslySetInnerHTML={{__html: alert.message}}></span>
+                        <span dangerouslySetInnerHTML={{__html: alert.data}}></span>
                     </div>
                 )}
             </div>

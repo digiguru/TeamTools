@@ -1,10 +1,10 @@
 import React from 'react'
-import { IAlertSubscription, subscribeMessage } from './StreamSubscriber'
+import { ISubscription, subscribeMessage } from './StreamSubscriber'
 interface IProps {
 }
 
 interface IState {
-    alerts: Array<IAlertSubscription>;
+    alerts: Array<ISubscription>;
 }
 export enum alertType {
     success = 'success',
@@ -28,7 +28,7 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
     componentWillUnmount() {
         this.unsub.unsubscribe()
     }
-    cssClasses(alert:IAlertSubscription) {
+    cssClasses(alert:ISubscription) {
         if (!alert) return;
 
         const classes = ['alert'];
@@ -38,7 +38,7 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
             [alertType.info]: 'alert-info',
             [alertType.warning]: 'alert-warning'
         }
-        classes.push(alertTypeClass[alert.type]);
+        classes.push(alertTypeClass[alert.verb]);
         return classes.join(' ');
     }
     render() {
@@ -48,7 +48,7 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
             <div className="console">
                 {alerts.map((alert, index) =>
                     <div key={index} className={this.cssClasses(alert)}>
-                        <span dangerouslySetInnerHTML={{__html: alert.message}}></span>
+                        <span dangerouslySetInnerHTML={{__html: alert.data}}></span>
                     </div>
                 )}
             </div>
