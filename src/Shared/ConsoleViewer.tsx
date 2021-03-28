@@ -19,15 +19,19 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
         super(props)
         this.state = { alerts: [] }
         
-        this.unsub = subscribeMessage()
-                     .subscribe((data) => {
-                         let alerts = this.state.alerts.concat(data)
-                         this.setState({ alerts })
-                     })
+        
     }
     componentWillUnmount() {
         this.unsub.unsubscribe()
     }
+    componentDidMount() {
+        this.unsub = subscribeMessage()
+                     .subscribe((alert) => {
+                         let alerts = this.state.alerts.concat(alert)
+                         this.setState({ alerts })
+                     })
+    }
+
     cssClasses(alert:ISubscription) {
         if (!alert) return;
 
@@ -43,7 +47,6 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
     }
     render() {
         const { alerts } = this.state;
-        if (!alerts.length) return null;
         return (
             <div className="console">
                 {alerts.map((alert, index) =>

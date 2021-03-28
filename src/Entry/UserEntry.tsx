@@ -1,6 +1,5 @@
 import React from 'react';
-import { alertMessage, alertError, userChange, userAdd, userRemove } from '../Shared/StreamSubscriber';
-import { User } from '../Shared/User';
+import { alertMessage, alertError, userAdd, userRemove } from '../Shared/StreamSubscriber';
 
 type MyProps = {
     message: string;
@@ -59,7 +58,7 @@ export class UserEntry extends React.Component<MyProps, MyState> {
             <p>{this.props.message}</p>
             <ul id="users">
             {this.state.users.map((user) =>
-                <li>{user}<button onClick={this.handleClickRemove}>X</button></li>
+                <li key={user}>{user}<button onClick={this.handleClickRemove}>X</button></li>
             )}
             </ul>
 

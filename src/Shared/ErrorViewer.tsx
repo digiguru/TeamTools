@@ -1,5 +1,5 @@
 import React from 'react'
-import { ISubscription, subscripeError } from './StreamSubscriber'
+import { ISubscription, subscribeError } from './StreamSubscriber'
 
 interface IProps {
 }
@@ -23,13 +23,16 @@ export class ErrorViewer extends React.Component<IProps, IState> {
         super(props)
         this.state = { alerts: [] }
         
-        this.unsub = subscripeError()
-                     .subscribe((data) => {
-                         let alert:IAlert = {...data, fading: false}
-                         let alerts = this.state.alerts.concat(alert)
-                         this.setState({ alerts })
-                         setTimeout(() => this.removeAlert(alert), 3000);
-                     })
+        
+    }
+    componentDidMount() {
+        this.unsub = subscribeError()
+        .subscribe((data) => {
+            let alert:IAlert = {...data, fading: false}
+            let alerts = this.state.alerts.concat(alert)
+            this.setState({ alerts })
+            setTimeout(() => this.removeAlert(alert), 3000);
+        })
     }
     componentWillUnmount() {
         this.unsub.unsubscribe()

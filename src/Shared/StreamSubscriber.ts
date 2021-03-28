@@ -43,7 +43,12 @@ export const userRemove = (user: string) =>
     mainSubject.next({subject: eSubject.user, verb: verbUser.remove, data: user});
 
 //SUBSCRIBE
-export const subscribeMessage = () => mainSubject.asObservable()
-export const subscripeError = () => 
+export const subscribe = () => mainSubject.asObservable()
+//alert
+export const subscribeMessage = () => 
+    subscribe()
+    .pipe(filter(alert => alert.subject === eSubject.alert))
+export const subscribeError = () => 
     subscribeMessage()
     .pipe(filter(alert => alert.verb === verbAlert.error))
+    
