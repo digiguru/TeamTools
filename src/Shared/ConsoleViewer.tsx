@@ -1,5 +1,5 @@
 import React from 'react'
-import { IAlertSubscription, subscribeAlert } from './StreamSubscriber'
+import { IAlertSubscription, subscribeMessage } from './StreamSubscriber'
 interface IProps {
 }
 
@@ -19,7 +19,7 @@ export class ConsoleViewer extends React.Component<IProps, IState> {
         super(props)
         this.state = { alerts: [] }
         
-        this.unsub = subscribeAlert()
+        this.unsub = subscribeMessage()
                      .subscribe((data) => {
                          let alerts = this.state.alerts.concat(data)
                          this.setState({ alerts })

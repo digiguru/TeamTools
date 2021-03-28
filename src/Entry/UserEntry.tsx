@@ -1,5 +1,5 @@
 import React from 'react';
-import { alertType, publishAlert } from '../Shared/StreamSubscriber';
+import { publishMessage, publishError } from '../Shared/StreamSubscriber';
 
 type MyProps = {
     message: string;
@@ -16,13 +16,13 @@ export class UserEntry extends React.Component<MyProps, MyState> {
     };
     addUser = (user) => {
         if(this.state.users.includes(user))
-            return publishAlert(user + " is already in the list", alertType.error);
+            return publishError(user + " is already in the list");
         if(!user)
-            return publishAlert("Cannot add blank users", alertType.error);
+            return publishError("Cannot add blank users");
         let users = this.state.users.concat([user]);
         this.setState({users: users});
         this.props.handleUserListChange(users);
-        publishAlert("Added user " + user, alertType.info);
+        publishMessage("Added user " + user);
     }
     handleAddUser = (event) => {
         let user = this.state.currentUser;
