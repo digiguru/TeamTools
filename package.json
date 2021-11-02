@@ -1,24 +1,24 @@
 {
   "name": "teamtools",
   "dependencies": {
-    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/jest-dom": "^5.15.0",
     "@testing-library/react": "^12.1.2",
-    "@testing-library/user-event": "^13.1.9",
+    "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.0.2",
-    "@types/node": "^15.12.4",
+    "@types/node": "^16.11.6",
     "@types/react": "^17.0.33",
-    "@types/react-dom": "^17.0.8",
+    "@types/react-dom": "^17.0.10",
     "@types/react-redux": "^7.1.20",
     "@types/react-test-renderer": "^17.0.1",
-    "d3": "^7.0.0",
+    "d3": "^7.1.1",
     "immutable": "^4.0.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-redux": "^7.2.4",
+    "react-redux": "^7.2.6",
     "react-scripts": "4.0.3",
-    "redux": "^4.1.0",
+    "redux": "^4.1.2",
     "rxjs": "^7.4.0",
-    "typescript": "^4.3.4"
+    "typescript": "^4.4.4"
   },
   "description": "Start mini server",
   "version": "1.0.0",
@@ -58,7 +58,7 @@
   "homepage": "https://teamtools.herokuapp.com/",
   "devDependencies": {
     "acorn": "^8.5.0",
-    "jest-junit": "^12.2.0",
+    "jest-junit": "^13.0.0",
     "react-test-renderer": "^17.0.2"
   }
 }
