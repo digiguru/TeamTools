@@ -18,7 +18,7 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.2",
     "rxjs": "^7.4.0",
-    "typescript": "^4.4.4"
+    "typescript": "^4.5.2"
   },
   "description": "Start mini server",
   "version": "1.0.0",
