@@ -36,25 +36,19 @@ test("Focusable zones", () => {
     
     myStore.dispatch(Action.setStageSize(800, 600));
 
-    const component = renderizer.create(
-            <Provider store={myStore}>
-                <StageConnector>
-                    <TuckmanConnector />
-                </StageConnector>
-            </Provider>
-    );
+   
 
     myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setZoneFocus("forming", "not-in-focus"));
     myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setZoneFocus("storming", "not-in-focus"));
     myStore.dispatch(Action.setZoneFocus("norming", "in-focus"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setZoneFocus("norming", "not-in-focus"));
     myStore.dispatch(Action.setZoneFocus("performing", "in-focus"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
 
 });
@@ -64,19 +58,22 @@ test("Should show the component", () => {
     const myStore = createStore(tuckmanReducer);
     myStore.dispatch(Action.setStageSize(800, 600));
 
-    const component = renderizer.create(
-            <Provider store={myStore}>
-                <StageConnector>
-                    <TuckmanConnector />
-                </StageConnector>
-            </Provider>
-    );
-
-    expect(component.toJSON()).toMatchSnapshot();
+   
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
 });
+
+function renderStore(myStore: any) {
+    return renderizer.create(
+        <Provider store={myStore}>
+            <StageConnector>
+                <TuckmanConnector />
+            </StageConnector>
+        </Provider>
+    );
+}
 /*
 it("Should show the stretch area", () => {
     // Arrange

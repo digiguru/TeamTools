@@ -29,25 +29,27 @@ test("Should not mutate in any way", () => {
     checkAfterAction(Action.chooseZone("Adam Hall", "Stretch", 85));
 });
 
-
-
-test("Should show the component", () => {
-    // Arrange
-    const myStore = createStore(comfortReducer);
-
-    const component = renderizer.create(
+function renderStore(store) {
+    return renderizer.create(
         <svg xmlns="http://www.w3.org/2000/svg" id="stage">
-            <Provider store={myStore}>
+            <Provider store={store}>
                 <StageConnector>
                     <ComfortStage />
                 </StageConnector>
             </Provider>
         </svg>
     );
+}
 
-    expect(component.toJSON()).toMatchSnapshot();
+test("Should show the component", () => {
+    // Arrange
+    const myStore = createStore(comfortReducer);
+
+  
+
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
     myStore.dispatch(Action.setUserFocus("Adam Hall", "in-focus"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
 });
 
@@ -56,21 +58,13 @@ test("Should allow shrinking", () => {
 
     const myStore = createStore(comfortReducer);
 
-    const component = renderizer.create(
-        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
-            <Provider store={myStore}>
-                <StageConnector>
-                    <ComfortStage />
-                </StageConnector>
-            </Provider>
-        </svg>
-    );
+   
 
     myStore.dispatch(Action.chooseZone("Adam Hall", "Stretch", 50));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
     myStore.dispatch(Action.chooseZone("Caroline Hall", "Chaos", 100));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
 });
 
@@ -80,21 +74,13 @@ test("Should allow hiding", () => {
 
     const myStore = createStore(comfortReducer);
 
-    const component = renderizer.create(
-        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
-            <Provider store={myStore}>
-                <StageConnector>
-                    <ComfortStage />
-                </StageConnector>
-            </Provider>
-        </svg>
-    );
+    
 
     myStore.dispatch(Action.setStageVisibility("hiding"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
     myStore.dispatch(Action.setStageVisibility("appearing"));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
 });
 
@@ -105,15 +91,7 @@ test("Should allow users to be set okay", () => {
 
     const myStore = createStore(comfortReducer);
 
-    const component = renderizer.create(
-        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
-            <Provider store={myStore}>
-                <StageConnector>
-                    <ComfortStage />
-                </StageConnector>
-            </Provider>
-        </svg>
-    );
+   
     const users: IUserList = {
         Users: [
             {Username: "Test person 1"},
@@ -122,7 +100,7 @@ test("Should allow users to be set okay", () => {
         ]
     };
     myStore.dispatch(Action.recieveUserList(users));
-    expect(component.toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 });
 
 
