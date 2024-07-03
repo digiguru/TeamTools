@@ -61,7 +61,7 @@
   "license": "MIT",
   "homepage": "https://teamtools.herokuapp.com/",
   "devDependencies": {
-    "acorn": "^8.12.0",
+    "acorn": "^8.12.1",
     "jest-junit": "^16.0.0",
     "react-test-renderer": "^18.2.0"
   }
