@@ -1,15 +1,14 @@
 import * as React from "react";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { render, act } from "@testing-library/react";
 // import { TuckmanStage } from "../Tuckman/Component";
 import { tuckmanReducer } from "../Tuckman/Reducer";
 // import { Size } from "../Models/Size";
 import * as Action from "../Tuckman/Actions";
 import { TuckmanConnector } from "../Tuckman/Connector";
 import { StageConnector } from "../Stage/Connector";
-import { act } from "react-test-renderer";
 // import { Stage } from "../Stage/Component";
-const renderizer = require("react-test-renderer");
 
 test("Should not mutate in any way", () => {
     const myStore = createStore(tuckmanReducer);
@@ -43,22 +42,22 @@ test("Focusable zones", () => {
     act(() => {
         myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
     });
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
     act(() => {
         myStore.dispatch(Action.setZoneFocus("forming", "not-in-focus"));
         myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
     });
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
     act(() => {
         myStore.dispatch(Action.setZoneFocus("storming", "not-in-focus"));
         myStore.dispatch(Action.setZoneFocus("norming", "in-focus"));
     });
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
     act(() => {
         myStore.dispatch(Action.setZoneFocus("norming", "not-in-focus"));
         myStore.dispatch(Action.setZoneFocus("performing", "in-focus"));
     });
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
 
 });
@@ -71,26 +70,22 @@ test("Should show the component", () => {
     });
 
   
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
     act(() => {
         myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
     });
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
 });
 
 function renderStore(myStore: any) {
-    let renderer;
-    act(() => {
-        renderer = renderizer.create(
-            <Provider store={myStore}>
-                <StageConnector>
-                    <TuckmanConnector />
-                </StageConnector>
-            </Provider>
-        );
-    });
-    return renderer;
+    return render(
+        <Provider store={myStore}>
+            <StageConnector>
+                <TuckmanConnector />
+            </StageConnector>
+        </Provider>
+    );
 }
 /*
 it("Should show the stretch area", () => {

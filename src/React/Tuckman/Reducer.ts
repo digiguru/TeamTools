@@ -6,8 +6,7 @@ import { Size } from "../Models/Size";
 import { Point } from "../Models/Point";
 import { TuckmanActions } from "./Actions";
 import { IUser, IUserList } from "../User/Model";
-
-const { fromJS, List, Map } = require('immutable');
+import { fromJS, List, Map } from "immutable";
 
 
 const initialSize: Size = new Size(800, 800);

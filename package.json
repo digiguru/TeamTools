@@ -2,6 +2,7 @@
   "name": "teamtools",
   "dependencies": {
     "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/dom": "^10.4.0",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^14.6.1",
     "@types/jest": "^30.0.0",
@@ -15,7 +16,6 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-redux": "^9.2.0",
-    "react-scripts": "5.0.1",
     "redux": "^5.0.1",
     "rxjs": "^7.8.2",
     "typescript": "^5.9.3"
@@ -23,14 +23,15 @@
   "description": "Start mini server",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "test:debug": "react-scripts --inspect-brk test --runInBand --no-cache",
-    "test:ci": "react-scripts test --ci --reporters jest-junit --reporters default",
-    "test:update": "react-scripts test -- -u",
-    "eject": "react-scripts eject"
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ci": "vitest run",
+    "test:update": "vitest -u"
   },
   "repository": {
     "type": "git",
@@ -38,9 +39,6 @@
   },
   "eslintConfig": {
     "extends": "react-app"
-  },
-  "jest-junit": {
-    "outputDirectory": "results"
   },
   "browserslist": {
     "production": [
@@ -59,7 +57,9 @@
   "homepage": "https://teamtools.herokuapp.com/",
   "devDependencies": {
     "acorn": "^8.15.0",
-    "jest-junit": "^16.0.0",
-    "react-test-renderer": "^19.2.3"
+    "@vitejs/plugin-react": "^4.7.0",
+    "vite": "^5.4.8",
+    "vitest": "^2.1.1",
+    "jsdom": "^25.0.0"
   }
 }
