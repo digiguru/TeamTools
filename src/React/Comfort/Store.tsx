@@ -2,7 +2,6 @@ import * as React from "react";
 import { createStore } from "redux";
 import { ComfortConnector } from "./Connector";
 import { comfortReducer } from "./Reducer";
-import { render } from "react-dom";
 import { Provider } from "react-redux";
 import { setStageSize, setStageVisibility, fetchUserList } from "./Actions";
 import { Size } from "../Models/Size";

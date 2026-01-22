@@ -1,6 +1,6 @@
 import * as React from "react";
 import {createStore} from "redux";
-import { render } from "react-dom";
+import { createRoot } from "react-dom/client";
 import { Provider } from "react-redux";
 import { setStageSize, setStageVisibility } from "./Tuckman/Actions";
 import { Size } from "./Models/Size";
@@ -22,13 +22,17 @@ const unsubscribe = myStore.subscribe(() =>
   console.log(myStore.getState())
 );
 
-render(
+const rootElement = document.getElementById("container");
+if (!rootElement) {
+  throw new Error("Container element not found");
+}
+const root = createRoot(rootElement);
+root.render(
   <Provider store={myStore}>
     <StageConnector>
         <ComfortStage />
     </StageConnector>
-  </Provider>,
-  document.getElementById("container")
+  </Provider>
 );
 // <TuckmanStage />
 // <TuckmanConnector />
