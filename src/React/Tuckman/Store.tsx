@@ -7,12 +7,9 @@ import { getWidthHeight } from "../Shared/WindowHelper";
 import { TuckmanConnector } from "./Connector";
 import { StageConnector } from "../Stage/Connector";
 import { tuckmanReducer } from "./Reducer";
-import { InMemoryBrowserUsers } from "../../Shared/InMemoryBrowserUsers";
 export const myTuckmanStore = createStore(tuckmanReducer);
-const users = new InMemoryBrowserUsers(window);
 
-
-const unsubscribe = myTuckmanStore.subscribe(() =>
+myTuckmanStore.subscribe(() =>
   console.log(myTuckmanStore.getState())
 );
 
@@ -37,13 +34,6 @@ export function resizeImage() {
 export function getStore() {
   return myTuckmanStore;
 }
-function hideModel() {
-  myTuckmanStore.dispatch(setStageVisibility("hiding"));
-}
-function showModel() {
-  myTuckmanStore.dispatch(setStageVisibility("appearing"));
-}
-
 window.addEventListener("resize", resizeImage, false);
 setTimeout(() => {
   console.log("HIDE IT!");

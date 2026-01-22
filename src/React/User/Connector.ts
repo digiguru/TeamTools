@@ -1,9 +1,9 @@
 import { connect } from "react-redux";
 import { selectUser, setUserFocus } from "../Comfort/Actions";
-import {ComfortAppState} from "../Comfort/Model";
-import {ReduxUserList} from "./Component";
+import { ComfortAppState } from "../Comfort/Model";
+import { ReduxUserList } from "./Component";
 import { IUserList } from "./Model";
-const { fromJS } = require("immutable");
+import { fromJS } from "immutable";
 
 
 const mapStateToProps = (state: ComfortAppState, ownProps: IUserList): IUserList => {

@@ -21,7 +21,10 @@
     "noImplicitAny": false,
     "strictPropertyInitialization": false,
     "strictNullChecks": false,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "types": [
+      "vitest/globals"
+    ]
   },
   "include": [
     "src"

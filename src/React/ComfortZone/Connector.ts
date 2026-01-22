@@ -17,14 +17,6 @@ const mapStateToProps = (state: ComfortAppState, ownProps: ComfortZoneState) : I
     }
 };
 
-const getCenterPointFromElement = (el) => {
-  const boundingBox = el.getBBox();
-  const centerX     = (boundingBox.width - boundingBox.x) / 2;
-  const centerY     = (boundingBox.height - boundingBox.y) / 2;
-  return new Point(centerX, centerY);
-};
-
-
 const mapDispatchToProps = (dispatch) : IComfortZoneEventList => {
   return {
     Events: {
@@ -64,6 +56,5 @@ export const ReduxComfortConnector = connect(
   mapStateToProps,
   mapDispatchToProps
 )(ReduxComfortArea);
-
 
 

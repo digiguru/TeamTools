@@ -1,7 +1,5 @@
 import * as React from "react";
 import {ITuckmanUserChoiceState} from "../Tuckman/Model";
-import {Point} from "../Models/Point";
-import {Polar} from "../Models/Polar";
 import { ITuckmanUserChoice, IUserChoiceState } from "./Model";
 
 export const TuckmanUserHistoryArea = (state: IUserChoiceState) => {

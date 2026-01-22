@@ -1,7 +1,6 @@
 import * as React from "react";
 import { ITuckmanModel } from "./Model";
 import { ReduxUserConnector } from "../User/Connector";
-import { ITuckmanZone } from "../TuckmanZone/Model";
 import { TuckmanZoneConnector } from "../TuckmanZone/Connector";
 import { TuckmanUserHistoryConnector } from "../TuckmanUserChoice/Connector";
 

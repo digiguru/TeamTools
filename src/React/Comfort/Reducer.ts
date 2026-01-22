@@ -1,12 +1,11 @@
 
-import {ComfortActions} from "./Actions";
-import {ComfortAppState} from "./Model";
+import { ComfortActions } from "./Actions";
+import { ComfortAppState } from "./Model";
 import { Point } from "../Models/Point";
 import { Size } from "../Models/Size";
 import { DOMMeasurement } from "../Models/IDomMeasurement";
 import { IUser, IUserList } from "../User/Model";
-
-const { fromJS, List, Map } = require('immutable');
+import { fromJS, List, Map } from "immutable";
 
 const initialSize: Size = new Size(800, 800);
 const initialState: ComfortAppState = {
