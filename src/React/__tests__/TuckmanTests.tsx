@@ -66,13 +66,17 @@ test("Should show the component", () => {
 });
 
 function renderStore(myStore: any) {
-    return renderizer.create(
-        <Provider store={myStore}>
-            <StageConnector>
-                <TuckmanConnector />
-            </StageConnector>
-        </Provider>
-    );
+    let renderer;
+    act(() => {
+        renderer = renderizer.create(
+            <Provider store={myStore}>
+                <StageConnector>
+                    <TuckmanConnector />
+                </StageConnector>
+            </Provider>
+        );
+    });
+    return renderer;
 }
 /*
 it("Should show the stretch area", () => {

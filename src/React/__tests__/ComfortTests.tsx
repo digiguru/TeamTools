@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 import * as Action from "../Comfort/Actions";
 import { StageConnector } from "../Stage/Connector";
 import { IUserList } from "../User/Model";
+import { act } from "react-test-renderer";
 
 
 const renderizer = require("react-test-renderer");
@@ -30,15 +31,19 @@ test("Should not mutate in any way", () => {
 });
 
 function renderStore(store) {
-    return renderizer.create(
-        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
-            <Provider store={store}>
-                <StageConnector>
-                    <ComfortStage />
-                </StageConnector>
-            </Provider>
-        </svg>
-    );
+    let renderer;
+    act(() => {
+        renderer = renderizer.create(
+            <svg xmlns="http://www.w3.org/2000/svg" id="stage">
+                <Provider store={store}>
+                    <StageConnector>
+                        <ComfortStage />
+                    </StageConnector>
+                </Provider>
+            </svg>
+        );
+    });
+    return renderer;
 }
 
 test("Should show the component", () => {
@@ -102,6 +107,5 @@ test("Should allow users to be set okay", () => {
     myStore.dispatch(Action.recieveUserList(users));
     expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 });
-
 
 
