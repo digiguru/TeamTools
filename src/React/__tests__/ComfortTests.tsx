@@ -1,16 +1,12 @@
 import * as React from "react";
 import { createStore } from "redux";
-import { ComfortStage } from "../Comfort/Component";
-import {comfortReducer} from "../Comfort/Reducer";
-// import { render } from "react-dom";
 import { Provider } from "react-redux";
+import { render, act } from "@testing-library/react";
+import { ComfortStage } from "../Comfort/Component";
+import { comfortReducer } from "../Comfort/Reducer";
 import * as Action from "../Comfort/Actions";
 import { StageConnector } from "../Stage/Connector";
 import { IUserList } from "../User/Model";
-import { act } from "react-test-renderer";
-
-
-const renderizer = require("react-test-renderer");
 
 test("Should not mutate in any way", () => {
     const myState = comfortReducer(undefined, {type: "Startup"});
@@ -31,19 +27,15 @@ test("Should not mutate in any way", () => {
 });
 
 function renderStore(store) {
-    let renderer;
-    act(() => {
-        renderer = renderizer.create(
-            <svg xmlns="http://www.w3.org/2000/svg" id="stage">
-                <Provider store={store}>
-                    <StageConnector>
-                        <ComfortStage />
-                    </StageConnector>
-                </Provider>
-            </svg>
-        );
-    });
-    return renderer;
+    return render(
+        <svg xmlns="http://www.w3.org/2000/svg" id="stage">
+            <Provider store={store}>
+                <StageConnector>
+                    <ComfortStage />
+                </StageConnector>
+            </Provider>
+        </svg>
+    );
 }
 
 test("Should show the component", () => {
@@ -52,9 +44,11 @@ test("Should show the component", () => {
 
   
 
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
-    myStore.dispatch(Action.setUserFocus("Adam Hall", "in-focus"));
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
+    act(() => {
+        myStore.dispatch(Action.setUserFocus("Adam Hall", "in-focus"));
+    });
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
 });
 
@@ -65,11 +59,15 @@ test("Should allow shrinking", () => {
 
    
 
-    myStore.dispatch(Action.chooseZone("Adam Hall", "Stretch", 50));
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    act(() => {
+        myStore.dispatch(Action.chooseZone("Adam Hall", "Stretch", 50));
+    });
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
-    myStore.dispatch(Action.chooseZone("Caroline Hall", "Chaos", 100));
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    act(() => {
+        myStore.dispatch(Action.chooseZone("Caroline Hall", "Chaos", 100));
+    });
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
 });
 
@@ -81,11 +79,15 @@ test("Should allow hiding", () => {
 
     
 
-    myStore.dispatch(Action.setStageVisibility("hiding"));
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    act(() => {
+        myStore.dispatch(Action.setStageVisibility("hiding"));
+    });
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
-    myStore.dispatch(Action.setStageVisibility("appearing"));
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    act(() => {
+        myStore.dispatch(Action.setStageVisibility("appearing"));
+    });
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
 });
 
@@ -104,8 +106,8 @@ test("Should allow users to be set okay", () => {
             {Username: "Test person 3"}
         ]
     };
-    myStore.dispatch(Action.recieveUserList(users));
-    expect(renderStore(myStore).toJSON()).toMatchSnapshot();
+    act(() => {
+        myStore.dispatch(Action.recieveUserList(users));
+    });
+    expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 });
-
-

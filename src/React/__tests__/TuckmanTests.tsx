@@ -34,20 +34,30 @@ test("Should not mutate in any way", () => {
 test("Focusable zones", () => {
     const myStore = createStore(tuckmanReducer);
     
-    myStore.dispatch(Action.setStageSize(800, 600));
+    act(() => {
+        myStore.dispatch(Action.setStageSize(800, 600));
+    });
 
    
 
-    myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
+    act(() => {
+        myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
+    });
     expect(renderStore(myStore).toJSON()).toMatchSnapshot();
-    myStore.dispatch(Action.setZoneFocus("forming", "not-in-focus"));
-    myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
+    act(() => {
+        myStore.dispatch(Action.setZoneFocus("forming", "not-in-focus"));
+        myStore.dispatch(Action.setZoneFocus("storming", "in-focus"));
+    });
     expect(renderStore(myStore).toJSON()).toMatchSnapshot();
-    myStore.dispatch(Action.setZoneFocus("storming", "not-in-focus"));
-    myStore.dispatch(Action.setZoneFocus("norming", "in-focus"));
+    act(() => {
+        myStore.dispatch(Action.setZoneFocus("storming", "not-in-focus"));
+        myStore.dispatch(Action.setZoneFocus("norming", "in-focus"));
+    });
     expect(renderStore(myStore).toJSON()).toMatchSnapshot();
-    myStore.dispatch(Action.setZoneFocus("norming", "not-in-focus"));
-    myStore.dispatch(Action.setZoneFocus("performing", "in-focus"));
+    act(() => {
+        myStore.dispatch(Action.setZoneFocus("norming", "not-in-focus"));
+        myStore.dispatch(Action.setZoneFocus("performing", "in-focus"));
+    });
     expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
 
@@ -56,11 +66,15 @@ test("Focusable zones", () => {
 test("Should show the component", () => {
     // Arrange
     const myStore = createStore(tuckmanReducer);
-    myStore.dispatch(Action.setStageSize(800, 600));
+    act(() => {
+        myStore.dispatch(Action.setStageSize(800, 600));
+    });
 
-   
+  
     expect(renderStore(myStore).toJSON()).toMatchSnapshot();
-    myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
+    act(() => {
+        myStore.dispatch(Action.setZoneFocus("forming", "in-focus"));
+    });
     expect(renderStore(myStore).toJSON()).toMatchSnapshot();
 
 });
