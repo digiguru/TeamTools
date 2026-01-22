@@ -49,19 +49,19 @@ const initialState: ITuckmanModel = {
 export function tuckmanReducer(state: ITuckmanModel = initialState, action): ITuckmanModel {
     switch (action.type) {
         case TuckmanActions.SET_STAGESIZE:
-            return TuckmanZoneAction.setStageSize(state, (<any>action).width, (<any>action).height);
+            return TuckmanZoneAction.setStageSize(state, (action as any).width, (action as any).height);
         case TuckmanActions.SET_STAGEVISIBLE:
-            return TuckmanZoneAction.setStageVisibilty(state, (<any>action).visibility);
+            return TuckmanZoneAction.setStageVisibilty(state, (action as any).visibility);
         case TuckmanActions.SET_USERFOCUS:
-            return TuckmanZoneAction.setUserFocus(state, (<any>action).user, (<any>action).focus);
+            return TuckmanZoneAction.setUserFocus(state, (action as any).user, (action as any).focus);
         case TuckmanActions.SET_ZONEFOCUS:
-            return TuckmanZoneAction.setZoneFocus(state, (<any>action).area, (<any>action).focus);
+            return TuckmanZoneAction.setZoneFocus(state, (action as any).area, (action as any).focus);
         case TuckmanActions.SELECT_USER:
-            return TuckmanZoneAction.selectUser(state, (<any>action).user);
+            return TuckmanZoneAction.selectUser(state, (action as any).user);
         case TuckmanActions.CHOOSE_ZONE:
-            return TuckmanZoneAction.chooseZone(state, (<any>action).user, (<any>action).area, (<any>action).distance);
+            return TuckmanZoneAction.chooseZone(state, (action as any).user, (action as any).area, (action as any).distance);
         case TuckmanActions.TOGGLE_CHOICES:
-            return TuckmanZoneAction.toggleChoiceVisibility(state, (<any>action).visible);
+            return TuckmanZoneAction.toggleChoiceVisibility(state, (action as any).visible);
         default:
             return state;
     }

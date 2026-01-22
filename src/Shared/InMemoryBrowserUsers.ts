@@ -39,7 +39,7 @@ export class InMemoryBrowserUsers implements IUserRepo  {
     setUsers(users: User[]): PromiseLike<User[]> {
 
         const promCache = this.cache.setUsers(users);
-        const promRepo = this.repo.saveUsers(users);
+        this.repo.saveUsers(users);
         return promCache;
     }
 }

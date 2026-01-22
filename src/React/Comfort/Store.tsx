@@ -3,7 +3,7 @@ import { createStore } from "redux";
 import { ComfortConnector } from "./Connector";
 import { comfortReducer } from "./Reducer";
 import { Provider } from "react-redux";
-import { setStageSize, setStageVisibility, fetchUserList } from "./Actions";
+import { setStageSize } from "./Actions";
 import { Size } from "../Models/Size";
 import { getWidthHeight } from "../Shared/WindowHelper";
 import { StageConnector } from "../Stage/Connector";
@@ -13,7 +13,7 @@ const store = createStore(comfortReducer);
 // comfortStore.dispatch(fetchUserList());
 store.dispatch(setStageSize(800, 800));
 
-const unsubscribe = store.subscribe(() =>
+store.subscribe(() =>
   console.log(store.getState())
 );
 
@@ -38,12 +38,6 @@ export function resizeImage() {
 }
 export function getStore() {
   return store;
-}
-function hideModel() {
-  store.dispatch(setStageVisibility("hiding"));
-}
-function showModel() {
-  store.dispatch(setStageVisibility("appearing"));
 }
 window.addEventListener("resize", resizeImage, false);
 
