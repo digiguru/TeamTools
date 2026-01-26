@@ -13,7 +13,7 @@
     "@types/react-test-renderer": "^19.1.0",
     "d3": "^7.9.0",
     "immutable": "^5.1.4",
-    "react": "^19.2.3",
+    "react": "^19.2.4",
     "react-dom": "^19.2.3",
     "react-redux": "^9.2.0",
     "redux": "^5.0.1",
