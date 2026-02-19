@@ -57,7 +57,7 @@
   "homepage": "https://teamtools.herokuapp.com/",
   "devDependencies": {
     "@vitejs/plugin-react": "^5.1.4",
-    "acorn": "^8.15.0",
+    "acorn": "^8.16.0",
     "happy-dom": "^20.6.1",
     "vite": "^7.3.1",
     "vitest": "^4.0.18"
