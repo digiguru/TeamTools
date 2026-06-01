@@ -1,0 +1,62 @@
+name: CI & Vercel Deployment
+
+on:
+  push:
+    branches: [main]       # Triggers on merges to main
+  pull_request:            # Triggers on all PRs (including Dependabot)
+
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+jobs:
+  ci-pipeline:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'      # Natively handles caching your node_modules
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run Tests
+        run: npm run test:ci
+
+      # =========================================================
+      # VERCEL DEPLOYMENT (Only runs if the tests above pass!)
+      # =========================================================
+      
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      # 1. PREVIEW DEPLOYMENTS (For Pull Requests / Feature Branches)
+      - name: Pull Vercel Environment Info (Preview)
+        if: github.ref != 'refs/heads/main'
+        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts (Preview)
+        if: github.ref != 'refs/heads/main'
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel (Preview)
+        if: github.ref != 'refs/heads/main'
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+
+      # 2. PRODUCTION DEPLOYMENTS (When merged into main)
+      - name: Pull Vercel Environment Info (Production)
+        if: github.ref == 'refs/heads/main'
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Build Project Artifacts (Production)
+        if: github.ref == 'refs/heads/main'
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+      - name: Deploy to Vercel (Production)
+        if: github.ref == 'refs/heads/main'
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
