@@ -9,8 +9,7 @@ const mapStateToProps = (state: ComfortAppState, ownProps: IUserList): IUserList
         ShowUsers: state.UserList.ShowUsers,
         Users: (state.UserList.Users ?? []).map((user, index) => ({
             ...user,
-            Y: (index * 90) + 60,
-            Focus: "Focus" in user ? user.Focus : "not-in-focus"
+            Y: (index * 90) + 60
         } as IUserUI))
     };
 };
