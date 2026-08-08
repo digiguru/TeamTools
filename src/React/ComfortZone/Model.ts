@@ -28,8 +28,9 @@ export interface IComfortZoneConnectorWithEvents extends IComfortZoneConnector {
     Events       : IComfortZoneEvents;
 }
 export class ComfortZoneState {
-    Name  : "Chaos" | "Stretch" | "Comfort";
-    Focus?: "in-focus" | "active" | "not-in-focus";
-    Range?: ComfortZoneRangeState;
-    Size? : ISizable;
+    Name       : "Chaos" | "Stretch" | "Comfort";
+    Focus?     : "in-focus" | "active" | "not-in-focus";
+    visibility?: "hiding" | "appearing";
+    Range?     : ComfortZoneRangeState;
+    Size?      : ISizable;
 }
