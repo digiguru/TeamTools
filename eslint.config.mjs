@@ -19,6 +19,28 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-empty-object-type': 'off',
+      '@typescript-eslint/no-wrapper-object-types': 'warn',
+      '@typescript-eslint/no-this-alias': 'off',
+      'prefer-const': 'off',
+    },
+  },
+  {
+    files: ['src/setupTests.ts'],
+    rules: {
+      'no-global-assign': 'off',
+    },
+  },
+  {
+    files: ['src/**/*.js'],
+    rules: {
+      '@typescript-eslint/no-require-imports': 'off',
+    },
+  },
+  {
+    files: ['src/startup.js'],
+    rules: {
+      'no-unexpected-multiline': 'off',
     },
   },
 );
