@@ -12,12 +12,13 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "lint": "tsc --noEmit",
+    "lint": "eslint .",
+    "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "test:ci": "vitest run",
     "test:watch": "vitest",
     "test:update": "vitest -u",
-    "check": "npm run lint && npm test && npm run build"
+    "check": "npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
@@ -58,9 +59,13 @@
   "author": "digiguru",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@vitejs/plugin-react": "^6.0.5",
     "acorn": "^8.18.0",
+    "eslint": "^10.8.0",
+    "globals": "^16.0.0",
     "happy-dom": "^20.11.1",
+    "typescript-eslint": "^8.65.0",
     "vite": "^8.2.0",
     "vitest": "^4.1.10"
   }
