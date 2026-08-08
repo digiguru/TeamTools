@@ -1,5 +1,24 @@
 {
   "name": "teamtools",
+  "description": "Anonymous team health and Tuckman-stage voting tool",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "start": "vite",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:ci": "vitest run",
+    "test:watch": "vitest",
+    "test:update": "vitest -u",
+    "check": "npm run lint && npm test && npm run build"
+  },
   "dependencies": {
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^7.0.0",
@@ -20,25 +39,9 @@
     "rxjs": "^7.8.2",
     "typescript": "^7.0.2"
   },
-  "description": "Start mini server",
-  "version": "1.0.0",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "start": "vite",
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "test": "vitest",
-    "test:ci": "vitest run",
-    "test:update": "vitest -u"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/digiguru/TeamTools.git"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
@@ -54,7 +57,6 @@
   },
   "author": "digiguru",
   "license": "MIT",
-  "homepage": "https://teamtools.herokuapp.com/",
   "devDependencies": {
     "@vitejs/plugin-react": "^6.0.5",
     "acorn": "^8.18.0",

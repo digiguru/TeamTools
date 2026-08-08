@@ -1,14 +1,16 @@
-import { IDOMMeasurement } from "../Models/IDomMeasurement";
+import { Point } from "../Models/Point";
 import { IStageState } from "../Stage/Model";
 import { IUserList, IUser } from "../User/Model";
 import { ITuckmanZone } from "../TuckmanZone/Model";
 
 export interface ITuckmanModel extends IStageState {
-    zones?       : ITuckmanZoneList;
-    CurrentUser? : IUser;
-    UserList?    : IUserList;
-    UserChoices? : Array<ITuckmanUserChoiceState>;
-    visibility   : boolean;
+    zones?          : ITuckmanZoneList;
+    CenterPoint?    : Point;
+    CurrentUser?    : IUser;
+    UserList?       : IUserList;
+    UserChoices?    : Array<ITuckmanUserChoiceState>;
+    ShowUserChoices?: boolean;
+    visibility      : boolean;
 }
 
 export interface ITuckmanZoneList {
@@ -17,8 +19,9 @@ export interface ITuckmanZoneList {
     norming   : ITuckmanZone;
     performing: ITuckmanZone;
 }
+
 export interface ITuckmanUserChoiceState {
     User    : IUser;
-    zone    : "forming" | "storming" | "norming" | "performing";
+    Zone    : "forming" | "norming" | "performing" | "storming";
     Distance: number;
 }
