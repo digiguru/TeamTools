@@ -10,6 +10,12 @@ updates:
       all-npm-dependencies:
         patterns:
           - "*"
+    # typescript-eslint 8.67 supports TypeScript versions below 6.1.
+    # Remove this once TypeScript 7 support is released.
+    ignore:
+      - dependency-name: typescript
+        update-types:
+          - version-update:semver-major
 
   - package-ecosystem: github-actions
     directory: "/"
