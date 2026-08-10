@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -28,26 +28,12 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
-        with:
-          ref: ${{ github.event.pull_request.head.ref || github.ref_name }}
 
       - name: Setup Node.js
         uses: actions/setup-node@v7
         with:
           node-version-file: package.json
           cache: npm
-
-      - name: Refresh lockfile for nanoid security patch
-        if: github.event_name == 'pull_request'
-        run: |
-          npm install --package-lock-only --ignore-scripts
-          if ! git diff --quiet -- package-lock.json; then
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git add package-lock.json
-            git commit -m "Regenerate package lock for nanoid security patch"
-            git push origin HEAD:${{ github.event.pull_request.head.ref }}
-          fi
 
       - name: Install dependencies
         run: npm ci
