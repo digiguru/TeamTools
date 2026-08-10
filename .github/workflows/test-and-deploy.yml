@@ -38,6 +38,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Report full dependency audit
+        run: npm audit --json || true
+
       - name: Audit production dependencies
         run: npm run audit:prod
 
