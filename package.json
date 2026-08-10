@@ -18,8 +18,9 @@
     "test:ci": "vitest run",
     "test:watch": "vitest",
     "test:update": "vitest -u",
+    "audit": "npm audit --audit-level=high",
     "audit:prod": "npm audit --omit=dev --audit-level=high",
-    "check": "npm run audit:prod && npm run lint && npm run typecheck && npm test && npm run build"
+    "check": "npm run audit && npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
     "d3": "^7.9.0",
@@ -29,6 +30,9 @@
     "react-redux": "^9.3.0",
     "redux": "^5.0.1",
     "rxjs": "^7.8.2"
+  },
+  "overrides": {
+    "nanoid": "^3.3.17"
   },
   "repository": {
     "type": "git",
