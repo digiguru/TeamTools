@@ -4,12 +4,19 @@ updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
-      interval: daily
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: Europe/London
     open-pull-requests-limit: 10
     groups:
       all-npm-dependencies:
         patterns:
           - "*"
+        update-types:
+          - major
+          - minor
+          - patch
     # typescript-eslint 8.67 supports TypeScript versions below 6.1.
     # Remove this once TypeScript 7 support is released.
     ignore:
@@ -20,7 +27,10 @@ updates:
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
-      interval: daily
+      interval: weekly
+      day: monday
+      time: "08:00"
+      timezone: Europe/London
     open-pull-requests-limit: 10
     groups:
       all-github-actions:
