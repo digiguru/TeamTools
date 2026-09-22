@@ -16,6 +16,7 @@ export interface RoomSummary {
   status: "open" | "revealed";
   createdAt: number;
   updatedAt: number;
+  savedVoteCount?: number;
 }
 
 export interface RoomSnapshot {
@@ -28,8 +29,18 @@ export interface RoomSnapshot {
   votes: RevealedVote[];
 }
 
+export interface SavedRoom {
+  id: string;
+  name: string;
+  model: ModelType;
+  createdAt: number;
+  updatedAt: number;
+  votes: VotePoint[];
+}
+
 const HOST_TOKEN_KEY = "teamtools-host-token";
 const VOTER_KEY_PREFIX = "teamtools-voter:";
+const SAVED_ROOMS_KEY = "teamtools-saved-rooms-v1";
 
 function randomToken() {
   if (globalThis.crypto?.randomUUID) {
@@ -54,6 +65,70 @@ export function getHostToken() {
 
 export function getVoterId(roomId: string) {
   return getOrCreate(`${VOTER_KEY_PREFIX}${roomId}`);
+}
+
+export function readSavedRooms(): SavedRoom[] {
+  try {
+    const value = JSON.parse(localStorage.getItem(SAVED_ROOMS_KEY) || "[]");
+    if (!Array.isArray(value)) return [];
+    return value
+      .filter(
+        (item) =>
+          item &&
+          typeof item.id === "string" &&
+          typeof item.name === "string" &&
+          (item.model === "comfort" || item.model === "tuckman"),
+      )
+      .slice(0, 50);
+  } catch {
+    return [];
+  }
+}
+
+export function writeSavedRooms(rooms: SavedRoom[]) {
+  localStorage.setItem(SAVED_ROOMS_KEY, JSON.stringify(rooms.slice(0, 50)));
+}
+
+export function upsertSavedRoom(room: SavedRoom) {
+  const existing = readSavedRooms();
+  const next = [room, ...existing.filter((item) => item.id !== room.id)]
+    .sort((a, b) => b.updatedAt - a.updatedAt)
+    .slice(0, 50);
+  writeSavedRooms(next);
+  return room;
+}
+
+export function replaceSavedRoomId(oldId: string, room: RoomSummary) {
+  const saved = readSavedRooms();
+  const previous = saved.find((item) => item.id === oldId);
+  if (!previous) return;
+  upsertSavedRoom({
+    ...previous,
+    id: room.id,
+    name: room.name,
+    model: room.model,
+    updatedAt: room.updatedAt,
+  });
+  if (oldId !== room.id) {
+    writeSavedRooms(readSavedRooms().filter((item) => item.id !== oldId));
+  }
+}
+
+export function saveRoomSnapshot(snapshot: RoomSnapshot) {
+  const previous = readSavedRooms().find((item) => item.id === snapshot.room.id);
+  const revealedVotes =
+    snapshot.room.status === "revealed"
+      ? snapshot.votes.map(({ x, y }) => ({ x, y }))
+      : previous?.votes || [];
+
+  return upsertSavedRoom({
+    id: snapshot.room.id,
+    name: snapshot.room.name,
+    model: snapshot.room.model,
+    createdAt: snapshot.room.createdAt,
+    updatedAt: snapshot.room.updatedAt,
+    votes: revealedVotes,
+  });
 }
 
 export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {

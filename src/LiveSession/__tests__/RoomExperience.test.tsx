@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   arrangeComfortVotes,
   comfortZoneForVote,
@@ -7,15 +7,80 @@ import {
   projectTuckmanVote,
   tuckmanYForX,
 } from "../ModelVisual";
-import { roomIdFromLocation } from "../realtime";
+import {
+  readSavedRooms,
+  roomIdFromLocation,
+  saveRoomSnapshot,
+} from "../realtime";
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 describe("live room experience", () => {
+  it("shows a terminal missing-room state instead of reconnecting forever", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ error: "Room not found" }), {
+          status: 404,
+          headers: { "content-type": "application/json" },
+        }),
+      ),
+    );
+
+    const { RoomPage } = await import("../RoomPage");
+    render(<RoomPage roomId="orphaned-room-1234" />);
+
+    await waitFor(() =>
+      expect(screen.getByText("This room is no longer live.")).toBeInTheDocument(),
+    );
+    expect(screen.getByRole("link", { name: "Go to Team Tools" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+  });
+
   it("reads friendly room slugs from the URL", () => {
     history.pushState({}, "", "/room/steady-nexus-4821");
     expect(roomIdFromLocation()).toBe("steady-nexus-4821");
 
     history.pushState({}, "", "/");
     expect(roomIdFromLocation()).toBeNull();
+  });
+
+  it("saves host room snapshots locally for restart recovery", () => {
+    localStorage.clear();
+    saveRoomSnapshot({
+      type: "snapshot",
+      room: {
+        id: "steady-nexus-4821",
+        name: "Recovered room",
+        model: "comfort",
+        status: "revealed",
+        createdAt: 100,
+        updatedAt: 200,
+      },
+      isHost: true,
+      myVote: null,
+      joinedCount: 2,
+      votedCount: 2,
+      votes: [
+        { x: 0.4, y: 0.5 },
+        { x: 0.7, y: 0.5 },
+      ],
+    });
+
+    expect(readSavedRooms()).toEqual([
+      expect.objectContaining({
+        id: "steady-nexus-4821",
+        name: "Recovered room",
+        votes: [
+          { x: 0.4, y: 0.5 },
+          { x: 0.7, y: 0.5 },
+        ],
+      }),
+    ]);
   });
 
   it("lets an attendee place a private point on the visual", () => {
@@ -65,18 +130,33 @@ describe("live room experience", () => {
     expect(tuckmanYForX(0.95)).toBeCloseTo(0.302);
   });
 
-  it("arranges revealed comfort votes as an outward spiral", () => {
-    const arranged = arrangeComfortVotes([
-      { x: 0.5, y: 0.5 },
+  it("arranges revealed comfort votes by angle without changing their radius or zone", () => {
+    const votes = [
+      { x: 0.54, y: 0.5 },
       { x: 0.5, y: 0.72 },
-      { x: 0.9, y: 0.5 },
-    ]);
-    const radii = arranged.map((point) =>
+      { x: 0.72, y: 0.5 },
+    ];
+    const arranged = arrangeComfortVotes(votes);
+
+    const originalRadii = [...votes]
+      .map((point) =>
+        Math.hypot((point.x - 0.5) * 1000, (point.y - 0.5) * 600),
+      )
+      .sort((a, b) => a - b);
+    const arrangedRadii = arranged.map((point) =>
       Math.hypot((point.x - 0.5) * 1000, (point.y - 0.5) * 600),
     );
-    expect(radii[0]).toBeLessThan(radii[1]);
-    expect(radii[1]).toBeLessThan(radii[2]);
-    expect(comfortZoneForVote({ x: 0.5, y: 0.5 })).toBe("Comfort");
+
+    expect(arrangedRadii[0]).toBeCloseTo(originalRadii[0], 8);
+    expect(arrangedRadii[1]).toBeCloseTo(originalRadii[1], 8);
+    expect(arrangedRadii[2]).toBeCloseTo(originalRadii[2], 8);
+
+    expect(comfortZoneForVote(arranged[0])).toBe("Comfort");
+    expect(comfortZoneForVote(arranged[1])).toBe("Stretch");
+    expect(comfortZoneForVote(arranged[2])).toBe("Chaos");
+
+    expect(arranged[0].x).toBeGreaterThan(0.5);
+    expect(arranged[0].y).toBeCloseTo(0.5, 8);
   });
 
   it("does not render percentage labels on the Tuckman chart", () => {
