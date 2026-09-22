@@ -175,11 +175,20 @@ aggregate(contributions) => domainAggregate
 
 ### 8. Presence is a transport capability
 
-Wheel can answer "who is connected now" because it has live sockets.
+Wheel now distinguishes four realtime presence states:
 
-TeamTools cannot and does not need to.
+```text
+connected
+active
+contributed
+waiting
+```
 
-Presence belongs with realtime transport rather than the base participant model.
+"Active" means recently interactive or already contributed while still connected. "Waiting" means active but not yet contributed. Presence is deduplicated by participant ID rather than connection/socket.
+
+TeamTools still cannot observe those states at runtime because it has no network transport, but it now carries the same transport-neutral presence calculation in `src/LiveSession/Presence.ts`. This is useful proof that the capability can exist independently of WebSocket implementation details.
+
+Presence therefore belongs with realtime transport rather than the base participant model. The core should expose presence calculations/interfaces, while each transport supplies connection/activity events.
 
 ## Proposed library shape after this experiment
 
@@ -256,3 +265,23 @@ The strongest test is:
 - TeamTools configures named participants + local transport + per-activity sequential/single-submit contributions.
 
 If those can both use the same core interfaces cleanly, the abstraction is ready to extract.
+
+
+## Testability finding: time is a dependency
+
+The Wheel implementation initially exposed a testing smell: a browser test waited the real 10-second activity timeout.
+
+The reusable presence API now treats time as input:
+
+```ts
+participantPresence(connections, contributions, now, timeoutMs)
+```
+
+TeamTools tests exercise expiry using synthetic timestamps and short logical windows with no wall-clock sleep.
+
+The eventual shared library should keep this rule:
+
+- production may default to a human-scale timeout such as 10 seconds;
+- timeout duration must be configurable;
+- core calculations accept/inject time;
+- tests should advance logical time or use a short test configuration rather than wait production durations.
