@@ -31,7 +31,8 @@
     "react-redux": "^9.3.0",
     "redux": "^5.0.1",
     "rxjs": "^7.8.2",
-    "ws": "^8.21.0"
+    "ws": "^8.21.0",
+    "@vercel/analytics": "^2.0.1"
   },
   "overrides": {
     "nanoid": "^3.3.17"
