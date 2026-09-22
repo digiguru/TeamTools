@@ -26,6 +26,14 @@ export default tseslint.config(
     },
   },
   {
+    files: ['server.mjs'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
     files: ['src/setupTests.ts'],
     rules: {
       'no-global-assign': 'off',
