@@ -45,7 +45,8 @@ Those are therefore **not** being invented inside this refactor.
 - domain-neutral session/participant/contribution types;
 - generic browser repository storage;
 - generic participant persistence;
-- a session-status frontend control that distinguishes local from realtime transport.
+- a session-status frontend control that distinguishes local from realtime transport;
+- an optional presence capability with connected/active/contributed/waiting semantics and injectable timeouts.
 
 Existing TeamTools `User` and repository APIs stay compatible behind adapters.
 
@@ -61,3 +62,21 @@ The second consumer shows that the final library should likely separate:
 6. **domain aggregation/rendering** — always app-owned.
 
 This means realtime networking should be an optional capability, not baked into the definition of a session.
+
+
+## Optional presence capability
+
+`Presence.ts` mirrors the richer presence semantics now proven in Wheel of Emotion without enabling realtime behavior in TeamTools itself.
+
+The generic states are:
+
+- **connected** — at least one live transport connection exists for a participant;
+- **active** — connected and either recently interactive or already contributed;
+- **contributed** — connected and has a current contribution;
+- **waiting** — active but has not contributed.
+
+Connections are deduplicated by `participantId`, so multiple connections for one participant do not inflate counts.
+
+The default activity timeout is 10 seconds, but all presence calculations accept `now` and `timeoutMs` explicitly. Tests therefore use synthetic timestamps rather than sleeping for production-duration timeouts.
+
+TeamTools does not currently feed runtime connections into this capability because it remains a local facilitator-led application. That omission is intentional: presence stays an optional realtime concern rather than becoming fake local UI state.
