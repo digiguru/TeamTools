@@ -266,7 +266,7 @@ exports[`Should allow shrinking 1`] = `
             </text>
           </g>
           <g
-            class="appear"
+            class="disappear"
             id="users"
           />
           <g
@@ -728,44 +728,7 @@ exports[`Should show the component 2`] = `
           <g
             class="appear"
             id="users"
-          >
-            <g
-              class="user-group"
-            >
-              <rect
-                class="in-focus"
-                height="90"
-                width="800"
-                x="0"
-                y="60"
-              />
-              <text
-                class="username"
-                x="60"
-                y="120"
-              >
-                Adam Hall
-              </text>
-            </g>
-            <g
-              class="user-group"
-            >
-              <rect
-                class="not-in-focus"
-                height="90"
-                width="800"
-                x="0"
-                y="150"
-              />
-              <text
-                class="username"
-                x="60"
-                y="210"
-              >
-                Caroline Hall
-              </text>
-            </g>
-          </g>
+          />
           <g
             id="history"
           />
