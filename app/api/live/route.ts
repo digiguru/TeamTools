@@ -334,8 +334,18 @@ export async function GET(request: Request) {
     return Response.json({ rooms: ownedRooms }, { status: 200 });
   }
 
-  const voterId = url.searchParams.get("voterId") || "";
   const room = rooms.get(roomId);
+
+  if (url.searchParams.get("check") === "1") {
+    return room
+      ? Response.json({ room: publicRoom(room) }, { status: 200 })
+      : Response.json(
+          { error: "Room not found. It may have expired after a deployment." },
+          { status: 404 },
+        );
+  }
+
+  const voterId = url.searchParams.get("voterId") || "";
 
   if (!room || !tokenIsValid(voterId)) {
     return Response.json(

@@ -35,6 +35,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
     "connecting",
   );
   const [error, setError] = useState("");
+  const [roomMissing, setRoomMissing] = useState(false);
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectRef = useRef<number | null>(null);
   const unmountedRef = useRef(false);
@@ -42,7 +43,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
   const autosaveRef = useRef<number | null>(null);
   const [saved, setSaved] = useState(false);
 
-  const connect = useCallback(() => {
+  const connect = useCallback(async () => {
     if (
       unmountedRef.current ||
       (socketRef.current && socketRef.current.readyState <= WebSocket.OPEN)
@@ -51,6 +52,31 @@ export function RoomPage({ roomId }: { roomId: string }) {
     }
 
     setConnection("connecting");
+
+    try {
+      const response = await fetch(
+        `/api/live?roomId=${encodeURIComponent(roomId)}&check=1`,
+        { cache: "no-store" },
+      );
+      if (response.status === 404) {
+        setRoomMissing(true);
+        setConnection("offline");
+        setError("");
+        return;
+      }
+      if (!response.ok) {
+        throw new Error(`Room check failed (${response.status})`);
+      }
+    } catch {
+      if (!unmountedRef.current) {
+        setConnection("offline");
+        reconnectRef.current = window.setTimeout(connect, 1200);
+      }
+      return;
+    }
+
+    if (unmountedRef.current || roomMissing) return;
+
     const socket = new WebSocket(roomWebSocketUrl(roomId));
     socketRef.current = socket;
 
@@ -95,16 +121,21 @@ export function RoomPage({ roomId }: { roomId: string }) {
       }
     });
 
-    socket.addEventListener("close", () => {
+    socket.addEventListener("close", (event) => {
       setConnection("offline");
       socketRef.current = null;
-      if (!unmountedRef.current) {
+      if (event.code === 4004) {
+        setRoomMissing(true);
+        setError("");
+        return;
+      }
+      if (!unmountedRef.current && !roomMissing) {
         reconnectRef.current = window.setTimeout(connect, 900);
       }
     });
 
     socket.addEventListener("error", () => setConnection("offline"));
-  }, [roomId]);
+  }, [roomId, roomMissing]);
 
   useEffect(() => {
     unmountedRef.current = false;
@@ -174,6 +205,22 @@ export function RoomPage({ roomId }: { roomId: string }) {
     }
     return "Place yourself on the model. Your choice stays private until reveal.";
   }, [snapshot, isRevealed]);
+
+  if (roomMissing && !snapshot) {
+    return (
+      <main className="room-loading">
+        <span className="eyebrow">Room unavailable</span>
+        <h1>This room is no longer live.</h1>
+        <p>
+          The server no longer remembers this room. If you are the host and saved it
+          in this browser, you can restore it from your Team Tools dashboard.
+        </p>
+        <a className="button button--primary room-loading__action" href="/">
+          Go to Team Tools
+        </a>
+      </main>
+    );
+  }
 
   if (connection === "offline" && !snapshot) {
     return (

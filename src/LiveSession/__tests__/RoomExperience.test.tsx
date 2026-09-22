@@ -1,5 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import {
   arrangeComfortVotes,
   comfortZoneForVote,
@@ -13,7 +13,34 @@ import {
   saveRoomSnapshot,
 } from "../realtime";
 
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 describe("live room experience", () => {
+  it("shows a terminal missing-room state instead of reconnecting forever", async () => {
+    vi.stubGlobal(
+      "fetch",
+      vi.fn().mockResolvedValue(
+        new Response(JSON.stringify({ error: "Room not found" }), {
+          status: 404,
+          headers: { "content-type": "application/json" },
+        }),
+      ),
+    );
+
+    const { RoomPage } = await import("../RoomPage");
+    render(<RoomPage roomId="orphaned-room-1234" />);
+
+    await waitFor(() =>
+      expect(screen.getByText("This room is no longer live.")).toBeInTheDocument(),
+    );
+    expect(screen.getByRole("link", { name: "Go to Team Tools" })).toHaveAttribute(
+      "href",
+      "/",
+    );
+  });
+
   it("reads friendly room slugs from the URL", () => {
     history.pushState({}, "", "/room/steady-nexus-4821");
     expect(roomIdFromLocation()).toBe("steady-nexus-4821");
