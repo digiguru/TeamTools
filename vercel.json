@@ -4,5 +4,11 @@
     "server.mjs": {
       "includeFiles": "dist/**"
     }
-  }
+  },
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "/server.mjs"
+    }
+  ]
 }
