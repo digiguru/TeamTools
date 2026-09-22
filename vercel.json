@@ -1,10 +1,4 @@
 {
-  "experimentalServices": {
-    "web": {
-      "type": "web",
-      "entrypoint": ".",
-      "routePrefix": "/",
-      "framework": "vite"
-    }
-  }
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "nextjs"
 }

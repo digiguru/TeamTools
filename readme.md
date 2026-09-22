@@ -1,19 +1,67 @@
 # TeamTools
 
-TeamTools is a lightweight facilitator-led team-health application for capturing where named participants think a team sits across the Comfort and Tuckman models and showing the combined result immediately.
+TeamTools is an anonymous real-time workshop tool for making team dynamics visible without attaching names to individual responses.
 
-The project started as a RaphaelJS experiment, moved through D3, and is now a React + TypeScript application rendered with SVG.
+A host creates a room, chooses either the **Comfort / Stretch / Chaos** model or the **Tuckman** team-development model, shares a friendly room link, and watches participation counts update live. Attendees place one anonymous point on the model and can move it while voting is open. The host then reveals the room, which freezes voting and shows every point at once.
+
+## Current room flow
+
+1. Open the landing page and choose a model.
+2. Optionally name the room.
+3. Create the host room.
+4. Share the generated `/room/<slug>` attendee link.
+5. Attendees vote anonymously on their own devices.
+6. Everyone can see how many attendees have joined and how many have voted.
+7. The host reveals the room.
+8. Every attendee sees the anonymous distribution with their own point highlighted.
+
+The host facilitates rather than voting, so host connections are not included in attendee or vote counts.
+
+## Models
+
+### Comfort / Stretch / Chaos
+
+A quick pulse on how demanding the current work feels. Comfort can signal safety and familiarity, stretch can support useful growth, and chaos can signal overload.
+
+### Tuckman
+
+Places the team across **forming**, **storming**, **norming**, and **performing** to surface differences in how people perceive the team's current stage.
+
+These models are conversation starters, not scorecards.
+
+## Privacy and identity
+
+TeamTools does not ask attendees for names, accounts, email addresses, or profiles.
+
+Each browser gets a random room-scoped voter ID stored in local storage. The host browser separately stores a random host credential. The host credential is never added to the shared room URL, and host privileges are checked by the server.
+
+One browser has one current vote per room. Multiple tabs from the same browser reuse the same voter identity.
+
+## Reveal behaviour
+
+Votes remain private while the room is open. Attendees can see only their own point plus the room's joined/voted counts.
+
+When the host selects **Reveal**, the round is frozen. The server then sends the full anonymous set of points to every connected browser. Each attendee's own point is marked as **you**.
+
+Freezing the round prevents people from repositioning themselves after seeing the group distribution.
+
+## Room lifetime
+
+Live room state is currently held in server memory, matching the lightweight approach used by Wheel of Emotion.
+
+A server restart or redeployment clears active rooms and votes. The browser-scoped host/voter identities remain local, but room data itself is not durable. Add shared persistence before using TeamTools for sessions that must survive deployments or process restarts.
 
 ## Tech stack
 
 - React 19
 - TypeScript 6
 - Vite 8
-- Redux / React Redux
+- Node.js 24
+- `ws` WebSockets
+- Redux / React Redux for the retained legacy model code
 - RxJS
 - Vitest and Testing Library
 - Vercel for deployment
-- Node.js 24
 
 ## Development
 
@@ -22,41 +70,44 @@ Requirements:
 - Node.js 24
 - npm
 
-Install dependencies and start the development server:
+Install dependencies and start the combined Node + Vite development service:
 
 ```bash
 npm ci
 npm run dev
 ```
 
-Vite will print the local development URL, normally `http://localhost:5173`.
+The development server listens on `http://localhost:3000` by default.
+
+Build the frontend and run the production-style Node service with:
+
+```bash
+npm run build
+npm start
+```
 
 ## Quality checks
 
-Run the full local validation with:
+Run the full validation suite with:
 
 ```bash
 npm run check
 ```
 
-Or run each stage independently:
+Or run the stages separately:
 
 ```bash
+npm run audit
 npm run lint
+npm run typecheck
 npm test
 npm run build
+npm run check:server
 ```
-
-`npm run lint` performs a full TypeScript type-check with `tsc --noEmit`. This is currently a more useful static-analysis gate for this TypeScript-heavy codebase than preserving the obsolete Create React App ESLint configuration that the project previously carried.
 
 ## Tests
 
-The Vitest suite covers the core team models and shared behaviours, including:
-
-- Comfort model behaviour
-- Tuckman model behaviour
-- cache behaviour
-- construction and filtering of users
+The Vitest suite covers the retained Comfort/Tuckman domain behaviours plus the live-room primitives and attendee experience, including room URL parsing, point placement, presence semantics, and the highlighted personal vote after reveal.
 
 Use watch mode while developing:
 
@@ -70,69 +121,54 @@ CI uses:
 npm run test:ci
 ```
 
-Tests should focus on behaviour rather than implementation details. New reducers, transformations and user-visible flows should normally gain tests in the same change.
+## CI/CD and branches
 
-## CI/CD
+The repository uses:
 
-GitHub Actions runs on pull requests and pushes to `main` using Node 24. The validation pipeline runs:
+- `preview` as the stable preview branch;
+- `main` for production;
+- feature branches targeting `preview`.
 
-1. `npm ci`
-2. TypeScript static analysis
-3. the Vitest suite
-4. the Vite production build
-
-A successful pull request can then be deployed as a Vercel preview. Pushes to `main` deploy to production when the required Vercel secrets are configured.
-
-Dependabot pull requests can be auto-merged only after the CI pipeline succeeds.
-
-## Internal live-session extraction
-
-TeamTools is the second application being used to prove a reusable collaboration-session model.
-
-The internal shared vocabulary is:
-
-- **session** — the facilitator workspace;
-- **participant** — currently represented by TeamTools `User`;
-- **contribution** — a Comfort or Tuckman choice;
-- **aggregate** — the rendered collection/summary of choices.
-
-Unlike Wheel of Emotion, TeamTools is currently a **local facilitator-led session**, not a realtime multi-browser room. The extraction therefore keeps transport, identity policy and persistence separate from the core session model instead of making WebSockets or anonymous tokens mandatory.
-
-See `src/LiveSession/README.md` for the compatibility mapping and evidence collected for the eventual shared-library extraction.
+GitHub Actions validates pull requests with Node 24. Vercel reports preview deployment status against the PR.
 
 ## Project structure
 
-- `src/LiveSession/` — domain-neutral session, participant, storage, optional presence and core-control primitives
-- `src/Domain/` — adapters between TeamTools choices and generic session contributions
-- `src/Entry/` — TeamTools participant-entry UI
-- `src/React/Comfort/` — comfort model state and UI
-- `src/React/Tuckman/` — Tuckman model state and UI
-- `src/React/*Zone/` — visualisation and interaction areas
-- `src/Shared/` — reusable browser, user, cache and geometry utilities
+- `server.mjs` — room API, WebSocket transport, host authorization, live counts, voting and reveal
+- `src/LiveSession/RoomApp.tsx` — landing/room routing
+- `src/LiveSession/LandingPage.tsx` — host setup and model selection
+- `src/LiveSession/RoomPage.tsx` — host and attendee live-room experience
+- `src/LiveSession/ModelVisual.tsx` — interactive bouncy SVG visualisations
+- `src/LiveSession/realtime.ts` — browser identity and realtime client helpers
+- `src/LiveSession/Presence.ts` — reusable presence semantics
+- `src/React/Comfort/` and `src/React/Tuckman/` — retained model/domain implementation
+- `src/Shared/` — styling and reusable utilities
 - `src/**/__tests__/` — Vitest suites
-- `vite.config.ts` — Vite and test configuration
-- `vercel.json` — Vercel deployment configuration
-
-## Deployment
-
-Production assets are generated with:
-
-```bash
-npm run build
-```
-
-The current deployment target is Vercel. The old Heroku references and `Procfile` are historical leftovers and are not the primary deployment path.
-
-## Contributing
-
-Keep pull requests small where practical. Before opening or merging one, run:
-
-```bash
-npm run check
-```
-
-Do not weaken tests merely to get CI green; fix the behaviour or update the expectation when the intended behaviour has genuinely changed.
 
 ## License
 
 MIT — see `LICENSE`.
+
+
+## Analytics
+
+Vercel Web Analytics is enabled in the React app. The live-room flow records privacy-safe custom events for:
+
+- `Room Created` — model only.
+- `Room Displayed` — model, host/attendee role and room status.
+- `Room Connected` — successful WebSocket connection.
+- `Vote Cast` — model and whether the attendee changed an existing vote.
+
+Room names, room IDs, voter IDs and host tokens are not sent as custom event properties.
+
+
+## Next.js runtime
+
+TeamTools now runs on Next.js App Router on Vercel.
+
+- `/` is the host setup page.
+- `/room/[roomId]` is the host/attendee room experience.
+- `/api/live` creates rooms and upgrades live WebSocket connections.
+- Vercel Analytics is mounted from the root Next.js layout.
+- The previous Vite + custom `server.mjs` deployment path has been removed.
+
+Room state is still process-memory backed for this migration baseline. The follow-up durability work remains tracked separately so it can move to shared storage without reintroducing custom-server deployment plumbing.
