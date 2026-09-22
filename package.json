@@ -1,15 +1,15 @@
 {
   "name": "teamtools",
-  "description": "Anonymous team health and Tuckman-stage voting tool",
-  "version": "1.0.0",
-  "main": "index.js",
+  "description": "Anonymous real-time team model voting rooms for comfort/stretch and Tuckman stages",
+  "version": "1.1.0",
+  "main": "server.mjs",
   "type": "module",
   "engines": {
     "node": "24.x"
   },
   "scripts": {
-    "start": "vite",
-    "dev": "vite",
+    "start": "node server.mjs",
+    "dev": "TEAMTOOLS_DEV=1 node --watch server.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -20,7 +20,8 @@
     "test:update": "vitest -u",
     "audit": "npm audit --audit-level=high",
     "audit:prod": "npm audit --omit=dev --audit-level=high",
-    "check": "npm run audit && npm run lint && npm run typecheck && npm test && npm run build"
+    "check:server": "node --check server.mjs",
+    "check": "npm run audit && npm run lint && npm run typecheck && npm test && npm run build && npm run check:server"
   },
   "dependencies": {
     "d3": "^7.9.0",
@@ -29,7 +30,8 @@
     "react-dom": "^19.3.0",
     "react-redux": "^9.3.0",
     "redux": "^5.0.1",
-    "rxjs": "^7.8.2"
+    "rxjs": "^7.8.2",
+    "ws": "^8.21.0"
   },
   "overrides": {
     "nanoid": "^3.3.17"
@@ -75,4 +77,3 @@
     "vitest": "^5.0.1"
   }
 }
-
