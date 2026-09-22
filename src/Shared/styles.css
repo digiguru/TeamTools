@@ -208,3 +208,6 @@ a { color: inherit; }
   .saved-room-grid { grid-template-columns: 1fr; }
   .room-header-actions { width: 100%; flex-wrap: wrap; }
 }
+
+
+.room-loading__action { display: inline-flex; margin-top: 18px; text-decoration: none; }
