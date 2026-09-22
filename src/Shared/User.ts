@@ -1,5 +1,6 @@
 import {IIndexableObject} from "./Cache";
-export class User implements IIndexableObject {
+import type { Participant } from "../LiveSession/Model";
+export class User implements IIndexableObject, Participant {
     name: string;
     id: string;
     voted: boolean;
