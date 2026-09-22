@@ -229,3 +229,154 @@ textarea { min-height: 150px; font-size: 1rem; }
     .tool-card, .console-card { border-radius: 18px; padding: 18px; }
     .section-heading { gap: 10px; }
 }
+
+
+/* Gradient refresh */
+:root {
+    --gradient-primary: linear-gradient(135deg, #22d3ee 0%, #6366f1 52%, #a855f7 100%);
+    --gradient-surface: linear-gradient(145deg, rgba(34,211,238,.12), rgba(99,102,241,.10) 48%, rgba(168,85,247,.10));
+    --gradient-entry: linear-gradient(135deg, rgba(14,165,233,.18), rgba(99,102,241,.15));
+    --gradient-comfort: linear-gradient(135deg, rgba(52,211,153,.12), rgba(34,211,238,.12));
+    --gradient-tuckman: linear-gradient(135deg, rgba(99,102,241,.14), rgba(168,85,247,.14));
+}
+
+body {
+    background:
+        radial-gradient(circle at 8% 6%, rgba(34,211,238,.20), transparent 28rem),
+        radial-gradient(circle at 88% 12%, rgba(168,85,247,.18), transparent 30rem),
+        radial-gradient(circle at 50% 78%, rgba(99,102,241,.14), transparent 36rem),
+        linear-gradient(180deg, #08111f 0%, #090d1f 48%, #050811 100%);
+}
+
+.app-header h1 {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 0 0 48px rgba(99,102,241,.16);
+}
+
+.status-pill {
+    background: linear-gradient(135deg, rgba(12,24,40,.88), rgba(30,41,59,.72));
+    border-color: rgba(125,211,252,.22);
+}
+
+.tool-card {
+    background:
+        var(--gradient-surface),
+        linear-gradient(180deg, rgba(20,35,56,.90), rgba(12,24,40,.80));
+}
+
+.tool-card--entry {
+    background:
+        var(--gradient-entry),
+        linear-gradient(180deg, rgba(20,35,56,.90), rgba(12,24,40,.80));
+}
+
+.tool-card:nth-of-type(2) {
+    background:
+        var(--gradient-comfort),
+        linear-gradient(180deg, rgba(20,35,56,.90), rgba(12,24,40,.80));
+}
+
+.tool-card:nth-of-type(3) {
+    background:
+        var(--gradient-tuckman),
+        linear-gradient(180deg, rgba(20,35,56,.90), rgba(12,24,40,.80));
+}
+
+.section-number {
+    background: linear-gradient(135deg, rgba(34,211,238,.16), rgba(99,102,241,.16));
+    border-color: rgba(125,211,252,.32);
+}
+
+.tool-surface {
+    background:
+        linear-gradient(180deg, rgba(8,17,31,.64), rgba(7,12,25,.50)),
+        radial-gradient(circle at top right, rgba(99,102,241,.10), transparent 20rem);
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.03);
+}
+
+.entry-kicker {
+    margin: 0 0 14px;
+    color: #bae6fd;
+    font-size: .82rem;
+    font-weight: 800;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+.participant-entry-row {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.participant-entry-row #user {
+    flex: 1 1 260px;
+    min-width: 0;
+    background: rgba(5,12,22,.72);
+    border-color: rgba(125,211,252,.20);
+}
+
+#add {
+    background: var(--gradient-primary);
+    border: 0;
+    color: white;
+    font-weight: 800;
+    box-shadow: 0 10px 30px rgba(99,102,241,.24);
+}
+
+#add:hover {
+    background: linear-gradient(135deg, #67e8f9 0%, #818cf8 50%, #c084fc 100%);
+}
+
+.participant-list {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 0 0 16px;
+    padding: 0;
+}
+
+.participant-list:empty::before {
+    content: "No participants yet — add the people taking part.";
+    color: var(--muted);
+    font-size: .92rem;
+}
+
+#users.participant-list li {
+    width: auto;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: .5rem .6rem .5rem .75rem;
+    border: 1px solid rgba(125,211,252,.16);
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(14,165,233,.12), rgba(99,102,241,.12));
+}
+
+#users.participant-list li button {
+    width: 26px;
+    height: 26px;
+    padding: 0;
+    border-radius: 50%;
+    background: rgba(15,23,42,.72);
+    color: #cbd5e1;
+}
+
+.console-card {
+    background:
+        linear-gradient(135deg, rgba(14,165,233,.08), rgba(99,102,241,.08), rgba(168,85,247,.08)),
+        linear-gradient(180deg, rgba(20,35,56,.86), rgba(12,24,40,.74));
+}
+
+@media (max-width: 700px) {
+    .participant-entry-row {
+        flex-direction: column;
+    }
+    #add {
+        width: 100%;
+    }
+}

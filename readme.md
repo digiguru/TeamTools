@@ -1,13 +1,13 @@
 # TeamTools
 
-TeamTools is a lightweight team-health application for anonymously capturing where people think a team sits in the Tuckman model and showing the combined result immediately.
+TeamTools is a lightweight facilitator-led team-health application for capturing where named participants think a team sits across the Comfort and Tuckman models and showing the combined result immediately.
 
 The project started as a RaphaelJS experiment, moved through D3, and is now a React + TypeScript application rendered with SVG.
 
 ## Tech stack
 
 - React 19
-- TypeScript 7
+- TypeScript 6
 - Vite 8
 - Redux / React Redux
 - RxJS
@@ -85,9 +85,26 @@ A successful pull request can then be deployed as a Vercel preview. Pushes to `m
 
 Dependabot pull requests can be auto-merged only after the CI pipeline succeeds.
 
+## Internal live-session extraction
+
+TeamTools is the second application being used to prove a reusable collaboration-session model.
+
+The internal shared vocabulary is:
+
+- **session** — the facilitator workspace;
+- **participant** — currently represented by TeamTools `User`;
+- **contribution** — a Comfort or Tuckman choice;
+- **aggregate** — the rendered collection/summary of choices.
+
+Unlike Wheel of Emotion, TeamTools is currently a **local facilitator-led session**, not a realtime multi-browser room. The extraction therefore keeps transport, identity policy and persistence separate from the core session model instead of making WebSockets or anonymous tokens mandatory.
+
+See `src/LiveSession/README.md` for the compatibility mapping and evidence collected for the eventual shared-library extraction.
+
 ## Project structure
 
-- `src/Entry/` — entry/user onboarding UI
+- `src/LiveSession/` — domain-neutral session, participant, storage, optional presence and core-control primitives
+- `src/Domain/` — adapters between TeamTools choices and generic session contributions
+- `src/Entry/` — TeamTools participant-entry UI
 - `src/React/Comfort/` — comfort model state and UI
 - `src/React/Tuckman/` — Tuckman model state and UI
 - `src/React/*Zone/` — visualisation and interaction areas

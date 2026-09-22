@@ -15,15 +15,15 @@ test("Should not mutate in any way", () => {
         const currentState = comfortReducer(myState, action);
         expect(initialState).toEqual(JSON.stringify(myState));
     };
-    checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
-    checkAfterAction(Action.selectUser("Adam Hall"));
+    checkAfterAction(Action.setUserFocus("Test participant", "in-focus"));
+    checkAfterAction(Action.selectUser("Test participant"));
     checkAfterAction(Action.setStageSize(800, 600));
     checkAfterAction(Action.setZoneFocus("Chaos", "in-focus"));
     checkAfterAction(Action.setZoneFocus("Stretch", "active"));
     checkAfterAction(Action.setZoneFocus("Comfort", "in-focus"));
     checkAfterAction(Action.toggleChoiceVisibility(true));
     checkAfterAction(Action.toggleChoiceVisibility(false));
-    checkAfterAction(Action.chooseZone("Adam Hall", "Stretch", 85));
+    checkAfterAction(Action.chooseZone("Test participant", "Stretch", 85));
 });
 
 function renderStore(store) {
@@ -46,7 +46,7 @@ test("Should show the component", () => {
 
     expect(renderStore(myStore).asFragment()).toMatchSnapshot();
     act(() => {
-        myStore.dispatch(Action.setUserFocus("Adam Hall", "in-focus"));
+        myStore.dispatch(Action.setUserFocus("Test participant", "in-focus"));
     });
     expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
@@ -60,12 +60,12 @@ test("Should allow shrinking", () => {
    
 
     act(() => {
-        myStore.dispatch(Action.chooseZone("Adam Hall", "Stretch", 50));
+        myStore.dispatch(Action.chooseZone("Test participant", "Stretch", 50));
     });
     expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 
     act(() => {
-        myStore.dispatch(Action.chooseZone("Caroline Hall", "Chaos", 100));
+        myStore.dispatch(Action.chooseZone("Another participant", "Chaos", 100));
     });
     expect(renderStore(myStore).asFragment()).toMatchSnapshot();
 

@@ -11,7 +11,7 @@ type MyState = {
 };
 export class UserEntry extends React.Component<MyProps, MyState> {
     state: MyState = {
-      users: ["fred", "bob"],
+      users: [],
       currentUser: ""
     };
     addUser = (user) => {
@@ -55,15 +55,17 @@ export class UserEntry extends React.Component<MyProps, MyState> {
     render() {
       return (
         <div>
-            <p>{this.props.message}</p>
-            <ul id="users">
+            <p className="entry-kicker">{this.props.message}</p>
+            <ul id="users" className="participant-list">
             {this.state.users.map((user) =>
-                <li key={user}>{user}<button onClick={this.handleClickRemove}>X</button></li>
+                <li key={user}><span>{user}</span><button aria-label={`Remove ${user}`} onClick={this.handleClickRemove}>×</button></li>
             )}
             </ul>
 
-            <input type="text" placeholder="Joe Bloggs" id="user" onKeyUp={this.handleNameChange}  />
-            <input type="button" value="add" id="add" onClick={this.handleAddUser} />
+            <div className="participant-entry-row">
+              <input type="text" placeholder="Add participant name" id="user" onKeyUp={this.handleNameChange} />
+              <input type="button" value="Add participant" id="add" onClick={this.handleAddUser} />
+            </div>
         </div>
       );
     }

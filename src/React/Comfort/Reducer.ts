@@ -11,10 +11,7 @@ const initialState: ComfortAppState = {
     CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),
     UserList: {
         ShowUsers: true,
-        Users: [
-            {Username: "Adam Hall", Focus: "not-in-focus", Y: 0},
-            {Username: "Caroline Hall", Focus: "not-in-focus", Y: 0}
-        ]
+        Users: []
     },
     Zones: {
         Comfort: {Name: "Comfort", Focus: "not-in-focus", Range: {Start: 0, End: 33}, Size: {Width: new DOMMeasurement("50%"), Height: new DOMMeasurement("50%")}},
