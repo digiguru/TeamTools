@@ -11,8 +11,14 @@ type ModelType = "comfort" | "tuckman";
 type RoomStatus = "open" | "revealed";
 type VotePoint = { x: number; y: number };
 
+type LiveSocket = {
+  send(message: string): void;
+  on(event: "message", listener: (data: WebSocketData) => void): void;
+  on(event: "close", listener: () => void): void;
+};
+
 type Connection = {
-  ws: any;
+  ws: LiveSocket;
   voterId: string;
   isHost: boolean;
 };
@@ -288,9 +294,13 @@ export async function GET(request: Request) {
     broadcast(room);
 
     ws.on("message", (raw: WebSocketData) => {
-      let message: any;
+      let message: {
+        type?: string;
+        hostToken?: unknown;
+        vote?: unknown;
+      };
       try {
-        message = JSON.parse(webSocketText(raw));
+        message = JSON.parse(webSocketText(raw)) as typeof message;
       } catch {
         send(connection, { type: "error", error: "Invalid message." });
         return;
