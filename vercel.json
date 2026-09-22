@@ -1,14 +1,17 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": {
-    "server.mjs": {
-      "includeFiles": "dist/**"
+  "services": {
+    "web": {
+      "root": ".",
+      "entrypoint": "server.mjs"
     }
   },
-  "routes": [
+  "rewrites": [
     {
-      "src": "/(.*)",
-      "dest": "/server.mjs"
+      "source": "/(.*)",
+      "destination": {
+        "service": "web"
+      }
     }
   ]
 }
