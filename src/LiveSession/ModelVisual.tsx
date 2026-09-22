@@ -21,13 +21,17 @@ function smoothstep(value: number) {
   return t * t * (3 - 2 * t);
 }
 
+function performanceToY(performance: number) {
+  return 0.83 - clamp(performance) * 0.66;
+}
+
 export function tuckmanYForX(x: number) {
   const anchors = [
-    { x: 0.08, y: 400 / 600 },
-    { x: 0.375, y: 500 / 600 },
-    { x: 0.625, y: 200 / 600 },
-    { x: 0.875, y: 100 / 600 },
-    { x: 0.95, y: 100 / 600 },
+    { x: 0.05, y: performanceToY(0.5) },
+    { x: 0.125, y: performanceToY(0.5) },
+    { x: 0.375, y: performanceToY(0.2) },
+    { x: 0.875, y: performanceToY(0.8) },
+    { x: 0.95, y: performanceToY(0.8) },
   ];
 
   const clampedX = Math.max(anchors[0].x, Math.min(anchors[anchors.length - 1].x, x));
@@ -43,7 +47,7 @@ export function tuckmanYForX(x: number) {
 }
 
 export function projectTuckmanVote(vote: RevealedVote): RevealedVote {
-  const x = Math.max(0.08, Math.min(0.95, vote.x));
+  const x = Math.max(0.05, Math.min(0.95, vote.x));
   return { ...vote, x, y: tuckmanYForX(x) };
 }
 
@@ -116,20 +120,20 @@ function VoteDots({
       {visibleVotes.map((point, index) => (
         <g
           key={dotKey(point, index)}
-          className="vote-dot-group"
-          style={{ animationDelay: `${index * 55}ms` }}
           transform={`translate(${point.x * 1000} ${point.y * 600})`}
         >
           <circle
-            className={`vote-halo ${point.mine ? "vote-halo--mine" : ""}`}
+            className={`vote-halo vote-dot-appear ${point.mine ? "vote-halo--mine" : ""}`}
+            style={{ animationDelay: `${index * 55}ms` }}
             r={point.mine ? 27 : 22}
           />
           <circle
-            className={`vote-dot ${point.mine ? "vote-dot--mine" : ""}`}
+            className={`vote-dot vote-dot-appear ${point.mine ? "vote-dot--mine" : ""}`}
+            style={{ animationDelay: `${index * 55}ms` }}
             r={point.mine ? 12 : 9}
           />
           {point.mine && (
-            <text className="vote-you" x="0" y="-26" textAnchor="middle">
+            <text className="vote-you vote-dot-appear" x="0" y="-26" textAnchor="middle">
               you
             </text>
           )}
@@ -137,6 +141,28 @@ function VoteDots({
       ))}
     </g>
   );
+}
+
+function clientPointToModel(
+  event: React.PointerEvent<SVGSVGElement>,
+  svg: SVGSVGElement,
+): VotePoint {
+  const rect = svg.getBoundingClientRect();
+  const viewWidth = 1000;
+  const viewHeight = 600;
+  const scale = Math.min(rect.width / viewWidth, rect.height / viewHeight);
+  const renderedWidth = viewWidth * scale;
+  const renderedHeight = viewHeight * scale;
+  const offsetX = (rect.width - renderedWidth) / 2;
+  const offsetY = (rect.height - renderedHeight) / 2;
+
+  const viewX = (event.clientX - rect.left - offsetX) / scale;
+  const viewY = (event.clientY - rect.top - offsetY) / scale;
+
+  return {
+    x: clamp(viewX / viewWidth),
+    y: clamp(viewY / viewHeight),
+  };
 }
 
 export function ModelVisual({
@@ -149,7 +175,7 @@ export function ModelVisual({
   const svgRef = useRef<SVGSVGElement>(null);
   const [hoveredArea, setHoveredArea] = useState<AreaName | null>(null);
   const [tooltipPosition, setTooltipPosition] = useState({ x: 50, y: 12 });
-  const [comfortPulse, setComfortPulse] = useState<{ zone: ComfortZone; key: number } | null>(null);
+  const [comfortPulse, setComfortPulse] = useState<{ point: VotePoint; key: number } | null>(null);
   const [spark, setSpark] = useState<{
     key: number;
     from: VotePoint;
@@ -186,11 +212,7 @@ export function ModelVisual({
 
   const pointFromEvent = (event: React.PointerEvent<SVGSVGElement>) => {
     if (!svgRef.current) return null;
-    const rect = svgRef.current.getBoundingClientRect();
-    return {
-      x: clamp((event.clientX - rect.left) / rect.width),
-      y: clamp((event.clientY - rect.top) / rect.height),
-    };
+    return clientPointToModel(event, svgRef.current);
   };
 
   const choose = (event: React.PointerEvent<SVGSVGElement>) => {
@@ -205,7 +227,7 @@ export function ModelVisual({
         to: { x: point.x, y: tuckmanYForX(point.x) },
       });
     } else {
-      setComfortPulse({ zone: comfortZoneForVote(point), key: Date.now() });
+      setComfortPulse({ point, key: Date.now() });
     }
 
     onVote(point);
@@ -224,8 +246,8 @@ export function ModelVisual({
   };
 
   const tuckmanPath = useMemo(() => {
-    const points = Array.from({ length: 90 }, (_, index) => {
-      const x = 0.08 + (0.87 * index) / 89;
+    const points = Array.from({ length: 100 }, (_, index) => {
+      const x = 0.05 + (0.9 * index) / 99;
       return `${index ? "L" : "M"} ${Math.round(x * 1000)} ${Math.round(tuckmanYForX(x) * 600)}`;
     });
     return points.join(" ");
@@ -318,19 +340,18 @@ export function ModelVisual({
               filter="url(#softGlow)"
             />
             {comfortPulse && (
-              <circle
-                key={comfortPulse.key}
-                className="comfort-click-pulse"
-                cx="500"
-                cy="300"
-                r={
-                  comfortPulse.zone === "Comfort"
-                    ? 88
-                    : comfortPulse.zone === "Stretch"
-                      ? 190
-                      : 248
-                }
-              />
+              <g key={comfortPulse.key} className="comfort-ripples" aria-hidden="true">
+                {[0, 1, 2].map((index) => (
+                  <circle
+                    key={index}
+                    className="comfort-ripple"
+                    cx={comfortPulse.point.x * 1000}
+                    cy={comfortPulse.point.y * 600}
+                    r="10"
+                    style={{ animationDelay: `${index * 85}ms` }}
+                  />
+                ))}
+              </g>
             )}
             <text className="model-label model-label--chaos" x="500" y="70" textAnchor="middle">
               CHAOS
@@ -388,59 +409,60 @@ export function ModelVisual({
                 </text>
               </g>
             ))}
-            <path
-              className="tuckman-flow-line"
-              d={tuckmanPath}
-              fill="none"
-              stroke="url(#tuckmanFlow)"
-              strokeWidth="24"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              opacity=".82"
-            />
-            <text className="performance-marker" x="80" y="386" textAnchor="middle">25%</text>
-            <text className="performance-marker" x="375" y="540" textAnchor="middle">0%</text>
-            <text className="performance-marker" x="625" y="180" textAnchor="middle">75%</text>
-            <text className="performance-marker" x="875" y="82" textAnchor="middle">100%</text>
+            <g key={spark?.key ?? "steady-line"} className={spark ? "tuckman-line-impact" : undefined}>
+              <path
+                className="tuckman-flow-line"
+                d={tuckmanPath}
+                fill="none"
+                stroke="url(#tuckmanFlow)"
+                strokeWidth="24"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                opacity=".82"
+              />
+            </g>
             <text className="model-caption" x="500" y="566" textAnchor="middle">
-              forming starts with potential • storming dips • norming and performing climb
+              forming begins steady • storming dips • norming rebuilds • performing holds high
             </text>
 
             {spark && (
-              <g key={spark.key} className="anime-spark" filter="url(#sparkGlow)">
-                <line
-                  className="spark-trail spark-trail--glow"
-                  x1={spark.from.x * 1000}
-                  y1={spark.from.y * 600}
-                  x2={spark.to.x * 1000}
-                  y2={spark.to.y * 600}
-                />
-                <line
-                  className="spark-trail"
-                  x1={spark.from.x * 1000}
-                  y1={spark.from.y * 600}
-                  x2={spark.to.x * 1000}
-                  y2={spark.to.y * 600}
-                />
+              <g key={spark.key} className="anime-impact" filter="url(#sparkGlow)" aria-hidden="true">
+                <circle
+                  className="spark-particle"
+                  cx={spark.from.x * 1000}
+                  cy={spark.from.y * 600}
+                  r="9"
+                >
+                  <animateMotion
+                    dur="220ms"
+                    fill="freeze"
+                    path={`M 0 0 L ${(spark.to.x - spark.from.x) * 1000} ${(spark.to.y - spark.from.y) * 600}`}
+                  />
+                  <animate attributeName="opacity" values="1;1;0" keyTimes="0;0.72;1" dur="360ms" fill="freeze" />
+                </circle>
+                {[0, 1, 2].map((index) => (
+                  <circle
+                    key={index}
+                    className="tuckman-impact-ripple"
+                    cx={spark.to.x * 1000}
+                    cy={spark.to.y * 600}
+                    r="8"
+                    style={{ animationDelay: `${180 + index * 70}ms` }}
+                  />
+                ))}
                 <line
                   className="spark-flare"
-                  x1={spark.to.x * 1000 - 34}
+                  x1={spark.to.x * 1000 - 30}
                   y1={spark.to.y * 600}
-                  x2={spark.to.x * 1000 + 34}
+                  x2={spark.to.x * 1000 + 30}
                   y2={spark.to.y * 600}
                 />
                 <line
                   className="spark-flare"
                   x1={spark.to.x * 1000}
-                  y1={spark.to.y * 600 - 34}
+                  y1={spark.to.y * 600 - 30}
                   x2={spark.to.x * 1000}
-                  y2={spark.to.y * 600 + 34}
-                />
-                <circle
-                  className="spark-core"
-                  cx={spark.to.x * 1000}
-                  cy={spark.to.y * 600}
-                  r="10"
+                  y2={spark.to.y * 600 + 30}
                 />
               </g>
             )}
@@ -461,7 +483,8 @@ export function ModelVisual({
           <strong>{hoveredArea}</strong>
           {totalVotes ? (
             <span>
-              {tooltipCount} {tooltipCount === 1 ? "person" : "people"} · {tooltipPercent}%
+              {tooltipCount} {tooltipCount === 1 ? "person" : "people"}
+              {model === "comfort" ? ` · ${tooltipPercent}%` : ""}
             </span>
           ) : (
             <span>Votes hidden until reveal</span>
