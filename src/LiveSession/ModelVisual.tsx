@@ -72,21 +72,21 @@ export function arrangeComfortVotes(votes: RevealedVote[]): RevealedVote[] {
   if (!votes.length) return [];
 
   const ranked = votes
-    .map((vote, originalIndex) => ({ vote, originalIndex, intensity: votePixelRadius(vote) }))
-    .sort((a, b) => a.intensity - b.intensity || a.originalIndex - b.originalIndex);
+    .map((vote, originalIndex) => ({
+      vote,
+      originalIndex,
+      radius: votePixelRadius(vote),
+    }))
+    .sort((a, b) => a.radius - b.radius || a.originalIndex - b.originalIndex);
 
-  const turns = Math.max(1.2, Math.min(2.8, ranked.length / 4));
-  const maxIntensity = Math.max(1, ...ranked.map((item) => item.intensity));
+  const angleStep = (Math.PI * 2) / ranked.length;
 
-  return ranked.map(({ vote, intensity }, index) => {
-    const progress = ranked.length === 1 ? 0.5 : index / (ranked.length - 1);
-    const angle = -Math.PI / 2 + progress * Math.PI * 2 * turns;
-    const intensityRatio = clamp(intensity / maxIntensity);
-    const radius = 26 + intensityRatio * 220;
+  return ranked.map(({ vote, radius }, index) => {
+    const angle = index * angleStep;
     return {
       ...vote,
-      x: clamp((500 + Math.cos(angle) * radius) / 1000),
-      y: clamp((300 + Math.sin(angle) * radius) / 600),
+      x: (500 + Math.cos(angle) * radius) / 1000,
+      y: (300 + Math.sin(angle) * radius) / 600,
     };
   });
 }
