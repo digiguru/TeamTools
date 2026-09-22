@@ -401,3 +401,5 @@ server.listen(port, host, () => {
     `TeamTools listening on http://${host}:${port}${dev ? " (Vite middleware)" : ""}`,
   );
 });
+
+export default server;
