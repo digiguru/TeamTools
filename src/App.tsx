@@ -5,6 +5,7 @@ import './Shared/styles.css'
 import Entry from "./Entry/Entry"
 import { ErrorViewer } from './Shared/ErrorViewer'
 import { ConsoleViewer } from './Shared/ConsoleViewer';
+import { SessionStatus } from './LiveSession/SessionStatus';
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
           <h1>Team Tools</h1>
           <p className="lede">Interactive models for making team dynamics visible, discussable and easier to improve.</p>
         </div>
-        <div className="status-pill"><span className="status-dot" />Live workspace</div>
+        <SessionStatus transport="local" />
       </header>
 
       <ErrorViewer />
