@@ -183,6 +183,8 @@ export function RoomPage({ roomId }: { roomId: string }) {
         {snapshot?.isHost && <ShareButton roomId={roomId} />}
       </header>
 
+      <section className="room-model-stage" aria-label="Live team model">      </section>
+
       <section className="room-metrics" aria-label="Room participation">
         <div>
           <span className="metric-value">{snapshot?.joinedCount ?? "—"}</span>
@@ -202,7 +204,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
         </div>
       </section>
 
-      <section className="room-workspace">
+      <section className="room-controls">
         <div className="room-copy">
           <span className="step-number">
             {isRevealed ? "REVEAL" : snapshot?.isHost ? "HOST" : "VOTE"}

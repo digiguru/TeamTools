@@ -1,6 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
-import { ModelVisual } from "../ModelVisual";
+import {
+  arrangeComfortVotes,
+  comfortZoneForVote,
+  ModelVisual,
+  projectTuckmanVote,
+  tuckmanYForX,
+} from "../ModelVisual";
 import { roomIdFromLocation } from "../realtime";
 
 describe("live room experience", () => {
@@ -45,6 +51,28 @@ describe("live room experience", () => {
     });
 
     expect(onVote).toHaveBeenCalledWith({ x: 0.5, y: 0.5 });
+  });
+
+  it("projects Tuckman votes onto the model line", () => {
+    const projected = projectTuckmanVote({ x: 0.625, y: 0.92 });
+    expect(projected.x).toBeCloseTo(0.625);
+    expect(projected.y).toBeCloseTo(200 / 600);
+    expect(tuckmanYForX(0.375)).toBeCloseTo(500 / 600);
+    expect(tuckmanYForX(0.875)).toBeCloseTo(100 / 600);
+  });
+
+  it("arranges revealed comfort votes as an outward spiral", () => {
+    const arranged = arrangeComfortVotes([
+      { x: 0.5, y: 0.5 },
+      { x: 0.5, y: 0.72 },
+      { x: 0.9, y: 0.5 },
+    ]);
+    const radii = arranged.map((point) =>
+      Math.hypot((point.x - 0.5) * 1000, (point.y - 0.5) * 600),
+    );
+    expect(radii[0]).toBeLessThan(radii[1]);
+    expect(radii[1]).toBeLessThan(radii[2]);
+    expect(comfortZoneForVote({ x: 0.5, y: 0.5 })).toBe("Comfort");
   });
 
   it("highlights the attendee's own point after reveal", () => {
