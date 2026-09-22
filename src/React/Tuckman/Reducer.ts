@@ -8,10 +8,7 @@ const initialSize: Size = new Size(800, 800);
 const initialState: ITuckmanModel = {
     UserList: {
         ShowUsers: true,
-        Users: [
-            {Username: "Adam Hall", Focus: "not-in-focus", Y: 0},
-            {Username: "Caroline Hall", Focus: "not-in-focus", Y: 0}
-        ]
+        Users: []
     },
     Size: initialSize,
     CenterPoint: new Point(initialSize.width / 2, initialSize.height / 2),

@@ -18,8 +18,8 @@ test("Should not mutate in any way", () => {
         myStore.dispatch(action);
         expect(inputState).toEqual(JSON.stringify(originalState));
     };
-    checkAfterAction(Action.setUserFocus("Adam Hall", "in-focus"));
-    checkAfterAction(Action.selectUser("Adam Hall"));
+    checkAfterAction(Action.setUserFocus("Test participant", "in-focus"));
+    checkAfterAction(Action.selectUser("Test participant"));
     checkAfterAction(Action.setStageSize(800, 600));
     checkAfterAction(Action.setZoneFocus("forming", "in-focus"));
     checkAfterAction(Action.setZoneFocus("storming", "active"));
@@ -27,7 +27,7 @@ test("Should not mutate in any way", () => {
     checkAfterAction(Action.setZoneFocus("performing", "in-focus"));
     checkAfterAction(Action.toggleChoiceVisibility(true));
     checkAfterAction(Action.toggleChoiceVisibility(false));
-    checkAfterAction(Action.chooseZone("Adam Hall", "performing", 85));
+    checkAfterAction(Action.chooseZone("Test participant", "performing", 85));
 });
 
 test("Focusable zones", () => {
