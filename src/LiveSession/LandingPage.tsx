@@ -1,4 +1,5 @@
 import React, { FormEvent, useState } from "react";
+import { track } from "@vercel/analytics";
 import { api, type ModelType, type RoomSummary } from "./realtime";
 import { MODEL_COPY } from "./modelCopy";
 
@@ -20,6 +21,7 @@ export function LandingPage() {
           model,
         }),
       });
+      track("Room Created", { model: result.room.model });
       location.href = `/room/${result.room.id}`;
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Could not create the room.");
