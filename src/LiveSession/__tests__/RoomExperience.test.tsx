@@ -56,9 +56,13 @@ describe("live room experience", () => {
   it("projects Tuckman votes onto the model line", () => {
     const projected = projectTuckmanVote({ x: 0.625, y: 0.92 });
     expect(projected.x).toBeCloseTo(0.625);
-    expect(projected.y).toBeCloseTo(200 / 600);
-    expect(tuckmanYForX(0.375)).toBeCloseTo(500 / 600);
-    expect(tuckmanYForX(0.875)).toBeCloseTo(100 / 600);
+    expect(projected.y).toBeGreaterThan(0.3);
+    expect(projected.y).toBeLessThan(0.7);
+    expect(tuckmanYForX(0.05)).toBeCloseTo(0.5);
+    expect(tuckmanYForX(0.125)).toBeCloseTo(0.5);
+    expect(tuckmanYForX(0.375)).toBeCloseTo(0.698);
+    expect(tuckmanYForX(0.875)).toBeCloseTo(0.302);
+    expect(tuckmanYForX(0.95)).toBeCloseTo(0.302);
   });
 
   it("arranges revealed comfort votes as an outward spiral", () => {
@@ -73,6 +77,18 @@ describe("live room experience", () => {
     expect(radii[0]).toBeLessThan(radii[1]);
     expect(radii[1]).toBeLessThan(radii[2]);
     expect(comfortZoneForVote({ x: 0.5, y: 0.5 })).toBe("Comfort");
+  });
+
+  it("does not render percentage labels on the Tuckman chart", () => {
+    render(
+      <ModelVisual
+        model="tuckman"
+        vote={null}
+        revealedVotes={[]}
+        interactive={false}
+      />,
+    );
+    expect(screen.queryByText(/%/)).not.toBeInTheDocument();
   });
 
   it("highlights the attendee's own point after reveal", () => {
