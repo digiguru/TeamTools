@@ -147,3 +147,15 @@ GitHub Actions validates pull requests with Node 24. Vercel reports preview depl
 ## License
 
 MIT — see `LICENSE`.
+
+
+## Analytics
+
+Vercel Web Analytics is enabled in the React app. The live-room flow records privacy-safe custom events for:
+
+- `Room Created` — model only.
+- `Room Displayed` — model, host/attendee role and room status.
+- `Room Connected` — successful WebSocket connection.
+- `Vote Cast` — model and whether the attendee changed an existing vote.
+
+Room names, room IDs, voter IDs and host tokens are not sent as custom event properties.
