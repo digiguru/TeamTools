@@ -62,16 +62,25 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
   headers.set("authorization", `Bearer ${getHostToken()}`);
   const response = await fetch(path, { ...init, headers });
   const payload = await response.json().catch(() => ({}));
-  if (!response.ok) throw new Error(payload?.error || `Request failed (${response.status})`);
+  if (!response.ok) {
+    throw new Error(payload?.error || `Request failed (${response.status})`);
+  }
   return payload as T;
 }
 
 export function roomIdFromLocation() {
-  return location.pathname.match(/^\/room\/([a-z0-9-]{3,64})\/?$/i)?.[1]?.toLowerCase() || null;
+  return (
+    window.location.pathname
+      .match(/^\/room\/([a-z0-9-]{3,64})\/?$/i)?.[1]
+      ?.toLowerCase() || null
+  );
 }
 
 export function roomWebSocketUrl(roomId: string) {
-  const protocol = location.protocol === "https:" ? "wss:" : "ws:";
-  const params = new URLSearchParams({ roomId, voterId: getVoterId(roomId) });
-  return `${protocol}//${location.host}/ws?${params}`;
+  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+  const params = new URLSearchParams({
+    roomId,
+    voterId: getVoterId(roomId),
+  });
+  return `${protocol}//${window.location.host}/api/live?${params}`;
 }

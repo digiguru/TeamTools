@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { track } from "@vercel/analytics";
 import { ModelVisual } from "./ModelVisual";
@@ -13,7 +15,7 @@ function ShareButton({ roomId }: { roomId: string }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
-    const url = `${location.origin}/room/${roomId}`;
+    const url = `${window.location.origin}/room/${roomId}`;
     await navigator.clipboard?.writeText(url);
     setCopied(true);
     window.setTimeout(() => setCopied(false), 1500);
@@ -28,7 +30,9 @@ function ShareButton({ roomId }: { roomId: string }) {
 
 export function RoomPage({ roomId }: { roomId: string }) {
   const [snapshot, setSnapshot] = useState<RoomSnapshot | null>(null);
-  const [connection, setConnection] = useState<"connecting" | "live" | "offline">("connecting");
+  const [connection, setConnection] = useState<"connecting" | "live" | "offline">(
+    "connecting",
+  );
   const [error, setError] = useState("");
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectRef = useRef<number | null>(null);

@@ -1,3 +1,5 @@
+"use client";
+
 import React, { FormEvent, useState } from "react";
 import { track } from "@vercel/analytics";
 import { api, type ModelType, type RoomSummary } from "./realtime";
@@ -14,7 +16,7 @@ export function LandingPage() {
     setCreating(true);
     setError("");
     try {
-      const result = await api<{ room: RoomSummary }>("/api/rooms", {
+      const result = await api<{ room: RoomSummary }>("/api/live", {
         method: "POST",
         body: JSON.stringify({
           name: name.trim() || `${MODEL_COPY[model].title} check-in`,
@@ -22,9 +24,11 @@ export function LandingPage() {
         }),
       });
       track("Room Created", { model: result.room.model });
-      location.href = `/room/${result.room.id}`;
+      window.location.href = `/room/${result.room.id}`;
     } catch (reason) {
-      setError(reason instanceof Error ? reason.message : "Could not create the room.");
+      setError(
+        reason instanceof Error ? reason.message : "Could not create the room.",
+      );
       setCreating(false);
     }
   };
