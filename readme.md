@@ -102,7 +102,7 @@ See `src/LiveSession/README.md` for the compatibility mapping and evidence colle
 
 ## Project structure
 
-- `src/LiveSession/` — domain-neutral session, participant, storage and core-control primitives
+- `src/LiveSession/` — domain-neutral session, participant, storage, optional presence and core-control primitives
 - `src/Domain/` — adapters between TeamTools choices and generic session contributions
 - `src/Entry/` — TeamTools participant-entry UI
 - `src/React/Comfort/` — comfort model state and UI
