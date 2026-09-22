@@ -1,15 +1,33 @@
 "use client";
 
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import { track } from "@vercel/analytics";
-import { api, type ModelType, type RoomSummary } from "./realtime";
+import {
+  api,
+  readSavedRooms,
+  replaceSavedRoomId,
+  upsertSavedRoom,
+  type ModelType,
+  type RoomSummary,
+  type SavedRoom,
+} from "./realtime";
 import { MODEL_COPY } from "./modelCopy";
 
 export function LandingPage() {
   const [model, setModel] = useState<ModelType>("comfort");
   const [name, setName] = useState("");
   const [creating, setCreating] = useState(false);
+  const [restoringId, setRestoringId] = useState<string | null>(null);
+  const [liveRooms, setLiveRooms] = useState<RoomSummary[]>([]);
+  const [savedRooms, setSavedRooms] = useState<SavedRoom[]>([]);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    setSavedRooms(readSavedRooms());
+    api<{ rooms: RoomSummary[] }>("/api/live")
+      .then((result) => setLiveRooms(result.rooms))
+      .catch(() => setLiveRooms([]));
+  }, []);
 
   const createRoom = async (event: FormEvent) => {
     event.preventDefault();
@@ -23,13 +41,43 @@ export function LandingPage() {
           model,
         }),
       });
+      upsertSavedRoom({
+        id: result.room.id,
+        name: result.room.name,
+        model: result.room.model,
+        createdAt: result.room.createdAt,
+        updatedAt: result.room.updatedAt,
+        votes: [],
+      });
       track("Room Created", { model: result.room.model });
       window.location.href = `/room/${result.room.id}`;
     } catch (reason) {
-      setError(
-        reason instanceof Error ? reason.message : "Could not create the room.",
-      );
+      setError(reason instanceof Error ? reason.message : "Could not create the room.");
       setCreating(false);
+    }
+  };
+
+  const restoreRoom = async (saved: SavedRoom) => {
+    setRestoringId(saved.id);
+    setError("");
+    try {
+      const result = await api<{
+        room: RoomSummary;
+        restored: boolean;
+        replacedRoomId?: string;
+      }>("/api/live", {
+        method: "POST",
+        body: JSON.stringify({ action: "restore", snapshot: saved }),
+      });
+      replaceSavedRoomId(saved.id, result.room);
+      track("Room Restored", {
+        model: result.room.model,
+        recreated: result.restored,
+      });
+      window.location.href = `/room/${result.room.id}`;
+    } catch (reason) {
+      setError(reason instanceof Error ? reason.message : "Could not restore the room.");
+      setRestoringId(null);
     }
   };
 
@@ -43,6 +91,60 @@ export function LandingPage() {
           then reveal the shape of the room together.
         </p>
       </header>
+
+      {(liveRooms.length > 0 || savedRooms.length > 0) && (
+        <section className="host-room-dashboard">
+          <div className="dashboard-heading">
+            <div>
+              <span className="step-number">HOST</span>
+              <h2>Your rooms</h2>
+            </div>
+            <p>
+              Saved rooms live in this browser, so you can reopen them even after
+              the live server has restarted.
+            </p>
+          </div>
+
+          {liveRooms.length > 0 && (
+            <div className="saved-room-group">
+              <h3>Live on this server</h3>
+              <div className="saved-room-grid">
+                {liveRooms.map((room) => (
+                  <a className="saved-room-card" href={`/room/${room.id}`} key={room.id}>
+                    <span className="saved-room-model">{MODEL_COPY[room.model].title}</span>
+                    <strong>{room.name}</strong>
+                    <small>{room.status === "revealed" ? "Revealed" : "Open"} · {room.id}</small>
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {savedRooms.length > 0 && (
+            <div className="saved-room-group">
+              <h3>Saved in this browser</h3>
+              <div className="saved-room-grid">
+                {savedRooms.map((saved) => (
+                  <article className="saved-room-card" key={saved.id}>
+                    <span className="saved-room-model">{MODEL_COPY[saved.model].title}</span>
+                    <strong>{saved.name}</strong>
+                    <small>
+                      {saved.votes.length} saved vote{saved.votes.length === 1 ? "" : "s"} · {saved.id}
+                    </small>
+                    <button
+                      className="button button--secondary"
+                      disabled={restoringId === saved.id}
+                      onClick={() => restoreRoom(saved)}
+                    >
+                      {restoringId === saved.id ? "Opening…" : "Open saved room"}
+                    </button>
+                  </article>
+                ))}
+              </div>
+            </div>
+          )}
+        </section>
+      )}
 
       <form className="host-setup" onSubmit={createRoom}>
         <div className="setup-heading">
@@ -78,9 +180,7 @@ export function LandingPage() {
 
         <div className="create-room-row">
           <label>
-            <span>
-              Room name <small>optional</small>
-            </span>
+            <span>Room name <small>optional</small></span>
             <input
               value={name}
               onChange={(event) => setName(event.target.value)}
@@ -92,36 +192,24 @@ export function LandingPage() {
             {creating ? "Creating…" : "Create host room"}
           </button>
         </div>
-        {error && (
-          <p className="inline-error" role="alert">
-            {error}
-          </p>
-        )}
+        {error && <p className="inline-error" role="alert">{error}</p>}
       </form>
 
       <section className="how-it-works">
         <div>
           <span>02</span>
           <strong>Share</strong>
-          <p>
-            The room slug is safe to put in chat or on screen. The host credential
-            stays only in your browser.
-          </p>
+          <p>The room slug is safe to put in chat or on screen. The host credential stays only in your browser.</p>
         </div>
         <div>
           <span>03</span>
           <strong>Vote privately</strong>
-          <p>
-            Everyone sees joined and voted counts, but nobody sees the distribution
-            yet.
-          </p>
+          <p>Everyone sees joined and voted counts, but nobody sees the distribution yet.</p>
         </div>
         <div>
           <span>04</span>
           <strong>Reveal together</strong>
-          <p>
-            The host freezes the round and reveals every anonymous point at once.
-          </p>
+          <p>The host freezes the round and reveals every anonymous point at once.</p>
         </div>
       </section>
     </main>

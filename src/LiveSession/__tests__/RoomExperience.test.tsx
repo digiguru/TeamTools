@@ -7,7 +7,11 @@ import {
   projectTuckmanVote,
   tuckmanYForX,
 } from "../ModelVisual";
-import { roomIdFromLocation } from "../realtime";
+import {
+  readSavedRooms,
+  roomIdFromLocation,
+  saveRoomSnapshot,
+} from "../realtime";
 
 describe("live room experience", () => {
   it("reads friendly room slugs from the URL", () => {
@@ -16,6 +20,40 @@ describe("live room experience", () => {
 
     history.pushState({}, "", "/");
     expect(roomIdFromLocation()).toBeNull();
+  });
+
+  it("saves host room snapshots locally for restart recovery", () => {
+    localStorage.clear();
+    saveRoomSnapshot({
+      type: "snapshot",
+      room: {
+        id: "steady-nexus-4821",
+        name: "Recovered room",
+        model: "comfort",
+        status: "revealed",
+        createdAt: 100,
+        updatedAt: 200,
+      },
+      isHost: true,
+      myVote: null,
+      joinedCount: 2,
+      votedCount: 2,
+      votes: [
+        { x: 0.4, y: 0.5 },
+        { x: 0.7, y: 0.5 },
+      ],
+    });
+
+    expect(readSavedRooms()).toEqual([
+      expect.objectContaining({
+        id: "steady-nexus-4821",
+        name: "Recovered room",
+        votes: [
+          { x: 0.4, y: 0.5 },
+          { x: 0.7, y: 0.5 },
+        ],
+      }),
+    ]);
   });
 
   it("lets an attendee place a private point on the visual", () => {

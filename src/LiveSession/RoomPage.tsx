@@ -6,6 +6,7 @@ import { ModelVisual } from "./ModelVisual";
 import {
   getHostToken,
   roomWebSocketUrl,
+  saveRoomSnapshot,
   type RoomSnapshot,
   type VotePoint,
 } from "./realtime";
@@ -38,6 +39,8 @@ export function RoomPage({ roomId }: { roomId: string }) {
   const reconnectRef = useRef<number | null>(null);
   const unmountedRef = useRef(false);
   const displayedRef = useRef(false);
+  const autosaveRef = useRef<number | null>(null);
+  const [saved, setSaved] = useState(false);
 
   const connect = useCallback(() => {
     if (
@@ -77,6 +80,12 @@ export function RoomPage({ roomId }: { roomId: string }) {
             });
           }
           setSnapshot(nextSnapshot);
+          if (nextSnapshot.isHost) {
+            if (autosaveRef.current) window.clearTimeout(autosaveRef.current);
+            autosaveRef.current = window.setTimeout(() => {
+              saveRoomSnapshot(nextSnapshot);
+            }, 800);
+          }
         }
         if (message.type === "error") {
           setError(message.error || "Something went wrong.");
@@ -106,6 +115,9 @@ export function RoomPage({ roomId }: { roomId: string }) {
       if (reconnectRef.current) {
         window.clearTimeout(reconnectRef.current);
       }
+      if (autosaveRef.current) {
+        window.clearTimeout(autosaveRef.current);
+      }
       socketRef.current?.close();
       socketRef.current = null;
     };
@@ -129,6 +141,16 @@ export function RoomPage({ roomId }: { roomId: string }) {
   };
 
   const reveal = () => send({ type: "reveal" });
+  const saveNow = () => {
+    if (!snapshot?.isHost) return;
+    saveRoomSnapshot(snapshot);
+    setSaved(true);
+    track("Room Saved", {
+      model: snapshot.room.model,
+      revealed: snapshot.room.status === "revealed",
+    });
+    window.setTimeout(() => setSaved(false), 1500);
+  };
   const modelCopy = snapshot ? MODEL_COPY[snapshot.room.model] : null;
   const percent =
     snapshot && snapshot.joinedCount > 0
@@ -180,7 +202,14 @@ export function RoomPage({ roomId }: { roomId: string }) {
             </span>
           </p>
         </div>
-        {snapshot?.isHost && <ShareButton roomId={roomId} />}
+        {snapshot?.isHost && (
+          <div className="room-header-actions">
+            <button className="button button--secondary" onClick={saveNow}>
+              {saved ? "Saved" : "Save room"}
+            </button>
+            <ShareButton roomId={roomId} />
+          </div>
+        )}
       </header>
 
       <section className="room-model-stage" aria-label="Live team model">      </section>
