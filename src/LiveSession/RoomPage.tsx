@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { track } from "@vercel/analytics";
 import { ModelVisual } from "./ModelVisual";
 import {
   getHostToken,
@@ -32,6 +33,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
   const socketRef = useRef<WebSocket | null>(null);
   const reconnectRef = useRef<number | null>(null);
   const unmountedRef = useRef(false);
+  const displayedRef = useRef(false);
 
   const connect = useCallback(() => {
     if (
@@ -46,6 +48,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
     socketRef.current = socket;
 
     socket.addEventListener("open", () => {
+      track("Room Connected");
       setConnection("live");
       setError("");
       socket.send(
@@ -60,7 +63,16 @@ export function RoomPage({ roomId }: { roomId: string }) {
       try {
         const message = JSON.parse(event.data);
         if (message.type === "snapshot") {
-          setSnapshot(message as RoomSnapshot);
+          const nextSnapshot = message as RoomSnapshot;
+          if (!displayedRef.current) {
+            displayedRef.current = true;
+            track("Room Displayed", {
+              model: nextSnapshot.room.model,
+              role: nextSnapshot.isHost ? "host" : "attendee",
+              status: nextSnapshot.room.status,
+            });
+          }
+          setSnapshot(nextSnapshot);
         }
         if (message.type === "error") {
           setError(message.error || "Something went wrong.");
@@ -106,8 +118,10 @@ export function RoomPage({ roomId }: { roomId: string }) {
     if (!snapshot || snapshot.isHost || snapshot.room.status !== "open") {
       return;
     }
+    const changed = Boolean(snapshot.myVote);
     setSnapshot({ ...snapshot, myVote: vote });
     send({ type: "vote", vote });
+    track("Vote Cast", { model: snapshot.room.model, changed });
   };
 
   const reveal = () => send({ type: "reveal" });
