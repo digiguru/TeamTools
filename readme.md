@@ -159,3 +159,16 @@ Vercel Web Analytics is enabled in the React app. The live-room flow records pri
 - `Vote Cast` — model and whether the attendee changed an existing vote.
 
 Room names, room IDs, voter IDs and host tokens are not sent as custom event properties.
+
+
+## Next.js runtime
+
+TeamTools now runs on Next.js App Router on Vercel.
+
+- `/` is the host setup page.
+- `/room/[roomId]` is the host/attendee room experience.
+- `/api/live` creates rooms and upgrades live WebSocket connections.
+- Vercel Analytics is mounted from the root Next.js layout.
+- The previous Vite + custom `server.mjs` deployment path has been removed.
+
+Room state is still process-memory backed for this migration baseline. The follow-up durability work remains tracked separately so it can move to shared storage without reintroducing custom-server deployment plumbing.
