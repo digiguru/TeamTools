@@ -17,7 +17,7 @@ concurrency:
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-  VERCEL_CLI_VERSION: 58.9.0
+  VERCEL_CLI_VERSION: 59.19.1
 
 jobs:
   ci-pipeline:
@@ -36,7 +36,7 @@ jobs:
           cache: npm
 
       - name: Install dependencies
-        run: npm ci
+        run: npm install
 
       - name: Audit all dependencies
         run: npm run audit
