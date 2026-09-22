@@ -130,18 +130,33 @@ describe("live room experience", () => {
     expect(tuckmanYForX(0.95)).toBeCloseTo(0.302);
   });
 
-  it("arranges revealed comfort votes as an outward spiral", () => {
-    const arranged = arrangeComfortVotes([
-      { x: 0.5, y: 0.5 },
+  it("arranges revealed comfort votes by angle without changing their radius or zone", () => {
+    const votes = [
+      { x: 0.54, y: 0.5 },
       { x: 0.5, y: 0.72 },
-      { x: 0.9, y: 0.5 },
-    ]);
-    const radii = arranged.map((point) =>
+      { x: 0.72, y: 0.5 },
+    ];
+    const arranged = arrangeComfortVotes(votes);
+
+    const originalRadii = [...votes]
+      .map((point) =>
+        Math.hypot((point.x - 0.5) * 1000, (point.y - 0.5) * 600),
+      )
+      .sort((a, b) => a - b);
+    const arrangedRadii = arranged.map((point) =>
       Math.hypot((point.x - 0.5) * 1000, (point.y - 0.5) * 600),
     );
-    expect(radii[0]).toBeLessThan(radii[1]);
-    expect(radii[1]).toBeLessThan(radii[2]);
-    expect(comfortZoneForVote({ x: 0.5, y: 0.5 })).toBe("Comfort");
+
+    expect(arrangedRadii[0]).toBeCloseTo(originalRadii[0], 8);
+    expect(arrangedRadii[1]).toBeCloseTo(originalRadii[1], 8);
+    expect(arrangedRadii[2]).toBeCloseTo(originalRadii[2], 8);
+
+    expect(comfortZoneForVote(arranged[0])).toBe("Comfort");
+    expect(comfortZoneForVote(arranged[1])).toBe("Stretch");
+    expect(comfortZoneForVote(arranged[2])).toBe("Chaos");
+
+    expect(arranged[0].x).toBeGreaterThan(0.5);
+    expect(arranged[0].y).toBeCloseTo(0.5, 8);
   });
 
   it("does not render percentage labels on the Tuckman chart", () => {
