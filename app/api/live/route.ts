@@ -1,4 +1,4 @@
-import { randomBytes } from "node:crypto";
+import { randomBytes, randomInt } from "node:crypto";
 import {
   experimental_upgradeWebSocket,
   type WebSocketData,
@@ -82,7 +82,7 @@ function makeRoomId() {
     const bytes = randomBytes(5);
     const adjective = adjectives[bytes[0] % adjectives.length];
     const noun = nouns[bytes[1] % nouns.length];
-    const suffix = (bytes.readUIntBE(2, 3) % 9000) + 1000;
+    const suffix = randomInt(1000, 10000);
     const id = `${adjective}-${noun}-${suffix}`;
     if (!rooms.has(id)) return id;
   }
