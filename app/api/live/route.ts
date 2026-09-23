@@ -79,9 +79,8 @@ function cleanRoomName(value: unknown) {
 
 function makeRoomId() {
   for (let attempt = 0; attempt < 12; attempt += 1) {
-    const bytes = randomBytes(5);
-    const adjective = adjectives[bytes[0] % adjectives.length];
-    const noun = nouns[bytes[1] % nouns.length];
+    const adjective = adjectives[randomInt(adjectives.length)];
+    const noun = nouns[randomInt(nouns.length)];
     const suffix = randomInt(1000, 10000);
     const id = `${adjective}-${noun}-${suffix}`;
     if (!rooms.has(id)) return id;
