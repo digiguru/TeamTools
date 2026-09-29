@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   analyticsRuntimeAvailable,
@@ -37,4 +38,14 @@ it("uses persistent close and session-only denial semantics for the analytics no
   expect(shouldAutoOpenAnalyticsNotice(false, true, "denied")).toBe(false);
   expect(shouldAutoOpenAnalyticsNotice(true, false, "denied")).toBe(false);
   expect(shouldAutoOpenAnalyticsNotice(false, false, "granted")).toBe(false);
+});
+
+
+it("uses the canonical gtag queue and explicit destinations", () => {
+  const source = readFileSync("src/Analytics/google.ts", "utf8");
+  expect(source).toContain("window.dataLayer?.push(arguments)");
+  expect(source).not.toContain("window.dataLayer?.push(queued)");
+  expect(source).toContain('gtag("js", new Date())');
+  expect(source).toMatch(/gtag\("event", "page_view", \{[\s\S]*?send_to:\s*MEASUREMENT_ID/);
+  expect(source).toMatch(/gtag\("event", eventName, \{[\s\S]*?send_to:\s*MEASUREMENT_ID/);
 });
