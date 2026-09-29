@@ -108,6 +108,7 @@ export function ensureGoogleAnalytics(rawUrl?: string): boolean {
       ad_user_data: "denied",
       ad_personalization: "denied",
     });
+    gtag("js", new Date());
     applySafeLocation(rawUrl);
     gtag("config", MEASUREMENT_ID, {
       send_page_view: false,
