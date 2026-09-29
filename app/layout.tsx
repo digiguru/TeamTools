@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Analytics } from "@vercel/analytics/next";
+import { AnalyticsPrivacy } from "../src/Analytics/AnalyticsPrivacy";
 import "../src/Shared/styles.css";
 
 export const metadata: Metadata = {
@@ -19,7 +19,7 @@ export default function RootLayout({
     <html lang="en">
       <body>
         {children}
-        <Analytics />
+        <AnalyticsPrivacy />
       </body>
     </html>
   );
