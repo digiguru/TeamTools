@@ -181,3 +181,13 @@ TeamTools now runs on Next.js App Router on Vercel.
 - The previous Vite + custom `server.mjs` deployment path has been removed.
 
 Room state is still process-memory backed for this migration baseline. The follow-up durability work remains tracked separately so it can move to shared storage without reintroducing custom-server deployment plumbing.
+
+
+## Shared libraries
+
+TeamTools consumes two shared npm packages directly through Next.js:
+
+- `@digiguru/live-session` — shared session/participant/contribution types, browser identity helpers, presence semantics and reconnecting WebSocket lifecycle.
+- `@digiguru/spacial-stage` — layout-aware motion primitives for spatial UI transitions.
+
+TeamTools keeps its domain-specific room model, vote geometry, local saved-room snapshots and model rendering in this repository. The shared packages provide infrastructure and vocabulary rather than dictating the workshop experience.
