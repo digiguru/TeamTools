@@ -46,7 +46,11 @@ export function AnalyticsPrivacy() {
     if (privacySignal && preference === "on") return;
     try {
       localStorage.setItem(TEAMTOOLS_ANALYTICS_PREFERENCE_KEY, preference);
-    } catch {}
+    } catch {
+      setEnabled(false);
+      setNoticeOpen(false);
+      return;
+    }
     setEnabled(preference === "on" && !privacySignal && analyticsRuntimeAvailable(window.location.hostname));
     setNoticeOpen(false);
   };
