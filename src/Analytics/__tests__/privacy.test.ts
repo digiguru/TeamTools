@@ -42,7 +42,7 @@ it("uses persistent close and session-only denial semantics for the analytics no
 
 
 it("uses the canonical gtag queue and explicit destinations", () => {
-  const source = readFileSync(new URL("../google.ts", import.meta.url), "utf8");
+  const source = readFileSync("src/Analytics/google.ts", "utf8");
   expect(source).toContain("window.dataLayer?.push(arguments)");
   expect(source).not.toContain("window.dataLayer?.push(queued)");
   expect(source).toContain('gtag("js", new Date())');
