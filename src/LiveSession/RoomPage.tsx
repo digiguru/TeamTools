@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { track } from "@vercel/analytics";
+import { trackTeamToolsEvent } from "../Analytics/client";
 import { ModelVisual } from "./ModelVisual";
 import {
   getHostToken,
@@ -81,7 +81,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
     socketRef.current = socket;
 
     socket.addEventListener("open", () => {
-      track("Room Connected");
+      trackTeamToolsEvent("Room Connected");
       setConnection("live");
       setError("");
       socket.send(
@@ -99,7 +99,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
           const nextSnapshot = message as RoomSnapshot;
           if (!displayedRef.current) {
             displayedRef.current = true;
-            track("Room Displayed", {
+            trackTeamToolsEvent("Room Displayed", {
               model: nextSnapshot.room.model,
               role: nextSnapshot.isHost ? "host" : "attendee",
               status: nextSnapshot.room.status,
@@ -168,7 +168,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
     const changed = Boolean(snapshot.myVote);
     setSnapshot({ ...snapshot, myVote: vote });
     send({ type: "vote", vote });
-    track("Vote Cast", { model: snapshot.room.model, changed });
+    trackTeamToolsEvent("Vote Cast", { model: snapshot.room.model, changed });
   };
 
   const reveal = () => send({ type: "reveal" });
@@ -176,7 +176,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
     if (!snapshot?.isHost) return;
     saveRoomSnapshot(snapshot);
     setSaved(true);
-    track("Room Saved", {
+    trackTeamToolsEvent("Room Saved", {
       model: snapshot.room.model,
       revealed: snapshot.room.status === "revealed",
     });

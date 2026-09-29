@@ -149,17 +149,24 @@ GitHub Actions validates pull requests with Node 24. Vercel reports preview depl
 MIT — see `LICENSE`.
 
 
-## Analytics
+## Analytics and privacy
 
-Vercel Web Analytics is enabled in the React app. The live-room flow records privacy-safe custom events for:
+Team Tools uses two deliberately separate analytics layers:
 
-- `Room Created` — model only.
-- `Room Displayed` — model, host/attendee role and room status.
-- `Room Connected` — successful WebSocket connection.
-- `Vote Cast` — model and whether the attendee changed an existing vote.
+- **Vercel Web Analytics** provides aggregate page and feature usage without analytics cookies. It remains independently switchable from the in-app **Analytics & privacy** control.
+- **Google Analytics 4** is available only when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is configured **and** the visitor explicitly chooses **Allow analytics cookies**. The Google tag is not loaded before consent.
 
-Room names, room IDs, voter IDs and host tokens are not sent as custom event properties.
+The privacy boundary is strict. Room URLs are normalised from `/room/<room-id>` to `/room/:room`; query strings and fragments are removed; custom events contain only coarse product taxonomy such as model, role, status, changed/revealed flags. Room names, room IDs, vote positions, voter IDs, host tokens and saved-room history are never sent.
 
+Google Analytics runs with automatic pageviews disabled, manual sanitised pageviews, empty referrers, Google Signals disabled, ad personalisation disabled, and all advertising consent categories denied. Revoking Google Analytics consent disables collection and removes reachable `_ga` cookies. Browser Global Privacy Control / Do Not Track disables both providers. Local development hosts do not load either provider.
+
+Production configuration:
+
+```text
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-V6EEZJPGET
+```
+
+Keep this variable scoped to the production Vercel environment so Preview and Development builds remain free of GA telemetry.
 
 ## Next.js runtime
 
