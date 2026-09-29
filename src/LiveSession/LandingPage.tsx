@@ -1,7 +1,7 @@
 "use client";
 
 import React, { FormEvent, useEffect, useState } from "react";
-import { track } from "@vercel/analytics";
+import { trackTeamToolsEvent } from "../Analytics/client";
 import {
   api,
   readSavedRooms,
@@ -49,7 +49,7 @@ export function LandingPage() {
         updatedAt: result.room.updatedAt,
         votes: [],
       });
-      track("Room Created", { model: result.room.model });
+      trackTeamToolsEvent("Room Created", { model: result.room.model });
       window.location.href = `/room/${result.room.id}`;
     } catch (reason) {
       setError(reason instanceof Error ? reason.message : "Could not create the room.");
@@ -70,7 +70,7 @@ export function LandingPage() {
         body: JSON.stringify({ action: "restore", snapshot: saved }),
       });
       replaceSavedRoomId(saved.id, result.room);
-      track("Room Restored", {
+      trackTeamToolsEvent("Room Restored", {
         model: result.room.model,
         recreated: result.restored,
       });
