@@ -13,9 +13,11 @@ export type TeamToolsAnalyticsEvent =
 
 function browserPrivacySignal(): boolean {
   if (typeof window === "undefined") return true;
-  return navigator.globalPrivacyControl === true
+  const privacyNavigator = navigator as Navigator & { globalPrivacyControl?: boolean };
+  const privacyWindow = window as Window & { doNotTrack?: string };
+  return privacyNavigator.globalPrivacyControl === true
     || navigator.doNotTrack === "1"
-    || window.doNotTrack === "1";
+    || privacyWindow.doNotTrack === "1";
 }
 
 export function teamToolsAnalyticsAllowed(): boolean {
