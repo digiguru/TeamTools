@@ -254,7 +254,6 @@ a { color: inherit; }
   .analytics-notice-actions { display: grid; grid-template-columns: 1fr; }
 }
 
-.analytics-notice { position: relative; }
 .analytics-notice-close {
   position: absolute;
   top: 10px;
