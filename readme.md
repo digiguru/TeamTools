@@ -149,17 +149,22 @@ GitHub Actions validates pull requests with Node 24. Vercel reports preview depl
 MIT — see `LICENSE`.
 
 
-## Analytics
+## Analytics and privacy
 
-Vercel Web Analytics is enabled in the React app. The live-room flow records privacy-safe custom events for:
+TeamTools uses **Vercel Web Analytics** for aggregate product analytics. Google Analytics is not enabled.
 
-- `Room Created` — model only.
-- `Room Displayed` — model, host/attendee role and room status.
-- `Room Connected` — successful WebSocket connection.
-- `Vote Cast` — model and whether the attendee changed an existing vote.
+Analytics is privacy-hardened:
 
-Room names, room IDs, voter IDs and host tokens are not sent as custom event properties.
+- `/room/<room-id>` page views are reported as `/room/:room`;
+- query strings and URL fragments are removed before analytics events are sent;
+- custom events are limited to coarse product behaviour such as room creation, connection, display, voting and local room saves;
+- event properties are restricted to fixed product taxonomy such as model, host/attendee role, room status and whether an action changed an existing state;
+- room names, room IDs, vote positions, voter IDs, host tokens and saved-room history are never sent as analytics properties;
+- analytics is disabled on localhost/development hosts and when the browser sends a privacy signal;
+- a persistent **Analytics & privacy** control explains collection and provides a one-click opt-out stored only in that browser;
+- there are no advertising trackers or analytics cookies.
 
+The root analytics component uses a `beforeSend` privacy boundary so URLs are redacted immediately before transmission. Custom events also pass through a local preference/privacy guard rather than calling Vercel directly.
 
 ## Next.js runtime
 
