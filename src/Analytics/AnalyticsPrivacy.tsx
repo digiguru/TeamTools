@@ -8,6 +8,9 @@ import {
   normaliseAnalyticsUrl,
   TEAMTOOLS_ANALYTICS_PREFERENCE_KEY,
   TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY,
+  TEAMTOOLS_ANALYTICS_NOTICE_DISMISSED_KEY,
+  TEAMTOOLS_ANALYTICS_NOTICE_SESSION_KEY,
+  shouldAutoOpenAnalyticsNotice,
   type AnalyticsPreference,
   type GoogleAnalyticsConsent,
 } from "./privacy";
@@ -43,6 +46,40 @@ function readGoogleConsent(): GoogleAnalyticsConsent {
   }
 }
 
+function persistentNoticeDismissed(): boolean {
+  try {
+    return localStorage.getItem(TEAMTOOLS_ANALYTICS_NOTICE_DISMISSED_KEY) === "1";
+  } catch {
+    return true;
+  }
+}
+
+function sessionNoticeDismissed(): boolean {
+  try {
+    return sessionStorage.getItem(TEAMTOOLS_ANALYTICS_NOTICE_SESSION_KEY) === "1";
+  } catch {
+    return true;
+  }
+}
+
+function rememberPersistentDismissal(): void {
+  try {
+    localStorage.setItem(TEAMTOOLS_ANALYTICS_NOTICE_DISMISSED_KEY, "1");
+    sessionStorage.removeItem(TEAMTOOLS_ANALYTICS_NOTICE_SESSION_KEY);
+  } catch {
+    // Storage failure leaves the privacy-safe defaults in force.
+  }
+}
+
+function rememberSessionDismissal(): void {
+  try {
+    localStorage.removeItem(TEAMTOOLS_ANALYTICS_NOTICE_DISMISSED_KEY);
+    sessionStorage.setItem(TEAMTOOLS_ANALYTICS_NOTICE_SESSION_KEY, "1");
+  } catch {
+    // Storage failure simply means the choice cannot outlive this render.
+  }
+}
+
 export function AnalyticsPrivacy() {
   const pathname = usePathname();
   const [ready, setReady] = useState(false);
@@ -61,7 +98,11 @@ export function AnalyticsPrivacy() {
     setPrivacySignal(signal);
     setVercelEnabled(available && !signal && vercelPreference !== "off");
     setGoogleConsent(signal ? "denied" : storedGoogleConsent);
-    setNoticeOpen(available && (vercelPreference === null || storedGoogleConsent === null || signal));
+    setNoticeOpen(available && shouldAutoOpenAnalyticsNotice(
+      persistentNoticeDismissed(),
+      sessionNoticeDismissed(),
+      signal ? "denied" : storedGoogleConsent,
+    ));
     setReady(true);
   }, []);
 
@@ -98,6 +139,29 @@ export function AnalyticsPrivacy() {
     setNoticeOpen(false);
   };
 
+  const closeWithDefaults = () => {
+    if (readPreference() === null) {
+      try {
+        localStorage.setItem(TEAMTOOLS_ANALYTICS_PREFERENCE_KEY, "on");
+      } catch {
+        // Preserve the current in-memory default if storage is unavailable.
+      }
+    }
+    if (readGoogleConsent() === null) setGooglePreference("denied");
+    rememberPersistentDismissal();
+    setNoticeOpen(false);
+  };
+
+  const acceptGoogleCookies = () => {
+    setGooglePreference("granted");
+    rememberPersistentDismissal();
+  };
+
+  const denyGoogleCookiesForSession = () => {
+    setGooglePreference("denied");
+    rememberSessionDismissal();
+  };
+
   const beforeSend = (event: BeforeSendEvent) => {
     if (!vercelEnabled) return null;
     return { ...event, url: normaliseAnalyticsUrl(event.url) };
@@ -113,6 +177,14 @@ export function AnalyticsPrivacy() {
       </button>
       {ready && noticeOpen && (
         <aside className="analytics-notice" role="dialog" aria-modal="false" aria-label="Analytics and privacy">
+          <button
+            className="analytics-notice-close"
+            type="button"
+            aria-label="Close analytics preferences and use the defaults"
+            onClick={closeWithDefaults}
+          >
+            ×
+          </button>
           <div>
             <strong>Analytics &amp; privacy</strong>
             <p>
@@ -141,11 +213,11 @@ export function AnalyticsPrivacy() {
               className="button button--primary"
               type="button"
               disabled={privacySignal || !googleAnalyticsConfigured()}
-              onClick={() => setGooglePreference("granted")}
+              onClick={acceptGoogleCookies}
             >
               Allow analytics cookies
             </button>
-            <button className="button button--secondary" type="button" onClick={() => setGooglePreference("denied")}>
+            <button className="button button--secondary" type="button" onClick={denyGoogleCookiesForSession}>
               No analytics cookies
             </button>
           </div>
