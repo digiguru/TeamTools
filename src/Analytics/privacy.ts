@@ -1,5 +1,7 @@
 export const TEAMTOOLS_ANALYTICS_PREFERENCE_KEY = "teamtools-analytics-preference-v1";
 export const TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY = "teamtools-google-analytics-consent-v1";
+export const TEAMTOOLS_ANALYTICS_NOTICE_DISMISSED_KEY = "teamtools-analytics-notice-dismissed-v1";
+export const TEAMTOOLS_ANALYTICS_NOTICE_SESSION_KEY = "teamtools-analytics-notice-session-v1";
 
 export type AnalyticsPreference = "on" | "off" | null;
 export type GoogleAnalyticsConsent = "granted" | "denied" | null;
@@ -17,4 +19,12 @@ export function normaliseAnalyticsUrl(rawUrl: string): string {
 export function analyticsRuntimeAvailable(hostname: string): boolean {
   const host = hostname.toLowerCase().replace(/^\[|\]$/g, "");
   return !["localhost", "127.0.0.1", "::1", "0.0.0.0"].includes(host);
+}
+
+export function shouldAutoOpenAnalyticsNotice(
+  persistentDismissed: boolean,
+  sessionDismissed: boolean,
+  googleConsent: GoogleAnalyticsConsent,
+): boolean {
+  return !persistentDismissed && !sessionDismissed && googleConsent !== "granted";
 }

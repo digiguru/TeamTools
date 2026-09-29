@@ -160,6 +160,8 @@ The privacy boundary is strict. Room URLs are normalised from `/room/<room-id>` 
 
 Google Analytics runs with automatic pageviews disabled, manual sanitised pageviews, empty referrers, Google Signals disabled, ad personalisation disabled, and all advertising consent categories denied. Revoking Google Analytics consent disables collection and removes reachable `_ga` cookies. Browser Global Privacy Control / Do Not Track disables both providers. Local development hosts do not load either provider.
 
+The analytics notice does not repeatedly interrupt people who have dismissed it. Closing the notice fills only missing choices with the defaults (Vercel aggregate analytics on, Google Analytics cookies off), preserves explicit opt-outs, and suppresses automatic prompts thereafter. Choosing **No analytics cookies** dismisses the notice for the current browser session only, so the consent choice can be offered again in a later session. The persistent **Analytics & privacy** button remains available for manual changes.
+
 Production configuration:
 
 ```text
