@@ -10,9 +10,11 @@ import {
 } from "./privacy";
 
 function browserPrivacySignal(): boolean {
-  return navigator.globalPrivacyControl === true
+  const privacyNavigator = navigator as Navigator & { globalPrivacyControl?: boolean };
+  const privacyWindow = window as Window & { doNotTrack?: string };
+  return privacyNavigator.globalPrivacyControl === true
     || navigator.doNotTrack === "1"
-    || window.doNotTrack === "1";
+    || privacyWindow.doNotTrack === "1";
 }
 
 function readPreference(): AnalyticsPreference {
