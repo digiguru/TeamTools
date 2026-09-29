@@ -253,3 +253,25 @@ a { color: inherit; }
   .analytics-notice { right: 10px; bottom: 50px; width: calc(100vw - 20px); max-height: calc(100vh - 70px); overflow: auto; }
   .analytics-notice-actions { display: grid; grid-template-columns: 1fr; }
 }
+
+.analytics-notice { position: relative; }
+.analytics-notice-close {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 34px;
+  height: 34px;
+  border: 0;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+}
+.analytics-notice-close:hover,
+.analytics-notice-close:focus-visible {
+  background: rgba(255,255,255,.07);
+  color: var(--text);
+}
+.analytics-notice > div:first-of-type { padding-right: 32px; }
