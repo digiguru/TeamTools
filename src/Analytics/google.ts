@@ -36,6 +36,7 @@ function installGoogleQueue(): void {
   if (!browserAvailable()) return;
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () {
+    // eslint-disable-next-line prefer-rest-params -- Google gtag's canonical queue stores the Arguments object.
     window.dataLayer?.push(arguments);
   };
 }
