@@ -1,6 +1,8 @@
 export const TEAMTOOLS_ANALYTICS_PREFERENCE_KEY = "teamtools-analytics-preference-v1";
+export const TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY = "teamtools-google-analytics-consent-v1";
 
 export type AnalyticsPreference = "on" | "off" | null;
+export type GoogleAnalyticsConsent = "granted" | "denied" | null;
 
 export function normaliseAnalyticsUrl(rawUrl: string): string {
   const url = new URL(rawUrl, "https://teamtools.invalid");
