@@ -32,13 +32,17 @@ function browserAvailable(): boolean {
   return typeof window !== "undefined" && typeof document !== "undefined";
 }
 
-function gtag(...args: unknown[]): void {
+function installGoogleQueue(): void {
   if (!browserAvailable()) return;
   window.dataLayer = window.dataLayer || [];
-  window.gtag = window.gtag || function (...queued: unknown[]) {
-    window.dataLayer?.push(queued);
+  window.gtag = window.gtag || function () {
+    window.dataLayer?.push(arguments);
   };
-  window.gtag(...args);
+}
+
+function gtag(...args: unknown[]): void {
+  installGoogleQueue();
+  window.gtag?.(...args);
 }
 
 function safeLocation(rawUrl = browserAvailable() ? window.location.href : "/"): string {
@@ -136,6 +140,7 @@ export function ensureGoogleAnalytics(rawUrl?: string): boolean {
 export function trackGoogleAnalyticsPageView(rawUrl?: string): void {
   if (!ensureGoogleAnalytics(rawUrl)) return;
   gtag("event", "page_view", {
+    send_to: MEASUREMENT_ID,
     page_title: document.title,
     page_location: safeLocation(rawUrl),
     page_referrer: "",
@@ -149,6 +154,7 @@ export function trackGoogleAnalyticsEvent(
   const eventName = EVENT_NAMES[name];
   if (!eventName || !ensureGoogleAnalytics(window.location.href)) return;
   gtag("event", eventName, {
+    send_to: MEASUREMENT_ID,
     ...data,
     page_location: safeLocation(window.location.href),
     page_referrer: "",
