@@ -1,6 +1,5 @@
-import {
-  TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY, describe, expect, it } from "vitest";
-import { analyticsRuntimeAvailable, normaliseAnalyticsUrl } from "../privacy";
+import { describe, expect, it } from "vitest";
+import { analyticsRuntimeAvailable, normaliseAnalyticsUrl, TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY } from "../privacy";
 
 describe("analytics privacy", () => {
   it("redacts room identifiers and removes query/hash data", () => {
@@ -19,6 +18,6 @@ describe("analytics privacy", () => {
 });
 
 
-test("Google Analytics consent uses a separate browser key", () => {
+it("Google Analytics consent uses a separate browser key", () => {
   expect(TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY).toBe("teamtools-google-analytics-consent-v1");
 });
