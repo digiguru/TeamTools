@@ -1,11 +1,13 @@
 "use client";
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { createRealtimeSessionClient } from "@digiguru/live-session/browser";
+import { animateFlip, captureRect } from "@digiguru/spacial-stage";
 import { trackTeamToolsEvent } from "../Analytics/client";
 import { ModelVisual } from "./ModelVisual";
 import {
   getHostToken,
-  roomWebSocketUrl,
+  getVoterId,
   saveRoomSnapshot,
   type RoomSnapshot,
   type VotePoint,
@@ -36,17 +38,19 @@ export function RoomPage({ roomId }: { roomId: string }) {
   );
   const [error, setError] = useState("");
   const [roomMissing, setRoomMissing] = useState(false);
-  const socketRef = useRef<WebSocket | null>(null);
+  const clientRef = useRef<ReturnType<typeof createRealtimeSessionClient> | null>(null);
   const reconnectRef = useRef<number | null>(null);
   const unmountedRef = useRef(false);
   const displayedRef = useRef(false);
   const autosaveRef = useRef<number | null>(null);
+  const roomControlsRef = useRef<HTMLElement | null>(null);
+  const spatialEntrancePlayedRef = useRef(false);
   const [saved, setSaved] = useState(false);
 
   const connect = useCallback(async () => {
     if (
       unmountedRef.current ||
-      (socketRef.current && socketRef.current.readyState <= WebSocket.OPEN)
+      (clientRef.current?.socket && clientRef.current.socket.readyState <= WebSocket.OPEN)
     ) {
       return;
     }
@@ -75,27 +79,35 @@ export function RoomPage({ roomId }: { roomId: string }) {
       return;
     }
 
-    if (unmountedRef.current || roomMissing) return;
+    if (unmountedRef.current) return;
 
-    const socket = new WebSocket(roomWebSocketUrl(roomId));
-    socketRef.current = socket;
-
-    socket.addEventListener("open", () => {
-      trackTeamToolsEvent("Room Connected");
-      setConnection("live");
-      setError("");
-      socket.send(
-        JSON.stringify({
-          type: "authenticate-host",
-          hostToken: getHostToken(),
-        }),
-      );
-    });
-
-    socket.addEventListener("message", (event) => {
-      try {
-        const message = JSON.parse(event.data);
-        if (message.type === "snapshot") {
+    const client = createRealtimeSessionClient({
+      sessionId: roomId,
+      participantId: getVoterId(roomId),
+      hostCredential: getHostToken(),
+      websocketPath: "/api/live",
+      queryNames: { session: "roomId", participant: "voterId" },
+      hostAuthMessage: (credential) => ({
+        type: "authenticate-host",
+        hostToken: credential,
+      }),
+      onConnectionState: (state) => {
+        if (state === "is-live") {
+          trackTeamToolsEvent("Room Connected");
+          setConnection("live");
+          setError("");
+          return;
+        }
+        if (state === "is-offline") {
+          setConnection("offline");
+          return;
+        }
+        setConnection("connecting");
+      },
+      onMessage: (message) => {
+        if (!message || typeof message !== "object") return;
+        const payload = message as { type?: string; error?: string };
+        if (payload.type === "snapshot") {
           const nextSnapshot = message as RoomSnapshot;
           if (!displayedRef.current) {
             displayedRef.current = true;
@@ -112,30 +124,26 @@ export function RoomPage({ roomId }: { roomId: string }) {
               saveRoomSnapshot(nextSnapshot);
             }, 800);
           }
+          return;
         }
-        if (message.type === "error") {
-          setError(message.error || "Something went wrong.");
+        if (payload.type === "error") {
+          setError(payload.error || "Something went wrong.");
         }
-      } catch {
-        setError("Received an invalid room update.");
-      }
+      },
+      shouldReconnectAfterClose: (event) => {
+        if (event.code === 4004) {
+          setRoomMissing(true);
+          setConnection("offline");
+          setError("");
+          return false;
+        }
+        return !unmountedRef.current;
+      },
     });
 
-    socket.addEventListener("close", (event) => {
-      setConnection("offline");
-      socketRef.current = null;
-      if (event.code === 4004) {
-        setRoomMissing(true);
-        setError("");
-        return;
-      }
-      if (!unmountedRef.current && !roomMissing) {
-        reconnectRef.current = window.setTimeout(connect, 900);
-      }
-    });
-
-    socket.addEventListener("error", () => setConnection("offline"));
-  }, [roomId, roomMissing]);
+    clientRef.current = client;
+    client.connect();
+  }, [roomId]);
 
   useEffect(() => {
     unmountedRef.current = false;
@@ -149,16 +157,35 @@ export function RoomPage({ roomId }: { roomId: string }) {
       if (autosaveRef.current) {
         window.clearTimeout(autosaveRef.current);
       }
-      socketRef.current?.close();
-      socketRef.current = null;
+      clientRef.current?.stopReconnect();
+      clientRef.current?.socket?.close(1000, "Client navigation");
+      clientRef.current = null;
     };
   }, [connect]);
 
+  useEffect(() => {
+    const element = roomControlsRef.current;
+    if (!snapshot || !element || spatialEntrancePlayedRef.current) return;
+
+    const destination = captureRect(element);
+    if (!destination) return;
+
+    spatialEntrancePlayedRef.current = true;
+    const source = {
+      ...destination,
+      left: destination.left + 48,
+      right: destination.right + 48,
+    };
+
+    void animateFlip(element, source, destination, {
+      duration: 420,
+      easing: "cubic-bezier(.2,.82,.24,1)",
+      origin: "top left",
+    });
+  }, [snapshot]);
+
   const send = (message: unknown) => {
-    const socket = socketRef.current;
-    if (socket?.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(message));
-    }
+    clientRef.current?.send(message);
   };
 
   const castVote = (vote: VotePoint) => {
@@ -280,7 +307,7 @@ export function RoomPage({ roomId }: { roomId: string }) {
         </div>
       </section>
 
-      <section className="room-controls">
+      <section className="room-controls" ref={roomControlsRef}>
         <div className="room-copy">
           <span className="step-number">
             {isRevealed ? "REVEAL" : snapshot?.isHost ? "HOST" : "VOTE"}
