@@ -1,3 +1,8 @@
+import {
+  createLocalToken,
+  sessionIdFromPath
+} from "@digiguru/live-session/browser";
+
 export type ModelType = "comfort" | "tuckman";
 
 export interface VotePoint {
@@ -42,19 +47,10 @@ const HOST_TOKEN_KEY = "teamtools-host-token";
 const VOTER_KEY_PREFIX = "teamtools-voter:";
 const SAVED_ROOMS_KEY = "teamtools-saved-rooms-v1";
 
-function randomToken() {
-  if (globalThis.crypto?.randomUUID) {
-    return globalThis.crypto.randomUUID().replace(/-/g, "");
-  }
-  const bytes = new Uint8Array(24);
-  globalThis.crypto?.getRandomValues?.(bytes);
-  return Array.from(bytes, (byte) => byte.toString(16).padStart(2, "0")).join("");
-}
-
 function getOrCreate(key: string) {
   const existing = localStorage.getItem(key);
   if (existing) return existing;
-  const value = randomToken();
+  const value = createLocalToken();
   localStorage.setItem(key, value);
   return value;
 }
@@ -144,18 +140,5 @@ export async function api<T>(path: string, init: RequestInit = {}): Promise<T> {
 }
 
 export function roomIdFromLocation() {
-  return (
-    window.location.pathname
-      .match(/^\/room\/([a-z0-9-]{3,64})\/?$/i)?.[1]
-      ?.toLowerCase() || null
-  );
-}
-
-export function roomWebSocketUrl(roomId: string) {
-  const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-  const params = new URLSearchParams({
-    roomId,
-    voterId: getVoterId(roomId),
-  });
-  return `${protocol}//${window.location.host}/api/live?${params}`;
+  return sessionIdFromPath(window.location.pathname, "room");
 }
