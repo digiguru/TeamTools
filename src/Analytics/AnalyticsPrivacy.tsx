@@ -1,13 +1,21 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { Analytics, type BeforeSendEvent } from "@vercel/analytics/react";
 import {
   analyticsRuntimeAvailable,
   normaliseAnalyticsUrl,
   TEAMTOOLS_ANALYTICS_PREFERENCE_KEY,
+  TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY,
   type AnalyticsPreference,
+  type GoogleAnalyticsConsent,
 } from "./privacy";
+import {
+  disableGoogleAnalytics,
+  googleAnalyticsConfigured,
+  trackGoogleAnalyticsPageView,
+} from "./google";
 
 function browserPrivacySignal(): boolean {
   const privacyNavigator = navigator as Navigator & { globalPrivacyControl?: boolean };
@@ -26,71 +34,119 @@ function readPreference(): AnalyticsPreference {
   }
 }
 
+function readGoogleConsent(): GoogleAnalyticsConsent {
+  try {
+    const value = localStorage.getItem(TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY);
+    return value === "granted" || value === "denied" ? value : null;
+  } catch {
+    return "denied";
+  }
+}
+
 export function AnalyticsPrivacy() {
+  const pathname = usePathname();
   const [ready, setReady] = useState(false);
-  const [enabled, setEnabled] = useState(false);
+  const [runtimeAvailable, setRuntimeAvailable] = useState(false);
+  const [vercelEnabled, setVercelEnabled] = useState(false);
+  const [googleConsent, setGoogleConsent] = useState<GoogleAnalyticsConsent>(null);
   const [noticeOpen, setNoticeOpen] = useState(false);
   const [privacySignal, setPrivacySignal] = useState(false);
 
   useEffect(() => {
     const signal = browserPrivacySignal();
-    const preference = readPreference();
-    const runtimeAvailable = analyticsRuntimeAvailable(window.location.hostname);
+    const vercelPreference = readPreference();
+    const storedGoogleConsent = readGoogleConsent();
+    const available = analyticsRuntimeAvailable(window.location.hostname);
+    setRuntimeAvailable(available);
     setPrivacySignal(signal);
-    setEnabled(runtimeAvailable && !signal && preference !== "off");
-    setNoticeOpen(preference === null || signal);
+    setVercelEnabled(available && !signal && vercelPreference !== "off");
+    setGoogleConsent(signal ? "denied" : storedGoogleConsent);
+    setNoticeOpen(available && (vercelPreference === null || storedGoogleConsent === null || signal));
     setReady(true);
   }, []);
 
-  const setPreference = (preference: "on" | "off") => {
+  useEffect(() => {
+    if (!ready || !runtimeAvailable || privacySignal || googleConsent !== "granted") {
+      disableGoogleAnalytics();
+      return;
+    }
+    trackGoogleAnalyticsPageView(window.location.href);
+  }, [googleConsent, pathname, privacySignal, ready, runtimeAvailable]);
+
+  const setVercelPreference = (preference: "on" | "off") => {
     if (privacySignal && preference === "on") return;
     try {
       localStorage.setItem(TEAMTOOLS_ANALYTICS_PREFERENCE_KEY, preference);
     } catch {
-      setEnabled(false);
-      setNoticeOpen(false);
+      setVercelEnabled(false);
       return;
     }
-    setEnabled(preference === "on" && !privacySignal && analyticsRuntimeAvailable(window.location.hostname));
+    setVercelEnabled(preference === "on" && !privacySignal && runtimeAvailable);
+  };
+
+  const setGooglePreference = (consent: Exclude<GoogleAnalyticsConsent, null>) => {
+    if (privacySignal && consent === "granted") return;
+    try {
+      localStorage.setItem(TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY, consent);
+    } catch {
+      setGoogleConsent("denied");
+      disableGoogleAnalytics();
+      return;
+    }
+    setGoogleConsent(consent);
+    if (consent === "denied") disableGoogleAnalytics();
     setNoticeOpen(false);
   };
 
   const beforeSend = (event: BeforeSendEvent) => {
-    if (!enabled) return null;
+    if (!vercelEnabled) return null;
     return { ...event, url: normaliseAnalyticsUrl(event.url) };
   };
 
+  if (ready && !runtimeAvailable) return null;
+
   return (
     <>
-      {ready && enabled && <Analytics beforeSend={beforeSend} />}
+      {ready && vercelEnabled && <Analytics beforeSend={beforeSend} />}
       <button className="analytics-settings-link" type="button" onClick={() => setNoticeOpen(true)}>
         Analytics &amp; privacy
       </button>
       {ready && noticeOpen && (
-        <aside className="analytics-notice" role="region" aria-label="Analytics and privacy">
+        <aside className="analytics-notice" role="dialog" aria-modal="false" aria-label="Analytics and privacy">
           <div>
             <strong>Analytics &amp; privacy</strong>
             <p>
-              Team Tools uses privacy-friendly Vercel Web Analytics to understand aggregate page and feature use so the service can be improved.
-              We may record page views, broad browser/device information, coarse location, and anonymous product events such as creating a room or casting a vote.
+              Vercel Web Analytics gives us aggregate product usage without analytics cookies. Google Analytics is optional:
+              it uses analytics cookies and does not load at all unless you explicitly allow it.
             </p>
             <p>
-              <strong>We never send</strong> room names, room codes, vote positions, voter IDs, host tokens, or saved room history to analytics.
-              Room URLs are anonymised before reporting. There are no advertising trackers or analytics cookies.
+              <strong>We never send</strong> room names, room codes, vote positions, voter IDs, host tokens, or saved room history.
+              Room URLs are anonymised to <code>/room/:room</code>, query strings and fragments are removed, and Google advertising
+              storage, signals and personalisation stay disabled.
             </p>
-            {privacySignal && <p><strong>Your browser is sending a privacy signal, so analytics are disabled.</strong></p>}
+            {privacySignal && <p><strong>Your browser is sending a privacy signal, so both analytics providers are disabled.</strong></p>}
+            {!googleAnalyticsConfigured() && <p><strong>Google Analytics is not configured for this deployment.</strong></p>}
+
+            <p><strong>Vercel aggregate analytics:</strong> {vercelEnabled ? "On" : "Off"}</p>
+            <div className="analytics-notice-actions">
+              <button className="button button--secondary" type="button" disabled={privacySignal} onClick={() => setVercelPreference(vercelEnabled ? "off" : "on")}>
+                {vercelEnabled ? "Turn Vercel analytics off" : "Turn Vercel analytics on"}
+              </button>
+            </div>
+
+            <p><strong>Google Analytics cookies:</strong> {googleConsent === "granted" ? "Allowed" : "Not allowed"}</p>
           </div>
           <div className="analytics-notice-actions">
             <button
               className="button button--primary"
               type="button"
-              disabled={privacySignal}
-              onClick={() => setPreference("on")}
+              disabled={privacySignal || !googleAnalyticsConfigured()}
+              onClick={() => setGooglePreference("granted")}
             >
-              {privacySignal ? "Analytics disabled" : "Keep analytics on"}
+              Allow analytics cookies
             </button>
-            <button className="button button--secondary" type="button" onClick={() => setPreference("off")}>
-              Turn analytics off
+            <button className="button button--secondary" type="button" onClick={() => setGooglePreference("denied")}>
+              No analytics cookies
             </button>
           </div>
         </aside>
