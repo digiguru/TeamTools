@@ -22,6 +22,8 @@
     "check": "npm run audit && npm run lint && npm run typecheck && npm test && npm run build"
   },
   "dependencies": {
+    "@digiguru/live-session": "^0.1.1",
+    "@digiguru/spacial-stage": "^0.1.1",
     "@vercel/analytics": "^2.0.1",
     "@vercel/functions": "3.9.9",
     "d3": "^7.9.0",
