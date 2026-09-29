@@ -2,6 +2,7 @@
 
 import { track } from "@vercel/analytics";
 import { analyticsRuntimeAvailable, TEAMTOOLS_ANALYTICS_PREFERENCE_KEY } from "./privacy";
+import { trackGoogleAnalyticsEvent } from "./google";
 
 export type TeamToolsAnalyticsEvent =
   | "Room Created"
@@ -34,6 +35,6 @@ export function trackTeamToolsEvent(
   name: TeamToolsAnalyticsEvent,
   data?: Record<string, string | number | boolean>,
 ): void {
-  if (!teamToolsAnalyticsAllowed()) return;
-  track(name, data);
+  if (teamToolsAnalyticsAllowed()) track(name, data);
+  if (!browserPrivacySignal()) trackGoogleAnalyticsEvent(name, data);
 }
