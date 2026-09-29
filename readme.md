@@ -151,20 +151,22 @@ MIT — see `LICENSE`.
 
 ## Analytics and privacy
 
-TeamTools uses **Vercel Web Analytics** for aggregate product analytics. Google Analytics is not enabled.
+Team Tools uses two deliberately separate analytics layers:
 
-Analytics is privacy-hardened:
+- **Vercel Web Analytics** provides aggregate page and feature usage without analytics cookies. It remains independently switchable from the in-app **Analytics & privacy** control.
+- **Google Analytics 4** is available only when `NEXT_PUBLIC_GA_MEASUREMENT_ID` is configured **and** the visitor explicitly chooses **Allow analytics cookies**. The Google tag is not loaded before consent.
 
-- `/room/<room-id>` page views are reported as `/room/:room`;
-- query strings and URL fragments are removed before analytics events are sent;
-- custom events are limited to coarse product behaviour such as room creation, connection, display, voting and local room saves;
-- event properties are restricted to fixed product taxonomy such as model, host/attendee role, room status and whether an action changed an existing state;
-- room names, room IDs, vote positions, voter IDs, host tokens and saved-room history are never sent as analytics properties;
-- analytics is disabled on localhost/development hosts and when the browser sends a privacy signal;
-- a persistent **Analytics & privacy** control explains collection and provides a one-click opt-out stored only in that browser;
-- there are no advertising trackers or analytics cookies.
+The privacy boundary is strict. Room URLs are normalised from `/room/<room-id>` to `/room/:room`; query strings and fragments are removed; custom events contain only coarse product taxonomy such as model, role, status, changed/revealed flags. Room names, room IDs, vote positions, voter IDs, host tokens and saved-room history are never sent.
 
-The root analytics component uses a `beforeSend` privacy boundary so URLs are redacted immediately before transmission. Custom events also pass through a local preference/privacy guard rather than calling Vercel directly.
+Google Analytics runs with automatic pageviews disabled, manual sanitised pageviews, empty referrers, Google Signals disabled, ad personalisation disabled, and all advertising consent categories denied. Revoking Google Analytics consent disables collection and removes reachable `_ga` cookies. Browser Global Privacy Control / Do Not Track disables both providers. Local development hosts do not load either provider.
+
+Production configuration:
+
+```text
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-V6EEZJPGET
+```
+
+Keep this variable scoped to the production Vercel environment so Preview and Development builds remain free of GA telemetry.
 
 ## Next.js runtime
 
