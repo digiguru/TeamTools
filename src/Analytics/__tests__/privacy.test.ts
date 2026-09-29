@@ -1,4 +1,5 @@
-import { describe, expect, it } from "vitest";
+import {
+  TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY, describe, expect, it } from "vitest";
 import { analyticsRuntimeAvailable, normaliseAnalyticsUrl } from "../privacy";
 
 describe("analytics privacy", () => {
@@ -15,4 +16,9 @@ describe("analytics privacy", () => {
     expect(analyticsRuntimeAvailable("::1")).toBe(false);
     expect(analyticsRuntimeAvailable("teamtools.digiguru.co.uk")).toBe(true);
   });
+});
+
+
+test("Google Analytics consent uses a separate browser key", () => {
+  expect(TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY).toBe("teamtools-google-analytics-consent-v1");
 });
