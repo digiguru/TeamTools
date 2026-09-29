@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { analyticsRuntimeAvailable, normaliseAnalyticsUrl, TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY } from "../privacy";
+import {
+  analyticsRuntimeAvailable,
+  normaliseAnalyticsUrl,
+  shouldAutoOpenAnalyticsNotice,
+  TEAMTOOLS_ANALYTICS_NOTICE_DISMISSED_KEY,
+  TEAMTOOLS_ANALYTICS_NOTICE_SESSION_KEY,
+  TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY,
+} from "../privacy";
 
 describe("analytics privacy", () => {
   it("redacts room identifiers and removes query/hash data", () => {
@@ -20,4 +27,14 @@ describe("analytics privacy", () => {
 
 it("Google Analytics consent uses a separate browser key", () => {
   expect(TEAMTOOLS_GOOGLE_ANALYTICS_CONSENT_KEY).toBe("teamtools-google-analytics-consent-v1");
+});
+
+it("uses persistent close and session-only denial semantics for the analytics notice", () => {
+  expect(TEAMTOOLS_ANALYTICS_NOTICE_DISMISSED_KEY).toBe("teamtools-analytics-notice-dismissed-v1");
+  expect(TEAMTOOLS_ANALYTICS_NOTICE_SESSION_KEY).toBe("teamtools-analytics-notice-session-v1");
+  expect(shouldAutoOpenAnalyticsNotice(false, false, null)).toBe(true);
+  expect(shouldAutoOpenAnalyticsNotice(false, false, "denied")).toBe(true);
+  expect(shouldAutoOpenAnalyticsNotice(false, true, "denied")).toBe(false);
+  expect(shouldAutoOpenAnalyticsNotice(true, false, "denied")).toBe(false);
+  expect(shouldAutoOpenAnalyticsNotice(false, false, "granted")).toBe(false);
 });
