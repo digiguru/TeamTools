@@ -28,7 +28,7 @@
     "@vercel/functions": "3.9.9",
     "d3": "^7.9.0",
     "immutable": "^5.1.9",
-    "next": "16.3.6",
+    "next": "16.3.8",
     "react": "^19.3.0",
     "react-dom": "^19.3.0",
     "react-redux": "^9.3.0",
@@ -63,19 +63,19 @@
     "@testing-library/react": "^16.3.3",
     "@testing-library/user-event": "^14.6.7",
     "@types/jest": "^30.0.0",
-    "@types/node": "^26.6.2",
+    "@types/node": "^26.6.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@types/react-redux": "^7.1.34",
     "@types/react-test-renderer": "^19.3.0",
     "acorn": "^8.18.0",
     "eslint": "^10.11.0",
-    "globals": "^17.12.0",
+    "globals": "^17.13.0",
     "happy-dom": "^20.14.5",
     "typescript": "6.0.3",
-    "typescript-eslint": "^8.70.1",
-    "vitest": "^5.0.1",
+    "typescript-eslint": "^8.71.0",
+    "vitest": "^5.0.3",
     "@vitejs/plugin-react": "^6.1.1",
-    "vite": "^8.3.1"
+    "vite": "^8.3.2"
   }
 }
