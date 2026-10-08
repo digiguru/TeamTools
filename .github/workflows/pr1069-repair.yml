@@ -1,0 +1,30 @@
+name: Repair PR 1069 dependency audit
+on:
+  push:
+    branches: [fix/pr1069-security-audit]
+permissions:
+  contents: write
+jobs:
+  repair:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - name: Update vulnerable dependencies
+        run: npm audit fix || true
+      - name: Verify full security audit
+        run: npm audit --audit-level=high
+      - name: Commit dependency lockfile
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add package-lock.json package.json
+          if ! git diff --cached --quiet; then
+            git commit -m "fix(deps): resolve PR 1069 security advisories"
+            git push
+          fi
