@@ -25,10 +25,10 @@
     "@digiguru/live-session": "^0.1.1",
     "@digiguru/spacial-stage": "^0.1.1",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/functions": "3.11.0",
+    "@vercel/functions": "3.11.2",
     "d3": "^7.9.2",
-    "immutable": "^5.1.9",
-    "next": "16.4.5",
+    "immutable": "^5.2.1",
+    "next": "16.4.6",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "react-redux": "^9.3.1",
@@ -63,7 +63,7 @@
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
     "@testing-library/react": "^16.3.3",
-    "@testing-library/user-event": "^14.6.8",
+    "@testing-library/user-event": "^14.6.10",
     "@types/jest": "^30.0.0",
     "@types/node": "^26.6.6",
     "@types/react": "^19.3.0",
@@ -75,9 +75,9 @@
     "globals": "^17.14.0",
     "happy-dom": "^21.0.4",
     "typescript": "6.0.3",
-    "typescript-eslint": "^8.72.1",
+    "typescript-eslint": "^8.72.2",
     "vitest": "^5.1.0",
-    "@vitejs/plugin-react": "^6.2.1",
-    "vite": "^8.3.6"
+    "@vitejs/plugin-react": "^6.3.0",
+    "vite": "^8.3.8"
   }
 }
